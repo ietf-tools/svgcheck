@@ -13,7 +13,7 @@ try:
 except ImportError:
     pass
 
-import xml2rfc.log
+from RfcEditor.common import log
 
 
 class MyTextWrapper(textwrap.TextWrapper):
@@ -156,7 +156,7 @@ def justify_inline(left_str, center_str, right_str, width=72):
     if sumwidth > width:
         # Trim longest string
         longest_index = strings.index(max(strings, key=len))
-        xml2rfc.log.warn('The inline string was truncated because it was ' \
+        log.warn('The inline string was truncated because it was ' \
                          'too long:\n  ' + strings[longest_index])
         strings[longest_index] = strings[longest_index][:-(sumwidth - width)]
 
@@ -320,7 +320,7 @@ def _replace_unicode_characters(str):
         else:
             entity = match.group(1).encode('ascii', 'xmlcharrefreplace').decode('ascii')
             str = re.sub(match.group(1), entity, str)
-            xml2rfc.log.warn('Illegal character replaced in string: ' + entity)
+            log.warn('Illegal character replaced in string: ' + entity)
 
 
 # Ascii representations of unicode chars from rfc2629-xhtml.ent
