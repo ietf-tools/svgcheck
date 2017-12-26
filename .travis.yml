@@ -12,5 +12,6 @@ install:
   - pip install -r requirements.txt
 
 script:
+  - pwd
   - python common/test.py
  
