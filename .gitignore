@@ -104,3 +104,6 @@ ENV/
 # cleanup of emacs files
 *~
 #*
+*#
+.#*
+
