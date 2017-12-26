@@ -9,10 +9,9 @@ from RfcEditor import common
 
 class TestParserMethods(unittest.TestCase):
 
-    @unittest.skip("too many warnings to be happy")
-    def test_pep8_conformance(self):
+    def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
-        pep8style = pep8.StyleGuide(quiet=False,config_file="setup.cfg")
+        pep8style = pycodestyle.StyleGuide(quiet=False,config_file="setup.cfg")
         result = pep8style.check_files(['parser.py', 'log.py', 'utils.py',
                                         'test.py'])
         self.assertEqual(result.total_errors, 0,

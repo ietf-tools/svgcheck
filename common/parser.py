@@ -416,7 +416,7 @@ class XmlRfcParser:
 
         # Initialize templates directory
         self.templates_path = templates_path or \
-                              os.path.join(os.path.dirname(common.__file__),
+                              os.path.join(os.path.dirname(__file__),
                                            'templates')
         self.default_dtd_path = os.path.join(self.templates_path, 'rfc2629.dtd')
         self.default_rng_path = os.path.join(self.templates_path, 'rfc7991.rng')
