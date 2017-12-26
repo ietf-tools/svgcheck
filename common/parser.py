@@ -14,7 +14,6 @@ import requests
 import lxml.etree
 from RfcEditor.common import log
 from RfcEditor.common import utils
-from RfcEditor import common
 
 try:
     from urllib.parse import urlparse, urljoin
@@ -28,6 +27,9 @@ except ImportError:
 
 __all__ = ['XmlRfcParser', 'XmlRfc', 'XmlRfcError']
 
+CACHES       = ['/var/cache/xml2rfc', '~/.cache/xml2rfc']  # Ordered by priority
+CACHE_PREFIX = ''
+NET_SUBDIRS  = ['bibxml', 'bibxml2', 'bibxml3', 'bibxml4', 'bibxml5']
 
 class XmlRfcError(Exception):
     """ Application XML errors with positional information
@@ -76,7 +78,7 @@ class CachingResolver(lxml.etree.Resolver):
             self.source_dir = None
 
         # Determine cache directories to read/write to
-        self.read_caches = [os.path.expanduser(path) for path in common.CACHES]
+        self.read_caches = [os.path.expanduser(path) for path in CACHES]
         self.write_cache = None
         if cache_path:
             # Explicit directory given, set as first directory in read_caches
@@ -102,8 +104,8 @@ class CachingResolver(lxml.etree.Resolver):
                             '\nTry giving a specific directory with --cache.')
         else:
             # Create the prefix directory if it doesnt exist
-            if common.CACHE_PREFIX != None and len(common.CACHE_PREFIX) > 0:
-                pdir = os.path.join(self.write_cache, common.CACHE_PREFIX)
+            if CACHE_PREFIX != None and len(CACHE_PREFIX) > 0:
+                pdir = os.path.join(self.write_cache, CACHE_PREFIX)
                 if not os.path.exists(pdir):
                     os.makedirs(pdir)
 
@@ -113,7 +115,7 @@ class CachingResolver(lxml.etree.Resolver):
         # Explicit path given?
         caches = path and [path] or self.read_caches
         for dir in caches:
-            path = os.path.join(dir, common.CACHE_PREFIX)
+            path = os.path.join(dir, CACHE_PREFIX)
             if os.access(path, os.W_OK):
                 shutil.rmtree(path)
                 log.write('Deleted cache directory at', path)
@@ -298,7 +300,7 @@ class CachingResolver(lxml.etree.Resolver):
                                 break
                     if not result:
                         # Try network subdirs
-                        for subdir in common.NET_SUBDIRS:
+                        for subdir in NET_SUBDIRS:
                             for loc in self.network_locs:
                                 for path in paths:
                                     url = urljoin(loc, subdir + '/' + path)
@@ -349,7 +351,7 @@ class CachingResolver(lxml.etree.Resolver):
         typename = self.include and 'include' or 'entity'
         # Try to load the URL from each cache in `read_cache`
         for dir in self.read_caches:
-            cached_path = os.path.join(dir, common.CACHE_PREFIX, basename)
+            cached_path = os.path.join(dir, CACHE_PREFIX, basename)
             if os.path.exists(cached_path):
                 if os.path.getmtime(cached_path) < (time.time() - self.cache_refresh_secs) and not self.no_network:
                     log.note('Cached version at %s too old; will refresh cache for %s %s' % (cached_path, typename, url))
@@ -372,7 +374,7 @@ class CachingResolver(lxml.etree.Resolver):
         if r.status_code == 200:
             if self.write_cache:
                 write_path = os.path.normpath(os.path.join(self.write_cache,
-                                                           common.CACHE_PREFIX, basename))
+                                                           CACHE_PREFIX, basename))
                 with codecs.open(write_path, 'w', encoding='utf-8') as cache_file:
                     cache_file.write(r.text)
                 log.note('Added file to cache: ', write_path)

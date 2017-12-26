@@ -11,7 +11,7 @@ class TestParserMethods(unittest.TestCase):
 
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
-        pep8style = pycodestyle.StyleGuide(quiet=False,config_file="setup.cfg")
+        pep8style = pycodestyle.StyleGuide(quiet=False, config_file="setup.cfg")
         result = pep8style.check_files(['parser.py', 'log.py', 'utils.py',
                                         'test.py'])
         self.assertEqual(result.total_errors, 0,
@@ -38,7 +38,7 @@ class TestParserMethods(unittest.TestCase):
         tree = parser.parse()
         self.assertEqual(len(tree.tree.xpath('good')), 1,
                          "Must be exactly one node named good")
-        
+
     def test_include2(self):
         """ Test that a two level xi:include is loaded"""
         parser = XmlRfcParser("Tests/include2.xml", quiet=False,
@@ -107,10 +107,8 @@ class TestParserMethods(unittest.TestCase):
             tree = parser.parse()
 
 
-
 def clear_cache(parser):
     parser.delete_cache()
-
 
 
 if __name__ == '__main__':

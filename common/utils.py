@@ -36,22 +36,21 @@ class MyTextWrapper(textwrap.TextWrapper):
         self.sentence_end_re = re.compile(r'[A-Za-z0-9\>\]\)\"\']'  # letter, end parentheses
                             r'[\.\!\?]'     # sentence-ending punct.
                             r'[\"\'\)\]]?'  # optional end-of-quote, end parentheses
-                            r'\Z'           # end of chunk
-                            )
+                            r'\Z')          # end of chunk
 
         # Exceptions which should not be treated like end-of-sentence
         self.not_sentence_end_re = re.compile(
-            # start of string or non-alpha character
+            #  start of string or non-alpha character
             r'(^|\s)'
             r'('
-            # Single uppercase letter, dot, enclosing parentheses or quotes
+            #  Single uppercase letter, dot, enclosing parentheses or quotes
             r'\.[\]\)\'"]*'
-            # Tla with leading uppercase, and special cases
-            # (Note: v1 spelled out Fig, Tbl, Mrs, Drs, Rep, Sen, Gov, Rev, Gen, Col, Maj and Cap,
+            #  Tla with leading uppercase, and special cases
+            #  (Note: v1 spelled out Fig, Tbl, Mrs, Drs, Rep, Sen, Gov, Rev, Gen, Col, Maj and Cap,
             #  but those are redundant with the Tla regex.)
             r'|([A-Z][a-z][a-z]|Eq|[Cc]f|vs|resp|viz|ibid|[JS]r|M[rs]|Messrs|Mmes|Dr|Profs?|St|Lt|i\.e)\.'
-            r')\Z' # trailing dot, end of group and end of chunk
-            )
+            r')\Z'  # trailing dot, end of group and end of chunk
+        )
 
         # Start of next sentence regex
         self.sentence_start_re = re.compile("^[\"'([]*[A-Z]")
@@ -63,7 +62,6 @@ class MyTextWrapper(textwrap.TextWrapper):
         }
 
         self.break_on_hyphens = True
-
 
     def _fix_sentence_endings(self, chunks):
         """_fix_sentence_endings(chunks : [string])
@@ -78,11 +76,12 @@ class MyTextWrapper(textwrap.TextWrapper):
         patsearch = self.sentence_end_re.search
         skipsearch = self.not_sentence_end_re.search
         startsearch = self.sentence_start_re.search
-        while i < len(chunks)-2:
-            if (chunks[i+1] == " " and patsearch(chunks[i])
-                                  and skipsearch(chunks[i])==None
-                                  and startsearch(chunks[i+2])):
-                chunks[i+1] = "  "
+        while i < len(chunks) - 2:
+            if (chunks[i + 1] == " " and patsearch(chunks[i]) and
+                skipsearch(chunks[i]) is None and
+                startsearch(chunks[i + 2])):
+
+                chunks[i + 1] = "  "
                 i += 2
             else:
                 i += 1
@@ -96,7 +95,7 @@ class MyTextWrapper(textwrap.TextWrapper):
         return text
 
     def wrap(self, text, initial_indent='', subsequent_indent='',
-        fix_doublespace=True, fix_sentence_endings=True, drop_whitespace=True):
+             fix_doublespace=True, fix_sentence_endings=True, drop_whitespace=True):
         """ Mirrored implementation of wrap which replaces characters properly
             also lets you easily specify indentation on the fly
         """
@@ -131,9 +130,9 @@ class MyTextWrapper(textwrap.TextWrapper):
                     if len(chunk3) > max_word_len:
                         chunks += self._split(chunk3)
                     else:
-                        chunks += [ chunk3 ]
+                        chunks += [chunk3]
             else:
-                chunks += [ chunk2 ]
+                chunks += [chunk2]
 
         # Original implementation
         if self.fix_sentence_endings:
@@ -152,18 +151,18 @@ def justify_inline(left_str, center_str, right_str, width=72):
         greater than the width, and trims the longest string
     """
     strings = [left_str.rstrip(), center_str.strip(), right_str.strip()]
-    sumwidth = sum( [len(s) for s in strings] )
+    sumwidth = sum([len(s) for s in strings])
     if sumwidth > width:
         # Trim longest string
         longest_index = strings.index(max(strings, key=len))
-        log.warn('The inline string was truncated because it was ' \
-                         'too long:\n  ' + strings[longest_index])
+        log.warn('The inline string was truncated because it was '
+                 'too long:\n  ' + strings[longest_index])
         strings[longest_index] = strings[longest_index][:-(sumwidth - width)]
 
     if len(strings[1]) % 2 == 0:
         center = strings[1].center(width)
     else:
-        center = strings[1].center(width+1)
+        center = strings[1].center(width + 1)
     right = strings[2].rjust(width)
     output = list(strings[0].ljust(width))
     for i, char in enumerate(output):
@@ -172,6 +171,7 @@ def justify_inline(left_str, center_str, right_str, width=72):
         elif right[i] != ' ':
             output[i] = right[i]
     return ''.join(output)
+
 
 def formatXmlWhitespace(tree):
     """ Traverses an lxml.etree ElementTreeand properly formats whitespace
@@ -183,14 +183,14 @@ def formatXmlWhitespace(tree):
         # Preserve formatting on artwork
         if element.tag != 'artwork':
             if element.text is not None:
-                element.text = re.sub('\s*\n\s*', ' ', \
-                               re.sub('\.\s*\n\s*', '.  ', \
-                               element.text.lstrip()))
+                element.text = re.sub('\s*\n\s*', ' ',
+                                      re.sub('\.\s*\n\s*', '.  ',
+                                             element.text.lstrip()))
 
             if element.tail is not None:
-                element.tail = re.sub('\s*\n\s*', ' ', \
-                               re.sub('\.\s*\n\s*', '.  ', \
-                               element.tail))
+                element.tail = re.sub('\s*\n\s*', ' ',
+                                      re.sub('\.\s*\n\s*', '.  ',
+                                             element.tail))
 
 
 def ascii_split(text):
@@ -211,8 +211,10 @@ DEFAULT_DIGITS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 
 def num_to_baseX(num, digits=DEFAULT_DIGITS):
-    if num < 0: return '-' + num_to_baseX(-num)
-    if num == 0: return digits[0]
+    if num < 0:
+        return '-' + num_to_baseX(-num)
+    if num == 0:
+        return digits[0]
     X = len(digits)
     s = ''
     while num > 0:
@@ -223,11 +225,13 @@ def num_to_baseX(num, digits=DEFAULT_DIGITS):
 
 
 def baseX_to_num(s, digits=DEFAULT_DIGITS):
-    if s[0] == '-': return -1 * baseX_to_num(s[1:])
+    if s[0] == '-':
+        return -1 * baseX_to_num(s[1:])
     ctopos = dict([(c, pos) for pos, c in enumerate(digits)])
     X = len(digits)
     num = 0
-    for c in s: num = num * X + ctopos[c]
+    for c in s:
+        num = num * X + ctopos[c]
     return num
 
 # ----------------------------------------------------------------------
@@ -268,9 +272,10 @@ def urlkeep(text):
     """
     wj_char = u'\u2060'
     zwsp_char = u'\u200B'
+
     def replacer(match):
         return match.group(0).replace('/', '/' + zwsp_char) \
-                             .replace('/' + zwsp_char + '/' + zwsp_char, '/' + wj_char +'/' + wj_char) \
+                             .replace('/' + zwsp_char + '/' + zwsp_char, '/' + wj_char + '/' + wj_char) \
                              .replace('-', '-' + wj_char) \
                              .replace(':', ':' + wj_char)
 
@@ -304,7 +309,7 @@ def safeReplaceUnicode(tree):
                 element.attrib[key] = element.attrib[key].encode('ascii')
             except UnicodeEncodeError:
                 element.attrib[key] = \
-                _replace_unicode_characters(element.attrib[key])
+                    _replace_unicode_characters(element.attrib[key])
 
 
 def _replace_unicode_characters(str):
@@ -549,6 +554,4 @@ _slash_replacements = [
     u'S/MIME',
     # If you remove me the regression test fails
     u'this/is/a/long/test',
-];
-
-
+]
