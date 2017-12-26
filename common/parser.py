@@ -12,9 +12,9 @@ import six
 import time
 import requests
 import lxml.etree
-from rfceditor.common import log
-from rfceditor.common import utils
-from rfceditor import common
+from RfcEditor.common import log
+from RfcEditor.common import utils
+from RfcEditor import common
 
 try:
     from urllib.parse import urlparse, urljoin

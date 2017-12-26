@@ -2,9 +2,9 @@ import pycodestyle
 import unittest
 import os
 import shutil
-from rfceditor.common.parser import XmlRfcParser
-from rfceditor.common.parser import XmlRfcError
-from rfceditor import common
+from RfcEditor.common.parser import XmlRfcParser
+from RfcEditor.common.parser import XmlRfcError
+from RfcEditor import common
 
 
 class TestParserMethods(unittest.TestCase):
