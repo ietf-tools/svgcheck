@@ -112,6 +112,4 @@ def clear_cache(parser):
 
 
 if __name__ == '__main__':
-    testX = TestParserMethods()
-    testX.test_local_nocache_entity()
     unittest.main()
