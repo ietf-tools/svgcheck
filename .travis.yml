@@ -13,5 +13,5 @@ install:
 
 script:
   - pwd
-  - python common/test.py
+  - cd common && python test.py
  
