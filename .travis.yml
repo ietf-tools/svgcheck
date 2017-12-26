@@ -6,7 +6,7 @@ python:
   - "3.7-dev"
 
 env:
-  - PYTHONPATH=~/Com-AugustCellars
+  - PYTHONPATH="$PWD"/Com-AugustCellars
 
 install:
   - pip install -r requirements.txt
