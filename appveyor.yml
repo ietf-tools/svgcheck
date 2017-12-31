@@ -3,11 +3,12 @@ environment:
     # For the versions of python available and we are using
     
     - PYTHON: "C:\\Python36-x64"
+      PYTHONPATH: "C:\\projects"
 
 install:
   # We need wheel instealled to build wheels
   - "%PYTHON%\\python.exe -m pip install wheel"
-  - "%PYTHON%\\python.exe pip install -r requirements.txt"
+  - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
 
 build: off
 
