@@ -16,7 +16,7 @@ test_script:
   - echo %PYTHONPATH%
   - cd
   - cd common
-  - "%PYTHON%\\python.exe test.py"
+  - "%PYTHON%\\python.exe -vv test.py"
   # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
   
 
