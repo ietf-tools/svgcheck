@@ -1,0 +1,26 @@
+environment:
+  matrix:
+    # For the versions of python available and we are using
+    
+    - PYTHON: "C:\\Python36-x64"
+
+install:
+  # We need wheel instealled to build wheels
+  - "%PYTHON%\\python.exe -m pip install wheel"
+  - "%PYTHON%\\python.exe pip install -r requirements.txt
+
+build: off
+
+test_script:
+  - cd common
+  - "%PYTHON%\\python.exe test.py"
+  # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
+  
+
+
+
+
+
+
+matrix:
+  fast_finish: true
