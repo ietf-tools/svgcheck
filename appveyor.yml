@@ -2,6 +2,10 @@ environment:
   matrix:
     # For the versions of python available and we are using
     
+    - PYTHON: "C:\\Python27"
+      PYTHONPATH: "C:\\projects"
+    - PYTHON: "C:\\Python27-x64"
+      PYTHONPATH: "C:\\projects"
     - PYTHON: "C:\\Python36-x64"
       PYTHONPATH: "C:\\projects"
 
