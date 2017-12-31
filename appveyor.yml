@@ -14,7 +14,7 @@ build: off
 
 test_script:
   - cd common
-  - "build.cmd %PYTHON%\\python.exe test.py"
+  - %PYTHON%\\python.exe test.py"
   # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
   
 
