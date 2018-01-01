@@ -20,6 +20,11 @@ test_script:
   - dir
   - cd rfctools_common
   - "%PYTHON%\\python.exe test.py"
+  - cd ..\..
+  - cd svgcheck
+  - "%PYTHON%\\python.exe setup.py install"
+  - cd svgcheck
+  - "%PYTHON%\\python.exe test.py"
   # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
   
 

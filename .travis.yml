@@ -12,5 +12,9 @@ script:
   - cd rfctools_common && python setup.py install
   - pwd
   - cd rfctools_common && python test.py
-
+  - cd ../../svgcheck
+  - python setup.py install
+  - cd svgcheck
+  - python test.py
+  
  
