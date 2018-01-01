@@ -22,13 +22,13 @@ with open(path.join(here, 'requirements.txt'), encoding='utf-8') as file:
 with open(path.join(here, 'MANIFEST.in'), encoding='utf-8') as file:
     extra_files = [ l.split()[1] for l in file.read().splitlines() if l ]
 
-import common
+import rfctools_common
 
 setup(
     name='rfctools_common',
 
     # Versions should comply with PEP440.
-    version=common.__version__,
+    version=rfctools_common.__version__,
 
     description="Verify that an svg file is compliant with the RFC standards.",
     long_description=long_description,
