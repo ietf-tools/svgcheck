@@ -13,7 +13,7 @@ try:
 except ImportError:
     pass
 
-from RfcEditor.common import log
+from rfctools_common import log
 
 
 class MyTextWrapper(textwrap.TextWrapper):

@@ -12,8 +12,8 @@ import six
 import time
 import requests
 import lxml.etree
-from RfcEditor.common import log
-from RfcEditor.common import utils
+from rfctools_common import log
+from rfctools_common import utils
 
 try:
     from urllib.parse import urlparse, urljoin
@@ -545,8 +545,6 @@ class XmlRfcParser:
         file = six.BytesIO(self.text)
         file.name =  os.path.join(os.path.abspath(  os.path.dirname(self.source)), os.path.basename(self.source))
         tree = lxml.etree.parse(file, parser)
-        if six.PY2:
-            self.text.close()
         xmlrfc = XmlRfc(tree, self.default_dtd_path, nsmap=self.nsmap)
 
         # Evaluate processing instructions before root element

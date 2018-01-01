@@ -10,7 +10,7 @@ environment:
       PYTHONPATH: "C:\\projects"
 
 install:
-  # We need wheel instealled to build wheels
+  # We need wheel installed to build wheels
   - "%PYTHON%\\python.exe -m pip install wheel"
   - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
 
@@ -19,8 +19,10 @@ build: off
 test_script:
   - echo %PYTHONPATH%
   - cd
-  - cd common
-  - "%PYTHON%\\python.exe -vv test.py"
+  - cd rfctools_common
+  - "%PYTHON%\\python.exe setup.py install"
+  - cd rfctools_common
+  - "%PYTHON%\\python.exe test.py"
   # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
   
 
