@@ -3,11 +3,8 @@ environment:
     # For the versions of python available and we are using
     
     - PYTHON: "C:\\Python27"
-      PYTHONPATH: "C:\\projects"
     - PYTHON: "C:\\Python27-x64"
-      PYTHONPATH: "C:\\projects"
     - PYTHON: "C:\\Python36-x64"
-      PYTHONPATH: "C:\\projects"
 
 install:
   # We need wheel installed to build wheels
@@ -17,10 +14,10 @@ install:
 build: off
 
 test_script:
-  - echo %PYTHONPATH%
   - cd
   - cd rfctools_common
   - "%PYTHON%\\python.exe setup.py install"
+  - dir
   - cd rfctools_common
   - "%PYTHON%\\python.exe test.py"
   # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"

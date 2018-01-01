@@ -11,6 +11,6 @@ script:
   - pwd
   - cd rfctools_common && python setup.py install
   - pwd
-  - cd rfctools_common/rfctools_common && python test.py
+  - cd rfctools_common && python test.py
 
  
