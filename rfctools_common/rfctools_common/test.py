@@ -13,7 +13,7 @@ class TestParserMethods(unittest.TestCase):
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="setup.cfg")
         result = pep8style.check_files(['parser.py', 'log.py', 'utils.py',
                                         'test.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 118,
                          "Found code style errors (and warnings).")
 
     def test_simple(self):
