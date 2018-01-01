@@ -50,9 +50,13 @@ class TestParserMethods(unittest.TestCase):
         """ Test that a remote https entity can be loaded """
         parser = XmlRfcParser("Tests/entity-http.xml", quiet=False,
                               cache_path=None, no_network=False)
-        tree = parser.parse()
-        self.assertEqual(len(tree.tree.xpath('reference')), 1,
-                         "Must be exactly one reference node")
+        try:
+            tree = parser.parse()
+            self.assertEqual(len(tree.tree.xpath('reference')), 1,
+                             "Must be exactly one reference node")
+        except XmlRfcError as e:
+            log.exception('Unable to parse the XML Document: ' + source, e)
+            raise e
 
     def test_remote_xinclude(self):
         """ Test that a remote https entity can be loaded """
