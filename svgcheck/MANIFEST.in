@@ -1,0 +1,9 @@
+include changelog
+include LICENSE
+include README.rst
+include requirements.txt
+include svgcheck/run.py
+include svgcheck/checksvg.py
+include svgcheck/word_properties.py
+include svgcheck/run.py
+include svgcheck/__init__.py

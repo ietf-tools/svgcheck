@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+
+# cleanup of emacs files
+*~
+#*
+*#
+.#*
+

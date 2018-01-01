@@ -1,0 +1,4 @@
+lxml>=2.2.8
+requests>=2.5.0
+six
+rfctools_common
