@@ -45,12 +45,15 @@ def warn(*args):
         write_err.write('\n')
 
 
-def error(*args, where=None):
+def error(*args, **kwargs):
     """ This is typically called after an exception was already raised. """
     prefix = "ERROR: "
-    if where is not None:
+    if 'where' in kwargs:
+        where = kwargs['where']
         fileName = where.base
-        if fileName[0:6] == 'file:/':
+        if fileName[0:7] == 'file://':
+            fileName = os.path.relpath(fileName[7:])
+        elif fileName[0:6] == 'file:/':
             fileName = os.path.relpath(fileName[6:])
         prefix = "{0}:{1}: ".format(fileName, where.sourceline)
     write_err.write(prefix + ' '.join(args))

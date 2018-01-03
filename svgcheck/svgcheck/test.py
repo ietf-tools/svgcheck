@@ -39,7 +39,7 @@ def test_svg_file(tester, fileName):
 
     log.write_out = io.StringIO()
     log.write_err = log.write_out
-    check(tree.tree.getroot())
+    check(tree.tree.getroot(), 0)
 
     returnValue = check_results(log.write_out, "Results/" + basename.replace(".svg", ".out"))
     tester.assertFalse(returnValue, "Output to console is different")
