@@ -57,7 +57,9 @@ def check_results(file1, file2Name):
 
     with open(file2Name, 'r') as f:
         lines2 = f.readlines()
-    lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+
+    if os.name == 'nt':
+        lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
 
     file1.seek(0)
     lines1 = file1.readlines()
