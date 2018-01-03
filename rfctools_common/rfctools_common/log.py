@@ -55,9 +55,11 @@ def error(*args, **kwargs):
             fileName = os.path.relpath(fileName[8:])
         elif fileName[0:6] == 'file:/':
             fileName = os.path.relpath(fileName[6:])
+        else:
+            fileName = os.path.relpath(fileName)
         prefix = "{0}:{1}: ".format(fileName, where.sourceline)
     write_err.write(prefix + u' '.join(args))
-    write_err.write('\n')
+    write_err.write(u'\n')
 
 
 def exception(message, list):

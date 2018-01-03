@@ -1,8 +1,8 @@
-Tests\rgb.svg:5: BLACK not allowed as value for stroke
-Tests\rgb.svg:5: WHITE not allowed as value for fill
-Tests\rgb.svg:6: #000 not allowed as value for stroke
-Tests\rgb.svg:6: #fff not allowed as value for fill
-Tests\rgb.svg:7: #000 not allowed as value for stroke
-Tests\rgb.svg:7: #fff not allowed as value for fill
-Tests\rgb.svg:8: rgb(0, 0, 0) not allowed as value for stroke
-Tests\rgb.svg:8: rgb(20%, 20%, 20%) not allowed as value for fill
+Tests/rgb.svg:5: BLACK not allowed as value for stroke
+Tests/rgb.svg:5: WHITE not allowed as value for fill
+Tests/rgb.svg:6: #000 not allowed as value for stroke
+Tests/rgb.svg:6: #fff not allowed as value for fill
+Tests/rgb.svg:7: #000 not allowed as value for stroke
+Tests/rgb.svg:7: #fff not allowed as value for fill
+Tests/rgb.svg:8: rgb(0, 0, 0) not allowed as value for stroke
+Tests/rgb.svg:8: rgb(20%, 20%, 20%) not allowed as value for fill
