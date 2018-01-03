@@ -24,19 +24,23 @@ import getopt
 import sys
 import re
 
-import svgcheck.word_properties as wp
+import word_properties as wp
 
 indent = 4
-warn_nbr = 0
 current_file = None
+errorCount = 0
 
 trace = True
-warn_limit = 10000
 
 bad_namespaces = []
 
 
-def check_some_props(attr, val, depth):  # For [style] properties
+def check_some_props(attr, val, depth):
+    """
+    This function is not currently being used.
+    For [style] properties
+    """
+
     vals = wp.properties[attr]
     props_to_check = wp.property_lists[vals]
     new_val = ''
@@ -60,26 +64,37 @@ def check_some_props(attr, val, depth):  # For [style] properties
     return (ok, new_val)
 
 
-def value_ok(v, obj):  # Is v OK for attrib/property obj?
-    # print("value_ok(%s, %s)" % (v, obj))
+def value_ok(v, obj):
+    """
+    Check that the value v is a legal value for the attribute passed in
+    The return value is going to be (Value OK?, Replacement value)
+    Returns if the value is ok, and if there is a value that should be used
+    to replace the value if it is not.
+    """
+
+    log.note("value_ok(%s, %s)" % (v, obj))
+    # Look if the object is a real attribute, or we recursed w/ an
+    # internal type name such as '<color>' (i.e. a basic_type)
     if obj not in wp.properties:
         if obj not in wp.basic_types:
             return (False, None)
+
         values = wp.basic_types[obj]
+
+        # Integers must be ints, but have no default
         if values == '+':  # Integer
             n = re.match(r'\d+$', v)
             return (n, None)
     else:
         values = wp.properties[obj]
-    # if isinstance(values, basestring):  # str) in python 3
+
+    # values could be a string or an array of values
     if isinstance(values, str):  # str) in python 3
         if values[0] == '<' or values[0] == '+':
-            print(". . . values = >%s<" % values)
+            log.warn(". . . values = >%s<" % values)
             return value_ok(False, None)
     else:
-        # print("--- values=") ;  print values
         for val in values:
-            # print("- - - val=%s, v=%s." % (val, v))
             if val[0] == '<':
                 return value_ok(v, val)
             if v == val:
@@ -117,63 +132,81 @@ def strip_prefix(element, el):  # Remove {namespace} prefix
             if ns not in wp.xmlns_urls:
                 if ns not in bad_namespaces:
                     bad_namespaces.append(ns)
-                    log.error("{0}:{1} - Namespace {2} is not permitted".format("FileName.xml", el.sourceline, ns))
+                    log.error("Namespace {0} is not permitted".format(ns), where=el)
                 ns_ok = False
             element = element[rbp+1:]
     return element, ns_ok  # return ns = False if it's not allowed
 
 
-def check(el, depth):
-    global new_file, trace
+def check(el, depth=0):
+    """
+    Walk the current tree checking to see if all elements pass muster
+    relative to RFC 7996 the RFC Tiny SVG document
 
-    if trace:
-        print("%s tag = %s" % (' ' * (depth*indent), el.tag))
-    if warn_nbr >= warn_limit:
-        return
+    Return False if the element is to be removed from tree when
+    writing it back out
+    """
+    global new_file
 
+    log.note("%s tag = %s" % (' ' * (depth*indent), el.tag))
+
+    # Check that the namespace is one of the pre-approved ones
     # ElementTree prefixes elements with default namespace in braces
     element, ns_ok = strip_prefix(el.tag, el)  # name of element
     if not ns_ok:
         return False  # Remove this el
+
+    # Is the element in the list of legal elements?
     log.note("%s element % s: %s" % (' ' * (depth*indent), element, el.attrib))
     if element not in wp.elements:
-        log.error("{0}:{1} Element '{2}' not allowed".format("InputFileName.xml", el.sourceline, element))
+        log.error("Element '{0}' not allowed".format(element), where=el)
         return False  # Remove this el
 
-    attribs = wp.elements[element]  # Allowed attributes for element
+    elementAttributes = wp.elements[element]  # Allowed attributes for element
 
     attribs_to_remove = []  # Can't remove them inside the iteration!
-    for attrib, val in el.attrib.items():
-        attr, ns_ok = strip_prefix(attrib, el)
+    for nsAttrib, val in el.attrib.items():
+        # validate that the namespace of the element is known and ok
+        attr, ns_ok = strip_prefix(nsAttrib, el)
         log.note("%s attr %s = %s (ns_ok = %s)" % (
                 ' ' * (depth*indent), attr, val, ns_ok))
         if not ns_ok:
-            attribs_to_remove.append(attrib)
-        if (attrib not in attribs) and (attrib not in wp.properties):
-            log.error("{0}:{1} - Element '{2}' does not allow attribute '{3}'".
-                      format("FileName.xml", el.sourceline, element, attrib))
-            attribs_to_remove.append(attrib)
-        elif (attrib in wp.properties):  # Not in elements{}, can't test value
-            vals = wp.properties[attrib]
-            # print("vals = ", ; print vals, ; print "<<<<<")
+            attribs_to_remove.append(attr)
+            continue
+
+        # look to see if the attribute is either an attribute for a specific
+        # element or is an attribute generically for all properties
+        if (attr not in elementAttributes) and (attr not in wp.properties):
+            log.error("Element '{0}' does not allow attribute '{1}'".
+                      format(element, attr), where=el)
+            attribs_to_remove.append(nsAttrib)
+
+        # Now check if the attribute is a generic property
+        elif (attr in wp.properties):
+            vals = wp.properties[attr]
+            # log.note("vals = " + vals +  "<<<<<")
+
+            #  Do method #1 of checking if the value is legal - not currently used.
             if vals and vals[0] == '[':
                 ok, new_val = check_some_props(attr, val, depth)
-                if new_file and not ok:
+                if not ok:
                     el.attrib[attr] = new_val[1:]
+
             else:
                 ok, new_val = value_ok(val, attr)
                 if vals and not ok:
-                    log.warn("{0}:{1} - {2} not allowed as value for {3}".format("FileName.xml", el.sourceline, val, attr))
+                    log.error("{0} not allowed as value for {1}".format(val, attr), where=el)
                     if new_val is not None:
-                        el.attrib[attrib] = new_val
+                        el.attrib[attr] = new_val
                     else:
-                        attribs_to_remove.append(attrib)
+                        attribs_to_remove.append(nsAttrib)
+
     for attrib in attribs_to_remove:
-        el.attrib[attrib]
+        del el.attrib[attrib]
+
     els_to_rm = []  # Can't remove them inside the iteration!
     for child in el:
-        if trace:
-            print("%schild, tag = %s" % (' ' * (depth*indent), child.tag))
+        log.note("%schild, tag = %s" % (' ' * (depth*indent), child.tag))
         if not check(child, depth+1):
             els_to_rm.append(child)
     if len(els_to_rm) != 0:
@@ -195,7 +228,7 @@ def remove_namespace(doc, namespace):
 
 
 def checkFile(fn):
-    global current_file, warn_nbr, root
+    global current_file, root
     current_file = fn
     print("Starting %s" % current_file)
     tree = ET.parse(fn)

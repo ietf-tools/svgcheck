@@ -6,14 +6,15 @@ python:
   # - "3.5"
   - "3.6"
   # - "3.7-dev"
+  - "pypy3"
 
 script:
   - pwd
-  - cd rfctools_common && python setup.py install
+  - cd rfctools_common && python setup.py --quiet install
   - pwd
   - cd rfctools_common && python test.py
   - cd ../../svgcheck
-  - python setup.py install
+  - python setup.py --quiet install
   - cd svgcheck
   - python test.py
   

@@ -1,0 +1,4 @@
+# Make all of the test files be normalized line endings
+*.xml text
+*.out text
+*.svg text
