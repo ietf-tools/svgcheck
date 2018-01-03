@@ -10,9 +10,11 @@
 """
 
 import sys
+import os
 
 quiet = False
 verbose = False
+debug = False
 
 write_out = sys.stdout
 write_err = sys.stderr
@@ -31,6 +33,7 @@ def write(*args):
 
 
 def note(*args):
+    """ Call for being verbose only """
     if verbose and not quiet:
         write(*args)
 
@@ -42,9 +45,15 @@ def warn(*args):
         write_err.write('\n')
 
 
-def error(*args):
+def error(*args, where=None):
     """ This is typically called after an exception was already raised. """
-    write_err.write('ERROR: ' + ' '.join(args))
+    prefix = "ERROR: "
+    if where is not None:
+        fileName = where.base
+        if fileName[0:6] == 'file:/':
+            fileName = os.path.relpath(fileName[6:])
+        prefix = "{0}:{1}: ".format(fileName, where.sourceline)
+    write_err.write(prefix + ' '.join(args))
     write_err.write('\n')
 
 

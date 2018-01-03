@@ -2,7 +2,7 @@ import sys
 import optparse
 import os
 import lxml.etree
-from svgcheck.checksvg import check
+from checksvg import check, errorCount
 from rfctools_common import log
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 
@@ -32,13 +32,14 @@ def main():
     parser_options.add_option('-N', '--no-network', action='store_true', default=False,
                               help='don\'t use the network to resolve references')
     parser_options.add_option('-c', '--cache', dest='cache',
-                              help='specify a primary cache directory to write to; default: try [ %s ]' % ', '.join(CACHES))
+                              help='specify a primary cache directory to write to;'
+                              'default: try [ %s ]' % ', '.join(CACHES))
     parser_options.add_option('-d', '--rng', dest='rng', help='specify an alternate RNG file')
     optionparser.add_option_group(parser_options)
 
     other_options = optparse.OptionGroup(optionparser, 'Other options')
     other_options.add_option('-q', '--quiet', action='store_true',
-                             help='dont print anything')
+                             help='don\'t print anything')
     other_options.add_option('-o', '--out', dest='output_filename', metavar='FILE',
                              help='specify an explicit output filename')
     other_options.add_option('-v', '--verbose', action='store_true',
@@ -89,8 +90,7 @@ def main():
     parser = XmlRfcParser(source, verbose=options.verbose,
                           quiet=options.quiet,
                           cache_path=options.cache,
-                          no_network=options.no_network
-    )
+                          no_network=options.no_network)
     try:
         xmlrfc = parser.parse(remove_pis=True)
     except XmlRfcError as e:
@@ -102,10 +102,20 @@ def main():
         log.exception('Unable to parse the XML document: ' + source, e.error_log)
         sys.exit(1)
 
-    #
-    check(xmlrfc.tree.getroot(), 0)
+    # Locate all of the svg elements that we need to check
 
+    svgPaths = xmlrfc.tree.xpath("/x:svg", namespaces={'x': 'http://www.w3.org/2000/svg'})
+
+    print("paths = {0}".format(len(svgPaths)))
+    for path in svgPaths:
+        if len(svgPaths) > 1:
+            log.node("Checking svg element at line {0} in file {1}".format(1, "file"))
+        check(path, 0)
+
+    # if
     print(lxml.etree.tostring(xmlrfc.tree.getroot(), pretty_print=True))
+
+    sys.exit(errorCount)
 
 
 if __name__ == '__main__':

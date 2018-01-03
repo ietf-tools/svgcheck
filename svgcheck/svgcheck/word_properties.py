@@ -31,8 +31,8 @@ elements = {
     'g':              ('label', 'class',
                        'id', 'role', 'fill', 'style', 'transform'),
     'defs':           ('id', 'role', 'fill'),
-    'title':          ('id', 'role'),
-    'desc':           ('id', 'role'),
+    'title':          ('id', 'role', 'space'),
+    'desc':           ('id', 'role', 'space'),
     'a':              ('id', 'role', 'fill', 'transform'),  # Linking
     'use':            ('x', 'y', 'href', 'xlink:href',
                        'id', 'role',  'fill', 'transform'),
@@ -54,7 +54,7 @@ elements = {
     'tspan':          ('x', 'y', 'id', 'role', 'fill'),
 
     'textArea':       ('x', 'y', 'width', 'height', 'auto',
-                       'id', 'role', 'fill', 'transform'),
+                       'id', 'role', 'fill', 'transform', 'space'),
     'tbreak':         ('id', 'role'),
     'solidColor':     ('id', 'role', 'fill'),
     # 'linearGradient': ('gradientUnits', 'x1', 'y1', 'x2', 'y2',

@@ -1,3 +1,9 @@
+#in progress
+xmldiff
+rfclint
+Samples
+cache
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -107,3 +113,5 @@ ENV/
 *#
 .#*
 
+# exclude Visual Studio files
+*.suo

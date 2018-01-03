@@ -1,0 +1,2 @@
+Tests\circle.svg:1: Element 'svg' does not allow attribute 'datatype'
+Tests\circle.svg:2: red not allowed as value for fill
