@@ -2,7 +2,7 @@ import sys
 import optparse
 import os
 import lxml.etree
-from checksvg import check, errorCount
+from svgcheck.checksvg import check, errorCount
 from rfctools_common import log
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 

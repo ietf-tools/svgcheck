@@ -103,18 +103,15 @@ def value_ok(v, obj):
                 lv = v.lower()
                 if lv[0] == '#':  # rrggbb  hex
                     if len(lv) == 7:
-                        return (lv[3:5] == lv[1:3] and lv[5:7] == lv[1:3] and
-                                (lv[1:3] == '00' or lv[1:3] == 'ff'), None)
+                        return (lv[3:5] == lv[1:3] and lv[5:7] == lv[1:3], None)
                     if len(lv) == 4:
-                        return (lv[2] == lv[1] and lv[3] == lv[1] and
-                                (lv[1] == '0' or lv[1] == 'f'), None)
+                        return (lv[2] == lv[1] and lv[3] == lv[1], None)
                     return (False, None)
                 elif lv.find('rgb') == 0:  # integers
                     rgb = re.search(r'\((\d+),(\d+),(\d+)\)', lv)
                     if rgb:
                         return ((rgb.group(2) == rgb.group(1) and
-                                 rgb.group(3) == rgb.group(1)) and
-                                (rgb.group(1) == '0' or rgb.group(1) == 256), None)
+                                 rgb.group(3) == rgb.group(1)), None)
                     return (False, None)
         v = v.lower()
         if obj == 'font-family':

@@ -7,7 +7,7 @@ from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
 from rfctools_common import log
 import difflib
-from checksvg import check
+from svgcheck.checksvg import check
 import io
 
 
