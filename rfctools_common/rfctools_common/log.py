@@ -51,12 +51,12 @@ def error(*args, **kwargs):
     if 'where' in kwargs:
         where = kwargs['where']
         fileName = where.base
-        if fileName[0:7] == 'file://':
-            fileName = os.path.relpath(fileName[7:])
+        if fileName.startswith("file:///"):
+            fileName = os.path.relpath(fileName[8:])
         elif fileName[0:6] == 'file:/':
             fileName = os.path.relpath(fileName[6:])
         prefix = "{0}:{1}: ".format(fileName, where.sourceline)
-    write_err.write(prefix + ' '.join(args))
+    write_err.write(prefix + u' '.join(args))
     write_err.write('\n')
 
 
