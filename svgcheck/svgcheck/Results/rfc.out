@@ -1,0 +1,4 @@
+Tests\rfc.xml:23: Element 'svg' does not allow attribute 'datatype'
+Tests\rfc.xml:24: red not allowed as value for fill
+Tests\circle.svg:1: Element 'svg' does not allow attribute 'datatype'
+Tests\circle.svg:2: red not allowed as value for fill

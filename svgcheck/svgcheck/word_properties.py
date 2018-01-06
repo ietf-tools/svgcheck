@@ -27,7 +27,7 @@ Attributes in elements{} 'bottom lines' added during chek.py testing
 elements = {
     'svg':            ('version', 'baseProfile', 'width', 'viewBox',
                        'preserveAspectRatio', 'snapshotTime',
-                       'height', 'id', 'role'),
+                       'height', 'id', 'role', 'base'),
     'g':              ('label', 'class',
                        'id', 'role', 'fill', 'style', 'transform'),
     'defs':           ('id', 'role', 'fill'),
