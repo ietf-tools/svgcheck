@@ -31,10 +31,10 @@ elements = {
     'g':              ('label', 'class',
                        'id', 'role', 'fill', 'style', 'transform'),
     'defs':           ('id', 'role', 'fill'),
-    'title':          ('id', 'role', 'space'),
-    'desc':           ('id', 'role', 'space'),
+    'title':          ('id', 'role'),
+    'desc':           ('id', 'role'),
     'a':              ('id', 'role', 'fill', 'transform'),  # Linking
-    'use':            ('x', 'y', 'href', 'xlink:href',
+    'use':            ('x', 'y', 'href',
                        'id', 'role',  'fill', 'transform'),
     'rect':           ('x', 'y', 'width', 'height', 'rx', 'ry',
                        'stroke-miterlimit',
@@ -49,12 +49,12 @@ elements = {
                        'id', 'role', 'fill', 'transform'),
     'polygon':        ('points',
                        'id', 'role', 'fill', 'style', 'transform'),
-    'text':           ('x', 'y', 'rotate', 'space',
+    'text':           ('x', 'y', 'rotate',
                        'id', 'role', 'fill', 'style', 'transform'),
     'tspan':          ('x', 'y', 'id', 'role', 'fill'),
 
     'textArea':       ('x', 'y', 'width', 'height', 'auto',
-                       'id', 'role', 'fill', 'transform', 'space'),
+                       'id', 'role', 'fill', 'transform'),
     'tbreak':         ('id', 'role'),
     'solidColor':     ('id', 'role', 'fill'),
     # 'linearGradient': ('gradientUnits', 'x1', 'y1', 'x2', 'y2',
@@ -144,8 +144,12 @@ property_lists = {  # Lists of properties to check (for Inkscape)
                   'fill', 'fill-rule'),
 }
 
+svg_urls = (
+    'http://www.w3.org/2000/svg',  # Base namespace for SVG
+)
+
 xmlns_urls = (  # Whitelist of allowed URLs
     'http://www.w3.org/2000/svg',  # Base namespace for SVG
     'http://www.w3.org/1999/xlink',  # svgwrite uses this
-    'http://www.w3.org/XML/1998/namespace',  # imagebot uses this
+    'http://www.w3.org/XML/1998/namespace',  # imagebot uses this  -- This is xml:
     )

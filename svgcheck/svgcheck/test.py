@@ -90,6 +90,12 @@ def check_results(file1, file2Name):
     if os.name == 'nt' and file2Name.endswith(".out"):
         lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
 
+    if not file2Name.endswith(".out"):
+        cwd = os.getcwd()
+        if os.name == 'nt':
+            cwd = cwd.replace('\\', '/')
+        lines2 = [line.replace('$$CWD$$', cwd) for line in lines2]
+
     file1.seek(0)
     lines1 = file1.readlines()
 

@@ -115,25 +115,23 @@ def value_ok(v, obj):
         return (False, None)
 
 
-def strip_prefix(element, el):  # Remove {namespace} prefix
-    global bad_namespaces
-    ns_ok = True
+def strip_prefix(element, el):
+    """
+    Given the tag for an element, separate the namespace from the tag
+    and return a tuple of the namespace and the local tag
+    It will be up to the caller to determine if the namespace is acceptable
+    """
+
+    ns = None
     if element[0] == '{':
         rbp = element.rfind('}')  # Index of rightmost }
         if rbp >= 0:
             ns = element[1:rbp]
-            if ns not in wp.xmlns_urls:
-                if ns not in bad_namespaces:
-                    bad_namespaces.append(ns)
-                    errorCount += 1
-                    log.error("Namespace {0} is not permitted".format(ns), where=el)
-                ns_ok = False
             element = element[rbp+1:]
         else:
             errorCount += 1
             log.error("Malformed namespace.  Should have errored during parsing")
-            ns_ok = False
-    return element, ns_ok  # return ns = False if it's not allowed
+    return element, ns  # return tag, namespace
 
 
 def check(el, depth=0):
@@ -150,8 +148,12 @@ def check(el, depth=0):
 
     # Check that the namespace is one of the pre-approved ones
     # ElementTree prefixes elements with default namespace in braces
-    element, ns_ok = strip_prefix(el.tag, el)  # name of element
-    if not ns_ok:
+    element, ns = strip_prefix(el.tag, el)  # name of element
+
+    # namespace for elements must be either empty or svg
+    if ns is not None and ns not in wp.svg_urls:
+        log.error("Element '{1}' in namespace '{2}' is not allowed".format(element, ns),
+                  where=el)
         return False  # Remove this el
 
     # Is the element in the list of legal elements?
@@ -166,10 +168,12 @@ def check(el, depth=0):
     attribs_to_remove = []  # Can't remove them inside the iteration!
     for nsAttrib, val in el.attrib.items():
         # validate that the namespace of the element is known and ok
-        attr, ns_ok = strip_prefix(nsAttrib, el)
-        log.note("%s attr %s = %s (ns_ok = %s)" % (
-                ' ' * (depth*indent), attr, val, ns_ok))
-        if not ns_ok:
+        attr, ns = strip_prefix(nsAttrib, el)
+        log.note("%s attr %s = %s (ns = %s)" % (
+                ' ' * (depth*indent), attr, val, ns))
+        if ns is not None and ns not in wp.xmlns_urls:
+            log.error("Element '{0}' does not allow attributes with namespace '{1}'".
+                      format(element, ns), where=el)
             attribs_to_remove.append(attr)
             continue
 
