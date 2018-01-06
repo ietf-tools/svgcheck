@@ -17,10 +17,10 @@ environment:
 install:
   # We need wheel installed to build wheels
   - ps: |
-    if ($env:PYTHON -eq "c:/vp/pypy2")
-    {
-      c:\pillow\winbuild\appveyor_install_pypy.cmd
-    }
+        if ($env:PYTHON -eq "c:/vp/pypy2")
+        {
+            c:\pillow\winbuild\appveyor_install_pypy.cmd
+        }
   - "%PYTHON%\\%EXECUTABLE% -m pip install wheel"
   - "%PYTHON%\\%EXECUTABLE% -m pip install -r requirements.txt"
 
