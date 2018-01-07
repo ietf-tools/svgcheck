@@ -13,12 +13,10 @@ matrix:
           env: PYTHON=python
         - os: osx
           language: generic
-          env: TOXENV=py27
-          env: PYTHON=python2
+          env: TOXENV=py27 PYTHON=python2
         - os: osx
           language: generic
-          env: TOXENV=py36
-          env: PYTHON=python3
+          env: TOXENV=py36 PYTHON=python3
 
 install:
     - ./install.sh
