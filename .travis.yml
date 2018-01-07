@@ -24,6 +24,7 @@ install:
     - ./install.sh
 
 script:
+  - pip install -r requirements.txt
   - pwd
   - cd rfctools_common && $PYTHON setup.py --quiet install
   - pwd
