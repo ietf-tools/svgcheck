@@ -18,8 +18,6 @@ then
 	    ;;
 
     esac
-else
-    # Custom stuff for Linux
 fi
 
     
