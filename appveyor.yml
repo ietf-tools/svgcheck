@@ -19,7 +19,7 @@ install:
   - ps: |
         if ($env:PYTHON -eq "c:/vp/pypy2")
         {
-            c:\pillow\winbuild\appveyor_install_pypy.cmd
+            c:\RfcEditor\winbuild\appveyor_install_pypy.cmd
         }
   - "%PYTHON%\\%EXECUTABLE% -m pip install wheel"
   - "%PYTHON%\\%EXECUTABLE% -m pip install -r requirements.txt"
