@@ -115,3 +115,4 @@ ENV/
 
 # exclude Visual Studio files
 *.suo
+*.pyproj
