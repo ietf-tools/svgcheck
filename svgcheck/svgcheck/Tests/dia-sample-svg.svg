@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14cm" height="16cm" viewBox="4 7 273 316" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <text font-size="12.7998" style="fill: #00FF00;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="100" y="320">
+    <tspan x="100" y="320"></tspan>
+  </text>
+  <g>
+    <ellipse style="fill: #ffffff" cx="89.0883" cy="35.766" rx="82" ry="27"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="89.0883" cy="35.766" rx="82" ry="27"/>
+  </g>
+  <g>
+    <ellipse style="fill: #ff00ff" cx="87.8883" cy="170.688" rx="82" ry="27"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="87.8883" cy="170.688" rx="82" ry="27"/>
+  </g>
+  <g>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 67.0438,62.6046 A 86.9421,86.9421 0 0 0 66.5601,136.198"/>
+    <polygon style="fill: #FF0000" points="69.9349,142.85 60.4932,136.863 66.0662,136.425 69.0601,131.704 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="69.9349,142.85 60.4932,136.863 66.0662,136.425 69.0601,131.704 "/>
+  </g>
+  <g>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 108.485,142.121 A 62.5199,62.5199 0 0 0 114.068,69.9912"/>
+    <polygon style="fill: #000000" points="109.916,63.8398 120.157,68.3263 114.714,69.6039 112.471,74.7243 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="109.916,63.8398 120.157,68.3263 114.714,69.6039 112.471,74.7243 "/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="89.0883" y="246.059">
+    <tspan x="89.0883" y="246.059"></tspan>
+  </text>
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:serif;font-style:normal;font-weight:normal" x="57.0883" y="40.0589">
+    <tspan x="57.0883" y="40.0589">original</tspan>
+  </text>
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:serif;font-style:normal;font-weight:normal" x="49.3934" y="176.464">
+    <tspan x="49.3934" y="176.464">canonical</tspan>
+  </text>
+  <g>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 159.088 155.438 C 199.088,143.938 199.088,193.938 168.612,187.461"/>
+    <polygon style="fill: #000000" points="161.276,185.902 172.096,183.09 168.612,187.461 170.018,192.872 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="161.276,185.902 172.096,183.09 168.612,187.461 170.018,192.872 "/>
+  </g>
+  <text font-size="15.8044" style="fill: #000000;text-anchor:start;font-family:serif;font-style:normal;font-weight:normal" x="29.7954" y="104.544">
+    <tspan x="29.7954" y="104.544">nit</tspan>
+  </text>
+  <text font-size="15.8044" style="fill: #000000;text-anchor:start;font-family:serif;font-style:normal;font-weight:normal" x="132.017" y="105.352">
+    <tspan x="132.017" y="105.352">edit</tspan>
+  </text>
+  <text font-size="15.8044" style="fill: #000000;text-anchor:start;font-family:serif;font-style:normal;font-weight:normal" x="194.139" y="177.473">
+    <tspan x="194.139" y="177.473">nit (no-op)</tspan>
+  </text>
+</svg>

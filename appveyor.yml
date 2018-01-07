@@ -8,7 +8,7 @@ environment:
     - PYTHON: "C:\\Python27"
     - PYTHON: "C:\\Python27-x64"
     - PYTHON: "C:\\Python36-x64"
-    - PYTHON: "C:\\Python-34"
+    - PYTHON: "C:\\Python34"
     - PYTHON: c:/vp/pypy2
       EXECUTABLE: bin/pypy.exe
       PIP_DIR: bin
