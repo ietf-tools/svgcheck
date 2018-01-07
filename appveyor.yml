@@ -1,31 +1,44 @@
 environment:
+  EXECUTABLE: python.exe
+  VENV: NO
+  PIP_DIR: Scripts
   matrix:
     # For the versions of python available and we are using
     
     - PYTHON: "C:\\Python27"
     - PYTHON: "C:\\Python27-x64"
     - PYTHON: "C:\\Python36-x64"
+    - PYTHON: "C:\\Python34"
+#    - PYTHON: c:/vp/pypy2
+#      EXECUTABLE: bin/pypy.exe
+#      PIP_DIR: bin
+#      VENV: YES
 
 install:
   # We need wheel installed to build wheels
-  - "%PYTHON%\\python.exe -m pip install wheel"
-  - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
+  - ps: |
+        if ($env:PYTHON -eq "c:/vp/pypy2")
+        {
+            c:\Projects\RfcEditor\winbuild\appveyor_install_pypy.cmd
+        }
+  - "%PYTHON%\\%EXECUTABLE% -m pip install wheel"
+  - "%PYTHON%\\%EXECUTABLE% -m pip install -r requirements.txt"
 
 build: off
 
 test_script:
   - cd
   - cd rfctools_common
-  - "%PYTHON%\\python.exe setup.py install"
+  - "%PYTHON%\\%EXECUTABLE% setup.py install"
   - dir
   - cd rfctools_common
-  - "%PYTHON%\\python.exe test.py"
+  - "%PYTHON%\\%EXECUTABLE% test.py"
   - cd ..\..
   - cd svgcheck
-  - "%PYTHON%\\python.exe setup.py install"
+  - "%PYTHON%\\%EXECUTABLE% setup.py install"
   - cd svgcheck
-  - "%PYTHON%\\python.exe test.py"
-  # - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
+  - "%PYTHON%\\%EXECUTABLE% test.py"
+  # - "build.cmd %PYTHON%\\%EXECUTABLE% setup.py bdist_wheel"
   
 
 

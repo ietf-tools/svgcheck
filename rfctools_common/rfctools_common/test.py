@@ -10,10 +10,10 @@ class TestParserMethods(unittest.TestCase):
 
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
-        pep8style = pycodestyle.StyleGuide(quiet=False, config_file="setup.cfg")
+        pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
         result = pep8style.check_files(['parser.py', 'log.py', 'utils.py',
                                         'test.py'])
-        self.assertEqual(result.total_errors, 118,
+        self.assertEqual(result.total_errors, 82,
                          "Found code style errors (and warnings).")
 
     def test_simple(self):

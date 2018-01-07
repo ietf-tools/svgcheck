@@ -2,7 +2,7 @@ import sys
 import optparse
 import os
 import lxml.etree
-from svgcheck.checksvg import check, errorCount
+from svgcheck.checksvg import checkTree, errorCount
 from rfctools_common import log
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 
@@ -47,6 +47,11 @@ def main():
     other_options.add_option('-V', '--version', action='callback', callback=display_version,
                              help='display the version number and exit')
     optionparser.add_option_group(other_options)
+
+    svg_options = optparse.OptionGroup(optionparser, 'SVG options')
+    svg_options.add_option('-r', '-repair', action='store_true', default=False,
+                           help='Repair the SVG so it meets RFC 7966')
+    optionparser.add_option_group(svg_options)
 
     # --- Parse and validate arguments --------------
 
@@ -102,20 +107,18 @@ def main():
         log.exception('Unable to parse the XML document: ' + source, e.error_log)
         sys.exit(1)
 
-    # Locate all of the svg elements that we need to check
+    # Check that
 
-    svgPaths = xmlrfc.tree.xpath("/x:svg", namespaces={'x': 'http://www.w3.org/2000/svg'})
+    if not checkTree(lxml.getroot()):
+        if options.repair:
+            if options.output_filename is None:
+                options.output_filename = source + '.new'
+            file = open(options.output_filename, 'w', encoding='utf8')
+            fle.write(lxml.etree.tostring(xmlrfc.tree.getroot(), pretty_print=True))
+        else:
+            sys.exit(1)
 
-    print("paths = {0}".format(len(svgPaths)))
-    for path in svgPaths:
-        if len(svgPaths) > 1:
-            log.node("Checking svg element at line {0} in file {1}".format(1, "file"))
-        check(path, 0)
-
-    # if
-    print(lxml.etree.tostring(xmlrfc.tree.getroot(), pretty_print=True))
-
-    sys.exit(errorCount)
+    sys.exit(0)
 
 
 if __name__ == '__main__':

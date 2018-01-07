@@ -11,14 +11,7 @@
 # From a simple original version by Joe Hildebrand
 
 from rfctools_common import log
-
-# '''  # ElementTree doesn't have nsmap
-try:
-    import xml.etree.cElementTree as ET
-except ImportError:
-    import xml.etree.ElementTree as ET
-# '''
-# from lxml import etree as ET
+import lxml.etree
 
 import getopt
 import sys
@@ -27,7 +20,6 @@ import re
 import word_properties as wp
 
 indent = 4
-current_file = None
 errorCount = 0
 
 trace = True
@@ -91,6 +83,7 @@ def value_ok(v, obj):
     # values could be a string or an array of values
     if isinstance(values, str):  # str) in python 3
         if values[0] == '<' or values[0] == '+':
+            errorCount += 1
             log.warn(". . . values = >%s<" % values)
             return value_ok(False, None)
     else:
@@ -122,20 +115,23 @@ def value_ok(v, obj):
         return (False, None)
 
 
-def strip_prefix(element, el):  # Remove {namespace} prefix
-    global bad_namespaces
-    ns_ok = True
+def strip_prefix(element, el):
+    """
+    Given the tag for an element, separate the namespace from the tag
+    and return a tuple of the namespace and the local tag
+    It will be up to the caller to determine if the namespace is acceptable
+    """
+
+    ns = None
     if element[0] == '{':
         rbp = element.rfind('}')  # Index of rightmost }
         if rbp >= 0:
             ns = element[1:rbp]
-            if ns not in wp.xmlns_urls:
-                if ns not in bad_namespaces:
-                    bad_namespaces.append(ns)
-                    log.error("Namespace {0} is not permitted".format(ns), where=el)
-                ns_ok = False
             element = element[rbp+1:]
-    return element, ns_ok  # return ns = False if it's not allowed
+        else:
+            errorCount += 1
+            log.error("Malformed namespace.  Should have errored during parsing")
+    return element, ns  # return tag, namespace
 
 
 def check(el, depth=0):
@@ -146,19 +142,24 @@ def check(el, depth=0):
     Return False if the element is to be removed from tree when
     writing it back out
     """
-    global new_file
+    global new_file, errorCount
 
     log.note("%s tag = %s" % (' ' * (depth*indent), el.tag))
 
     # Check that the namespace is one of the pre-approved ones
     # ElementTree prefixes elements with default namespace in braces
-    element, ns_ok = strip_prefix(el.tag, el)  # name of element
-    if not ns_ok:
+    element, ns = strip_prefix(el.tag, el)  # name of element
+
+    # namespace for elements must be either empty or svg
+    if ns is not None and ns not in wp.svg_urls:
+        log.error("Element '{1}' in namespace '{2}' is not allowed".format(element, ns),
+                  where=el)
         return False  # Remove this el
 
     # Is the element in the list of legal elements?
     log.note("%s element % s: %s" % (' ' * (depth*indent), element, el.attrib))
     if element not in wp.elements:
+        errorCount += 1
         log.error("Element '{0}' not allowed".format(element), where=el)
         return False  # Remove this el
 
@@ -167,18 +168,21 @@ def check(el, depth=0):
     attribs_to_remove = []  # Can't remove them inside the iteration!
     for nsAttrib, val in el.attrib.items():
         # validate that the namespace of the element is known and ok
-        attr, ns_ok = strip_prefix(nsAttrib, el)
-        log.note("%s attr %s = %s (ns_ok = %s)" % (
-                ' ' * (depth*indent), attr, val, ns_ok))
-        if not ns_ok:
-            attribs_to_remove.append(attr)
+        attr, ns = strip_prefix(nsAttrib, el)
+        log.note("%s attr %s = %s (ns = %s)" % (
+                ' ' * (depth*indent), attr, val, ns))
+        if ns is not None and ns not in wp.xmlns_urls:
+            log.error("Element '{0}' does not allow attributes with namespace '{1}'".
+                      format(element, ns), where=el)
+            attribs_to_remove.append(nsAttrib)
             continue
 
         # look to see if the attribute is either an attribute for a specific
         # element or is an attribute generically for all properties
         if (attr not in elementAttributes) and (attr not in wp.properties):
-            log.error("Element '{0}' does not allow attribute '{1}'".
-                      format(element, attr), where=el)
+            errorCount += 1
+            log.error("Element '{0}' does not allow attribute '{1}'".format(element, attr),
+                      where=el)
             attribs_to_remove.append(nsAttrib)
 
         # Now check if the attribute is a generic property
@@ -195,6 +199,7 @@ def check(el, depth=0):
             else:
                 ok, new_val = value_ok(val, attr)
                 if vals and not ok:
+                    errorCount += 1
                     log.error("{0} not allowed as value for {1}".format(val, attr), where=el)
                     if new_val is not None:
                         el.attrib[attr] = new_val
@@ -227,33 +232,29 @@ def remove_namespace(doc, namespace):
             print("after=%s." % elem.tag)
 
 
-def checkFile(fn):
-    global current_file, root
-    current_file = fn
-    print("Starting %s" % current_file)
-    tree = ET.parse(fn)
-    root = tree.getroot()
-    # print("root.attrib=%s, test -> %d" % (root.attrib, "xmlns" in root.attrib))
-    #    # attrib list doesn't have includes "xmlns", even though it's there
-    # print("root.tag=%s" % root.tag)
-    no_ns = root.tag.find("{") < 0
-    # print("no_ns = %s" % no_ns)
+def checkTree(tree):
+    """
+    Process the XML tree.  There are two cases to be dealt with
+    1. This is a simple svg at the root - can be either the real namespace or
+       an empty namespace
+    2. This is an rfc tree - and we should only look for real namespaces, but
+       there may be more than one thing to look for.
+    """
 
-    ET.register_namespace("", "http://www.w3.org/2000/svg")
-    # Stops tree.write() from prefixing above with "ns0"
-    check(root, 0)
-    print("bad_namespaces = %s" % bad_namespaces)
-    if trace and len(bad_namespaces) != 0:
-        print("bad_namespaces = %s" % bad_namespaces)
-    if new_file:
-        sp = fn.rfind('.svg')
-        if sp+3 != len(fn)-1:  # Indeces of last chars
-            print("filename doesn't end in '.svg' (%d, %d)" % (sp, len(fn)))
-        else:
-            if no_ns:
-                root.attrib["xmlns"] = "http://www.w3.org/2000/svg"
-            for ns in bad_namespaces:
-                remove_namespace(root, ns)
-            new_fn = fn.replace(".svg", ".new.svg")
-            print("writing to %s" % (new_fn))
-            tree.write(new_fn)
+    errorCount = 0
+    element = tree.getroot().tag
+    if element[0] == '{':
+        element = element[element.rfind('}')+1:]
+    if element == 'svg':
+        check(tree.getroot(), 0)
+    else:
+        # Locate all of the svg elements that we need to check
+
+        svgPaths = tree.getroot().xpath("//x:svg", namespaces={'x': 'http://www.w3.org/2000/svg'})
+
+        print("paths = {0}".format(len(svgPaths)))
+        for path in svgPaths:
+            if len(svgPaths) > 1:
+                log.note("Checking svg element at line {0} in file {1}".format(1, "file"))
+            check(path, 0)
+    return errorCount == 0
