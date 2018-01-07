@@ -10,7 +10,8 @@ then
 
     case "${TOXENV}" in
 	py27)
-	    # default version w/ the OS
+	# default version w/ the OS
+            brew install python
 	;;
 
 	py36)
