@@ -1,21 +1,36 @@
 language: python
-python:
-  - "2.7"
-  # - "3.3"
-  # - "3.4"
-  # - "3.5"
-  - "3.6"
-  # - "3.7-dev"
-  - "pypy3"
+
+matrix:
+    include:
+        - os: linux
+	  python: 2.7
+	  env: PYTHON=python
+	- os: linux
+	  python: 3.6
+	  env: PYTHON=python
+	- os: linux
+	  python: pypy3
+	  env: PYTHON=python
+	- os: osx
+	  language: generic
+	  env: TOXENV=py27
+	  env: PYTHON=python2
+	- os: osx
+	  language: generic
+	  env: TOXENV=py36
+	  env: PYTHON=python3
+
+install:
+    - ./install.sh
 
 script:
   - pwd
-  - cd rfctools_common && python setup.py --quiet install
+  - cd rfctools_common && $PYTHON setup.py --quiet install
   - pwd
-  - cd rfctools_common && python test.py
+  - cd rfctools_common && $PYTHON test.py
   - cd ../../svgcheck
-  - python setup.py --quiet install
+  - $PYTHON setup.py --quiet install
   - cd svgcheck
-  - python test.py
+  - $PYTHON test.py
   
  
