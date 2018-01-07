@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo $TRAVIS_OS_NAME
+echo $TOXENV
+
 if [[ $TRAVIS_OS_NAME == 'osx' ]]
 then
     #  install some custom requirements on OSX
