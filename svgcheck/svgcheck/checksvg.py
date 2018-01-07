@@ -174,7 +174,7 @@ def check(el, depth=0):
         if ns is not None and ns not in wp.xmlns_urls:
             log.error("Element '{0}' does not allow attributes with namespace '{1}'".
                       format(element, ns), where=el)
-            attribs_to_remove.append(attr)
+            attribs_to_remove.append(nsAttrib)
             continue
 
         # look to see if the attribute is either an attribute for a specific
