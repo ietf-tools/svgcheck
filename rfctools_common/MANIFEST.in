@@ -2,7 +2,7 @@ include changelog
 include LICENSE
 include README.rst
 include requirements.txt
-include parser.py
-include log.py
-include utils.py
-include __init__.py
+include rfctools_common/parser.py
+include rfctools_common/log.py
+include rfctools_common/utils.py
+include rfctools_common/__init__.py

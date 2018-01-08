@@ -1,0 +1,7 @@
+rfctools_common (0.0.1) distribution(s); urgency=urgency
+
+ * Create the initial simple version
+ * Create python setup program
+
+ -- Jim Schaad <ietf@augustcellars.com>  Fri 05 Jan 2018 12:00:00 -0800
+
