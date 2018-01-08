@@ -1,2 +1,2 @@
-Tests/circle.svg:1: Element 'svg' does not allow attribute 'datatype'
-Tests/circle.svg:2: red not allowed as value for fill
+Tests/circle.svg:1: The element 'svg' does not allow the attribute 'datatype', attribute to be removed.
+Tests/circle.svg:2: The attribute 'fill' does not allow the value 'red', replaced with 'black'

@@ -75,7 +75,7 @@ elements = {
 #   we also need to know which elements they're allowed in.
 
 properties = {
-    'stroke':                ('<paint>', 'none'),  # Change from I-D
+    'stroke':                ('none', '<paint>'),  # Change from I-D
     'stroke-width':          (),
     'stroke-linecap':        ('butt', 'round', 'square'),
     'stroke-linejoin':       ('miter', 'round', 'bevel'),
@@ -133,7 +133,7 @@ basic_types = {  # Lists of allowed values
     # 'grey', 'darkgrey', 'dimgrey', 'lightgrey',
     # 'gray', 'darkgray', 'dimgray', 'lightgray',
     # '#808080', '#A9A9A9', '#696969', '#D3D3D3'),
-    '<paint>':   ('<color>', 'none', 'currentColor', 'inherit'),
+    '<paint>':   ('none', 'currentColor', 'inherit', '<color>'),
     '<integer>': ('+')
     }
 color_default = 'black'

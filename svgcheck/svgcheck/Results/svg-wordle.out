@@ -1,0 +1,4 @@
+Tests/svg-wordle.svg:14: The element 'svg' does not allow the attribute 'space', attribute to be removed.
+Tests/svg-wordle.svg:15: Element 'metadata' not allowed
+Tests/svg-wordle.svg:19: Element 'clipPath' not allowed
+Tests/svg-wordle.svg:27: The element 'g' does not allow the attribute 'clip-path', attribute to be removed.

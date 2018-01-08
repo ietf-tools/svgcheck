@@ -49,7 +49,7 @@ def main():
     optionparser.add_option_group(other_options)
 
     svg_options = optparse.OptionGroup(optionparser, 'SVG options')
-    svg_options.add_option('-r', '-repair', action='store_true', default=False,
+    svg_options.add_option('-r', '--repair', action='store_true', default=False,
                            help='Repair the SVG so it meets RFC 7966')
     optionparser.add_option_group(svg_options)
 
@@ -109,7 +109,7 @@ def main():
 
     # Check that
 
-    if not checkTree(lxml.getroot()):
+    if not checkTree(xmlrfc.tree):
         if options.repair:
             if options.output_filename is None:
                 options.output_filename = source + '.new'

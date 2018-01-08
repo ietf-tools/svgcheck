@@ -73,5 +73,5 @@ setup(
         'rfctools-common': ['parser.py', 'log.py', 'utils.py']
         },
 
-    zip_save=False
+    zip_safe=False
 )

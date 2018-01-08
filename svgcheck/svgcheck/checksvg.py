@@ -56,15 +56,17 @@ def check_some_props(attr, val, depth):
     return (ok, new_val)
 
 
-def value_ok(v, obj):
+def value_ok(obj, v):
     """
     Check that the value v is a legal value for the attribute passed in
     The return value is going to be (Value OK?, Replacement value)
+    v -> set of values
+    obj -> attribute name
     Returns if the value is ok, and if there is a value that should be used
     to replace the value if it is not.
     """
 
-    log.note("value_ok(%s, %s)" % (v, obj))
+    log.note("value_ok look for %s in %s" % (v, obj))
     # Look if the object is a real attribute, or we recursed w/ an
     # internal type name such as '<color>' (i.e. a basic_type)
     if obj not in wp.properties:
@@ -80,6 +82,7 @@ def value_ok(v, obj):
     else:
         values = wp.properties[obj]
 
+    log.note("  legal value list {0}".format(values))
     # values could be a string or an array of values
     if isinstance(values, str):  # str) in python 3
         if values[0] == '<' or values[0] == '+':
@@ -89,9 +92,9 @@ def value_ok(v, obj):
     else:
         for val in values:
             if val[0] == '<':
-                return value_ok(v, val)
+                return value_ok(val, v)
             if v == val:
-                return (True, None)
+                return (True, v)
             elif val == '#':  # RGB value
                 lv = v.lower()
                 if lv[0] == '#':  # rrggbb  hex
@@ -108,8 +111,14 @@ def value_ok(v, obj):
                     return (False, None)
         v = v.lower()
         if obj == 'font-family':
-            if v.find('sans') >= 0:
-                return (False, 'sans-serif')
+            all = v.split(',')
+            newFonts = []
+            for font in ["sans-serif", "serif", "monospace"]:
+                if font in all:
+                    newFonts.append(font)
+            if len(newFonts) == 0:
+                newFonts.append("sans-serif")
+            return (False, ",".join(newFonts))
         if obj == '<color>':
             return (False, wp.color_default)
         return (False, None)
@@ -181,7 +190,8 @@ def check(el, depth=0):
         # element or is an attribute generically for all properties
         if (attr not in elementAttributes) and (attr not in wp.properties):
             errorCount += 1
-            log.error("Element '{0}' does not allow attribute '{1}'".format(element, attr),
+            log.error("The element '{0}' does not allow the attribute '{1}',"
+                      " attribute to be removed.".format(element, attr),
                       where=el)
             attribs_to_remove.append(nsAttrib)
 
@@ -197,14 +207,17 @@ def check(el, depth=0):
                     el.attrib[attr] = new_val[1:]
 
             else:
-                ok, new_val = value_ok(val, attr)
+                ok, new_val = value_ok(attr, val)
                 if vals and not ok:
                     errorCount += 1
-                    log.error("{0} not allowed as value for {1}".format(val, attr), where=el)
                     if new_val is not None:
                         el.attrib[attr] = new_val
+                        log.error("The attribute '{1}' does not allow the value '{0}',"
+                                  " replaced with '{2}'".format(val, attr, new_val), where=el)
                     else:
                         attribs_to_remove.append(nsAttrib)
+                        log.error("The attribute '{1}' does not allow the value '{0}',"
+                                  " attribute to be removed".format(val, attr), where=el)
 
     for attrib in attribs_to_remove:
         del el.attrib[attrib]
