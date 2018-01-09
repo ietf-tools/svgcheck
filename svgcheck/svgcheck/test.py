@@ -61,16 +61,18 @@ class TestParserMethods(unittest.TestCase):
 
     def test_simple_sub(self):
         check_process(self, ["svgcheck", "--out=Temp/rfc.xml", "--repair", "--no-xinclude",
-                             "Tests/rfc.xml"], "Results/rfc-01.out", "Results/rfc-01.xml",
-                      "Temp/rfc.xml")
+                             "Tests/rfc.xml"], "Results/rfc-01.out", "Results/rfc-01.err",
+                      "Results/rfc-01.xml", "Temp/rfc.xml")
 
     def test_to_stdout(self):
         check_process(self, ["svgcheck", "--repair", "--no-xinclude",
-                             "Tests/rfc.xml"], "Results/rfc-02.out", None, None)
+                             "Tests/rfc.xml"], "Results/rfc-02.out", "Results/rfc-02.err",
+                      None, None)
 
     def test_to_quiet(self):
         check_process(self, ["svgcheck", "--no-xinclude", "--quiet",
-                             "Tests/rfc.xml"], "Results/rfc-03.out", None, None)
+                             "Tests/rfc.xml"], "Results/rfc-03.out",
+                      "Results/rfc-03.err", None, None)
 
 
 def test_rfc_file(tester, fileName):
@@ -152,14 +154,14 @@ def check_results(file1, file2Name):
     return hasError
 
 
-def check_process(tester, args, stdoutFile, generatedFile, compareFile):
+def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):
     """
     Execute a subprocess using args as the command line.
     if stdoutFile is not None, compare it to the stdout of the process
     if generatedFile and compareFile are not None, compare them to each other
     """
 
-    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     p.wait()
 
     returnValue = True
@@ -181,6 +183,29 @@ def check_process(tester, args, stdoutFile, generatedFile, compareFile):
                 hasError = True
                 break
         if hasError:
+            print("stdout:")
+            print("".join(result))
+            returnValue = False
+
+    if errFile is not None:
+        with open(errFile, 'r') as f:
+            lines2 = f.readlines()
+        lines1 = io.TextIOWrapper(p.stderr, encoding='utf-8', line_buffering=True).readlines()
+
+        if os.name == 'nt':
+            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+            lines1 = [line.replace('\r', '') for line in lines1]
+
+        d = difflib.Differ()
+        result = list(d.compare(lines1, lines2))
+
+        hasError = False
+        for l in result:
+            if l[0:2] == '+ ' or l[0:2] == '- ':
+                hasError = True
+                break
+        if hasError:
+            print("stderr")
             print("".join(result))
             returnValue = False
 
@@ -201,6 +226,7 @@ def check_process(tester, args, stdoutFile, generatedFile, compareFile):
                 break
 
         if hasError:
+            print(generatedFile)
             print("".join(result))
             returnValue = False
 
