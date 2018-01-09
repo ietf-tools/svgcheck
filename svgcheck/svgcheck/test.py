@@ -4,6 +4,7 @@ import os
 import shutil
 import lxml.etree
 import subprocess
+import six
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
 from rfctools_common import log
@@ -162,13 +163,18 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
     """
 
     p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdoutX, stderr) = p.communicate()
     p.wait()
 
     returnValue = True
     if stdoutFile is not None:
         with open(stdoutFile, 'r') as f:
             lines2 = f.readlines()
-        lines1 = io.TextIOWrapper(p.stdout, encoding='utf-8', line_buffering=True).readlines()
+
+        if six.PY2:
+            lines1 = stdoutX.splitlines(True)
+        else:
+            lines1 = stdoutX.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
             lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
@@ -190,7 +196,11 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
     if errFile is not None:
         with open(errFile, 'r') as f:
             lines2 = f.readlines()
-        lines1 = io.TextIOWrapper(p.stderr, encoding='utf-8', line_buffering=True).readlines()
+
+        if six.PY2:
+            lines1 = stderr.splitlines(True)
+        else:
+            lines1 = stderr.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
             lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
