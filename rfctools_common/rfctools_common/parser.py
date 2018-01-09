@@ -402,6 +402,7 @@ class XmlRfcParser:
     """ XML parser container with callbacks to construct an RFC tree """
     def __init__(self, source, verbose=False, quiet=False,
                  cache_path=None, templates_path=None, library_dirs=None,
+                 no_xinclude=False,
                  no_network=False, network_locs=[
                      'https://xml2rfc.ietf.org/public/rfc/',
                      'https://xml2rfc.tools.ietf.org/public/rfc/',
@@ -415,6 +416,7 @@ class XmlRfcParser:
         self.cache_path = cache_path
         self.no_network = no_network
         self.network_locs = network_locs
+        self.no_xinclude = no_xinclude
 
         # Initialize templates directory
         self.templates_path = templates_path or \
@@ -459,7 +461,7 @@ class XmlRfcParser:
     def parse(self, remove_comments=True, remove_pis=False, quiet=False, strip_cdata=True):
         """ Parses the source XML file and returns an XmlRfc instance """
         if not (self.quiet or quiet):
-            log.write('Parsing file', self.source)
+            log.write('Parsing file', os.path.normpath(self.source))
 
         if six.PY2:
             self.text = open(self.source, "rU").read()
@@ -600,7 +602,8 @@ class XmlRfcParser:
 
         # Process xi:include statements
 
-        xmlrfc.tree.xinclude()
+        if not self.no_xinclude:
+            xmlrfc.tree.xinclude()
 
         # Finally, do any extra formatting on the RFC before returning
         xmlrfc._format_whitespace()

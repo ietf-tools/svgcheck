@@ -38,11 +38,22 @@ def note(*args):
         write(*args)
 
 
-def warn(*args):
+def warn(*args, **kwargs):
     """ Prints a warning message unless quiet """
     if not quiet:
-        write_err.write('WARNING: ' + ' '.join(args))
-        write_err.write('\n')
+        prefix = "WARNING: "
+        if 'where' in kwargs:
+            where = kwargs['where']
+            fileName = where.base
+            if fileName.startswith("file:///"):
+                fileName = os.path.relpath(fileName[8:])
+            elif fileName[0:6] == 'file:/':
+                fileName = os.path.relpath(fileName[6:])
+            else:
+                fileName = os.path.relpath(fileName)
+            prefix = "{0}:{1}: ".format(fileName, where.sourceline)
+        write_err.write(prefix + u' '.join(args))
+        write_err.write(u'\n')
 
 
 def error(*args, **kwargs):

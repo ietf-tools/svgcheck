@@ -26,14 +26,18 @@ def main():
                                          '...\nExample: svgcheck draft.xml',
                                          formatter=formatter)
 
-    parser_options = optparse.OptionGroup(optionparser, 'Parser Optoins')
-    parser_options.add_option('-C', '--clear-cache', action='callback', callback=clear_cache,
-                              help='purge the cache and exit')
+    parser_options = optparse.OptionGroup(optionparser, 'Parser Options')
     parser_options.add_option('-N', '--no-network', action='store_true', default=False,
                               help='don\'t use the network to resolve references')
+    parser_options.add_option('-X', "--no-xinclude", action='store_true', default=False,
+                              help='don\'t resolve xi:include elements')
+
+    parser_options.add_option('-C', '--clear-cache', action='callback', callback=clear_cache,
+                              help='purge the cache and exit')
     parser_options.add_option('-c', '--cache', dest='cache',
                               help='specify a primary cache directory to write to;'
                               'default: try [ %s ]' % ', '.join(CACHES))
+
     parser_options.add_option('-d', '--rng', dest='rng', help='specify an alternate RNG file')
     optionparser.add_option_group(parser_options)
 
@@ -93,11 +97,12 @@ def main():
 
     # Parse the document into an xmlrfc tree instance
     parser = XmlRfcParser(source, verbose=options.verbose,
+                          no_xinclude=options.no_xinclude,
                           quiet=options.quiet,
                           cache_path=options.cache,
                           no_network=options.no_network)
     try:
-        xmlrfc = parser.parse(remove_pis=True)
+        xmlrfc = parser.parse(remove_pis=True, remove_comments=False, strip_cdata=False)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + source, e)
         sys.exit(1)
@@ -112,9 +117,14 @@ def main():
     if not checkTree(xmlrfc.tree):
         if options.repair:
             if options.output_filename is None:
-                options.output_filename = source + '.new'
-            file = open(options.output_filename, 'w', encoding='utf8')
-            fle.write(lxml.etree.tostring(xmlrfc.tree.getroot(), pretty_print=True))
+                file = sys.stdout
+            else:
+                file = open(options.output_filename, 'w')
+            file.write(lxml.etree.tostring(xmlrfc.tree.getroot(),
+                                           xml_declaration=True,
+                                           encoding='utf-8',
+                                           doctype=xmlrfc.tree.docinfo.doctype,
+                                           pretty_print=True).decode('utf-8'))
         else:
             sys.exit(1)
 
