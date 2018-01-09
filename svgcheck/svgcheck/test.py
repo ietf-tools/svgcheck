@@ -159,13 +159,14 @@ def check_process(tester, args, stdoutFile, generatedFile, compareFile):
     if generatedFile and compareFile are not None, compare them to each other
     """
 
-    result = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p.wait()
 
     returnValue = True
     if stdoutFile is not None:
         with open(stdoutFile, 'r') as f:
             lines2 = f.readlines()
-        lines1 = result.stdout.decode('utf-8').splitlines(True)
+        lines1 = io.TextIOWrapper(p.stdout, encoding='utf-8', line_buffering=True).readlines()
 
         if os.name == 'nt':
             lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
