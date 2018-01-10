@@ -5,6 +5,7 @@ import shutil
 import lxml.etree
 import subprocess
 import six
+import sys
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
 from rfctools_common import log
@@ -61,8 +62,9 @@ class TestParserMethods(unittest.TestCase):
         test_rfc_file(self, "rfc.xml")
 
     def test_simple_sub(self):
-        check_process(self, ["svgcheck", "--out=Temp/rfc.xml", "--repair", "--no-xinclude",
-                             "Tests/rfc.xml"], "Results/rfc-01.out", "Results/rfc-01.err",
+        check_process(self, [sys.executable, "run.py", "--out=Temp/rfc.xml",
+                             "--repair", "--no-xinclude", "Tests/rfc.xml"],
+                      "Results/rfc-01.out", "Results/rfc-01.err",
                       "Results/rfc-01.xml", "Temp/rfc.xml")
 
     def test_to_stdout(self):
