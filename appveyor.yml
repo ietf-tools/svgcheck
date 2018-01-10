@@ -42,9 +42,5 @@ test_script:
   
 
 
-
-
-
-
-matrix:
-  fast_finish: true
+#matrix:
+#  fast_finish: true

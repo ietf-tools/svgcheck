@@ -3,6 +3,9 @@ import unittest
 import os
 import shutil
 import lxml.etree
+import subprocess
+import six
+import sys
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
 from rfctools_common import log
@@ -57,6 +60,22 @@ class TestParserMethods(unittest.TestCase):
     def test_rfc(self):
         """ Tests/rfc.xml: Test an XML file w/ two pictures """
         test_rfc_file(self, "rfc.xml")
+
+    def test_simple_sub(self):
+        check_process(self, [sys.executable, "run.py", "--out=Temp/rfc.xml",
+                             "--repair", "--no-xinclude", "Tests/rfc.xml"],
+                      "Results/rfc-01.out", "Results/rfc-01.err",
+                      "Results/rfc-01.xml", "Temp/rfc.xml")
+
+    def test_to_stdout(self):
+        check_process(self, [sys.executable, "run.py", "--repair", "--no-xinclude",
+                             "Tests/rfc.xml"], "Results/rfc-02.out", "Results/rfc-02.err",
+                      None, None)
+
+    def test_to_quiet(self):
+        check_process(self, [sys.executable, "run.py", "--no-xinclude", "--quiet",
+                             "Tests/rfc.xml"], "Results/rfc-03.out",
+                      "Results/rfc-03.err", None, None)
 
 
 def test_rfc_file(tester, fileName):
@@ -136,6 +155,94 @@ def check_results(file1, file2Name):
         print("".join(result))
 
     return hasError
+
+
+def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):
+    """
+    Execute a subprocess using args as the command line.
+    if stdoutFile is not None, compare it to the stdout of the process
+    if generatedFile and compareFile are not None, compare them to each other
+    """
+
+    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdoutX, stderr) = p.communicate()
+    p.wait()
+
+    returnValue = True
+    if stdoutFile is not None:
+        with open(stdoutFile, 'r') as f:
+            lines2 = f.readlines()
+
+        if six.PY2:
+            lines1 = stdoutX.splitlines(True)
+        else:
+            lines1 = stdoutX.decode('utf-8').splitlines(True)
+
+        if os.name == 'nt':
+            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+            lines1 = [line.replace('\r', '') for line in lines1]
+
+        d = difflib.Differ()
+        result = list(d.compare(lines1, lines2))
+
+        hasError = False
+        for l in result:
+            if l[0:2] == '+ ' or l[0:2] == '- ':
+                hasError = True
+                break
+        if hasError:
+            print("stdout:")
+            print("".join(result))
+            returnValue = False
+
+    if errFile is not None:
+        with open(errFile, 'r') as f:
+            lines2 = f.readlines()
+
+        if six.PY2:
+            lines1 = stderr.splitlines(True)
+        else:
+            lines1 = stderr.decode('utf-8').splitlines(True)
+
+        if os.name == 'nt':
+            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+            lines1 = [line.replace('\r', '') for line in lines1]
+
+        d = difflib.Differ()
+        result = list(d.compare(lines1, lines2))
+
+        hasError = False
+        for l in result:
+            if l[0:2] == '+ ' or l[0:2] == '- ':
+                hasError = True
+                break
+        if hasError:
+            print("stderr")
+            print("".join(result))
+            returnValue = False
+
+    if generatedFile is not None:
+        with open(generatedFile, 'r') as f:
+            lines2 = f.readlines()
+
+        with open(compareFile, 'r') as f:
+            lines1 = f.readlines()
+
+        d = difflib.Differ()
+        result = list(d.compare(lines1, lines2))
+
+        hasError = False
+        for l in result:
+            if l[0:2] == '+ ' or l[0:2] == '- ':
+                hasError = True
+                break
+
+        if hasError:
+            print(generatedFile)
+            print("".join(result))
+            returnValue = False
+
+    tester.assertTrue(returnValue, "Comparisons failed")
 
 
 def clear_cache(parser):

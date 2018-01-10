@@ -17,7 +17,7 @@ import getopt
 import sys
 import re
 
-import word_properties as wp
+import svgcheck.word_properties as wp
 
 indent = 4
 errorCount = 0
@@ -139,7 +139,7 @@ def strip_prefix(element, el):
             element = element[rbp+1:]
         else:
             errorCount += 1
-            log.error("Malformed namespace.  Should have errored during parsing")
+            log.warn("Malformed namespace.  Should have errored during parsing")
     return element, ns  # return tag, namespace
 
 
@@ -151,7 +151,7 @@ def check(el, depth=0):
     Return False if the element is to be removed from tree when
     writing it back out
     """
-    global new_file, errorCount
+    global errorCount
 
     log.note("%s tag = %s" % (' ' * (depth*indent), el.tag))
 
@@ -161,15 +161,15 @@ def check(el, depth=0):
 
     # namespace for elements must be either empty or svg
     if ns is not None and ns not in wp.svg_urls:
-        log.error("Element '{1}' in namespace '{2}' is not allowed".format(element, ns),
-                  where=el)
+        log.warn("Element '{1}' in namespace '{2}' is not allowed".format(element, ns),
+                 where=el)
         return False  # Remove this el
 
     # Is the element in the list of legal elements?
     log.note("%s element % s: %s" % (' ' * (depth*indent), element, el.attrib))
     if element not in wp.elements:
         errorCount += 1
-        log.error("Element '{0}' not allowed".format(element), where=el)
+        log.warn("Element '{0}' not allowed".format(element), where=el)
         return False  # Remove this el
 
     elementAttributes = wp.elements[element]  # Allowed attributes for element
@@ -181,8 +181,8 @@ def check(el, depth=0):
         log.note("%s attr %s = %s (ns = %s)" % (
                 ' ' * (depth*indent), attr, val, ns))
         if ns is not None and ns not in wp.xmlns_urls:
-            log.error("Element '{0}' does not allow attributes with namespace '{1}'".
-                      format(element, ns), where=el)
+            log.warn("Element '{0}' does not allow attributes with namespace '{1}'".
+                     format(element, ns), where=el)
             attribs_to_remove.append(nsAttrib)
             continue
 
@@ -190,9 +190,9 @@ def check(el, depth=0):
         # element or is an attribute generically for all properties
         if (attr not in elementAttributes) and (attr not in wp.properties):
             errorCount += 1
-            log.error("The element '{0}' does not allow the attribute '{1}',"
-                      " attribute to be removed.".format(element, attr),
-                      where=el)
+            log.warn("The element '{0}' does not allow the attribute '{1}',"
+                     " attribute to be removed.".format(element, attr),
+                     where=el)
             attribs_to_remove.append(nsAttrib)
 
         # Now check if the attribute is a generic property
@@ -212,12 +212,12 @@ def check(el, depth=0):
                     errorCount += 1
                     if new_val is not None:
                         el.attrib[attr] = new_val
-                        log.error("The attribute '{1}' does not allow the value '{0}',"
-                                  " replaced with '{2}'".format(val, attr, new_val), where=el)
+                        log.warn("The attribute '{1}' does not allow the value '{0}',"
+                                 " replaced with '{2}'".format(val, attr, new_val), where=el)
                     else:
                         attribs_to_remove.append(nsAttrib)
-                        log.error("The attribute '{1}' does not allow the value '{0}',"
-                                  " attribute to be removed".format(val, attr), where=el)
+                        log.warn("The attribute '{1}' does not allow the value '{0}',"
+                                 " attribute to be removed".format(val, attr), where=el)
 
     for attrib in attribs_to_remove:
         del el.attrib[attrib]
@@ -253,6 +253,7 @@ def checkTree(tree):
     2. This is an rfc tree - and we should only look for real namespaces, but
        there may be more than one thing to look for.
     """
+    global errorCount
 
     errorCount = 0
     element = tree.getroot().tag
@@ -265,9 +266,9 @@ def checkTree(tree):
 
         svgPaths = tree.getroot().xpath("//x:svg", namespaces={'x': 'http://www.w3.org/2000/svg'})
 
-        print("paths = {0}".format(len(svgPaths)))
         for path in svgPaths:
             if len(svgPaths) > 1:
                 log.note("Checking svg element at line {0} in file {1}".format(1, "file"))
             check(path, 0)
+
     return errorCount == 0
