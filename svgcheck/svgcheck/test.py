@@ -68,12 +68,12 @@ class TestParserMethods(unittest.TestCase):
                       "Results/rfc-01.xml", "Temp/rfc.xml")
 
     def test_to_stdout(self):
-        check_process(self, ["svgcheck", "--repair", "--no-xinclude",
+        check_process(self, [sys.executable, "run.py", "--repair", "--no-xinclude",
                              "Tests/rfc.xml"], "Results/rfc-02.out", "Results/rfc-02.err",
                       None, None)
 
     def test_to_quiet(self):
-        check_process(self, ["svgcheck", "--no-xinclude", "--quiet",
+        check_process(self, [sys.executable, "run.py", "--no-xinclude", "--quiet",
                              "Tests/rfc.xml"], "Results/rfc-03.out",
                       "Results/rfc-03.err", None, None)
 
