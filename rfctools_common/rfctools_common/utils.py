@@ -181,7 +181,7 @@ def formatXmlWhitespace(tree):
     """
     for element in tree.iter():
         # Preserve formatting on artwork
-        if element.tag != 'artwork':
+        if element.tag != 'artwork' and element.tag != 'sourcecode':
             if element.text is not None:
                 element.text = re.sub('\s*\n\s*', ' ',
                                       re.sub('\.\s*\n\s*', '.  ',

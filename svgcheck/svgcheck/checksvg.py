@@ -1,12 +1,7 @@
-#!/usr/bin/env python
-
-# Thu, 24 Sep 15 (NZST)
-# Sat,  7 Jun 14 (NZST)
-#
-# check-svg.py:  ./check-svg.py -n diagram.svg
-#                ./check-svy.py --help  # to see options info
+# This source file originally came from
 #
 # Nevil Brownlee, U Auckland
+#
 
 # From a simple original version by Joe Hildebrand
 
@@ -27,28 +22,30 @@ trace = True
 bad_namespaces = []
 
 
-def check_some_props(attr, val, depth):
+def check_some_props(attr, val):
     """
-    This function is not currently being used.
     For [style] properties
     """
 
-    vals = wp.properties[attr]
-    props_to_check = wp.property_lists[vals]
+    props_to_check = wp.property_lists[attr]
     new_val = ''
     ok = True
-    old_props = val.rstrip(';').split(';')
-    # print("old_props = %s" % old_props)
-    for prop in old_props:
+    style_props = val.rstrip(';').split(';')
+    # print("old_props = %s" % style_props)
+    for prop in style_props:
         # print("prop = %s" %  prop)
+        v = prop.split(':')
+        if len(v) != 2:
+            continue
         p, v = prop.split(':')
+        p = p.strip()
         v = v.strip()  # May have leading blank
         if p in props_to_check:
-            allowed_vals = wp.properties[p]
+            # allowed_vals = wp.properties[p]
             # print("$$$ p=%s, allowed_vals=%s." % (p, allowed_vals))
             allowed = value_ok(v, p)
             if not allowed:
-                warn("??? %s attribute: value '%s' not valid for '%s'" % (
+                log.warn("??? %s attribute: value '%s' not valid for '%s'" % (
                     attr, v, p), depth)
                 ok = False
         else:
@@ -69,59 +66,51 @@ def value_ok(obj, v):
     log.note("value_ok look for %s in %s" % (v, obj))
     # Look if the object is a real attribute, or we recursed w/ an
     # internal type name such as '<color>' (i.e. a basic_type)
-    if obj not in wp.properties:
-        if obj not in wp.basic_types:
-            return (False, None)
-
-        values = wp.basic_types[obj]
-
-        # Integers must be ints, but have no default
-        if values == '+':  # Integer
-            n = re.match(r'\d+$', v)
-            return (n, None)
-    else:
+    if obj in wp.properties:
         values = wp.properties[obj]
+    elif obj in wp.basic_types:
+        values = wp.basic_types[obj]
+    elif isinstance(obj, str):
+        # values to check is a string
+        if obj[0] == '+':
+            n = re.match(r'\d+\.\d+%?$', v)
+            rv = None
+            if n:
+                rv = n.group()
+            return (True, rv)
+        if obj[0] == '[':
+            return check_some_props(obj, v)
+        return (v == obj, v)
+    else:  # Unknown attribute
+        return (False, None)
 
     log.note("  legal value list {0}".format(values))
-    # values could be a string or an array of values
-    if isinstance(values, str):  # str) in python 3
-        if values[0] == '<' or values[0] == '+':
-            errorCount += 1
-            log.warn(". . . values = >%s<" % values)
-            return value_ok(False, None)
-    else:
-        for val in values:
-            if val[0] == '<':
-                return value_ok(val, v)
-            if v == val:
-                return (True, v)
-            elif val == '#':  # RGB value
-                lv = v.lower()
-                if lv[0] == '#':  # rrggbb  hex
-                    if len(lv) == 7:
-                        return (lv[3:5] == lv[1:3] and lv[5:7] == lv[1:3], None)
-                    if len(lv) == 4:
-                        return (lv[2] == lv[1] and lv[3] == lv[1], None)
-                    return (False, None)
-                elif lv.find('rgb') == 0:  # integers
-                    rgb = re.search(r'\((\d+),(\d+),(\d+)\)', lv)
-                    if rgb:
-                        return ((rgb.group(2) == rgb.group(1) and
-                                 rgb.group(3) == rgb.group(1)), None)
-                    return (False, None)
-        v = v.lower()
-        if obj == 'font-family':
-            all = v.split(',')
-            newFonts = []
-            for font in ["sans-serif", "serif", "monospace"]:
-                if font in all:
-                    newFonts.append(font)
-            if len(newFonts) == 0:
-                newFonts.append("sans-serif")
-            return (False, ",".join(newFonts))
-        if obj == '<color>':
-            return (False, wp.color_default)
-        return (False, None)
+    if len(values) == 0:
+        # Empty tuples have nothing to check, assume it is correct
+        return (True, None)
+
+    replaceWith = None
+    for val in values:
+        ok_v, matched_v = value_ok(val, v)
+        if ok_v:
+            return (True, matched_v)
+        if matched_v:
+            replaceWith = matched_v
+
+    log.note(" --- skip to end -- {0}".format(obj))
+    v = v.lower()
+    if obj == 'font-family':
+        all = v.split(',')
+        newFonts = []
+        for font in ["sans-serif", "serif", "monospace"]:
+            if font in all:
+                newFonts.append(font)
+        if len(newFonts) == 0:
+            newFonts.append("sans-serif")
+        return (False, ",".join(newFonts))
+    if obj == '<color>':
+        return (False, wp.color_default)
+    return (False, replaceWith)
 
 
 def strip_prefix(element, el):
@@ -161,7 +150,7 @@ def check(el, depth=0):
 
     # namespace for elements must be either empty or svg
     if ns is not None and ns not in wp.svg_urls:
-        log.warn("Element '{1}' in namespace '{2}' is not allowed".format(element, ns),
+        log.warn("Element '{0}' in namespace '{1}' is not allowed".format(element, ns),
                  where=el)
         return False  # Remove this el
 
@@ -180,10 +169,11 @@ def check(el, depth=0):
         attr, ns = strip_prefix(nsAttrib, el)
         log.note("%s attr %s = %s (ns = %s)" % (
                 ' ' * (depth*indent), attr, val, ns))
-        if ns is not None and ns not in wp.xmlns_urls:
-            log.warn("Element '{0}' does not allow attributes with namespace '{1}'".
-                     format(element, ns), where=el)
-            attribs_to_remove.append(nsAttrib)
+        if ns is not None and ns not in wp.svg_urls:
+            if ns not in wp.xmlns_urls:
+                log.warn("Element '{0}' does not allow attributes with namespace '{1}'".
+                         format(element, ns), where=el)
+                attribs_to_remove.append(nsAttrib)
             continue
 
         # look to see if the attribute is either an attribute for a specific
@@ -201,7 +191,7 @@ def check(el, depth=0):
             # log.note("vals = " + vals +  "<<<<<")
 
             #  Do method #1 of checking if the value is legal - not currently used.
-            if vals and vals[0] == '[':
+            if vals and vals[0] == '[' and False:
                 ok, new_val = check_some_props(attr, val, depth)
                 if not ok:
                     el.attrib[attr] = new_val[1:]
@@ -223,10 +213,28 @@ def check(el, depth=0):
         del el.attrib[attrib]
 
     els_to_rm = []  # Can't remove them inside the iteration!
+    if element in wp.element_children:
+        allowed_children = wp.element_children[element]
+    else:
+        allowed_children = []
+
     for child in el:
         log.note("%schild, tag = %s" % (' ' * (depth*indent), child.tag))
-        if not check(child, depth+1):
+        ch_tag, ns = strip_prefix(child.tag, el)
+        if ns not in wp.svg_urls:
+            if ns not in xmlns_urls:
+                log.warn("The namespace {0} is not permitted in svg elements.".format(ns),
+                         where=el)
+                els_to_remove.append(el)
+            continue
+
+        if ch_tag not in allowed_children:
+            log.warn("The element '{0}' is not allowed as a child of '{1}'".
+                     format(ch_tag, element), where=child)
             els_to_rm.append(child)
+        elif not check(child, depth+1):
+            els_to_rm.append(child)
+
     if len(els_to_rm) != 0:
         for child in els_to_rm:
             el.remove(child)
