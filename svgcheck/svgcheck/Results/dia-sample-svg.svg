@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14cm" height="16cm" viewBox="4 7 273 316">
-  <text font-size="12.7998" style="fill: #00FF00;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="100" y="320">
+  <text font-size="12.7998" style="fill:black;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="100" y="320">
     <tspan x="100" y="320"/>
   </text>
   <g>
@@ -8,12 +8,12 @@
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="89.0883" cy="35.766" rx="82" ry="27"/>
   </g>
   <g>
-    <ellipse style="fill: #ff00ff" cx="87.8883" cy="170.688" rx="82" ry="27"/>
+    <ellipse style="fill:black" cx="87.8883" cy="170.688" rx="82" ry="27"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="87.8883" cy="170.688" rx="82" ry="27"/>
   </g>
   <g>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 67.0438,62.6046 A 86.9421,86.9421 0 0 0 66.5601,136.198"/>
-    <polygon style="fill: #FF0000" points="69.9349,142.85 60.4932,136.863 66.0662,136.425 69.0601,131.704 "/>
+    <polygon style="fill:black" points="69.9349,142.85 60.4932,136.863 66.0662,136.425 69.0601,131.704 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="69.9349,142.85 60.4932,136.863 66.0662,136.425 69.0601,131.704 "/>
   </g>
   <g>
