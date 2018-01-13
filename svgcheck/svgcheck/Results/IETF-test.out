@@ -1,4 +1,4 @@
-Tests\IETF-test.svg:4: The attribute 'style' does not allow the value 'stroke:rgb(0,0,0);stroke-width:88;fill:none', replaced with 'stroke:white;stroke-width:88;fill:none'
-Tests\IETF-test.svg:9: The attribute 'style' does not allow the value 'stroke:rgb(0,0,0);stroke-width:88;fill:none', replaced with 'stroke:white;stroke-width:88;fill:none'
-Tests\IETF-test.svg:17: The attribute 'style' does not allow the value 'font-family:Arial embedded;font-size:1552px;font-weight:400', replaced with 'font-family:sans-serif;font-size:1552px'
-Tests\IETF-test.svg:18: The attribute 'style' does not allow the value 'stroke:none;fill:rgb(0,0,0)', replaced with 'stroke:none;fill:white'
+Tests/IETF-test.svg:4: The attribute 'style' does not allow the value 'stroke:rgb(0,0,0);stroke-width:88;fill:none', replaced with 'stroke:white;stroke-width:88;fill:none'
+Tests/IETF-test.svg:9: The attribute 'style' does not allow the value 'stroke:rgb(0,0,0);stroke-width:88;fill:none', replaced with 'stroke:white;stroke-width:88;fill:none'
+Tests/IETF-test.svg:17: The attribute 'style' does not allow the value 'font-family:Arial embedded;font-size:1552px;font-weight:400', replaced with 'font-family:sans-serif;font-size:1552px'
+Tests/IETF-test.svg:18: The attribute 'style' does not allow the value 'stroke:none;fill:rgb(0,0,0)', replaced with 'stroke:none;fill:white'
