@@ -111,6 +111,8 @@ def test_svg_file(tester, fileName):
     log.write_err = log.write_out
     checkTree(tree.tree)
 
+    (result, errors) = tree.validate(rng_path=parse.default_rng_path.replace("rfc7991", "svg"))
+
     returnValue = check_results(log.write_out, "Results/" + basename.replace(".svg", ".out"))
     tester.assertFalse(returnValue, "Output to console is different")
 
@@ -120,6 +122,7 @@ def test_svg_file(tester, fileName):
                                              pretty_print=True).decode('utf-8'))
     returnValue = check_results(result, "Results/" + basename)
     tester.assertFalse(returnValue, "Result from editing the tree is different")
+    tester.assertTrue(result, "Fails to validate againist the RNG")
 
 
 def check_results(file1, file2Name):

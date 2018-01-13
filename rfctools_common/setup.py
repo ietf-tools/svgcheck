@@ -70,8 +70,9 @@ setup(
     # ]
 
     package_data={
-        'rfctools-common': ['parser.py', 'log.py', 'utils.py']
+        'rfctools-common': ['templates/*']
         },
+    include_package_data = True,
 
     zip_safe=False
 )
