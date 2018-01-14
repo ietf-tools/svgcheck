@@ -49,6 +49,8 @@ def warn(*args, **kwargs):
                 fileName = os.path.relpath(fileName[8:])
             elif fileName[0:6] == 'file:/':
                 fileName = os.path.relpath(fileName[6:])
+            elif fileName[0:7] == 'http://' or fileName[0:8] == 'https://':
+                pass
             else:
                 fileName = os.path.relpath(fileName)
             prefix = "{0}:{1}: ".format(fileName, where.sourceline)

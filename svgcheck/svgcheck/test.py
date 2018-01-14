@@ -77,6 +77,20 @@ class TestParserMethods(unittest.TestCase):
                              "Tests/rfc.xml"], "Results/rfc-03.out",
                       "Results/rfc-03.err", None, None)
 
+    def test_rfc_complete(self):
+        check_process(self, [sys.executable, "run.py", "--repair", "Tests/rfc-svg.xml"],
+                      "Results/rfc-svg.out", "Results/rfc-svg.err", None, None)
+
+    def test_full_tiny(self):
+        check_process(self, [sys.executable, "run.py", "--out=Temp/full-tiny.xml",
+                             "--repair", "Tests/full-tiny.xml"],
+                      "Results/full-tiny.out", "Results/full-tiny.err",
+                      "Results/full-tiny.xml", "Temp/full-tiny.xml")
+        check_process(self, [sys.executable, "run.py", "--out=Temp/full-tiny-02.xml",
+                             "Temp/full-tiny.xml"],
+                      "Results/full-tiny-02.out", "Results/full-tiny-02.err",
+                      None, None)
+
 
 def test_rfc_file(tester, fileName):
     """ Run the basic tests for a single input file """
