@@ -77,6 +77,21 @@ class TestParserMethods(unittest.TestCase):
                              "Tests/rfc.xml"], "Results/rfc-03.out",
                       "Results/rfc-03.err", None, None)
 
+    def test_rfc_complete(self):
+        check_process(self, [sys.executable, "run.py", "--repair", "Tests/rfc-svg.xml"],
+                      "Results/rfc-svg.out", "Results/rfc-svg.err", None, None)
+
+    def test_full_tiny(self):
+        check_process(self, [sys.executable, "run.py", "--out=Temp/full-tiny.xml",
+                             "--repair", "Tests/full-tiny.xml"],
+                      "Results/full-tiny.out", "Results/full-tiny.err",
+                      "Results/full-tiny.xml", "Temp/full-tiny.xml")
+        print("pass 2")
+        check_process(self, [sys.executable, "run.py", "--out=Temp/full-tiny-02.xml",
+                             "Temp/full-tiny.xml"],
+                      "Results/full-tiny-02.out", "Results/full-tiny-02.err",
+                      None, None)
+
 
 def test_rfc_file(tester, fileName):
     """ Run the basic tests for a single input file """
@@ -133,8 +148,8 @@ def check_results(file1, file2Name):
     with open(file2Name, 'r') as f:
         lines2 = f.readlines()
 
-    if os.name == 'nt' and file2Name.endswith(".out"):
-        lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+    if os.name == 'nt' and (file2Name.endswith(".out") or file2Name.endswith(".err")):
+        lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\') for line in lines2]
 
     if not file2Name.endswith(".out"):
         cwd = os.getcwd()
@@ -182,7 +197,8 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             lines1 = stdoutX.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
-            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+            lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\')
+                      for line in lines2]
             lines1 = [line.replace('\r', '') for line in lines1]
 
         d = difflib.Differ()
@@ -208,7 +224,8 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             lines1 = stderr.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
-            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+            lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\')
+                      for line in lines2]
             lines1 = [line.replace('\r', '') for line in lines1]
 
         d = difflib.Differ()

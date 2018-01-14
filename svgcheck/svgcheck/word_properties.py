@@ -61,7 +61,8 @@ elements = {
     'defs':           ('id', 'role', 'fill', 'fill-rule', '<tbreak>'),
     'use':            ('x', 'y', 'href', 'id', 'role',  'fill', 'transform',
                        'fill-rule', '<tbreak>'),
-    'a':              ('id', 'role', 'fill', 'transform', 'fill-rule', '<tbreak>'),  # Linking
+    'a':              ('id', 'role', 'fill', 'transform', 'fill-rule', 'target',
+                       '<tbreak>'),  # Linking
     'tspan':          ('x', 'y', 'id', 'role', 'fill', 'fill-rule', '<tbreak>'),
     'tbreak':         ('id', 'role', '<tbreak>'),
 
@@ -132,14 +133,14 @@ properties = {
     'stroke-dashoffset':     (),  # 'inherit'
     'stroke-opacity':        (),  # 'inherit'
     'vector-effect':         ('non-scaling-stroke', 'none', 'inherit'),
-    'viewport-fill':         ('none', 'currentColor', '<color>'),
+    'viewport-fill':         ('none', 'currentColor', 'inherit', '<color>'),
 
     'display':               ('inline', 'block', 'list-item', 'run-in', 'compact',
                               'marker', 'table', 'inline-table', 'table-row-group',
                               'table-header-group', 'table-footer-group',
-                              'table-row,' 'table-column-group',
+                              'table-row', 'table-column-group',
                               'table-column', 'table-cell', 'table-caption',
-                              'none'),
+                              'none', 'inherit'),
     'viewport-fill-opacity': (),  # "inherit"
     'visibility':            ('visible', 'hidden', 'collapse', 'inherit'),
     'image-rendering':       ('auto', 'optimizeSpeed', 'optimizeQuality', 'inherit'),
@@ -151,7 +152,7 @@ properties = {
     'buffered-rendering':    ('auto', 'dynamic', 'static', 'inherit'),
 
     'solid-opacity':         (),  # 'inherit'
-    'solid-color':           ('currentColor', '<color>'),
+    'solid-color':           ('currentColor', 'inherit', '<color>'),
     'color':                 ('currentColor', 'inherit', '<color>'),
 
     'stop-color':           ('currentColor', 'inherit', '<color>'),
@@ -176,6 +177,11 @@ properties = {
     'height':              ('<number>',),
 
     'style':               ('[style]',),  # Check properties in [style]
+    'requiredFeatures': (),
+    'requiredFormats': (),
+    'requiredExtensions': (),
+    'requiredFonts': (),
+    'systemLanguage': ()
 }
 
 basic_types = {  # Lists of allowed values
@@ -219,7 +225,7 @@ element_children = {  # Elements allowed within other elements
     'defs':       svg_child,
     'use':        ('title', 'desc'),
     'a':          svg_child,
-    'tspan':      text_child,
+    'tspan':      text_child + ('tbreak',),  # should allow tbreak as a child
     }
 
 

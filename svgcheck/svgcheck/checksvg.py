@@ -35,6 +35,8 @@ def check_some_props(attr, val):
     for prop in style_props:
         # print("prop = %s" %  prop)
         v = prop.split(':')
+        if len(v) != 2:
+            continue
         p = v[0].strip()
         v = v[1].strip()  # May have leading blank
         log.note("   check_som_props - p={0}  v={1}".format(p, v))
