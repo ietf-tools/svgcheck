@@ -26,30 +26,34 @@ def check_some_props(attr, val):
     """
     For [style] properties
     """
+    log.note("check_some_props check '{0}' in '{1}'".format(attr, val))
 
     props_to_check = wp.property_lists[attr]
     new_val = ''
     ok = True
     style_props = val.rstrip(';').split(';')
-    # print("old_props = %s" % style_props)
     for prop in style_props:
         # print("prop = %s" %  prop)
         v = prop.split(':')
-        if len(v) != 2:
-            continue
-        p, v = prop.split(':')
-        p = p.strip()
-        v = v.strip()  # May have leading blank
+        p = v[0].strip()
+        v = v[1].strip()  # May have leading blank
+        log.note("   check_som_props - p={0}  v={1}".format(p, v))
         if p in props_to_check:
             # allowed_vals = wp.properties[p]
             # print("$$$ p=%s, allowed_vals=%s." % (p, allowed_vals))
-            allowed = value_ok(v, p)
+            allowed, newValue = value_ok(p, v)
             if not allowed:
-                log.warn("??? %s attribute: value '%s' not valid for '%s'" % (
-                    attr, v, p), depth)
+                log.note("??? '{0}' attribute: value '{1}' not valid for '{2}' use '{3}'".format(
+                    attr, v, p, newValue))
+                if newValue:
+                    new_val += ";" + p + ":" + newValue
                 ok = False
+            else:
+                new_val += ';' + prop
         else:
             new_val += ';' + prop
+    if new_val:
+        new_val = new_val[1:]
     return (ok, new_val)
 
 
@@ -80,7 +84,9 @@ def value_ok(obj, v):
             return (True, rv)
         if obj[0] == '[':
             return check_some_props(obj, v)
-        return (v == obj, v)
+        if v == obj:
+            return (True, v)
+        return (False, None)
     else:  # Unknown attribute
         return (False, None)
 
@@ -109,6 +115,8 @@ def value_ok(obj, v):
             newFonts.append("sans-serif")
         return (False, ",".join(newFonts))
     if obj == '<color>':
+        if v in wp.color_map:
+            return (False, wp.color_map[v])
         return (False, wp.color_default)
     return (False, replaceWith)
 

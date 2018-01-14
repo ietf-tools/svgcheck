@@ -51,7 +51,7 @@ elements = {
                        'id', 'role', 'fill', 'transform', 'fill-rule', '<tbreak>'),
     'polygon':        ('points',
                        'id', 'role', 'fill', 'style', 'transform', 'fill-rule', '<tbreak>'),
-    'solidcolor':     ('id', 'role', 'fill', 'fill-rule', '<tbreak>'),
+    'solidColor':     ('id', 'role', 'fill', 'fill-rule', '<tbreak>'),
     'textArea':       ('x', 'y', 'width', 'height', 'auto',
                        'id', 'role', 'fill', 'transform', 'fill-rule', '<tbreak>'),
     'text':           ('x', 'y', 'rotate', 'id', 'role', 'fill', 'style', 'transform',
@@ -152,9 +152,9 @@ properties = {
 
     'solid-opacity':         (),  # 'inherit'
     'solid-color':           ('currentColor', '<color>'),
-    'color':                 ('currentColor', '<color>'),
+    'color':                 ('currentColor', 'inherit', '<color>'),
 
-    'stop-color':           ('currentColor', '<color>'),
+    'stop-color':           ('currentColor', 'inherit', '<color>'),
     'stop-opacity':         (),  # 'inherit'
 
     'line-increment':      (''),  # 'auto', 'inherit'
@@ -169,7 +169,7 @@ properties = {
     'direction':           ('ltr', 'rtl', 'inherit'),
     'unicode-bidi':        ('normal', 'embed', 'bidi-override', 'inherit'),
     'text-anchor':         ('start', 'middle', 'end', 'inherit'),
-    'fill':                ('none', '<color>'),  # # = RGB val
+    'fill':                ('none', 'inherit', '<color>'),  # # = RGB val
     'fill-rule':           ('nonzero', 'evenodd', 'inherit'),
     'fill-opacity':        (),  # 'inherit'
 
@@ -192,32 +192,32 @@ color_default = 'black'
 property_lists = {  # Lists of properties to check (for Inkscape)
     '[style]':   ('font-family', 'font-weight', 'font-style',
                   'font-variant', 'direction', 'unicode-bidi', 'text-anchor',
-                  'fill', 'fill-rule'),
+                  'fill', 'fill-rule', 'stroke', 'stroke-width', 'font-size'),
 }
 
 # Elements allowed within other elements
 svg_child = ('title', 'path', 'rect', 'circle', 'line', 'ellipse',
              'polyline', 'polygon', 'solidColor', 'textArea',
-             'text', 'g', 'defs', 'use', 'a', 'tspan')
+             'text', 'g', 'defs', 'use', 'a', 'tspan', 'desc')
 text_child = ('desc', 'title', 'tspan', 'text', 'a')
 
 element_children = {  # Elements allowed within other elements
     'svg':        svg_child,
     'desc':       ('text'),
     'title':      ('text'),
-    'path':       ('title'),
-    'rect':       ('title'),
-    'circle':     ('title'),
-    'line':       ('title'),
-    'ellipse':    ('title'),
-    'polyline':   ('title'),
-    'polygon':    ('title'),
-    'solidColor': ('title'),
+    'path':       ('title', 'desc'),
+    'rect':       ('title', 'desc'),
+    'circle':     ('title', 'desc'),
+    'line':       ('title', 'desc'),
+    'ellipse':    ('title', 'desc'),
+    'polyline':   ('title', 'desc'),
+    'polygon':    ('title', 'desc'),
+    'solidColor': ('title', 'desc'),
     'textArea':   text_child,
     'text':       text_child,
     'g':          svg_child,
     'defs':       svg_child,
-    'use':        ('title'),
+    'use':        ('title', 'desc'),
     'a':          svg_child,
     'tspan':      text_child,
     }
@@ -232,3 +232,8 @@ xmlns_urls = (  # Whitelist of allowed URLs
     'http://www.w3.org/1999/xlink',  # svgwrite uses this
     'http://www.w3.org/XML/1998/namespace',  # imagebot uses this  -- This is xml:
     )
+
+color_map = {
+    'rgb(0,0,0)': 'white',
+    'rgb(255,255,255)': 'black'
+}
