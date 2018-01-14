@@ -86,6 +86,7 @@ class TestParserMethods(unittest.TestCase):
                              "--repair", "Tests/full-tiny.xml"],
                       "Results/full-tiny.out", "Results/full-tiny.err",
                       "Results/full-tiny.xml", "Temp/full-tiny.xml")
+        print("pass 2")
         check_process(self, [sys.executable, "run.py", "--out=Temp/full-tiny-02.xml",
                              "Temp/full-tiny.xml"],
                       "Results/full-tiny-02.out", "Results/full-tiny-02.err",
@@ -147,7 +148,7 @@ def check_results(file1, file2Name):
     with open(file2Name, 'r') as f:
         lines2 = f.readlines()
 
-    if os.name == 'nt' and file2Name.endswith(".out"):
+    if os.name == 'nt' and (file2Name.endswith(".out") or file2Name.endswith(".err")):
         lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\') for line in lines2]
 
     if not file2Name.endswith(".out"):
@@ -196,7 +197,8 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             lines1 = stdoutX.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
-            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+            lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\')
+                      for line in lines2]
             lines1 = [line.replace('\r', '') for line in lines1]
 
         d = difflib.Differ()
@@ -222,7 +224,8 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             lines1 = stderr.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
-            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+            lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\')
+                      for line in lines2]
             lines1 = [line.replace('\r', '') for line in lines1]
 
         d = difflib.Differ()
