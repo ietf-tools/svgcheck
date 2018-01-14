@@ -148,7 +148,7 @@ def check_results(file1, file2Name):
         lines2 = f.readlines()
 
     if os.name == 'nt' and file2Name.endswith(".out"):
-        lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+        lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\') for line in lines2]
 
     if not file2Name.endswith(".out"):
         cwd = os.getcwd()
