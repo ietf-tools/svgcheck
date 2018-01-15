@@ -72,11 +72,17 @@ setup(
     # package_data={
     #    'svgcheck': ['run.py']
     #    },
+    package_data={
+#        ':platform_system == "win32"': [ "win32/*" ],
+        'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
+    },
+            
 
     entry_points={
         'console_scripts': [
             'rfclint=rfclint.run:main'
             ]
         },
+    include_package_data = True,
     zip_safe=False
 )

@@ -1,4 +1,5 @@
 import pycodestyle
+import platform
 import unittest
 import os
 import shutil
@@ -37,7 +38,7 @@ class Test_ConfigFile(unittest.TestCase):
 
 class Test_Schema(unittest.TestCase):
     """ Initial set of tests dealing with validity and RNG checking """
-
+    @unittest.skipIf(platform.python_implementation() == "pypy")
     def test_invalid_xml(self):
         """ Load and run with an invalid XML file """
         check_process(self, [sys.executable, "run.py", "Tests/bad.xml"],
