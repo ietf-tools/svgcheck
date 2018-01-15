@@ -38,7 +38,7 @@ script:
   - cd svgcheck
   - $PYTHON test.py
   - cd ../../rfclint
-  - $PYTHON setyp.py --quiet install
+  - $PYTHON setup.py --quiet install
   - cd rfclint
   - $PYTHON test.py
   

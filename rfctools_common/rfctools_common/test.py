@@ -13,7 +13,7 @@ class TestParserMethods(unittest.TestCase):
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
         result = pep8style.check_files(['parser.py', 'log.py', 'utils.py',
                                         'test.py'])
-        self.assertEqual(result.total_errors, 82,
+        self.assertEqual(result.total_errors, 80,
                          "Found code style errors (and warnings).")
 
     def test_simple(self):
@@ -96,7 +96,8 @@ class TestParserMethods(unittest.TestCase):
         clear_cache(parser)
         if not os.path.exists('Tests/cache'):
             os.mkdir('Tests/cache')
-        shutil.copy('Tests/cache_saved/reference.RFC.1847.xml', 'Tests/cache/reference.RFC.1847.xml')
+        shutil.copy('Tests/cache_saved/reference.RFC.1847.xml',
+                    'Tests/cache/reference.RFC.1847.xml')
         tree = parser.parse()
         self.assertEqual(len(tree.tree.xpath('reference')), 1,
                          "Must be exactly one reference node")

@@ -74,21 +74,25 @@ def exception(message, list):
     if isinstance(list, Exception):
         list = [list]
     for e in list:
-        attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e) if not n.startswith("_")])
+        attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e)
+                     if not n.startswith("_")])
         if attr["message"].endswith(", got "):
             attr["message"] += "nothing."
         attr["filename"] = make_relative(attr["filename"])
         write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
 
+
 def exception_lines(message, list):
     if isinstance(list, Exception):
         list = [list]
     for e in list:
-        attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e) if not n.startswith("_")])
+        attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e)
+                     if not n.startswith("_")])
         if attr["message"].endswith(", got "):
             attr["message"] += "nothing."
         attr["filename"] = make_relative(attr["filename"])
         write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
+
 
 def make_relative(fileName):
     if fileName.startswith("file:///"):
