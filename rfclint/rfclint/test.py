@@ -102,6 +102,7 @@ class Test_Abnf(unittest.TestCase):
 
 class TestSpellerMethods(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
+    @unittest.skipIf(os.name != 'nt', "spell does not work correctly on Linux")
     def test_spell_line(self):
         speller = Speller()
         output = speller.processLine(['This', 'is', 'a', 'sentance.', ';'])
@@ -109,6 +110,7 @@ class TestSpellerMethods(unittest.TestCase):
         speller.close()
         self.assertEqual(len(output), 5, "Wrong number of return values")
 
+    @unittest.skipIf(os.name != 'nt', "spell does not work correctly on Linux")
     def test_spell_line_right(self):
         speller = Speller()
         output = speller.processLine(['This', 'is', 'a', 'sentence.', ';'])
@@ -116,6 +118,7 @@ class TestSpellerMethods(unittest.TestCase):
         speller.close()
         self.assertEqual(len(output), 5, "Wrong number of return values")
 
+    @unittest.skipIf(os.name != 'nt', "spell does not work correctly on Linux")
     def test_spell_tree(self):
         speller = Speller()
         with open("Tests/spell1.xml", "r") as f:
