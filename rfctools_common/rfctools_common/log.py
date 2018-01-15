@@ -63,13 +63,7 @@ def error(*args, **kwargs):
     prefix = "ERROR: "
     if 'where' in kwargs:
         where = kwargs['where']
-        fileName = where.base
-        if fileName.startswith("file:///"):
-            fileName = os.path.relpath(fileName[8:])
-        elif fileName[0:6] == 'file:/':
-            fileName = os.path.relpath(fileName[6:])
-        else:
-            fileName = os.path.relpath(fileName)
+        fileName = make_relative(where.base)
         prefix = "{0}:{1}: ".format(fileName, where.sourceline)
     write_err.write(prefix + u' '.join(args))
     write_err.write(u'\n')
@@ -83,4 +77,24 @@ def exception(message, list):
         attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e) if not n.startswith("_")])
         if attr["message"].endswith(", got "):
             attr["message"] += "nothing."
+        attr["filename"] = make_relative(attr["filename"])
         write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
+
+def exception_lines(message, list):
+    if isinstance(list, Exception):
+        list = [list]
+    for e in list:
+        attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e) if not n.startswith("_")])
+        if attr["message"].endswith(", got "):
+            attr["message"] += "nothing."
+        attr["filename"] = make_relative(attr["filename"])
+        write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
+
+def make_relative(fileName):
+    if fileName.startswith("file:///"):
+        fileName = os.path.relpath(fileName[8:])
+    elif fileName[0:6] == 'file:/':
+        fileName = os.path.relpath(fileName[6:])
+    else:
+        fileName = os.path.relpath(fileName)
+    return fileName

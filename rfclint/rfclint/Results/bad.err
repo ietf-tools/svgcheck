@@ -1,0 +1,4 @@
+ERROR: Unable to parse the XML document: Tests/bad.xml
+ Tests/bad.xml: Line 7: Opening and ending tag mismatch: t line 5 and section
+ Tests/bad.xml: Line 7: Opening and ending tag mismatch: t line 5 and section
+ Tests/bad.xml: Line 8: Premature end of data in tag section line 1
