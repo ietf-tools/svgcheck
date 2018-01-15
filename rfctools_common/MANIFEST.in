@@ -8,4 +8,5 @@ include rfctools_common/utils.py
 include rfctools_common/__init__.py
 include rfctools_common/templates/svg.rng
 include rfctools_common/templates/rfc7991.rng
+include rfctools_common/templates/svg-1.2-rfc.rng
 

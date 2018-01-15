@@ -1545,7 +1545,7 @@
         <zeroOrMore>
           <text/>
         </zeroOrMore>
-        <externalRef href="SVG-1.2-RFC.rng"/>
+        <externalRef href="svg-1.2-rfc.rng"/>
       </choice>
     </element>
   </define>

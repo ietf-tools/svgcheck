@@ -28,5 +28,5 @@ class ConfigFile(object):
         self.config.set(section, field, value)
 
     def save(self):
-        with open(self.options.config_file, 'w', encoding='utf-8') as f:
+        with open(self.options.config_file, 'w') as f:
             self.config.write(f)
