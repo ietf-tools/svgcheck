@@ -51,7 +51,7 @@ class Speller(object):
             program = which(look_for)
             if not program:
                 log.error("Cannot locate the program '{0}' on the path".format(look_for) )
-                raise('aspell')
+                raise FileNotFound('aspell')
 
             
         cmdLine = [program, '-a']

@@ -110,7 +110,6 @@ class Test_Abnf(unittest.TestCase):
 
 class TestSpellerMethods(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
-    @unittest.skipIf(os.name != 'nt', "spell does not work correctly on Linux")
     def test_spell_line(self):
         config = ConfigFile(None)
         speller = Speller(config)
@@ -119,7 +118,6 @@ class TestSpellerMethods(unittest.TestCase):
         speller.close()
         self.assertEqual(len(output), 5, "Wrong number of return values")
 
-    @unittest.skipIf(os.name != 'nt', "spell does not work correctly on Linux")
     def test_spell_line_right(self):
         config = ConfigFile(None)
         speller = Speller(config)
@@ -128,7 +126,6 @@ class TestSpellerMethods(unittest.TestCase):
         speller.close()
         self.assertEqual(len(output), 5, "Wrong number of return values")
 
-    @unittest.skipIf(os.name != 'nt', "spell does not work correctly on Linux")
     def test_spell_tree(self):
         config = ConfigFile(None)
         speller = Speller(config)
