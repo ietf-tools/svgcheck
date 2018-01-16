@@ -41,7 +41,7 @@ class Speller(object):
         if program:
             if not is_exe(program):
                 log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFound(program)
+                raise FileNotFoundException(program)
         else:
             print(" OS = {0}".format(os.name))
             if os.name == "nt":
@@ -51,7 +51,7 @@ class Speller(object):
             program = which(look_for)
             if not program:
                 log.error("Cannot locate the program '{0}' on the path".format(look_for) )
-                raise FileNotFound('aspell')
+                raise FileNotFoundException(lookfor)
 
             
         cmdLine = [program, '-a']
