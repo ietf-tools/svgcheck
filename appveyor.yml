@@ -27,6 +27,8 @@ install:
 build: off
 
 test_script:
+  - set PATH=%PATH%;%cd%\win32\aspell\bin
+  - set PATH
   - cd
   - cd rfctools_common
   - "%PYTHON%\\%EXECUTABLE% setup.py install"
@@ -37,6 +39,11 @@ test_script:
   - cd svgcheck
   - "%PYTHON%\\%EXECUTABLE% setup.py install"
   - cd svgcheck
+  - "%PYTHON%\\%EXECUTABLE% test.py"
+  - cd ..\..
+  - cd rfclint
+  - "%PYTHON%\\%EXECUTABLE% setup.py install"
+  - cd rfclint
   - "%PYTHON%\\%EXECUTABLE% test.py"
   # - "build.cmd %PYTHON%\\%EXECUTABLE% setup.py bdist_wheel"
   

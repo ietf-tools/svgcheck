@@ -1,4 +1,5 @@
 import pycodestyle
+import platform
 import unittest
 import os
 import shutil
@@ -8,7 +9,13 @@ import subprocess
 import difflib
 import six
 from rfclint.spell import Speller
+from rfclint.config import ConfigFile
 from lxml import etree
+
+try:
+    from configparser import SafeConfigParser, NoSectionError
+except ImportError:
+    from ConfigParser import SafeConfigParser, NoSectionError
 
 
 class Test_Coding(unittest.TestCase):
@@ -37,7 +44,8 @@ class Test_ConfigFile(unittest.TestCase):
 
 class Test_Schema(unittest.TestCase):
     """ Initial set of tests dealing with validity and RNG checking """
-
+    @unittest.skipIf(platform.python_implementation() == "PyPy",
+                     "Need version 5.10 for this to work")
     def test_invalid_xml(self):
         """ Load and run with an invalid XML file """
         check_process(self, [sys.executable, "run.py", "Tests/bad.xml"],
@@ -103,21 +111,24 @@ class Test_Abnf(unittest.TestCase):
 class TestSpellerMethods(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
     def test_spell_line(self):
-        speller = Speller()
+        config = ConfigFile(None)
+        speller = Speller(config)
         output = speller.processLine(['This', 'is', 'a', 'sentance.', ';'])
         print(output)
         speller.close()
         self.assertEqual(len(output), 5, "Wrong number of return values")
 
     def test_spell_line_right(self):
-        speller = Speller()
+        config = ConfigFile(None)
+        speller = Speller(config)
         output = speller.processLine(['This', 'is', 'a', 'sentence.', ';'])
         print(output)
         speller.close()
         self.assertEqual(len(output), 5, "Wrong number of return values")
 
     def test_spell_tree(self):
-        speller = Speller()
+        config = ConfigFile(None)
+        speller = Speller(config)
         with open("Tests/spell1.xml", "r") as f:
             tree = etree.parse(f)
         speller.processTree(tree.getroot())

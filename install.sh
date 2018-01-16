@@ -19,6 +19,7 @@ then
 	    ;;
 
     esac
+    brew install aspell
 fi
 
     

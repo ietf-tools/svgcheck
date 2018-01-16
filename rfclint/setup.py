@@ -4,6 +4,7 @@
 # --------------------------------------------------
 
 import re
+import sys
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
@@ -17,6 +18,9 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as file:
 # Get the requirements from the local requirements.txt file
 with open(path.join(here, 'requirements.txt'), encoding='utf-8') as file:
     requirements = file.read().splitlines()
+major, minor = sys.version_info[:2]
+if major == 2:
+    requirements.append("subprocess32")
 
 # Get additional items from the local MANIFEST.in file
 with open(path.join(here, 'MANIFEST.in'), encoding='utf-8') as file:
@@ -72,11 +76,17 @@ setup(
     # package_data={
     #    'svgcheck': ['run.py']
     #    },
+    package_data={
+#        ':platform_system == "win32"': [ "win32/*" ],
+        'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
+    },
+            
 
     entry_points={
         'console_scripts': [
             'rfclint=rfclint.run:main'
             ]
         },
+    include_package_data = True,
     zip_safe=False
 )
