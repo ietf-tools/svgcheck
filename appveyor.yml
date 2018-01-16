@@ -27,7 +27,8 @@ install:
 build: off
 
 test_script:
-  - set PATH=%PATH%;%cwd%\win32\aspell\bin
+  - set PATH=%PATH%;%cd%\win32\aspell\bin
+  - set PATH
   - cd
   - cd rfctools_common
   - "%PYTHON%\\%EXECUTABLE% setup.py install"

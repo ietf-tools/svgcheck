@@ -65,10 +65,12 @@ class Speller(object):
 
         self.p = subprocess.Popen(cmdLine,
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        # self.stdin = io.TextIOWrapper( self.p.stdin, encoding='utf-8', line_buffering=True)
-        # self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
-        self.stdout = self.p.stdout
-        self.stdin = self.p.stdin
+        if six.PY2:
+            self.stdout = self.p.stdout
+            self.stdin = self.p.stdin
+        else:
+            self.stdin = io.TextIOWrapper( self.p.stdin, encoding='utf-8', line_buffering=True)
+            self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
         self.stdout.readline()
         # self.stdin.write('!\n')
         self.word_re = re.compile(r'\w+[,.?!]*', re.UNICODE | re.MULTILINE)
