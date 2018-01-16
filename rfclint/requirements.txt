@@ -4,4 +4,3 @@ six
 rfctools_common>=0.1.0
 colorama
 appdirs
-subprocess32
