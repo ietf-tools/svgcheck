@@ -1,3 +1,3 @@
-Tests\abnf-three.xml:22: Got definitions, expecting '=' or '=/'
-Tests\abnf-three.xml:65: Got definitions, expecting '=' or '=/'
-Tests\abnf-three.xml:73: Got definitions, expecting '=' or '=/'
+Tests/abnf-three.xml:22: Got definitions, expecting '=' or '=/'
+Tests/abnf-three.xml:65: Got definitions, expecting '=' or '=/'
+Tests/abnf-three.xml:73: Got definitions, expecting '=' or '=/'

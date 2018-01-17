@@ -8,6 +8,7 @@ import sys
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+import os
 
 here = path.abspath(path.dirname(__file__))
 
@@ -81,9 +82,9 @@ setup(
     # 'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
     # },
     data_files=[('bin',
-                 ["../win32/bap.exe", "../win32/cygwin1.dll"] if os.name == "nt"
-                 ["../linux/bap"] if sys.platform == "linux"
-                 ["../macos/bap"] if sys.platform == "darwin" []
+                 ["../win32/bap.exe", "../win32/cygwin1.dll"] if os.name == "nt" else
+                 (["../linux/bap"] if sys.platform == "linux" else
+                  (["macos/bap"] if sys.platform == "darwin" else []))
                  )
                 ],
             
