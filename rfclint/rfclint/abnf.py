@@ -14,7 +14,7 @@ class AbnfChecker(object):
         if program:
             if not which(program):
                 log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFoundException(program)
+                raise FileNotFoundError(program)
         else:
             # look on the path first
             look_for = "bap"
@@ -26,16 +26,16 @@ class AbnfChecker(object):
                 #  Look for the version that we provide
                 if sys.platform == "win32" or sys.platform == "cygwin":
                     program = os.path.dirname(os.path.realpath(__file__)) + \
-                              "/../win32/bap.exe"
+                              "/../bin/bap.exe"
                 elif sys.platform == "linux":
-                    program = os.path.dirname(os.path.realpath(__file__)) + "/../linux/bap"
+                    program = os.path.dirname(os.path.realpath(__file__)) + "/../bin/bap"
                 elif sys.platform == "darwin":
-                    program = os.path.dirname(os.path.realpath(__file__)) + "/../maxos/bap"
+                    program = os.path.dirname(os.path.realpath(__file__)) + "/../bin/bap"
                 else:
-                    raise FileNotFoundException("Don't know where to find bap")
+                    raise FileNotFoundError("Don't know where to find bap")
                 program = which(program)
                 if not program:
-                    raise FileNotFoundException("Can't find bap anywhere")
+                    raise FileNotFoundError("Can't find bap anywhere")
         self.abnfProgram = program
 
     def validate(self, tree):
