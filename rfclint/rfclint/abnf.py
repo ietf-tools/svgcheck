@@ -3,6 +3,7 @@ import io
 import subprocess
 import re
 import os
+import six
 from rfctools_common import log
 from rfclint.spell import which
 
@@ -92,7 +93,10 @@ class SourceExtracter(object):
 
         lineOffsets = []
         for item in codeItems:
-            file.write(unicode(item.text))
+            if six.PY2:
+                file.write(unicode(item.text))
+            else:
+                file.write(item.text)
             lineOffsets.append((item.base, item.sourceline, item.text.count('\n')+1))
 
         self.lineOffsets = lineOffsets
