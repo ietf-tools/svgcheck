@@ -83,7 +83,7 @@ setup(
     # },
     data_files=[('bin',
                  ["win32/bap.exe", "win32/cygwin1.dll"] if os.name == "nt" else
-                 ["linux/bap"] if sys.platform == "linux" else
+                 ["linux/bap"] if sys.platform.startswith("linux") else
                  ["macos/bap"] if sys.platform == "darwin" else []
                  )
                 ],
