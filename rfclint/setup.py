@@ -68,7 +68,7 @@ setup(
     install_requires=requirements,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, <4',
 
-    # List additional gorups of dependencies here.
+    # List additional groups of dependencies here.
     # extras_require=(
     #  'dev':['twine',],
     # ]
@@ -76,10 +76,16 @@ setup(
     # package_data={
     #    'svgcheck': ['run.py']
     #    },
-    package_data={
-#        ':platform_system == "win32"': [ "win32/*" ],
-        'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
-    },
+    # package_data={
+    #        ':platform_system == "win32"': [ "win32/*" ],
+    # 'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
+    # },
+    data_files=[('bin',
+                 ["../win32/bap.exe", "../win32/cygwin1.dll"] if os.name == "nt"
+                 ["../linux/bap"] if sys.platform == "linux"
+                 ["../macos/bap"] if sys.platform == "darwin" []
+                 )
+                ],
             
 
     entry_points={

@@ -2,16 +2,20 @@ import appdirs
 import six
 
 try:
-    from configparser import SafeConfigParser, NoSectionError
+    from configparser import SafeConfigParser, NoSectionError, NoOptionError
 except ImportError:
-    from ConfigParser import SafeConfigParser, NoSectionError
+    from ConfigParser import SafeConfigParser, NoSectionError, NoOptionError
 
 
 class ConfigFile(object):
     def __init__(self, options):
         self.options = options
 
-        self.config = SafeConfigParser()
+        if six.PY2:
+            self.config = SafeConfigParser()
+        else:
+            self.config = ConfigParser()
+
         if options:
             if not options.config_file:
                 options.config_file = appdirs.user_data_dir('rfclint', 'IETF') + "/rfclint.cfg"
@@ -19,6 +23,8 @@ class ConfigFile(object):
 
             if options.abnf_program:
                 self.set('abnf', 'program', options.abnf_program)
+            if options.abnf_add:
+                self.set('abnf', 'addRules', options.abnf_add)
 
             # Spelling options
             if options.spell_program:
@@ -33,10 +39,22 @@ class ConfigFile(object):
             return self.config.get(section, field)
         except NoSectionError:
             return None
+        except NoOptionError:
+            return None
+
+    def getList(self, section, field):
+        value = self.get(section, field)
+        if not value:
+            return value
+        value = value.split(',')
+        value = [v.strip() for v in value]
+        return value
 
     def set(self, section, field, value):
         if not self.config.has_section(section):
             self.config.add_section(section)
+        if type(value) is list:
+            value = ",".join(value)
         self.config.set(section, field, value)
 
     def save(self):

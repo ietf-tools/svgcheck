@@ -1,15 +1,42 @@
+import sys
 import io
 import subprocess
 import re
 import os
 from rfctools_common import log
+from rfclint.spell import which
 
 
 class AbnfChecker(object):
-    def __init__(self, options):
-        self.options = options
-        self.abnfProgram = "d:\\Projects\\v3\\rfceditor\\rfclint\\win32\\bap.exe"
-        self.abnfProgram = os.path.dirname(os.path.realpath(__file__)) + "../../win32/bap.exe"
+    def __init__(self, config):
+        program = config.get('abnf', 'program')
+        self.dictionaries = config.getList('abnf', 'dictionaries')
+        if program:
+            if not which(program):
+                log.error("The program '{0}' does not exist or is not executable".format(program))
+                raise FileNotFoundException(program)
+        else:
+            # look on the path first
+            look_for = "bap"
+            if os.name == "nt":
+                look_for = "bap.exe"
+            program = which(look_for)
+
+            if not program:
+                #  Look for the version that we provide
+                if sys.platform == "win32" or sys.platform == "cygwin":
+                    program = os.path.dirname(os.path.realpath(__file__)) + \
+                              "/../win32/bap.exe"
+                elif sys.platform == "linux":
+                    program = os.path.dirname(os.path.realpath(__file__)) + "/../linux/bap"
+                elif sys.platform == "darwin":
+                    program = os.path.dirname(os.path.realpath(__file__)) + "/../maxos/bap"
+                else:
+                    raise FileNotFoundException("Don't know where to find bap")
+                program = which(program)
+                if not program:
+                    raise FileNotFoundException("Can't find bap anywhere")
+        self.abnfProgram = program
 
     def validate(self, tree):
         stdin = io.StringIO()
@@ -17,38 +44,31 @@ class AbnfChecker(object):
         if not xtract.ExtractToFile(stdin):
             log.note("No ABNF to check")
             return False
-        cmds = [self.abnfProgram]
-        if options.abnf_add:
-            if not os.path.exists(options.abnf_add):
-                log.error("Additional ABNF rule file '{0}' does not exist".format(optoins.abnf_add))
-                return
-            cmds.append("-i")
-            cmds.append(options.abnf_add)
+        cmds = [self.abnfProgram, "-q"]
+
+        if self.dictionaries:
+            for dict in self.dictionaries:
+                if not os.path.exists(dict):
+                    log.error("Additional ABNF rule file '{0}' does not exist".format(dict))
+                    return
+                cmds.append("-i")
+                cmds.append(dict)
 
         p = subprocess.Popen(cmds, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         (stdout, stderr) = p.communicate(stdin.getvalue().encode('utf-8'))
 
-        print("Return = {0}".format(p.returncode))
-        print("STDOUT = {0}".format(stdout.decode('utf-8')))
-        print("STDERR = {0}".format(stderr.decode('utf-8')))
-
-        for xxx in xtract.lineOffsets:
-            print("--- {0} {1} {2}".format(xxx[0], xxx[1], xxx[2]))
-
         errs = stderr.decode('utf-8').splitlines()
         for err in errs:
             m = re.match(r"stdin\((\d+):(\d+)\): error: (.*)", err)
             if m:
-                print("*** '{0}' '{1}' '{2}'".format(m.group(1), m.group(2), m.group(3)))
                 line = int(m.group(1))
-                runningLine = 0
+                runningLine = -1
                 for xxx in xtract.lineOffsets:
                     if line < runningLine + xxx[2]:
-                        print("{0}:{1}: ERROR: {2}".format(xxx[0], xxx[1] + line - runningLine,
-                                                           m.group(3)))
+                        log.error(m.group(3), file=xxx[0], line=xxx[1] + line - runningLine)
                         break
-                    runningLine += xxx[2]
+                    runningLine += xxx[2] - 1
         return True
 
 
@@ -72,7 +92,7 @@ class SourceExtracter(object):
 
         lineOffsets = []
         for item in codeItems:
-            file.write(item.text)
+            file.write(unicode(item.text))
             lineOffsets.append((item.base, item.sourceline, item.text.count('\n')+1))
 
         self.lineOffsets = lineOffsets

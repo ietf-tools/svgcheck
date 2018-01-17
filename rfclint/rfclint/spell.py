@@ -39,9 +39,9 @@ class Speller(object):
     def __init__(self, config):
         program = config.get('spell', 'program')
         if program:
-            if not is_exe(program):
+            if not which(program):
                 log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFoundException(program)
+                raise FileNotFoundError(program)
         else:
             print(" OS = {0}".format(os.name))
             if os.name == "nt":
@@ -51,7 +51,7 @@ class Speller(object):
             program = which(look_for)
             if not program:
                 log.error("Cannot locate the program '{0}' on the path".format(look_for) )
-                raise FileNotFoundException(lookfor)
+                raise FileNotFoundError(look_for)
 
             
         cmdLine = [program, '-a']
