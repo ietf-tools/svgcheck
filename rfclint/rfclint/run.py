@@ -242,7 +242,7 @@ def main():
 
     #  Validate any embedded ABNF
     if not options.no_abnf:
-        checker = AbnfChecker(options)
+        checker = AbnfChecker(config)
 
         checker.validate(xmlrfc.tree)
 

@@ -34,12 +34,58 @@ class Test_ConfigFile(unittest.TestCase):
         """ Change the abnf program name """
         try:
             os.mkdir("Temp")
-        except Exception as e:
+        except OSError as e:
             pass
         shutil.copyfile("Tests/empty.cfg", "Temp/empty.cfg")
         check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
                              "--abnf-program=abnf.foo", "--save-config"],
                       None, None, "Results/abnf.cfg", "Temp/empty.cfg")
+
+    def test_abnf_add_rules(self):
+        """ Add one dictionary """
+        try:
+            os.mkdir("Temp")
+        except OSError as e:
+            pass
+        shutil.copyfile("Tests/empty.cfg", "Temp/empty.cfg")
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             "--abnf-add-rules=otherruleset.abnf", "--save-config"],
+                      None, None, "Results/abnf_add_rules.cfg", "Temp/empty.cfg")
+
+    def test_spell_program_change(self):
+        """ Change the spell program name """
+        try:
+            os.mkdir("Temp")
+        except OSError as e:
+            pass
+        shutil.copyfile("Tests/empty.cfg", "Temp/empty.cfg")
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             "--spell-program=spell.foo", "--save-config"],
+                      None, None, "Results/spell.cfg", "Temp/empty.cfg")
+
+    def test_spell_one_dict(self):
+        """ Add one dictionary """
+        try:
+            os.mkdir("Temp")
+        except OSError as e:
+            pass
+        shutil.copyfile("Tests/empty.cfg", "Temp/empty.cfg")
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             "--spell-program=spell.foo", "--dictionary=dict1",
+                             "--save-config"],
+                      None, None, "Results/spell-one-dict.cfg", "Temp/empty.cfg")
+
+    def test_spell_two_dict(self):
+        """ Add two dictionaries """
+        try:
+            os.mkdir("Temp")
+        except OSError as e:
+            pass
+        shutil.copyfile("Tests/empty.cfg", "Temp/empty.cfg")
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             "--spell-program=spell.foo", "--dictionary=dict1",
+                             "--dictionary=dict2", "--save-config"],
+                      None, None, "Results/spell-two-dict.cfg", "Temp/empty.cfg")
 
 
 class Test_Schema(unittest.TestCase):
@@ -106,6 +152,32 @@ class Test_Abnf(unittest.TestCase):
         """ No ABFN in the source file """
         check_process(self, [sys.executable, "run.py", "Tests/rfc.xml"],
                       "Results/no-abnf.out", "Results/no-abnf.err", None, None)
+
+    def test_clean_abnf(self):
+        """ Clean ABNF in the source file """
+        check_process(self, [sys.executable, "run.py", "Tests/abnf-clean.xml"],
+                      "Results/abnf-clean.out", "Results/abnf-clean.err", None, None)
+
+    def test_error_one(self):
+        """ A single ABNF section w/ an error """
+        check_process(self, [sys.executable, "run.py", "Tests/abnf-one.xml"],
+                      "Results/abnf-one.out", "Results/abnf-one.err", None, None)
+
+    def test_error_three(self):
+        """ Three ABNF sections each w/ an error """
+        check_process(self, [sys.executable, "run.py", "Tests/abnf-three.xml"],
+                      "Results/abnf-three.out", "Results/abnf-three.err", None, None)
+
+    def test_add_extras(self):
+        """ An ABNF object needing additional file """
+        check_process(self, [sys.executable, "run.py", "--abnf-add-rules=Tests/abnf-extras.abnf",
+                             "Tests/abnf-extras.xml"],
+                      "Results/abnf-extras.out", "Results/abnf-extras.err", None, None)
+
+    def test_error_one(self):
+        """ A single ABNF section w/ an error, but skip checking """
+        check_process(self, [sys.executable, "run.py", "--no-abnf", "Tests/abnf-one.xml"],
+                      "Results/abnf-skip.out", "Results/abnf-skip.err", None, None)
 
 
 class TestSpellerMethods(unittest.TestCase):

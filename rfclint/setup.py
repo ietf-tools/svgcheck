@@ -8,6 +8,7 @@ import sys
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+import os
 
 here = path.abspath(path.dirname(__file__))
 
@@ -68,7 +69,7 @@ setup(
     install_requires=requirements,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, <4',
 
-    # List additional gorups of dependencies here.
+    # List additional groups of dependencies here.
     # extras_require=(
     #  'dev':['twine',],
     # ]
@@ -76,10 +77,16 @@ setup(
     # package_data={
     #    'svgcheck': ['run.py']
     #    },
-    package_data={
-#        ':platform_system == "win32"': [ "win32/*" ],
-        'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
-    },
+    # package_data={
+    #        ':platform_system == "win32"': [ "win32/*" ],
+    # 'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
+    # },
+    data_files=[('bin',
+                 ["win32/bap.exe", "win32/cygwin1.dll"] if os.name == "nt" else
+                 ["linux/bap"] if sys.platform.startswith("linux") else
+                 ["macos/bap"] if sys.platform == "darwin" else []
+                 )
+                ],
             
 
     entry_points={

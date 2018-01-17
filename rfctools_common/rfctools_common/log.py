@@ -65,6 +65,9 @@ def error(*args, **kwargs):
         where = kwargs['where']
         fileName = make_relative(where.base)
         prefix = "{0}:{1}: ".format(fileName, where.sourceline)
+    if 'file' in kwargs:
+        fileName = make_relative(kwargs['file'])
+        prefix = "{0}:{1}: ".format(fileName, kwargs['line'])
     write_err.write(prefix + u' '.join(args))
     write_err.write(u'\n')
 
