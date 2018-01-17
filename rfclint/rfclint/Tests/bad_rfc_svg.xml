@@ -1,0 +1,20 @@
+<rfc>
+  <front>
+    <title/>
+    <author fullname="Jim Schaad" initials="J" surname="Schaad">
+      <organization>IETF</organization>
+    </author>
+  </front>
+  <middle>
+    <section>
+      <name>Include an SVG item</name>
+      <artwork type="svg">
+<svg height="100" width="100" datatype="foobar" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+  <rectangle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+</svg>
+	
+      </artwork>
+    </section>
+  </middle>
+</rfc>

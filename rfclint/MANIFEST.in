@@ -1,0 +1,11 @@
+include changelog
+include LICENSE
+include README.rst
+include requirements.txt
+include rfclint/run.py
+include rfclint/abnf.py
+include rfclint/config.py
+include rfclint/spell.py
+include rfclint/__init__.py
+include win32/bap.exe
+include win32/cygwin1.dll

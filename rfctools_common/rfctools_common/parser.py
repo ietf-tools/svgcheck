@@ -507,7 +507,8 @@ class XmlRfcParser:
                     self.rfc_number = element.attrib.get("number", None)
                     break
         except lxml.etree.XMLSyntaxError as e:
-            log.warn("Parsing Error: %s" % e)
+            pass
+            # log.warn("Parsing Error: %s" % e)
         except ValueError as e:
             if e.message == "I/O operation on closed file":
                 pass

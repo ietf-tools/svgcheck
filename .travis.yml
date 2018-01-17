@@ -18,6 +18,12 @@ matrix:
           language: generic
           env: TOXENV=py36 PYTHON=python3 PIP=pip3
 
+addons:
+  apt:
+    packages:
+      - aspell
+      - aspell-en
+
 install:
     - ./install.sh
 
@@ -31,5 +37,10 @@ script:
   - $PYTHON setup.py --quiet install
   - cd svgcheck
   - $PYTHON test.py
+  - cd ../../rfclint
+  - $PYTHON setup.py --quiet install
+  - cd rfclint
+  - $PYTHON test.py
+  
   
  

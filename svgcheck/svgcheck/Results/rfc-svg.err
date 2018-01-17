@@ -1,5 +1,1 @@
 Parsing file Tests/rfc-svg.xml
-http://example.org/label:2: The element 'svg' does not allow the attribute 'zoomAndPan', attribute to be removed.
-http://example.org/label:2: The element 'svg' does not allow the attribute 'contentScriptType', attribute to be removed.
-http://example.org/label:2: The element 'svg' does not allow the attribute 'timelineBegin', attribute to be removed.
-http://example.org/label:2: The element 'svg' does not allow the attribute 'playbackOrder', attribute to be removed.
