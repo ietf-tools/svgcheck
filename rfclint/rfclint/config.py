@@ -2,7 +2,7 @@ import appdirs
 import six
 
 try:
-    from configparser import SafeConfigParser, NoSectionError, NoOptionError
+    from configparser import SafeConfigParser, NoSectionError, NoOptionError, ConfigParser
 except ImportError:
     from ConfigParser import SafeConfigParser, NoSectionError, NoOptionError
 
