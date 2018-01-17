@@ -82,9 +82,9 @@ setup(
     # 'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
     # },
     data_files=[('bin',
-                 ["../win32/bap.exe", "../win32/cygwin1.dll"] if os.name == "nt" else
-                 (["../linux/bap"] if sys.platform == "linux" else
-                  (["macos/bap"] if sys.platform == "darwin" else []))
+                 ["win32/bap.exe", "win32/cygwin1.dll"] if os.name == "nt" else
+                 ["linux/bap"] if sys.platform == "linux" else
+                 ["macos/bap"] if sys.platform == "darwin" else []
                  )
                 ],
             
