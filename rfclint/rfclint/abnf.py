@@ -1,4 +1,5 @@
 import sys
+import errno
 import io
 import subprocess
 import re
@@ -28,12 +29,8 @@ class AbnfChecker(object):
                 if sys.platform == "win32" or sys.platform == "cygwin":
                     program = os.path.dirname(os.path.realpath(__file__)) + \
                               "/../bin/bap.exe"
-                elif sys.platform == "linux":
-                    program = os.path.dirname(os.path.realpath(__file__)) + "/../bin/bap"
-                elif sys.platform == "darwin":
-                    program = os.path.dirname(os.path.realpath(__file__)) + "/../bin/bap"
                 else:
-                    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), "Don't know where to find bap")
+                    program = os.path.dirname(os.path.realpath(__file__)) + "/../bin/bap"
                 program = which(program)
                 if not program:
                     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), bap)
