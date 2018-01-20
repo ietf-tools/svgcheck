@@ -12,7 +12,7 @@ from rfclint.spell import which
 class AbnfChecker(object):
     def __init__(self, config):
         program = config.get('abnf', 'program')
-        self.dictionaries = config.getList('abnf', 'dictionaries')
+        self.dictionaries = config.getList('abnf', 'addrules')
         if program:
             if not which(program):
                 log.error("The program '{0}' does not exist or is not executable".format(program))
@@ -67,6 +67,8 @@ class AbnfChecker(object):
                         log.error(m.group(3), file=xxx[0], line=xxx[1] + line - runningLine)
                         break
                     runningLine += xxx[2] - 1
+            else:
+                log.error(err)
         return True
 
 

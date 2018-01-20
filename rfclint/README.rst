@@ -1,32 +1,19 @@
-Htmlizing IETF Text Documents
-=============================
+Perform Validation checks on Internet-Drafts
+============================================
 
-This module contains one single function, ```markup(text)``` which adds HTML markup
-to what is assumed to be an IETF document (usually an Internet-Draft_ or an RFC_)::
+There are a number of tasks that need to be performed when an Internet-Draft_ is
+begin process to create an RFC_. This tool performs a subset of those actions.
+The actions performed are:
 
-  from rfc2html import markup
-  with open('rfc3344.txt') as file:
-      text = file.read()
-  html = markup(text)
+- Validate the file is well formed XML and that it conforms to the XML2RFC Version 3
+  schema as defined in RFC 7991_.
+- Verify that embedded XML stanzas are well formed.
+- Verify that embedded ABNF is complete and well formed.
+- Identify misspelled words.
+- Detect duplicate words.
 
-As a historic artifact of being a document series which was started at the time when the easiest
-way of distributing a 'Request For Comments' was to type it up on a typewriter and mimeographing_
-it, RFCs and Internet-Drafts have traditionally been published as plaintext documents with a
-maximum line length of 72 characters.
-
-This format isn't particularly appropriate in a web-centric world, howerver, so starting in
-2002, `Henrik Levkowetz`_ started using scripts to convert the plaintext documents into HTML
-documents with the same look-and-feel as the plaintext originals, but with internal and external
-HTML links in order to facilitate browsing.
-
-Since 2004, the resulting documents have been made available on `tools.ietf.org`_.
-
-This module is a packaging of the htmlization code from version 1.113 of the htmlizing script.
-Earlier version of the script are available at `tools.ietf.org/tools/rfcmarkup`_
+The tool can be used either in an interactive mode or in batch mode.
 
 .. _Internet-Draft: https://en.wikipedia.org/wiki/Internet_Draft
 .. _RFC: https://en.wikipedia.org/wiki/Request_for_Comments
-.. _mimeographing: https://en.wikipedia.org/wiki/Mimeograph
-.. _`tools.ietf.org`: https://tools.ietf.org/html/
-.. _`tools.ietf.org/tools/rfcmarkup`: https://tools.ietf.org/tools/rfcmarkup
-.. _`Henrik Levkowetz`: mailto:henrik@levkowetz.com
+.. _RFC 7991: https://tools.ietf.org/html/rfc7991
