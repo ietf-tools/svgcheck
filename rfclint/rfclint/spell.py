@@ -41,7 +41,7 @@ class Speller(object):
         if program:
             if not which(program):
                 log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFoundError(program)
+                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), program)
         else:
             print(" OS = {0}".format(os.name))
             if os.name == "nt":
@@ -51,12 +51,10 @@ class Speller(object):
             program = which(look_for)
             if not program:
                 log.error("Cannot locate the program '{0}' on the path".format(look_for) )
-                raise FileNotFoundError(look_for)
+                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), look_for)
 
             
         cmdLine = [program, '-a']
-        print("   PROGRAM = '{0}'".format(program))
-        print("   COMMAND LINE = '{0}'".format(cmdLine))
         dicts = config.get('spell', 'dictionaries')
         if dicts:
             for dict in dicts:

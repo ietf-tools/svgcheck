@@ -1,8 +1,10 @@
 import sys
+import errno
 import io
 import subprocess
 import re
 import os
+import six
 from rfctools_common import log
 from rfclint.spell import which
 
@@ -14,7 +16,7 @@ class AbnfChecker(object):
         if program:
             if not which(program):
                 log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFoundException(program)
+                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), program)
         else:
             # look on the path first
             look_for = "bap"
@@ -26,16 +28,12 @@ class AbnfChecker(object):
                 #  Look for the version that we provide
                 if sys.platform == "win32" or sys.platform == "cygwin":
                     program = os.path.dirname(os.path.realpath(__file__)) + \
-                              "/../win32/bap.exe"
-                elif sys.platform == "linux":
-                    program = os.path.dirname(os.path.realpath(__file__)) + "/../linux/bap"
-                elif sys.platform == "darwin":
-                    program = os.path.dirname(os.path.realpath(__file__)) + "/../maxos/bap"
+                              "/../bin/bap.exe"
                 else:
-                    raise FileNotFoundException("Don't know where to find bap")
+                    program = os.path.dirname(os.path.realpath(__file__)) + "/../bin/bap"
                 program = which(program)
                 if not program:
-                    raise FileNotFoundException("Can't find bap anywhere")
+                    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), bap)
         self.abnfProgram = program
 
     def validate(self, tree):
@@ -92,7 +90,10 @@ class SourceExtracter(object):
 
         lineOffsets = []
         for item in codeItems:
-            file.write(unicode(item.text))
+            if six.PY2:
+                file.write(unicode(item.text))
+            else:
+                file.write(item.text)
             lineOffsets.append((item.base, item.sourceline, item.text.count('\n')+1))
 
         self.lineOffsets = lineOffsets
