@@ -182,7 +182,7 @@ class Test_Abnf(unittest.TestCase):
                              "Tests/abnf-extras.xml"],
                       "Results/abnf-extras-no.out", "Results/abnf-extras-no.err", None, None)
 
-    def test_error_one(self):
+    def test_error_one_skip(self):
         """ A single ABNF section w/ an error, but skip checking """
         check_process(self, [sys.executable, "run.py", "--no-abnf", "--no-spell",
                              "Tests/abnf-one.xml"],
@@ -192,7 +192,7 @@ class Test_Abnf(unittest.TestCase):
 class TestSpellerMethods(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
     def test_error_one(self):
-        """ A single ABNF section w/ an error, but skip checking """
+        """ Do basic quiet spell checking """
         check_process(self, [sys.executable, "run.py",
                              "Tests/spell.xml"],
                       "Results/spell-01.out", "Results/spell-01.err", None, None)

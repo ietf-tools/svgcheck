@@ -1,0 +1,3 @@
+Tests\abnf-one.xml:22: Got definitions, expecting '=' or '=/'
+ERROR: ; is UNDEFINED
+ERROR: parsing failed: 1 errors encountered
