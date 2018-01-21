@@ -14,6 +14,7 @@ from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 from rfctools_common import log
 from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker
+from rfclint.spell import Speller
 
 try:
     from configparser import SafeConfigParser
@@ -246,12 +247,17 @@ def main():
 
         checker.validate(xmlrfc.tree)
 
+    # do the Spelling and Duplicate checking
+    if not options.no_spell:
+        speller = Speller(config)
+        speller.processTree(xmlrfc.tree.getroot())
+
 
 if __name__ == '__main__':
     major, minor = sys.version_info[:2]
-    if major == 2 and minor < 6:
+    if major == 2 and minor < 7:
         print("")
-        print("The rfclint script requires python 2, with a version of 2.6 or higher.")
+        print("The rfclint script requires python 2, with a version of 2.7 or higher.")
         print("Can't proceed, quitting.")
         exit()
 
