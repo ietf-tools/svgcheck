@@ -255,9 +255,9 @@ def main():
 
 if __name__ == '__main__':
     major, minor = sys.version_info[:2]
-    if major == 2 and minor < 6:
+    if major == 2 and minor < 7:
         print("")
-        print("The rfclint script requires python 2, with a version of 2.6 or higher.")
+        print("The rfclint script requires python 2, with a version of 2.7 or higher.")
         print("Can't proceed, quitting.")
         exit()
 
