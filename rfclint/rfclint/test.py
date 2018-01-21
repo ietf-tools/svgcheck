@@ -22,7 +22,7 @@ class Test_Coding(unittest.TestCase):
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
-        result = pep8style.check_files(['run.py', 'abnf.py', 'config.py',
+        result = pep8style.check_files(['run.py', 'abnf.py', 'config.py', 'spell.py',
                                         'test.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
@@ -104,7 +104,8 @@ class Test_Schema(unittest.TestCase):
 
     def test_invalid_rng_skip(self):
         """ Load and run w/ an invalid RNG file, skip RNG check """
-        check_process(self, [sys.executable, "run.py", "--no-rng", "Tests/bad_rfc.xml"],
+        check_process(self, [sys.executable, "run.py", "--no-rng", "--no-spell",
+                             "Tests/bad_rfc.xml"],
                       "Results/bad_rfc_skip.out", "Results/bad_rfc_skip.err", None, None)
 
     def test_invalid_svg(self):
@@ -114,7 +115,7 @@ class Test_Schema(unittest.TestCase):
 
     def test_clean_rng(self):
         """ Load and run w/ a valid RFC """
-        check_process(self, [sys.executable, "run.py", "Tests/rfc.xml"],
+        check_process(self, [sys.executable, "run.py", "--no-spell", "Tests/rfc.xml"],
                       "Results/clean_rfc.out", "Results/clean_rfc.err", None, None)
 
 
@@ -122,26 +123,26 @@ class Test_Extract(unittest.TestCase):
     """ Set of tests dealing with extracting code from the source """
     def test_extract_nothing(self):
         """ Try and extract an item which does not exist """
-        check_process(self, [sys.executable, "run.py", "--extract=zero",
+        check_process(self, [sys.executable, "run.py", "--extract=zero", "--no-spell",
                              "--no-rng", "Tests/abnf.xml"],
                       "Results/extract_none.out", "Results/extract_none.err", None, None)
 
     def test_extract_one(self):
         """ Try and extract an item which does not exist """
-        check_process(self, [sys.executable, "run.py", "--extract=ASN.1",
+        check_process(self, [sys.executable, "run.py", "--extract=ASN.1", "--no-spell",
                              "--no-rng", "Tests/abnf.xml"],
                       "Results/extract_one.out", "Results/extract_one.err", None, None)
 
     def test_extract_two(self):
         """ Try and extract an item which does not exist """
-        check_process(self, [sys.executable, "run.py", "--extract=abnf",
+        check_process(self, [sys.executable, "run.py", "--extract=abnf", "--no-spell",
                              "--no-rng", "Tests/abnf.xml"],
                       "Results/extract_two.out", "Results/extract_two.err", None, None)
 
     def test_extract_to_file(self):
         """ Try and extract an item which does not exist """
         check_process(self, [sys.executable, "run.py", "--extract=abnf", "--out=Temp/extract.txt",
-                             "--no-rng", "Tests/abnf.xml"],
+                             "--no-spell", "--no-rng", "Tests/abnf.xml"],
                       "Results/extract_file.out", "Results/extract_file.err",
                       "Results/extract.txt", "Temp/extract.txt")
 
@@ -150,61 +151,51 @@ class Test_Abnf(unittest.TestCase):
     """ Set of tests dealing with the abnf checker """
     def test_no_abnf(self):
         """ No ABFN in the source file """
-        check_process(self, [sys.executable, "run.py", "Tests/rfc.xml"],
+        check_process(self, [sys.executable, "run.py", "--no-spell", "Tests/rfc.xml"],
                       "Results/no-abnf.out", "Results/no-abnf.err", None, None)
 
     def test_clean_abnf(self):
         """ Clean ABNF in the source file """
-        check_process(self, [sys.executable, "run.py", "Tests/abnf-clean.xml"],
+        check_process(self, [sys.executable, "run.py", "--no-spell", "Tests/abnf-clean.xml"],
                       "Results/abnf-clean.out", "Results/abnf-clean.err", None, None)
 
     def test_error_one(self):
         """ A single ABNF section w/ an error """
-        check_process(self, [sys.executable, "run.py", "Tests/abnf-one.xml"],
+        check_process(self, [sys.executable, "run.py", "--no-spell", "Tests/abnf-one.xml"],
                       "Results/abnf-one.out", "Results/abnf-one.err", None, None)
 
     def test_error_three(self):
         """ Three ABNF sections each w/ an error """
-        check_process(self, [sys.executable, "run.py", "Tests/abnf-three.xml"],
+        check_process(self, [sys.executable, "run.py", "--no-spell", "Tests/abnf-three.xml"],
                       "Results/abnf-three.out", "Results/abnf-three.err", None, None)
 
     def test_add_extras(self):
         """ An ABNF object needing additional file """
-        check_process(self, [sys.executable, "run.py", "--abnf-add-rules=Tests/abnf-extras.abnf",
+        check_process(self, [sys.executable, "run.py", "--no-spell",
+                             "--abnf-add-rules=Tests/abnf-extras.abnf",
                              "Tests/abnf-extras.xml"],
                       "Results/abnf-extras.out", "Results/abnf-extras.err", None, None)
 
-    def test_error_one(self):
+    def test_dont_add_extras(self):
+        """ An ABNF object needing additional file, but don't provide it """
+        check_process(self, [sys.executable, "run.py", "--no-spell",
+                             "Tests/abnf-extras.xml"],
+                      "Results/abnf-extras-no.out", "Results/abnf-extras-no.err", None, None)
+
+    def test_error_one_skip(self):
         """ A single ABNF section w/ an error, but skip checking """
-        check_process(self, [sys.executable, "run.py", "--no-abnf", "Tests/abnf-one.xml"],
+        check_process(self, [sys.executable, "run.py", "--no-abnf", "--no-spell",
+                             "Tests/abnf-one.xml"],
                       "Results/abnf-skip.out", "Results/abnf-skip.err", None, None)
 
 
 class TestSpellerMethods(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
-    def test_spell_line(self):
-        config = ConfigFile(None)
-        speller = Speller(config)
-        output = speller.processLine(['This', 'is', 'a', 'sentance.', ';'])
-        print(output)
-        speller.close()
-        self.assertEqual(len(output), 5, "Wrong number of return values")
-
-    def test_spell_line_right(self):
-        config = ConfigFile(None)
-        speller = Speller(config)
-        output = speller.processLine(['This', 'is', 'a', 'sentence.', ';'])
-        print(output)
-        speller.close()
-        self.assertEqual(len(output), 5, "Wrong number of return values")
-
-    def test_spell_tree(self):
-        config = ConfigFile(None)
-        speller = Speller(config)
-        with open("Tests/spell1.xml", "r") as f:
-            tree = etree.parse(f)
-        speller.processTree(tree.getroot())
-        speller.close()
+    def test_error_one(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py",
+                             "Tests/spell.xml"],
+                      "Results/spell-01.out", "Results/spell-01.err", None, None)
 
 
 def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):
