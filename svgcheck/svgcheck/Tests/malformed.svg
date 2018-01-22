@@ -1,0 +1,11 @@
+<svg height="100" width="100" datatype="foobar" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+  <desc style="malformed">This tries to cover all of the edge cases</desc>
+  <desc style="foobar:text;">This tries to cover all of the edge cases</desc>
+  <desc style="foobar:text;">
+    This tries to cover all of the edge cases
+    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+  </desc>
+  <ns:circle xmlns:ns="http://ietf.org/namespaces/foobar"/>
+  <notreal>text field</notreal>
+</svg>

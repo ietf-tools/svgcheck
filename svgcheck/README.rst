@@ -2,11 +2,11 @@ Check SVG against RFC schema
 ============================
 
 This program takes an XML file containing an SVG or an RFC document.  It then compares
-all of the SVG elements with the schema defined in the document with RFC 7996 bis_.
+all of the SVG elements with the schema defined in the document with `RFC 7996 bis`_.
 The program has the option
 of modifying and writing out a version of the input that passes the defined schema.
 
-The RFC Editor_ is in the process of changing the canonical input format of
+The `RFC Editor`_ is in the process of changing the canonical input format of
 Internet-Draft_ and RFC_ docuemnts.  As part of this process, the ability to create
 artwork which is not ASCII text is being introduced.  This is being done with SVG.
 However, the full set of SVG does not match with the archival nature of RFCs so
@@ -14,7 +14,7 @@ a subset of the SVG specification is being defined by the RFC Editor that elimin
 many capabilities such as animation.  Additionally, there is a requirement that
 the images have the widest possible usage both by printers, monochrome displays and
 individuals with visual disabilities.  Further information on the process can be found
-on the RFC Editor at the RFC Editor_ site.
+on the RFC Editor at the `RFC Editor`_ site.
 
 .. _Internet-Draft: https://en.wikipedia.org/wiki/Internet_Draft
 .. _RFC: https://en.wikipedia.org/wiki/Request_for_Comments
@@ -53,9 +53,9 @@ Dependencies
 
 svgcheck depends on the following packages:
 
-* lxml_ *(>= 4.1.1)
+* lxml_ *(>= 4.1.1)*
 * requests_ *(>= 2.5.0)*
-* rfctools_common_ *(>= 0.1.0)*
+* `rfctools_common`_ *(>= 0.1.0)*
 
 .. _lxml: http://lxml.de
 .. _requests: http://docs.python-requests.org

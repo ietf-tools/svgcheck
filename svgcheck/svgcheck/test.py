@@ -14,6 +14,25 @@ from svgcheck.checksvg import checkTree
 import io
 
 
+class TestCommandLineOptions(unittest.TestCase):
+    """ Run a set of command line checks to make sure they work """
+    def test_get_version(self):
+        check_process(self, [sys.executable, "run.py", "--version"],
+                      "Results/version.out", "Results/version.err",
+                      None, None)
+
+    def test_clear_cache(self):
+        if not os.path.exists('Temp/cache'):
+            os.mkdir('Temp/cache')
+        shutil.copy('Tests/cache_saved/reference.RFC.1847.xml',
+                    'Temp/cache/reference.RFC.1847.xml')
+        check_process(self, [sys.executable, "run.py", "--clear-cache",
+                             "--cache=Temp/cache"],
+                      None, None,
+                      None, None)
+        self.assertFalse(os.path.exists('Temp/cache/reference.RFC.1847.xml'))
+
+
 class TestParserMethods(unittest.TestCase):
 
     def test_pycodestyle_conformance(self):
@@ -55,6 +74,10 @@ class TestParserMethods(unittest.TestCase):
     def test_svg_wordle(self):
         """ Tests/svg-wordle.svg """
         test_svg_file(self, "svg-wordle.svg")
+
+    def test_svg_malformed(self):
+        """ Tests/malformed.svg """
+        test_svg_file(self, "malformed.svg")
 
     @unittest.skipIf(os.name != 'nt', "xi:include does not work correctly on Linux")
     def test_rfc(self):

@@ -22,41 +22,33 @@ trace = True
 bad_namespaces = []
 
 
-def check_some_props(attr, val):
+def modify_style(node):
     """
-    For [style] properties
+    For style properties, we want to pull it apart and then make individual attributes
     """
-    log.note("check_some_props check '{0}' in '{1}'".format(attr, val))
+    log.note("modify_style check '{0}' in '{1}'".format(node.attrib['style'], node.tag))
 
-    props_to_check = wp.property_lists[attr]
-    new_val = ''
-    ok = True
-    style_props = val.rstrip(';').split(';')
+    style_props = node.attrib['style'].rstrip(';').split(';')
+    new_attributes = []
+    props_to_check = wp.style_properties
+
     for prop in style_props:
         # print("prop = %s" %  prop)
         v = prop.split(':')
         if len(v) != 2:
+            log.error("Malformed field '{0}' in style attribute found. Field removed.".format(v),
+                      where=node)
             continue
         p = v[0].strip()
         v = v[1].strip()  # May have leading blank
-        log.note("   check_som_props - p={0}  v={1}".format(p, v))
+        log.note("   modify_style - p={0}  v={1}".format(p, v))
+        # we will deal with the change of values later when the attribute list is processed.
         if p in props_to_check:
-            # allowed_vals = wp.properties[p]
-            # print("$$$ p=%s, allowed_vals=%s." % (p, allowed_vals))
-            allowed, newValue = value_ok(p, v)
-            if not allowed:
-                log.note("??? '{0}' attribute: value '{1}' not valid for '{2}' use '{3}'".format(
-                    attr, v, p, newValue))
-                if newValue:
-                    new_val += ";" + p + ":" + newValue
-                ok = False
-            else:
-                new_val += ';' + prop
+            log.error("Style property '{0}' promoted to attribute".format(p), where=node)
+            node.attrib[p] = v
         else:
-            new_val += ';' + prop
-    if new_val:
-        new_val = new_val[1:]
-    return (ok, new_val)
+            log.error("Style property '{0}' removed".format(p), where=node)
+    del node.attrib['style']
 
 
 def value_ok(obj, v):
@@ -84,8 +76,8 @@ def value_ok(obj, v):
             if n:
                 rv = n.group()
             return (True, rv)
-        if obj[0] == '[':
-            return check_some_props(obj, v)
+        # if obj[0] == '[':
+        #     return check_some_props(obj, v)
         if v == obj:
             return (True, v)
         return (False, None)
@@ -173,6 +165,10 @@ def check(el, depth=0):
 
     elementAttributes = wp.elements[element]  # Allowed attributes for element
 
+    # do a re-write of style into individual elements
+    if 'style' in el.attrib:
+        modify_style(el)
+
     attribs_to_remove = []  # Can't remove them inside the iteration!
     for nsAttrib, val in el.attrib.items():
         # validate that the namespace of the element is known and ok
@@ -232,10 +228,9 @@ def check(el, depth=0):
         log.note("%schild, tag = %s" % (' ' * (depth*indent), child.tag))
         ch_tag, ns = strip_prefix(child.tag, el)
         if ns not in wp.svg_urls:
-            if ns not in xmlns_urls:
-                log.warn("The namespace {0} is not permitted in svg elements.".format(ns),
-                         where=el)
-                els_to_remove.append(el)
+            log.warn("The namespace {0} is not permitted for svg elements.".format(ns),
+                     where=child)
+            els_to_rm.append(child)
             continue
 
         if ch_tag not in allowed_children:
@@ -249,18 +244,6 @@ def check(el, depth=0):
         for child in els_to_rm:
             el.remove(child)
     return True  # OK
-
-
-def remove_namespace(doc, namespace):
-    # From  http://stackoverflow.com/questions/18159221/
-    #   remove-namespace-and-prefix-from-xml-in-python-using-lxml
-    ns = u'{%s}' % namespace
-    nsl = len(ns)
-    for elem in doc.getiterator():
-        if elem.tag.startswith(ns):
-            print("elem.tag before=%s," % elem.tag)
-            elem.tag = elem.tag[nsl:]
-            print("after=%s." % elem.tag)
 
 
 def checkTree(tree):
