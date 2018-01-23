@@ -118,3 +118,6 @@ ENV/
 *.suo
 *.pyproj
 *.sln
+
+# other windows files
+*.bat

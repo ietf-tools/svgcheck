@@ -1,0 +1,7 @@
+Tests/malformed.svg:2: The attribute 'fill' does not allow the value 'red', replaced with 'black'
+Tests/malformed.svg:3: Malformed field '['malformed']' in style attribute found. Field removed.
+Tests/malformed.svg:4: Style property 'foobar' removed
+Tests/malformed.svg:5: Style property 'foobar' removed
+Tests/malformed.svg:7: The element 'circle' is not allowed as a child of 'desc'
+Tests/malformed.svg:9: The namespace http://ietf.org/namespaces/foobar is not permitted for svg elements.
+Tests/malformed.svg:10: The element 'notreal' is not allowed as a child of 'svg'

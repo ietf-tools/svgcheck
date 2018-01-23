@@ -1,2 +1,22 @@
 Tests/DrawBerry-sample-2.svg:14: Element 'g' does not allow attributes with namespace 'http://www.inkscape.org/namespaces/inkscape'
 Tests/DrawBerry-sample-2.svg:14: Element 'g' does not allow attributes with namespace 'http://www.inkscape.org/namespaces/inkscape'
+Tests/DrawBerry-sample-2.svg:16: Style property 'fill' promoted to attribute
+Tests/DrawBerry-sample-2.svg:16: Style property 'stroke' promoted to attribute
+Tests/DrawBerry-sample-2.svg:16: Style property 'stroke-width' promoted to attribute
+Tests/DrawBerry-sample-2.svg:16: Style property 'stroke-opacity' promoted to attribute
+Tests/DrawBerry-sample-2.svg:16: Style property 'stroke-linecap' promoted to attribute
+Tests/DrawBerry-sample-2.svg:16: Style property 'stroke-linejoin' promoted to attribute
+Tests/DrawBerry-sample-2.svg:18: Style property 'fill' promoted to attribute
+Tests/DrawBerry-sample-2.svg:18: Style property 'stroke' promoted to attribute
+Tests/DrawBerry-sample-2.svg:18: Style property 'stroke-width' promoted to attribute
+Tests/DrawBerry-sample-2.svg:18: Style property 'stroke-opacity' promoted to attribute
+Tests/DrawBerry-sample-2.svg:18: Style property 'stroke-linecap' promoted to attribute
+Tests/DrawBerry-sample-2.svg:18: Style property 'stroke-linejoin' promoted to attribute
+Tests/DrawBerry-sample-2.svg:20: Style property 'fill' promoted to attribute
+Tests/DrawBerry-sample-2.svg:20: Style property 'stroke' promoted to attribute
+Tests/DrawBerry-sample-2.svg:22: Style property 'fill' promoted to attribute
+Tests/DrawBerry-sample-2.svg:22: Style property 'stroke' promoted to attribute
+Tests/DrawBerry-sample-2.svg:24: Style property 'fill' promoted to attribute
+Tests/DrawBerry-sample-2.svg:24: Style property 'stroke' promoted to attribute
+Tests/DrawBerry-sample-2.svg:26: Style property 'fill' promoted to attribute
+Tests/DrawBerry-sample-2.svg:26: Style property 'stroke' promoted to attribute

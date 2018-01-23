@@ -176,7 +176,6 @@ properties = {
 
     'height':              ('<number>',),
 
-    'style':               ('[style]',),  # Check properties in [style]
     'requiredFeatures': (),
     'requiredFormats': (),
     'requiredExtensions': (),
@@ -195,11 +194,10 @@ basic_types = {  # Lists of allowed values
 
 color_default = 'black'
 
-property_lists = {  # Lists of properties to check (for Inkscape)
-    '[style]':   ('font-family', 'font-weight', 'font-style',
-                  'font-variant', 'direction', 'unicode-bidi', 'text-anchor',
-                  'fill', 'fill-rule', 'stroke', 'stroke-width', 'font-size'),
-}
+style_properties = ('font-family', 'font-weight', 'font-style',
+                    'font-variant', 'direction', 'unicode-bidi', 'text-anchor',
+                    'fill', 'fill-rule', 'stroke', 'stroke-width', 'font-size',
+                    'fill-opacity', 'stroke-linecap', 'stroke-opacity', 'stroke-linejoin')
 
 # Elements allowed within other elements
 svg_child = ('title', 'path', 'rect', 'circle', 'line', 'ellipse',
