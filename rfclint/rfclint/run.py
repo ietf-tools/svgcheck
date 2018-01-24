@@ -14,7 +14,7 @@ from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 from rfctools_common import log
 from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker
-from rfclint.spell import Speller
+from rfclint.spell import Speller, SpellerColors
 
 try:
     from configparser import SafeConfigParser
@@ -37,6 +37,13 @@ def display_version(self, opt, value, parser):
 def clear_cache(self, opt, value, parser):
     rfclint.parser.XmlRfcParser('').delete_cache()
     sys.exit()
+
+
+def check_color(option, opt, value, parser):
+    if value not in SpellerColors:
+        raise OptionValueError("color value not supported. Use one of '{0}'".
+                               format(" ".join(SpellerColors.keys())))
+    setattr(parser.values, option.dest, value)
 
 
 def print_pi_help(self, opt, value, parser):
@@ -98,12 +105,20 @@ def main():
                              help='Don\'t run the spell checking')
     spell_options.add_option('--dictionary', dest='dict_list', action='append',
                              help='Use this addition dictionary when spell checking')
-    spell_options.add_option('--spell-window', dest='spell_window',
+    spell_options.add_option('--spell-window', dest='spell_window', action='store',
+                             type='int',
                              help='Set the number of words to appear around spelling errors')
     spell_options.add_option('--no-dup-detection', dest='no_dups', action='store_true',
                              help='Don\'t do duplication detection.')
     spell_options.add_option('--spell-program', dest='spell_program', metavar='NAME',
                              help='Name of spelling program to use')
+    spell_options.add_option('--no-suggest', dest='spell_suggest', action='store_false',
+                             help='Do not provide suggestions')
+    spell_options.add_option('--suggest', dest='spell_suggest', action='store_true',
+                             help='provide suggestions (default)')
+    spell_options.add_option('--color', dest='spell_color', action='callback',
+                             callback=check_color, type='string',
+                             help='color incorrect words in supplied context')
     optionparser.add_option_group(spell_options)
 
     abnf_options = optparse.OptionGroup(optionparser, 'ABNF Options')

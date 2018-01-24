@@ -63,6 +63,16 @@ class Test_ConfigFile(unittest.TestCase):
                              "--spell-program=spell.foo", "--save-config"],
                       None, None, "Results/spell.cfg", "Temp/empty.cfg")
 
+    def test_spell_no_suggest(self):
+        try:
+            os.mkdir("Temp")
+        except OSError as e:
+            pass
+        shutil.copyfile("Tests/empty.cfg", "Temp/empty.cfg")
+        check_process(self, [sys.executable, 'run.py', '--configfile=Temp/empty.cfg',
+                             '--no-suggest', '--save-config'],
+                      None, None, 'Results/spell-no-suggest.cfg', 'Temp/empty.cfg')
+
     def test_spell_one_dict(self):
         """ Add one dictionary """
         try:
@@ -189,13 +199,25 @@ class Test_Abnf(unittest.TestCase):
                       "Results/abnf-skip.out", "Results/abnf-skip.err", None, None)
 
 
-class TestSpellerMethods(unittest.TestCase):
+class Test_Spell(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
     def test_error_one(self):
         """ Do basic quiet spell checking """
-        check_process(self, [sys.executable, "run.py",
+        check_process(self, [sys.executable, "run.py", "--spell-window=0",
                              "Tests/spell.xml"],
                       "Results/spell-01.out", "Results/spell-01.err", None, None)
+
+    def test_add_context(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py", "--no-suggest",
+                             "Tests/spell.xml"],
+                      "Results/spell-context.out", "Results/spell-context.err", None, None)
+
+    def test_error_one_no_suggest(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "Tests/spell.xml"],
+                      "Results/spell-no-suggest.out", "Results/spell-no-suggest.err", None, None)
 
 
 def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):

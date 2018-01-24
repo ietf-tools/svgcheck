@@ -68,6 +68,8 @@ def error(*args, **kwargs):
     if 'file' in kwargs:
         fileName = make_relative(kwargs['file'])
         prefix = "{0}:{1}: ".format(fileName, kwargs['line'])
+    if 'additional' in kwargs:
+        prefix = ' '*kwargs['additional']
     write_err.write(prefix + u' '.join(args))
     write_err.write(u'\n')
 

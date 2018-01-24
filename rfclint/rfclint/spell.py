@@ -60,6 +60,14 @@ CutNodes = {
 
 # colorama.init()
 
+SpellerColors = {
+    'green': colorama.Fore.GREEN,
+    'none': '',
+    'red': colorama.Fore.RED,
+    'bright': colorama.Style.BRIGHT
+}
+# BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE,
+
 
 def which(program):
     def is_exe(fpath):
@@ -81,6 +89,21 @@ class Speller(object):
     """ Object to deal with processing spelling and duplicates """
     def __init__(self, config):
         program = config.get('spell', 'program')
+        self.suggest = config.getBoolean('spell', 'suggest', True)
+        self.window = config.getInt('spell', 'window', 15)
+        coloring = config.get('spell', 'color')
+        if coloring and coloring in SpellerColors:
+            self.color_start = SpellerColors[coloring]
+            self.color_end = colorama.Style.RESET_ALL
+            if self.color_start == '':
+                self.color_end = self.color_start
+        elif os.name == 'nt':
+            self.color_start = ''
+            self.color_end = ''
+        else:
+            self.color_start = colorama.Style.BRIGHT
+            self.color_end = colorama.Style.RESET_ALL
+
         if program:
             if not which(program):
                 log.error("The program '{0}' does not exist or is not executable".format(program))
@@ -115,7 +138,7 @@ class Speller(object):
             self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
         self.stdout.readline()
         # self.stdin.write('!\n')
-        self.word_re = re.compile(r'\w[\w,.?!]*', re.UNICODE | re.MULTILINE)
+        self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
         self.aspell_re = re.compile(r".\s(\w+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
 
@@ -139,7 +162,7 @@ class Speller(object):
         )
         """
         result = []
-
+        setNo = 0
         for wordSet in allWords:
             self.stdin.write('^ ' + wordSet[0] + '\n')
             # print('in line = ' + wordSet[0])
@@ -148,7 +171,7 @@ class Speller(object):
             running = 0
             while True:
                 line = self.stdout.readline().strip()
-                # print('out line = ' + line)
+                log.note('spell out line = ' + line)
                 if len(line) == 0:
                     break
 
@@ -170,8 +193,9 @@ class Speller(object):
                     log.error("internal error - aspell says line is '{0}'".format(line))
                     continue
 
-                tuple = (line[0], offset, wordSet[1], m.group(1), options)
+                tuple = (line[0], offset, wordSet[1], m.group(1), options, setNo)
                 result.append(tuple)
+            setNo += 1
 
         return result
 
@@ -188,9 +212,7 @@ class Speller(object):
         wordSet = self.getWords(tree)
         results = self.processLine(wordSet)
 
-        for r in results:
-            log.error("Misspelled word was found '{0}'".
-                      format(r[3]), where=r[2])
+        self.processResults(wordSet, results, None)
 
         # s = " ".join(words[max(0, i-10):min(len(words), i+10)])
         # s = s.replace(words[i], colorama.Fore.GREEN + ">>>" + words[i] + "<<<" +
@@ -223,5 +245,59 @@ class Speller(object):
                 continue
             words = [(tree.attrib[attr], tree)]
             results = self.processLine(words)
-            for r in results:
-                log.error("Misspelled word '{0}' in attribute '{1}'".format(r[3], attr), where=tree)
+            self.processResults(words, results, attr)
+
+    def processResults(self, wordSet, results, attributeName):
+        """  Process the results coming from a spell check operation """
+
+        matchGroups = []
+        allWords = []
+        for words in wordSet:
+            xx = self.word_re.finditer(words[0])
+            for w in xx:
+                if w:
+                    matchGroups.append((w, words[1]))
+                    allWords.append(w.group(1))
+                    if allWords[-1][-1] not in [' ', '-', "'"]:
+                        allWords[-1] += ' '
+
+        for r in results:
+            if attributeName:
+                log.error("Misspelled word '{0}' in attribute '{1}'".format(r[3], attributeName),
+                          where=r[2])
+            else:
+                log.error("Misspelled word was found '{0}'".format(r[3]), where=r[2])
+            if self.window > 0:
+                q = self.wordIndex(r[1], r[2], matchGroups)
+                if q >= 0:
+                    ctx = ""
+                    if q > 0:
+                        ctx = "".join(allWords[max(0, q-self.window):q])
+                    ctx += self.color_start + allWords[q] + self.color_end
+                    if q < len(allWords):
+                        ctx += "".join(allWords[q+1:min(q+self.window+1, len(allWords))])
+                    log.error(ctx, additional=2)
+            if self.suggest and r[4]:
+                log.error(r[4], additional=2)
+
+        # check for dups
+        last = None
+        for (m, el) in matchGroups:
+            for g in m.groups():
+                if last:
+                    # print("compare '{0}' and '{1}'".format(last, g))
+                    if last == g:
+                        log.error("Duplicate word found '{0}'".format(last), where=el)
+                last = g
+
+    def wordIndex(self, offset, el, matchArray):
+        """
+        Given an offset and element, find the index in the matchArray that matches
+        """
+
+        for i in range(len(matchArray)):
+            m = matchArray[i]
+            if m[1] == el and \
+               (m[0].start(1) <= offset and offset <= m[0].end(1)):
+                return i
+        return -1
