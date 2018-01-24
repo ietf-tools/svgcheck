@@ -211,15 +211,18 @@ class Test_Spell(unittest.TestCase):
     def test_error_one(self):
         "" " Do basic quiet spell checking "" "
         check_process(self, [sys.executable, "run.py", "--spell-window=0",
-                             "Tests/spell.xml"],
-                      "Results/spell-01.out", "Results/spell-01.err", None, None)
+                             "--color=none", "Tests/spell.xml"],
+                      "Results/spell-01.out",
+                      "Results/spell-01.err" if os.name == 'nt'
+                      else "Results/spell-01-60.err", None, None)
     """
 
     def test_add_context(self):
         """ Do basic quiet spell checking """
         check_process(self, [sys.executable, "run.py", "--no-suggest",
-                             "Tests/spell.xml"],
-                      "Results/spell-context.out", "Results/spell-context.err", None, None)
+                             "--color=none", "Tests/spell.xml"],
+                      "Results/spell-context.out",
+                      "Results/spell-context.err", None, None)
 
     def test_error_one_no_suggest(self):
         """ Do basic quiet spell checking """
