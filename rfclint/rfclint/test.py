@@ -52,7 +52,7 @@ class Test_ConfigFile(unittest.TestCase):
                              "--abnf-add-rules=otherruleset.abnf", "--save-config"],
                       None, None, "Results/abnf_add_rules.cfg", "Temp/empty.cfg")
 
-    def test_spell_program_change(self):
+    def test_spell_options(self):
         """ Change the spell program name """
         try:
             os.mkdir("Temp")
@@ -62,6 +62,18 @@ class Test_ConfigFile(unittest.TestCase):
         check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
                              "--spell-program=spell.foo", "--save-config"],
                       None, None, "Results/spell.cfg", "Temp/empty.cfg")
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             '--no-suggest', '--save-config'],
+                      None, None, 'Results/spell-02.cfg', 'Temp/empty.cfg')
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             '--suggest', '--save-config'],
+                      None, None, 'Results/spell-03.cfg', 'Temp/empty.cfg')
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             '--color=red', '--save-config'],
+                      None, None, 'Results/spell-04.cfg', 'Temp/empty.cfg')
+        check_process(self, [sys.executable, "run.py", "--configfile=Temp/empty.cfg",
+                             '--color=none', '--save-config'],
+                      None, None, 'Results/spell-05.cfg', 'Temp/empty.cfg')
 
     def test_spell_one_dict(self):
         """ Add one dictionary """
@@ -189,13 +201,34 @@ class Test_Abnf(unittest.TestCase):
                       "Results/abnf-skip.out", "Results/abnf-skip.err", None, None)
 
 
-class TestSpellerMethods(unittest.TestCase):
+class Test_Spell(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
+    """
+    Disable the following tests because different dictionaries currently cause different
+    sets of results to be suggested.  Until we figure out how to deal with this problem
+    the tests will always be failing someplace.
+
     def test_error_one(self):
+        "" " Do basic quiet spell checking "" "
+        check_process(self, [sys.executable, "run.py", "--spell-window=0",
+                             "--color=none", "Tests/spell.xml"],
+                      "Results/spell-01.out",
+                      "Results/spell-01.err" if os.name == 'nt'
+                      else "Results/spell-01-60.err", None, None)
+    """
+
+    def test_add_context(self):
         """ Do basic quiet spell checking """
-        check_process(self, [sys.executable, "run.py",
+        check_process(self, [sys.executable, "run.py", "--no-suggest",
+                             "--color=none", "Tests/spell.xml"],
+                      "Results/spell-context.out",
+                      "Results/spell-context.err", None, None)
+
+    def test_error_one_no_suggest(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "Tests/spell.xml"],
-                      "Results/spell-01.out", "Results/spell-01.err", None, None)
+                      "Results/spell-no-suggest.out", "Results/spell-no-suggest.err", None, None)
 
 
 def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):

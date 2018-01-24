@@ -29,10 +29,14 @@ class ConfigFile(object):
             # Spelling options
             if options.spell_program:
                 self.set('spell', 'program', options.spell_program)
-            if options.spell_window:
-                self.set('spell', 'window', options.spell_window)
+            if options.spell_window is not None:
+                self.setInt('spell', 'window', options.spell_window)
             if options.dict_list:
                 self.set('spell', 'dictionaries', options.dict_list)
+            if options.spell_suggest is not None:
+                self.setBoolean('spell', 'suggest', options.spell_suggest)
+            if options.spell_color:
+                self.set('spell', 'color', options.spell_color)
 
     def get(self, section, field):
         try:
@@ -41,6 +45,18 @@ class ConfigFile(object):
             return None
         except NoOptionError:
             return None
+
+    def getBoolean(self, section, field, default):
+        v = self.get(section, field)
+        if v is None:
+            return default
+        return v != '0'
+
+    def getInt(self, section, field, default):
+        v = self.get(section, field)
+        if v is None:
+            return default
+        return int(v)
 
     def getList(self, section, field):
         value = self.get(section, field)
@@ -56,6 +72,12 @@ class ConfigFile(object):
         if type(value) is list:
             value = ",".join(value)
         self.config.set(section, field, value)
+
+    def setBoolean(self, section, field, value):
+        self.set(section, field, '1' if value else '0')
+
+    def setInt(self, section, field, value):
+        self.set(section, field, str(value))
 
     def save(self):
         with open(self.options.config_file, 'w') as f:

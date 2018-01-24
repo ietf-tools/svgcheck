@@ -1,66 +1,131 @@
 Tests/spell.xml:4: Misspelled word 'THis' in attribute 'ascii'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:4: Misspelled word 'TITLe' in attribute 'abbrev'
+  Title, Titler, Tittle, Tuttle, Tootle, Turtle, TIT Le, TIT-Le, Titled, Titles, Tattle, Tile
 Tests/spell.xml:4: Misspelled word was found 'dcument'
+  document, documents, documenter, Dumont, document's, documented
 Tests/spell.xml:5: Misspelled word 'THis' in attribute 'name'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:5: Misspelled word 'TItle' in attribute 'name'
+  Title, Titler, Tittle, Tuttle, Tootle, Turtle, Titled, Titles, Tattle, Tile
 Tests/spell.xml:6: Misspelled word 'Schaad' in attribute 'asciiFullname'
+  Chad, Shad, Scad, Chadd, Chard, Shard, Schwa, Chased, Scheat, Sada, Sacha, Shade, Shady, Salad, Sacha's, Sad, Sashed, Sch, Chaddy, Ached
 Tests/spell.xml:6: Misspelled word 'YYY' in attribute 'asciiSurname'
 Tests/spell.xml:6: Misspelled word 'Schaad' in attribute 'surname'
+  Chad, Shad, Scad, Chadd, Chard, Shard, Schwa, Chased, Scheat, Sada, Sacha, Shade, Shady, Salad, Sacha's, Sad, Sashed, Sch, Chaddy, Ached
 Tests/spell.xml:7: Misspelled word was found 'Orgg'
+  Org, Orgy, Oreg, Orig, Egg, Rog
 Tests/spell.xml:7: Misspelled word was found 'affilliation'
+  affiliation, affiliations, affiliating, affiliation's, affliction, affirmation, officiation, foliation
 Tests/spell.xml:12: Misspelled word 'Xtxt' in attribute 'ascii'
+  Text, TX, Xx, XXL, Xix, Xxi, Xxv, Xxx, Ext, Styx, Xxxi, Xxxv, Stat, Stet, TWX, TeX, Tex, Tax, Tux, Tact
 Tests/spell.xml:14: Misspelled word was found 'ASN'
+  ASSN, ANS, SAN, AS, SN, AN, USN, ANN, ASA, ASE, AYN, ASS, AWN, AFN, ASL, ASK, ASP
 Tests/spell.xml:14: Misspelled word was found 'unicode'
+  Unicode, encode, uncoded, Unicode's, encoder, unicorn, unquote, unlicked, unified, buncoed, nicked, uncled
 Tests/spell.xml:14: Misspelled word was found 'groook'
+  grok, crook, gook, rook, grog, Gregoor, Brook, Groot, brook, groom, Greek, croak, crock, Garik, Gerik, groove, groovy, Gregor, groggy, Garrik, Gerick, Gromyko, groks, Garek, Gerek, recook, Garrick, crooks, Brooke, frock, groin, grope, grotto, group, growl
 Tests/spell.xml:18: Misspelled word was found 'ddtext'
+  dd text, dd-text, text, detect, detest, detects, detoxed, detox, twixt
 Tests/spell.xml:21: Misspelled word 'equall' in attribute 'ascii'
+  equally, equal, equals, squall, equable, equably, equaled, squally, Euell, Quill, quail, quell, quill
 Tests/spell.xml:21: Misspelled word was found 'reggional'
+  regional, regionally, regionals, Reginald, regions, Regina, region, resignal
 Tests/spell.xml:28: Misspelled word was found 'textt'
+  text, texts, Dexter, dexter, TeX, Tex, testy, text's, test, exit, next, texture, TeX's, TeXes, Tex's, Texan, Texas, twixt, exert, taxed, TWX, tset, tester, tektite, tuxedo
 Tests/spell.xml:30: Misspelled word was found 'fiiedl'
+  Fidel, Fidela, Field, field, fiddle, fiddly, feudal, filed, flied, Filide, Fidole, Fidelia, Fidelio, foiled, fide, foil, fuddle, fuel
 Tests/spell.xml:32: Misspelled word was found 'url'
+  URL, UL, URLs, Ural, Ur, Erl, Burl, burl, curl, furl, hurl, purl, Uri, urn
 Tests/spell.xml:38: Misspelled word was found 'WG'
+  G, WAG, WIG, W, WC, WK, AG, HG, MG, PG, VG, WW, WY, CG, JG, KG, LG, WA, WI, WP, WV, WM, WU, WE, WT, GE
 Tests/spell.xml:46: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:54: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:60: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:60: Misspelled word was found 'sectn'
+  sec tn, sec-tn, sect, sects, secant, Sexton, sexton, Seton, ctn, second, section, sector, pectin, sect's, Scan, scan, scant, scent, sedan, Stern, scorn, stern
 Tests/spell.xml:61: Misspelled word was found 'txt'
+  text, TX, ext, Tut, tat, tit, tot, tut, TNT, TWX, TeX, Tex, tax, tux, tact, Tc, texts, taxi
 Tests/spell.xml:61: Misspelled word was found 'svg'
+  avg, VG, Sig, sag, scag, SC, SF, SUV, Sc, sf, sch
 Tests/spell.xml:65: Misspelled word was found 'Assides'
+  Asides, As sides, As-sides, Ass ides, Ass-ides, Assizes, Assad's, Assets, Aussies, Aides, Aside, Asses, Sides, Assized, Assists, Acids, Assiduous, Assize's, Assumes, Assures, Assize, Assorts, Abides, Amides, Assureds, Acid's, Asserts, Assess, Seasides, Waysides, Insides, Upsides, Aussie's, Arsines, Assigns, Besides, Resides
 Tests/spell.xml:67: Misspelled word was found 'allwos'
+  allows, Allis, alloys, allots, alls, always, alleys, Allys, Allies, Altos, allies, altos, aloes, Alla's, Alli's, Ally's, allays, Alamos, also, awls, allowed, Alis, ales, allow, Alps, alps, Alley's, Allie's, alley's, wallows, Allen's, Ellwood, alleges, alleles, alleyways, alloy's, awl's
 Tests/spell.xml:70: Misspelled word was found 'simpley'
+  simple, simply, simpler, sample, simpled, simples
 Tests/spell.xml:73: Misspelled word was found 'tiem'
+  time, item, Tim, ti em, ti-em, tie, Diem, diem, teem, tier, them, tied, ties, Tome, tome
 Tests/spell.xml:74: Misspelled word was found 'Whch'
+  Which, Watch, Witch, Ch, Wench, Winch, Whig, Each, Etch, Whack, WC, WAC, WHO, Wac, Sch, Who, Why, Wash, Wish, Shh, THC, Huh, Shah, Whee, Whew, Whey, Whir, Whoa, Arch, Bach, Foch, Itch, Koch, Mach, Mich, Rich, Roch, Waco, Whit, Zach, Lech, Loch, Much, Ouch, Such, Tech, Wham, What, When, Whet, Whim, Whip, Whiz, Whom, Whop, Whys, Wick, With
 Tests/spell.xml:78: Misspelled word was found 'figre'
+  figure, figurer, fig re, fig-re, Figaro, fire, forge, figured, figures, firer, fore, ogre, fig, fixer, forgery, fugue, figged
 Tests/spell.xml:81: Misspelled word was found 'Cn'
+  CNN, Can, Con, NC, CNS, Ctn, CB, Cb, Cm, C, N, CA, CO, Ca, Co, Cu, Cc, Ck, Cw, Kn, CD, CF, CT, CV, CZ, Cd, Cf, Cl, Cr, Cs, Ct, IN, In, Ln, MN, Mn, ON, RN, Rn, Sn, TN, UN, Zn, An, Cg, En, On, Tn
 Tests/spell.xml:82: Misspelled word was found 'Src'
+  SEC, Sec, RC, SC, Sc, Sr, ARC, Arc, SAC, SRO, Soc, Sac, Sic, NRC, PRC, RSX, Spec
 Tests/spell.xml:82: Misspelled word was found 'additonlly'
+  additionally, additional, additively, atonally
 Tests/spell.xml:87: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:89: Misspelled word was found 'tiem'
+  time, item, Tim, ti em, ti-em, tie, Diem, diem, teem, tier, them, tied, ties, Tome, tome
 Tests/spell.xml:92: Misspelled word was found 'permmts'
+  permits, permit's, permutes, permeates, perms, perts
 Tests/spell.xml:95: Misspelled word was found 'aa'
+  AA, A, a, ABA, AMA, Ada, Ala, Ana, Ara, As, Asa, Ava, aha, aka, ala, as, SA, AAA, AI, AR, Ar, Au, IA, Ia, ah, aw, ea, FAA, baa, AB, AC, AD, AF, AK, AL, AM, AP, AV, AZ, Ab, Ac, Ad, Ag, Al, Am, At, Ax, ab, ac, ad, am, an, at, av, ax, BA, Ba, CA, Ca, DA, GA, Ga, Ha, LA, La, MA, Na, PA, Pa, QA, Ra, TA, Ta, VA, Va, WA, ca, fa, ha, la, ma, pa, ya
 Tests/spell.xml:98: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:102: Misspelled word was found 'textlegal'
+  text legal, text-legal, extralegal, textural, textual, textiles, textile, textile's, extralegally
 Tests/spell.xml:135: Misspelled word 'Mispelled' in attribute 'quotedFrom'
+  Misspelled, Mi spelled, Mi-spelled, Dispelled, Spelled, Misapplied, Miscalled, Respelled, Misspells, Impelled, Misspell, Misled, Misplaced, Misplayed, Misruled
 Tests/spell.xml:135: Misspelled word 'Srce' in attribute 'quotedFrom'
+  Race, Spruce, Stace, Sucre, Screw, Rice, Sere, Sire, Sore, Sure, Serve, SEC, Rec, Sec, Sr, Source, Scarce, See, Dre, Ste, Ace, Are, Scree, Cece, Saree, Sauce, Secy, Brice, Bruce, Bryce, Croce, Grace, Price, Pryce, Saxe, Trace, Brace, Secs, Since, Slice, Space, Spice, Trice, Truce, Carce, Ce, RC, Re, SC, SE, Sc, Se, Farce, Spec, SRO, Spree, Sprue, Arie, Sarge, Serge, Dace, Dice, Duce, Save, Surge, Arcs, Races, Sect, Racer, Screws
 Tests/spell.xml:135: Misspelled word 'txtr' in attribute 'quotedFrom'
+  text, taxer, texts, TX, tart, tort, Tatar, Tate, tater, titer, tote, toter, tutor, extra, texture, Tut, tat, tit, tot, tut, TNT, ext, tact, CRT, tats, tits, tots, tuts, Tito, Toto, tutu, axer
 Tests/spell.xml:136: Misspelled word was found 'allwos'
+  allows, Allis, alloys, allots, alls, always, alleys, Allys, Allies, Altos, allies, altos, aloes, Alla's, Alli's, Ally's, allays, Alamos, also, awls, allowed, Alis, ales, allow, Alps, alps, Alley's, Allie's, alley's, wallows, Allen's, Ellwood, alleges, alleles, alleyways, alloy's, awl's
 Tests/spell.xml:138: Misspelled word was found 'compliated'
+  complicated, completed, complicate, complied, complained, copulated, complected, compiled, composted, complicates, computed, compacted, compliant, composited
 Tests/spell.xml:142: Misspelled word was found 'nstted'
+  nested, netted, nutted, snotted, nestled, notated, nutated, noted, sated, sited, steed, stied, knitted, knotted
 Tests/spell.xml:145: Misspelled word was found 'overrreview'
+  overview, overdrive, overdrove, override, overripe, overviews, overrider, overwrite, overreacher, overred, overdrew, overdriven, overdrives, overgrew, overrefined, overrate, overrode, overrule, overthrew
 Tests/spell.xml:146: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:146: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:146: Misspelled word was found 'textt'
+  text, texts, Dexter, dexter, TeX, Tex, testy, text's, test, exit, next, texture, TeX's, TeXes, Tex's, Texan, Texas, twixt, exert, taxed, TWX, tset, tester, tektite, tuxedo
 Tests/spell.xml:147: Misspelled word was found 'de'
+  DE, De, DEA, DOE, Dee, Der, Dew, Doe, dew, die, doe, due, Ed, ed, D, d, DEC, Deb, Dec, Del, Dem, Den, Des, Dev, Dr, Dre, deb, def, deg, den, dye, Fe, SE, Se, E, e, Dex, DA, DD, DI, Di, Du, Dy, Te, dd, do, Ade, Ede, Ode, ode, DB, DC, DH, DJ, DP, dB, db, dc, dz, Be, Ce, GE, Ge, He, IE, Le, ME, Me, NE, Ne, OE, PE, Re, Xe, be, he, me, re, we, ye
 Tests/spell.xml:147: Misspelled word was found 'duplicatte'
+  duplicate, duplicator, duplicated, duplicates, duplicative, supplicate, duplicators
 Tests/spell.xml:140: Misspelled word was found 'CRefs'
+  Xrefs, Griefs, Refs, Carafes, Crees, Cress, Crews, Clefs, Craves, Credos, Creeds, Cares, Cores, Cries, Cures, Curfs, Grief's, Reefs, Ref's, Cafes, Care's, Cree's, Carers, Caress, Core's, Corers, Crafts, Crease, Crew's, Criers, Crofts, Crufts, Curers, Creeks, Briefs, Carets, Clef's, Crags, Creaks, Creams, Creels, Creeps, Cremes, Crepes, Cruds, Cruels, Cruets
 Tests/spell.xml:140: Misspelled word was found 'tet'
+  teat, tent, test, tset, yet, Te, ET, et, text, Ted, Tut, tat, tit, tot, tut, stet, TNT, tea, tee, PET, Pet, Set, bet, get, jet, let, met, net, pet, set, tel, ten, vet, wet, Tate, tote, tart, tort, TeX, Tex
 Tests/spell.xml:140: Misspelled word was found 'dups'
+  dips, dupes, DPs, dumps, duos, sups, UPS, ups, Du's, dues, dupe, cups, dubs, duds, dugs, duns, pups, yups
 Tests/spell.xml:157: Misspelled word was found 'Rference'
+  Reference, Referencer, Reverence, Referenced, References, Reverencer, Preference, Deference
 Tests/spell.xml:165: Misspelled word was found 'Anntoations'
+  Annotations, Annotation's, Annotation, Notations
 Tests/spell.xml:168: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:168: Misspelled word was found 'elementt'
+  element, elements, element's, elemental, Clement, Klement, clement, aliment, elementary, Clemente, elopement, ailment, easement, lament
 Tests/spell.xml:178: Misspelled word was found 'liness'
+  lioness, lines, line's, liners, Linea's, lowness, liens, lien's, Liane's, liner's, lingers, loners, lune's, Lin's, Linus, lanes, lings, linens, Linnea's
 Tests/spell.xml:181: Misspelled word was found 'liness'
+  lioness, lines, line's, liners, Linea's, lowness, liens, lien's, Liane's, liner's, lingers, loners, lune's, Lin's, Linus, lanes, lings, linens, Linnea's
 Tests/spell.xml:188: Misspelled word was found 'Anntoations'
+  Annotations, Annotation's, Annotation, Notations
 Tests/spell.xml:191: Misspelled word was found 'THis'
+  This, Thais, Thus, TH is, TH-is, Thia, Thins, His, Tis, Th's, Chis, Phis, Thin
 Tests/spell.xml:191: Misspelled word was found 'elementt'
+  element, elements, element's, elemental, Clement, Klement, clement, aliment, elementary, Clemente, elopement, ailment, easement, lament
