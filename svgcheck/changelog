@@ -1,8 +1,9 @@
 svgcheck (0.0.2) distribution(s); urgency=urgency
 
- * Rewrite style proprety handling to promote items rather than validate in place
+	* Rewrite style proprety handling to promote items rather than validate in place
+	* Add more test cases to get coverage number above 85%
 
--- Jim Schaad <ietf@augustcellars.com> WWW DD MM 2018 HH:MM:SS -0800
+-- Jim Schaad <ietf@augustcellars.com> FRI 25 01 2018 09:00:00 -0800
 
 svgcheck (0.0.1) distribution(s); urgency=urgency
 
