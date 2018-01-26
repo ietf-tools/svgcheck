@@ -63,7 +63,7 @@ def main():
     formatter = optparse.IndentedHelpFormatter(max_help_position=40)
     optionparser = optparse.OptionParser(usage='rfclint SOURCE [OPTIONS] '
                                          '...\nExample: rfclint '
-                                         'draft.xml -o Draft-1.0 --text --html',
+                                         'draft.xml',
                                          formatter=formatter)
 
     parser_options = optparse.OptionGroup(optionparser, "Parser Options")
@@ -78,6 +78,8 @@ def main():
                               help='disable RNG validation step')
     parser_options.add_option('-r', '--rng', action='store_true',
                               help='Specify an alternate RNG file')
+    parser_options.add_option('-X', '--no-xinclude', action='store_true', dest='no_xinclude',
+                              help='don\'t resolve any xi:include elements')
 
     optionparser.add_option_group(parser_options)
 
@@ -105,6 +107,8 @@ def main():
                              help='Don\'t run the spell checking')
     spell_options.add_option('--dictionary', dest='dict_list', action='append',
                              help='Use this addition dictionary when spell checking')
+    spell_options.add_option('--personal', dest='dict_personal',
+                             help='use this dictionary as the personal dictionary')
     spell_options.add_option('--spell-window', dest='spell_window', action='store',
                              type='int',
                              help='Set the number of words to appear around spelling errors')
