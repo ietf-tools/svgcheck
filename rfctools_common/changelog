@@ -1,8 +1,9 @@
 rfctools_common (0.0.2) distribution(s); urgency=urgency
 
- * None yet
+	* Add additional parameter to logging functions
+	* Correct README.rst file, should be able to be released publicly
 
--- Jim Schaad <ietf@augustcellars.com>  WWW DD MMM 2018 12:00:00 -0800
+-- Jim Schaad <ietf@augustcellars.com>  Fri 26 Jan 2018 09:00:00 -0800
 
 rfctools_common (0.0.1) distribution(s); urgency=urgency
 
