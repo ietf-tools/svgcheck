@@ -13,7 +13,7 @@ value = number
       / text
       / bytes
 
-int = ["-"] uint
+int = ["-"] uint fred =
 
 
 ; This is a float if it has fraction or exponent; int otherwise

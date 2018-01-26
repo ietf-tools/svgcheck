@@ -122,12 +122,28 @@ class Speller(object):
                 raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), look_for)
 
         cmdLine = [program, '-a']
-        dicts = config.get('spell', 'dictionaries')
+        dicts = config.getList('spell', 'dictionaries')
         if dicts:
             for dict in dicts:
                 cmdLine.append("--add-extra-dicts")
-                cmdLine.append(dict)
+                if os.path.isabs(dict):
+                    dict2 = dict
+                else:
+                    dict2 = os.path.join(os.getcwd(), dict)
+                dict2 = os.path.normpath(dict2)
+                cmdLine.append(dict2)
 
+        dict = config.get('spell', 'personal')
+        if dict:
+            cmdLine.append('-p')
+            if os.path.isabs(dict):
+                dict2 = dict
+            else:
+                dict2 = os.path.join(os.getcwd(), dict)
+            dict2 = os.path.normpath(dict2)
+            cmdLine.append(dict2)
+
+        log.note("spell command = '{0}'".format(" ".join(cmdLine)))
         self.p = subprocess.Popen(cmdLine,
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         if six.PY2:
@@ -136,17 +152,15 @@ class Speller(object):
         else:
             self.stdin = io.TextIOWrapper(self.p.stdin, encoding='utf-8', line_buffering=True)
             self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
-        self.stdout.readline()
-        # self.stdin.write('!\n')
+
+        #  Check that we got a good return
+        line = self.stdout.readline()
+        if re.match(r".*International Ispell.*", line) is None:
+            log.error("Error starting the spelling program\n{0}".format(line))
+
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
         self.aspell_re = re.compile(r".\s(\w+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
-
-    def close(self):
-        self.p.kill()
-        self.stdin.close()
-        self.stdout.close()
-        self.p.wait()
 
     def processLine(self, allWords):
         """

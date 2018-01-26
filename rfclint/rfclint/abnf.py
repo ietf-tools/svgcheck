@@ -58,15 +58,19 @@ class AbnfChecker(object):
 
         errs = stderr.decode('utf-8').splitlines()
         for err in errs:
-            m = re.match(r"stdin\((\d+):(\d+)\): error: (.*)", err)
+            m = re.match(r"(.+)\((\d+):(\d+)\): error: (.*)", err)
             if m:
-                line = int(m.group(1))
-                runningLine = -1
-                for xxx in xtract.lineOffsets:
-                    if line < runningLine + xxx[2]:
-                        log.error(m.group(3), file=xxx[0], line=xxx[1] + line - runningLine)
-                        break
-                    runningLine += xxx[2] - 1
+                line = int(m.group(2))
+                filename = m.group(1)
+                if filename == 'stdin':
+                    runningLine = -1
+                    for xxx in xtract.lineOffsets:
+                        if line < runningLine + xxx[2]:
+                            log.error(m.group(4), file=xxx[0], line=xxx[1] + line - runningLine)
+                            break
+                        runningLine += xxx[2] - 1
+                else:
+                    log.error(m.group(4), file=filename, line=line)
             else:
                 log.error(err)
         return True

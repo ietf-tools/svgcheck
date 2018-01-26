@@ -200,6 +200,13 @@ class Test_Abnf(unittest.TestCase):
                              "Tests/abnf-one.xml"],
                       "Results/abnf-skip.out", "Results/abnf-skip.err", None, None)
 
+    def test_error_in_extras(self):
+        """ An ABNF object needing an addition file, but that has errors """
+        check_process(self, [sys.executable, "run.py", "--no-spell",
+                             "--abnf-add-rules=Tests/abnf-bad-extras.abnf",
+                             "Tests/abnf-extras.xml"],
+                      "Results/abnf-bad-extras.out", "Results/abnf-bad-extras.err", None, None)
+
 
 class Test_Spell(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
@@ -229,6 +236,18 @@ class Test_Spell(unittest.TestCase):
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "Tests/spell.xml"],
                       "Results/spell-no-suggest.out", "Results/spell-no-suggest.err", None, None)
+
+    def test_add_dict(self):
+        """ Add a simple dictionary with my name """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--dictionary=Tests/schaad.wl", "Tests/spell.xml"],
+                      "Results/spell-add-dict.out", "Results/spell-add-dict.err", None, None)
+
+    def test_add_personal_dict(self):
+        """ Add a simple dictionary with my name """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--personal=Tests/schaad.wl", "Tests/spell.xml"],
+                      "Results/spell-add-per.out", "Results/spell-add-per.err", None, None)
 
 
 def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):

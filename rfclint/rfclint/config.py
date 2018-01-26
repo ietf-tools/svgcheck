@@ -37,6 +37,8 @@ class ConfigFile(object):
                 self.setBoolean('spell', 'suggest', options.spell_suggest)
             if options.spell_color:
                 self.set('spell', 'color', options.spell_color)
+            if options.dict_personal:
+                self.set('spell', 'personal', options.dict_personal)
 
     def get(self, section, field):
         try:
