@@ -1,0 +1,8 @@
+include changelog
+include LICENSE
+include README.rst
+include requirements.txt
+include xmldiff/run.py
+include xmldiff/zzs.py
+include xmldiff/DiffNode.py
+include svgcheck/__init__.py
