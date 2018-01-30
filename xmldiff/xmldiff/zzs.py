@@ -13,15 +13,10 @@ from six.moves import range
 
 import collections
 
-try:
-    import numpy as np
-    zeros = np.zeros
-except ImportError:
-    def py_zeros(dim, pytype):
-        assert len(dim) == 2
-        return [[pytype() for y in range(dim[1])]
-                for x in range(dim[0])]
-    zeros = py_zeros
+def py_zeros(dim, pytype):
+    assert len(dim) == 2
+    return [[pytype() for y in range(dim[1])]
+            for x in range(dim[0])]
 
 try:
     from editdist import distance as strdist
@@ -165,7 +160,7 @@ def distance(A, B, get_children, insert_cost, remove_cost, update_cost):
 
         m = i - Al[i] + 2
         n = j - Bl[j] + 2
-        fd = zeros((m, n), int)
+        fd = py_zeros((m, n), int)
 
         ioff = Al[i] - 1
         joff = Bl[j] - 1
