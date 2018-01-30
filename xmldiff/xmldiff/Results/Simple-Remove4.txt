@@ -1,0 +1,12 @@
+OP=2 left=   4
+OP=2 left=   3
+OP=2 left=   6
+OP=2 left=   5
+OP=4 left=   8 right=   4
+OP=4 left=   7 right=   3
+OP=2 left=  10
+OP=2 left=   9
+OP=2 left=  12
+OP=2 left=  11
+OP=4 left=   2 right=   2
+OP=4 left=   1 right=   1

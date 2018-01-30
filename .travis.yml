@@ -41,6 +41,11 @@ script:
   - $PYTHON setup.py --quiet install
   - cd rfclint
   - $PYTHON test.py
+  - cd ../../xmldiff
+  - $PYTHON setup.py --quite install
+  - cd xmldiff
+  - $PYTHON test.py
+ 
   
   
  
