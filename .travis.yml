@@ -42,7 +42,7 @@ script:
   - cd rfclint
   - $PYTHON test.py
   - cd ../../xmldiff
-  - $PYTHON setup.py --quite install
+  - $PYTHON setup.py --quiet install
   - cd xmldiff
   - $PYTHON test.py
  
