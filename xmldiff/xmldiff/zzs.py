@@ -13,10 +13,12 @@ from six.moves import range
 
 import collections
 
+
 def py_zeros(dim, pytype):
     assert len(dim) == 2
     return [[pytype() for y in range(dim[1])]
             for x in range(dim[0])]
+
 
 try:
     from editdist import distance as strdist

@@ -315,7 +315,7 @@ class DiffDocument(DiffRoot):
                 # Nodes which have undealt with children are deferred
                 f = True
                 for child in edit.right.children:
-                    if child.matchNode is not None and not child.insertTree:
+                    if child.matchNode is None and not child.insertTree:
                         f = False
                         break
                 if not f:
@@ -326,14 +326,58 @@ class DiffDocument(DiffRoot):
                 matchList = []
                 for child in edit.right.children:
                     if not child.inserted and not child.insertTree:
-                        matchList.append(child)
+                        matchList.append(child.matchNode)
                 if len(matchList) == 0:
                     newEdits.append(edit)
                     continue
 
                 # Build the list of all common ancestors of these nodes
+                commonParents = None
+                for child in matchList:
+                    c = child.parent
+                    ancestorList = [c]
+                    while c is not None:
+                        c = c.parent
+                        ancestorList.append(c)
+                    ancestorList = ancestorList[::-1]
+                    if commonParents is None:
+                        commonParents = ancestorList
+                    else:
+                        for i in range(min(len(ancestorList), len(commonParents))):
+                            if ancestorList[i] != commonParents[i]:
+                                commonParents = commonParents[:i-1]
+                                break
+                matchParent = commonParents[-1]
 
-                newEdits.append(edit)
+                # create the new node
+                newNode = edit.right.clone()
+                newNode.parent = matchParent
+                newNode.inserted = True
+                newNode.matchNode = edit.right
+                edit.right.matchNode = newNode
+
+                #
+
+                i = 0
+                iX = -1
+                for child in edit.right.children:
+                    if child.insertTree:
+                        newNode2 = child.cloneTree(None)
+                        newNode.children.append(newNode2)
+                        continue
+                    while i != len(matchParent.children):
+                        if matchParent.children[i].isMatchNode(child.matchNode):
+                            newNode.children.append(matchParent.children[i])
+                            matchParent.children[i].parent = newNode
+                            del matchParent.children[i]
+                            if iX == -1:
+                                iX = i
+                            break
+                        i += 1
+
+                if iX == -1:
+                    iX = 0
+                matchParent.children.insert(iX, newNode)
 
             if len(editList) == len(newEdits):
                 break
@@ -365,15 +409,19 @@ class DiffElement(DiffRoot):
                     self.children.append(DiffText(c.tail, self))
         else:
             DiffRoot.__init__(self, xmlNode.xml, parent)
-            xmlNode.matchNode = self
-            self.inserted = True
-            self.matchNode = xmlNode
-
-            for child in xmlNode.children:
-                self.children.append(child.cloneTree(self))
 
     def cloneTree(self, root):
         clone = DiffElement(self, root)
+        clone.matchNode = self
+        clone.inserted = True
+        self.matchNode = clone
+
+        for child in self.children:
+            clone.children.append(child.cloneTree(clone))
+        return clone
+
+    def clone(self):
+        clone = DiffElement(self, None)
         return clone
 
     def ToHtml(self, parent):
