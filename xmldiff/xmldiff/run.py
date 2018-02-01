@@ -86,12 +86,12 @@ def main():
         log.exception('Unable to parse the XML document: ' + rightSource, e)
         sys.exit(1)
 
-    with open(leftSource) as f:
+    with open(leftSource, "rU", encoding="utf8") as f:
         leftLines = f.readlines()
 
     leftLines = [escape(x).replace(' ', '&nbsp;') for x in leftLines]
 
-    with open(rightSource) as f:
+    with open(rightSource, "rU", encoding="utf8") as f:
         rightLines = f.readlines()
 
     rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
@@ -106,7 +106,7 @@ def main():
     editSet = distance(leftXml, rightXml, DiffRoot.get_children, DiffRoot.InsertCost,
                        DiffRoot.DeleteCost, DiffRoot.UpdateCost)
     editSet = editSet.toList()
-
+    print("edit count = " + str(len(editSet)))
     leftXml.applyEdits(editSet)
 
     #  DecorateSourceFile(leftXml, leftLines)

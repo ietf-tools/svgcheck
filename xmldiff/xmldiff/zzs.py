@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/Usr/bin/env python
 # -*- coding: utf-8 -*-
 #  Adapted from code by
 # Authors: Tim Henderson and Steve Johnson
@@ -16,7 +16,7 @@ import collections
 
 def py_zeros(dim, pytype):
     assert len(dim) == 2
-    return [[pytype() for y in range(dim[1])]
+    return [[pytype for y in range(dim[1])]
             for x in range(dim[0])]
 
 
@@ -162,7 +162,7 @@ def distance(A, B, get_children, insert_cost, remove_cost, update_cost):
 
         m = i - Al[i] + 2
         n = j - Bl[j] + 2
-        fd = py_zeros((m, n), int)
+        fd = py_zeros((m, n), EditItem(EditItem.OP_COMBINE, None, None))
 
         ioff = Al[i] - 1
         joff = Bl[j] - 1
@@ -182,22 +182,27 @@ def distance(A, B, get_children, insert_cost, remove_cost, update_cost):
                     # δ(F1 , F2 ) = min-+ δ(l(i1)..i , l(j1)..j-1) + γ(λ → w)
                     #                   | δ(l(i1)..i-1, l(j1)..j-1) + γ(v → w)
                     #                   +-
-                    op1 = EditItem(EditItem.OP_COMBINE, fd[x-1][y], remove_cost(An[x+ioff]))
-                    op2 = EditItem(EditItem.OP_COMBINE, fd[x][y-1], insert_cost(Bn[y+joff]))
-                    op3 = EditItem(EditItem.OP_COMBINE, fd[x-1][y-1],
-                                   update_cost(An[x+ioff], Bn[y+joff]))
-                    if op1.cost < op2.cost:
-                        if op1.cost < op3.cost:
-                            fd[x][y] = op1
-                        elif op2.cost < op3.cost:
-                            fd[x][y] = op2
+
+                    remove = remove_cost(An[x+ioff])
+                    insert = insert_cost(Bn[y+joff])
+                    update = update_cost(An[x+ioff], Bn[y+joff])
+
+                    op1Cost = fd[x-1][y].cost + remove.cost
+                    op2Cost = fd[x][y-1].cost + insert.cost
+                    op3Cost = fd[x-1][y-1].cost + update.cost
+
+                    if op1Cost < op2Cost:
+                        if op1Cost < op3Cost:
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x-1][y], remove)
+                        elif op2Cost < op3Cost:
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x][y-1], insert)
                         else:
-                            fd[x][y] = op3
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x-1][y-1], update)
                     else:
-                        if op2.cost < op3.cost:
-                            fd[x][y] = op2
+                        if op2Cost < op3Cost:
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x][y-1], insert)
                         else:
-                            fd[x][y] = op3
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x-1][y-1], update)
 
                     # fd[x][y] = min(
                     #     fd[x-1][y] + remove_cost(An[x+ioff]),
@@ -215,22 +220,27 @@ def distance(A, B, get_children, insert_cost, remove_cost, update_cost):
                     p = Al[x+ioff]-1-ioff
                     q = Bl[y+joff]-1-joff
                     # print (p, q), (len(fd), len(fd[0]))
-                    op1 = EditItem(EditItem.OP_COMBINE, fd[x-1][y], remove_cost(An[x+ioff]))
-                    op2 = EditItem(EditItem.OP_COMBINE, fd[x][y-1], insert_cost(Bn[y+joff]))
-                    op3 = EditItem(EditItem.OP_COMBINE, fd[p][q], treedists[x+ioff][y+joff])
+                    remove = remove_cost(An[x+ioff])
+                    insert = insert_cost(Bn[y+joff])
 
-                    if op1.cost < op2.cost:
-                        if op1.cost < op3.cost:
-                            fd[x][y] = op1
-                        elif op2.cost < op3.cost:
-                            fd[x][y] = op2
+                    op1Cost = fd[x-1][y].cost + remove.cost
+                    op2Cost = fd[x][y-1].cost + insert.cost
+                    op3Cost = fd[p][q].cost + treedists[x+ioff][y+joff].cost
+
+                    if op1Cost < op2Cost:
+                        if op1Cost < op3Cost:
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x-1][y], remove)
+                        elif op2Cost < op3Cost:
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x][y-1], insert)
                         else:
-                            fd[x][y] = op3
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[p][q],
+                                                treedists[x+ioff][y+joff])
                     else:
-                        if op2.cost < op3.cost:
-                            fd[x][y] = op2
+                        if op2Cost < op3Cost:
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[x][y-1], insert)
                         else:
-                            fd[x][y] = op3
+                            fd[x][y] = EditItem(EditItem.OP_COMBINE, fd[p][q],
+                                                treedists[x+ioff][y+joff])
 
                     # fd[x][y] = min(
                     #     fd[x-1][y] + remove_cost(An[x+ioff]),

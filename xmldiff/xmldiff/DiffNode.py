@@ -175,11 +175,11 @@ class DiffRoot(object):
         if self == other:
             return True
         if self.deleted:
-            if self.children.count != 1:
+            if len(self.children) != 1:
                 return False
             return self.children[0].isMatchNode(other)
         if other.deleted:
-            if other.children.count != 1:
+            if len(other.children) != 1:
                 return False
             return self.isMatchNode(other.children[0])
         return False
@@ -335,17 +335,17 @@ class DiffDocument(DiffRoot):
                 commonParents = None
                 for child in matchList:
                     c = child.parent
-                    ancestorList = [c]
+                    ancestorList = []
                     while c is not None:
-                        c = c.parent
                         ancestorList.append(c)
+                        c = c.parent
                     ancestorList = ancestorList[::-1]
                     if commonParents is None:
                         commonParents = ancestorList
                     else:
                         for i in range(min(len(ancestorList), len(commonParents))):
                             if ancestorList[i] != commonParents[i]:
-                                commonParents = commonParents[:i-1]
+                                commonParents = commonParents[:i]
                                 break
                 matchParent = commonParents[-1]
 
@@ -360,6 +360,7 @@ class DiffDocument(DiffRoot):
 
                 i = 0
                 iX = -1
+                interums = []
                 for child in edit.right.children:
                     if child.insertTree:
                         newNode2 = child.cloneTree(None)
@@ -367,12 +368,22 @@ class DiffDocument(DiffRoot):
                         continue
                     while i != len(matchParent.children):
                         if matchParent.children[i].isMatchNode(child.matchNode):
+                            if len(interums) != 0:
+                                if iX != -1:
+                                    for ii in interums:
+                                        newNode.children.append(matchParent.children[ii])
+                                        matchParent.children[ii] = newNode
+                                        del matchParent.children[ii]
+                                        i -= 1
+                                interums = []
                             newNode.children.append(matchParent.children[i])
                             matchParent.children[i].parent = newNode
                             del matchParent.children[i]
                             if iX == -1:
                                 iX = i
                             break
+                        else:
+                            interums.append(i)
                         i += 1
 
                 if iX == -1:
@@ -383,6 +394,8 @@ class DiffDocument(DiffRoot):
                 break
 
         print("Number of edits left = " + str(len(newEdits)))
+        for edit in newEdits:
+            print(edit.toString())
 
 
 class DiffPI(DiffRoot):
@@ -392,7 +405,66 @@ class DiffPI(DiffRoot):
     def ToHtml(self, parent):
         root = E.LI()
         parent.append(root)
+        if self.inserted:
+            root.attrib['class'] = 'right'
+        elif self.deleted:
+            root.attrib['class'] = 'left'
+        elif self.matchNode is None:
+            root.attrib['class'] = 'error'
+        else:
+            if self.xml.target == self.matchNode.xml.target:
+                if self.xml.text == self.matchNode.xml.text:
+                    pass
+                else:
+                    root.text = "<?{0} ".format(self.xml.target)
+                    s = E.SPAN()
+                    s.attrib['class'] = 'left'
+                    s.text = self.xml.text
+                    root.append(s)
+                    s = E.SPAN()
+                    s.attrib['class'] = 'right'
+                    s.text = self.matchNode.xml.text
+                    root.append(s)
+                    s.tail = "?>"
+                    return
+            else:
+                root.text = "<?"
+                s = E.SPAN()
+                s.attrib['class'] = 'left'
+                s.text = self.xml.target
+                root.append(s)
+                s = E.SPAN()
+                s.attrib['class'] = 'right'
+                s.text = self.matchNode.xml.target
+                root.append(s)
+                s.tail = ' '
+                s = E.SPAN()
+                s.attrib['class'] = 'left'
+                s.text = self.xml.text
+                root.append(s)
+                s = E.SPAN()
+                s.attrib['class'] = 'right'
+                s.text = self.matchNode.xml.text
+                root.append(s)
+                s.tail = "?>"
+                return
+
         root.text = "<?{0} {1}?>".format(self.xml.target, self.xml.text)
+
+    def cloneTree(self, parent):
+        return DiffPI(self.xml, parent)
+
+    def updateCost(self, right):
+        if self.xml.target == right.xml.target:
+            if self.xml.text == right.xml.text:
+                return EditItem(EditItem.OP_MATCH, self, right)
+            else:
+                item = EditItem(EditItem.OP_RENAME, self, right)
+                item.cost = 50
+                return item
+        item = EditItem(EditItem.OP_RENAME, self, right)
+        item.cost = 100
+        return item
 
 
 class DiffElement(DiffRoot):
