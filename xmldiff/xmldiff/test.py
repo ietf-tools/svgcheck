@@ -127,6 +127,11 @@ class TestDistanceMethods(unittest.TestCase):
         DistanceTest(self, "Tests/Simple-Add3.xml", "Tests/Insert5.xml",
                      "Results/Insert5.txt", "Results/Insert5.html")
 
+    def test_Table1(self):
+        """ Add a layer to a tree """
+        DistanceTest(self, "Tests/Table1.xml", "Tests/Table2.xml",
+                     "Results/Table1.txt", "Results/Table1.html")
+
 
 def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile):
     """ General distance test function """
