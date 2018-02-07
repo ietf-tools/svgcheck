@@ -194,6 +194,12 @@ class Test_Abnf(unittest.TestCase):
                              "Tests/abnf-extras.xml"],
                       "Results/abnf-extras-no.out", "Results/abnf-extras-no.err", None, None)
 
+    def test_extras_doesnt_exit(self):
+        """ An ABNF object needing additional file, but the one given is not real """
+        check_process(self, [sys.executable, "run.py", "--no-spell",
+                             "--abnf-add-rules=abnf-extras.abnf", "Tests/abnf-extras.xml"],
+                      "Results/abnf-extras-not.out", "Results/abnf-extras-not.err", None, None)
+
     def test_error_one_skip(self):
         """ A single ABNF section w/ an error, but skip checking """
         check_process(self, [sys.executable, "run.py", "--no-abnf", "--no-spell",
@@ -206,6 +212,12 @@ class Test_Abnf(unittest.TestCase):
                              "--abnf-add-rules=Tests/abnf-bad-extras.abnf",
                              "Tests/abnf-extras.xml"],
                       "Results/abnf-bad-extras.out", "Results/abnf-bad-extras.err", None, None)
+
+    def test_no_program(self):
+        """ No ABNF executable """
+        check_process(self, [sys.executable, "run.py", "--abnf-program=no-abnf",
+                             "--no-spell", "Tests/abnf-extras.xml"],
+                      "Results/abnf-no-program.out", "Results/abnf-no-program.err", None, None)
 
 
 class Test_Spell(unittest.TestCase):
@@ -243,11 +255,30 @@ class Test_Spell(unittest.TestCase):
                              "--dictionary=Tests/schaad.wl", "Tests/spell.xml"],
                       "Results/spell-add-dict.out", "Results/spell-add-dict.err", None, None)
 
+    def test_add_dict_not(self):
+        """ Add a simple dictionary which does not exit """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--dictionary=schaad.wl", "Tests/spell.xml"],
+                      "Results/spell-add-dict-not.out", "Results/spell-add-dict-not.err",
+                      None, None)
+
     def test_add_personal_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "--personal=Tests/schaad.wl", "Tests/spell.xml"],
                       "Results/spell-add-per.out", "Results/spell-add-per.err", None, None)
+
+    def test_add_personal_dict_not(self):
+        """ Add a simple dictionary which does not exist """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--personal=schaad.wl", "Tests/spell.xml"],
+                      "Results/spell-add-per-not.out", "Results/spell-add-per-not.err", None, None)
+
+    def test_no_program(self):
+        """ No spell executable """
+        check_process(self, [sys.executable, "run.py", "--spell-program=no-spell",
+                             "Tests/spell.xml"],
+                      "Results/spell-no-program.out", "Results/spell-no-program.err", None, None)
 
 
 def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):

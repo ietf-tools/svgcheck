@@ -13,7 +13,7 @@ import appdirs
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 from rfctools_common import log
 from rfclint.config import ConfigFile
-from rfclint.abnf import AbnfChecker
+from rfclint.abnf import AbnfChecker, RfcLintError
 from rfclint.spell import Speller, SpellerColors
 
 try:
@@ -262,14 +262,22 @@ def main():
 
     #  Validate any embedded ABNF
     if not options.no_abnf:
-        checker = AbnfChecker(config)
+        try:
+            checker = AbnfChecker(config)
 
-        checker.validate(xmlrfc.tree)
+            checker.validate(xmlrfc.tree)
+        except RfcLintError as e:
+            log.error("Skipping ABNF checking because")
+            log.error(e.message, additional=2)
 
     # do the Spelling and Duplicate checking
     if not options.no_spell:
-        speller = Speller(config)
-        speller.processTree(xmlrfc.tree.getroot())
+        try:
+            speller = Speller(config)
+            speller.processTree(xmlrfc.tree.getroot())
+        except RfcLintError as e:
+            log.error("Skipping spell checking because")
+            log.error(e.message, additional=2)
 
 
 if __name__ == '__main__':

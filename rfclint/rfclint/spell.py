@@ -8,11 +8,22 @@ import six
 import platform
 from rfctools_common import log
 
+
 if six.PY2:
     import subprocess32
     subprocess = subprocess32
 else:
     import subprocess
+
+
+class RfcLintError(Exception):
+    """ RFC Lint internal errors """
+    def __init__(self, msg, filename=None, line_no=0):
+        self.msg = msg
+        self.message = msg
+        self.position = line_no
+        self.filename = filename
+        self.line = line_no
 
 
 CheckAttributes = {
@@ -106,8 +117,8 @@ class Speller(object):
 
         if program:
             if not which(program):
-                log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), program)
+                raise RfcLintError("The program '{0}' does not exist or is not executable".
+                                   format(program))
         else:
             if os.name == "nt":
                 look_for = "aspell.exe"
@@ -118,30 +129,38 @@ class Speller(object):
                 look_for = "aspell"
                 program = which(look_for)
             if not program:
-                log.error("Cannot locate the program '{0}' on the path".format(look_for))
-                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), look_for)
+                raise RfcLintError("The program '{0}' does not exist or is not executable".
+                                   format(look_for))
 
         cmdLine = [program, '-a']
         dicts = config.getList('spell', 'dictionaries')
         if dicts:
             for dict in dicts:
-                cmdLine.append("--add-extra-dicts")
                 if os.path.isabs(dict):
                     dict2 = dict
                 else:
                     dict2 = os.path.join(os.getcwd(), dict)
                 dict2 = os.path.normpath(dict2)
+                if not os.path.exists(dict2):
+                    log.error("Additional Dictionary '{0}' ignored because it was not found".
+                              format(dict))
+                    continue
+                cmdLine.append("--add-extra-dicts")
                 cmdLine.append(dict2)
 
         dict = config.get('spell', 'personal')
         if dict:
-            cmdLine.append('-p')
             if os.path.isabs(dict):
                 dict2 = dict
             else:
                 dict2 = os.path.join(os.getcwd(), dict)
             dict2 = os.path.normpath(dict2)
-            cmdLine.append(dict2)
+            if not os.path.exists(dict2):
+                log.error("Personal Dictionary '{0}' ignored because it was not found".
+                          format(dict))
+            else:
+                cmdLine.append('-p')
+                cmdLine.append(dict2)
 
         log.note("spell command = '{0}'".format(" ".join(cmdLine)))
         self.p = subprocess.Popen(cmdLine,
@@ -156,7 +175,7 @@ class Speller(object):
         #  Check that we got a good return
         line = self.stdout.readline()
         if re.match(r".*International Ispell.*", line) is None:
-            log.error("Error starting the spelling program\n{0}".format(line))
+            raise RfcLintError("Error starting the spelling program\n{0}".format(line))
 
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)

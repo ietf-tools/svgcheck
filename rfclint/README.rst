@@ -100,7 +100,7 @@ Configuration File
 
 rfclint keeps configuration information in a configuration file.  By default the file is stored at
 
-    * On Windows: c:\Users\USER\AppDatea\Local\rfclint\IETF\rfclint.cfg
+    * On Windows: c:\Users\USER\AppData\Local\rfclint\IETF\rfclint.cfg
     * Otherwise: /home/USER/.local/share/rfclint/rfclint.cfg
 
 The format of the configuration file is the standard INI file format.
