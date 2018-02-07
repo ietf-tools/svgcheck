@@ -8,7 +8,7 @@ from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError
 from rfctools_common import log
 from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
 import string
-from zzs import EditItem, distance
+from xmldiff.zzs2 import EditItem, distance
 
 try:
     import debug
@@ -105,7 +105,6 @@ def main():
 
     editSet = distance(leftXml, rightXml, DiffRoot.get_children, DiffRoot.InsertCost,
                        DiffRoot.DeleteCost, DiffRoot.UpdateCost)
-    editSet = editSet.toList()
     print("edit count = " + str(len(editSet)))
     leftXml.applyEdits(editSet)
 

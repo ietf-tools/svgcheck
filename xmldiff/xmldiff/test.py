@@ -5,7 +5,7 @@ import shutil
 import difflib
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
-from zzs import EditItem, distance
+from xmldiff.zzs2 import EditItem, distance
 from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
 
 
@@ -142,7 +142,7 @@ def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile):
     right = BuildDiffTree(right.tree)
 
     editSet = distance(left, right, DiffRoot.get_children,
-                       DiffRoot.InsertCost, DiffRoot.DeleteCost, DiffRoot.UpdateCost).toList()
+                       DiffRoot.InsertCost, DiffRoot.DeleteCost, DiffRoot.UpdateCost)
     with open(diffFile, 'r') as f:
         lines2 = f.readlines()
 
