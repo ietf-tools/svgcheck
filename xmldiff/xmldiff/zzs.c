@@ -11,6 +11,22 @@ int compare(const void * a, const void * b)
     return (*(int*)a - *(int *)b);
 }
 
+typedef struct eElement {
+    int operation;
+    void * left;
+    void * right;
+} eElement;
+
+typedef struct eArray {
+  int c;
+  eElement rgEdits[];
+} eArray;
+
+typedef struct cArray {
+  int c;
+  void * rg[];
+} cArray;
+
 
 struct xxx {
     int i;
@@ -393,7 +409,6 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		b_insert[i].right = b->nodes.rgValues[i];
 	}
 
-	fprintf(stderr, "POINT #1\n");
 	for (int i_1 = 0; i_1 < a->keyroots.cItems; i_1++) {
 		int i = a->keyroots.rgValues[i_1];
 		// _CrtCheckMemory();
@@ -512,7 +527,6 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		}
 	}
 	_CrtCheckMemory();
-	fprintf(stderr, "POINT #2\n");
 
 	EditList * pret = cloneEdits(treedists[tindex(a->size - 1, b->size - 1)], 1);
 

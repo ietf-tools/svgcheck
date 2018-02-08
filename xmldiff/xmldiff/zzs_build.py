@@ -23,9 +23,14 @@ typedef struct cArray {
   void * rg[];
 } cArray;
 
-#include "zzs.c"
+extern struct eArray * Distance(void * leftTree, void *  rightTree,
+                                struct cArray  *(*callback)(void *),
+                                int (*insert)(void *), int (*remove)(void *), 
+                                int (*update)(void *, void *));
+
 
                       """,
+                      sources=["zzs.c"],
                       libraries=[])
 
 ffibuilder.cdef("""
