@@ -30,7 +30,7 @@ extern struct eArray * Distance(void * leftTree, void *  rightTree,
 
 
                       """,
-                      sources=["zzs.c"],
+                      sources=["xmldiff/zzs.c"],
                       libraries=[])
 
 ffibuilder.cdef("""
