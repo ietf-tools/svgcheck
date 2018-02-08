@@ -5,7 +5,7 @@ import shutil
 import difflib
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
-from xmldiff.zzs2 import EditItem, distance
+from zzs2 import EditItem, distance
 from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
 
 

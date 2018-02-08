@@ -78,5 +78,8 @@ setup(
             'xmldiff=xmldiff.run:main'
             ]
         },
+    # Install my c code
+    setup_requires=["cffi>=1.0.0"],
+    cffi_modules=["xmldiff/zzs_build.py:ffibuilder"],
     zip_safe=False
 )
