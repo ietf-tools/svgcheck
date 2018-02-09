@@ -415,7 +415,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		b_insert[i].right = b->nodes.rgValues[i];
 	}
 
-	int i_1
+	int i_1;
 	for (i_1 = 0; i_1 < a->keyroots.cItems; i_1++) {
 		int i = a->keyroots.rgValues[i_1];
 		// _CrtCheckMemory();
@@ -435,18 +435,19 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 			int ioff = a->lmds.rgValues[i] - 1;
 			int joff = b->lmds.rgValues[j] - 1;
 			_CrtCheckMemory();
-
-			for (int x = 1; x < m; x++) {
+			
+			int x;
+			for (x = 1; x < m; x++) {
 				Combine(&fd[index(x, 0)], &fd[index(x - 1, 0)], &a_remove[x + ioff]);
 			}
 			_CrtCheckMemory();
 
-			for (int y = 1; y < n; y++) {
+			int y;
+			for (y = 1; y < n; y++) {
 				Combine(&fd[index(0, y)], &fd[index(0, y - 1)], &b_insert[y + joff]);
 			}
 
 			// fprintf(stderr, "POINT #4\n");
-			int x;
 			for (x = 1; x < m; x++) {
 				int y;
 				for (y = 1; y < n; y++) {
