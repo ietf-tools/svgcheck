@@ -4,6 +4,7 @@ import optparse
 import os
 import lxml.etree
 import datetime
+import six
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError
 from rfctools_common import log
 from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
@@ -86,18 +87,28 @@ def main():
         log.exception('Unable to parse the XML document: ' + rightSource, e)
         sys.exit(1)
 
-    with open(leftSource, "rU", encoding="utf8") as f:
-        leftLines = f.readlines()
+    if six.PY2:
+        with open(leftSource, "rU") as f:
+            leftLines = f.readlines()
+    else:
+        with open(leftSource, "rU", encoding="utf8") as f:
+            leftLines = f.readlines()
 
     leftLines = [escape(x).replace(' ', '&nbsp;') for x in leftLines]
 
-    with open(rightSource, "rU", encoding="utf8") as f:
-        rightLines = f.readlines()
+    if six.PY2:
+        with open(rightSource, "rU") as f:
+            rightLines = f.readlines()
+    else:
+        with open(rightSource, "rU", encoding="utf8") as f:
+            rightLines = f.readlines()
 
     rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
 
     templates = {}
     templates_dir = 'Templates'
+    templates_dir = os.path.join(os.path.dirname(__file__), 'Templates')
+    
     for filename in ['base.html']:
         file = open(os.path.join(templates_dir, filename), 'r')
         templates[filename] = string.Template(file.read())
@@ -130,7 +141,10 @@ def main():
     filename = options.output_filename
     if not filename:
         filename = basename + ".html"
-    file = open(filename, "w", encoding='utf-8')
+    if six.PY2:
+        file = open(filename, "w")
+    else:
+        file = open(filename, "w", encoding='utf-8')
     file.write(output)
     file.close()
 

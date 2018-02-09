@@ -1,4 +1,4 @@
-from _zzs import ffi, lib
+from xmldiff._zzs import ffi, lib
 from xmldiff.DiffNode import DiffElement
 
 all_handles = []
