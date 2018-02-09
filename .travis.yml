@@ -43,7 +43,7 @@ script:
   - $PYTHON test.py
   - cd ../../xmldiff
   - $PYTHON setup.py --quiet install
-  - cd xmldiff
+  - cd Test
   - $PYTHON test.py
  
   

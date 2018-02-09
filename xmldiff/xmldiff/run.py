@@ -108,7 +108,7 @@ def main():
     templates = {}
     templates_dir = 'Templates'
     templates_dir = os.path.join(os.path.dirname(__file__), 'Templates')
-    
+
     for filename in ['base.html']:
         file = open(os.path.join(templates_dir, filename), 'r')
         templates[filename] = string.Template(file.read())

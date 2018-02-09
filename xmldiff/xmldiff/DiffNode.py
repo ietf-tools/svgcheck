@@ -3,7 +3,7 @@ from rfctools_common.parser import XmlRfc
 from rfctools_common import log
 import sys
 from lxml.html import builder as E
-from zzs import EditItem
+from xmldiff.EditItem import EditItem
 
 try:
     import debug

@@ -46,7 +46,7 @@ test_script:
   - cd ..\..
   - cd xmldiff
   - "%PYTHON%\\%EXECUTABLE% setup.py install"
-  - cd xmldiff
+  - cd Test
   - "%PYTHON%\\%EXECUTABLE% test.py"
   
 

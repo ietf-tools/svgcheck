@@ -5,8 +5,9 @@ import shutil
 import difflib
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
-from zzs2 import EditItem, distance
-from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
+from xmldiff.EditItem import EditItem
+from xmldiff.zzs2 import distance
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
 
 
 class TestParserMethods(unittest.TestCase):
@@ -14,8 +15,8 @@ class TestParserMethods(unittest.TestCase):
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
-        result = pep8style.check_files(['run.py', 'zzs.py', 'DiffNode.py',
-                                        'test.py'])
+        result = pep8style.check_files(['../xmldiff/run.py', '../xmldiff/zzs2.py',
+                                        '../xmldiff/DiffNode.py', 'test.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
