@@ -111,6 +111,18 @@ class TestParserMethods(unittest.TestCase):
         with self.assertRaises(XmlRfcError):
             tree = parser.parse()
 
+    def test_french_xml(self):
+        """ Parse file w/ encoding ISO-8859-1 """
+        parser = XmlRfcParser("Tests/doc_fr_latin1.xml", quiet=False)
+        tree = parser.parse()
+        """ self.assertEqual(len(tree.tree.xpath('doc')), 1,
+                         "Look for that french tag - not found") """
+
+    def test_utf8_xml(self):
+        """ Parse file w/ encoding UTF-8 """
+        parser = XmlRfcParser("Tests/doc_utf8.xml", quiet=False)
+        tree = parser.parse()
+
 
 def clear_cache(parser):
     parser.delete_cache()
