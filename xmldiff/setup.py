@@ -59,6 +59,7 @@ setup(
 
     #
     packages=find_packages(exclude=['contrib', 'docs', 'Tests', 'Results']),
+    py_modules=['xmldiff'],
 
     # List run-time dependencies here.
     install_requires=requirements,
@@ -69,17 +70,19 @@ setup(
     #  'dev':['twine',],
     # ]
 
-    # package_data={
-    #    'svgcheck': ['run.py']
-    #    },
+    package_data={
+       'xmldiff': ['Templates/*']
+       },
 
     entry_points={
         'console_scripts': [
             'xmldiff=xmldiff.run:main'
-            ]
-        },
+        ]
+    },
+    include_package_data = True,
+    
     # Install my c code
     setup_requires=["cffi>=1.0.0"],
-    cffi_modules=["xmldiff/zzs_build.py:ffibuilder"],
-    zip_safe=False
+    cffi_modules=["./xmldiff/zzs_build.py:ffibuilder"],
+    zip_safe=False,
 )
