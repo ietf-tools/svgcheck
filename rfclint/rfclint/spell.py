@@ -197,8 +197,8 @@ class Speller(object):
         result = []
         setNo = 0
         for wordSet in allWords:
-            self.stdin.write('^ ' + wordSet[0].encode('utf8') + '\n')
-            # print('in line = ' + wordSet[0].encode('utf8'))
+            self.stdin.write('^ ' + wordSet[0] + '\n')
+            print('in line = ' + wordSet[0])
 
             index = 0
             running = 0

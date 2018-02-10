@@ -280,16 +280,18 @@ class Test_Spell(unittest.TestCase):
                              "Tests/spell.xml"],
                       "Results/spell-no-program.out", "Results/spell-no-program.err", None, None)
 
+    @unittest.skipIf(True, "Test is still in progress")
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "--no-rng", "Tests/spell-utf8.xml"],
                       "Results/spell-utf8.out", "Results/spell-utf8.err", None, None)
 
+    @unittest.skipIf(True, "Test is still in progress")
     def test_spell_utf8_with_dict(self):
         """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
-                             "--no-rng", "--dictionary=Tests/utf8.wl", "Tests/spell.xml"],
+                             "--no-rng", "--dictionary=Tests/utf8.wl", "Tests/spell-utf8.xml"],
                       "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
 
 
