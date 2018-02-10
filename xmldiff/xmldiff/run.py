@@ -51,6 +51,8 @@ def main():
     value_options.add_option('-o', '--out', dest='output_filename', metavar='FILE',
                              help='specify an explicit output filename',
                              default="xmldiff.html")
+    value_options.add_option('--debug', action="store_true",
+                             help='Show debugging output')
 
     # --- Parse and validate arguments ----------------------------
 
@@ -116,7 +118,12 @@ def main():
 
     editSet = distance(leftXml, rightXml, DiffRoot.get_children, DiffRoot.InsertCost,
                        DiffRoot.DeleteCost, DiffRoot.UpdateCost)
-    print("edit count = " + str(len(editSet)))
+
+    if options.debug:
+        print("edit count = " + str(len(editSet)))
+        for edit in editSet:
+            print( edit.toString() )
+            
     leftXml.applyEdits(editSet)
 
     #  DecorateSourceFile(leftXml, leftLines)
