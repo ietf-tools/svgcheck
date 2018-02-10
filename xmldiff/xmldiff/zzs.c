@@ -83,7 +83,7 @@ void my_mprobe(void * p)
     fprintf(stderr, "preceeding block is clobbered %p\n", p);
     break;
 
-  case MCHECK_TRAIL:
+  case MCHECK_TAIL:
     fprintf(stderr, "following block is clobbered %p\n", p);
     break;
     
