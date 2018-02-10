@@ -2,7 +2,7 @@ from cffi import FFI
 
 ffibuilder = FFI()
 
-ffibuilder.set_source("xmldiff._zzs",
+ffibuilder.set_source("xmldiff._zzs", extra_link_args='-lmcheck',
                       r""" // passed to the C compiler
 // contains implementation of things declared in cdef()
 #include <sys/types.h>
