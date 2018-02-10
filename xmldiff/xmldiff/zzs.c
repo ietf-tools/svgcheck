@@ -247,7 +247,7 @@ typedef struct editList {
 	void * three;
 } EditList;
 
-inline void Combine(EditList * pdest, EditList * pleft, EditList * pright)
+void Combine(EditList * pdest, EditList * pleft, EditList * pright)
 {
 	pdest->operation = OP_COMBINE;
 	pdest->cost = 0;
@@ -261,7 +261,7 @@ inline void Combine(EditList * pdest, EditList * pleft, EditList * pright)
 	}
 }
 
-inline void UpdateAndCombine(EditList * pdest, EditList * pleft, void * left, void * right, int cost)
+void UpdateAndCombine(EditList * pdest, EditList * pleft, void * left, void * right, int cost)
 {
 	pdest->operation = cost ? OP_COMBINE_UPDATE : OP_COMBINE_MATCH;
 	pdest->cost = cost;
@@ -456,7 +456,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 			// fprintf(stderr, "POINT #4\n");
 			for (x = 1; x < m; x++) {
 				for (y = 1; y < n; y++) {
-					_CrtCheckMemory();
+				  // _CrtCheckMemory();
 					int x_ioff = x + ioff;
 					int y_joff = y + joff;
 					// fprintf(stderr, "POINT #5 %d %d %d %d\n", x, y, x_ioff, y_joff);

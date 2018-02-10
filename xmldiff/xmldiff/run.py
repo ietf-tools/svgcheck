@@ -7,7 +7,7 @@ import datetime
 import six
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError
 from rfctools_common import log
-from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
 import string
 from xmldiff.zzs2 import EditItem, distance
 
