@@ -546,7 +546,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		}
 	}
 	_CrtCheckMemory();
-	fprintf(stderr, "Finished loops distance\n"); fflush(sderr);
+	fprintf(stderr, "Finished loops distance\n"); fflush(stderr);
 
 	free(fd);
 
