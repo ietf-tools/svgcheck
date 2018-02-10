@@ -42,8 +42,9 @@ script:
   - cd rfclint
   - $PYTHON test.py
   - cd ../../xmldiff
-  - $PYTHON setup.py --quiet install
+  - $PYTHON setup.py install
   - cd Test
+  - xmldiff Tests/SimpleTree.xml Tests/Simple-AddNode.xml
   - $PYTHON test.py
  
   

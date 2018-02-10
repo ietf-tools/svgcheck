@@ -125,22 +125,28 @@ void appendNode(ptrArray * dest, void * newValue)
 
 struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 {
+	int i;
+	int lmd;
+	int j = 0;
+	int c;
+	int jj;
 	struct snode * stack = NULL;
 	struct pnode * pstack = NULL;
-
+	struct aTree * self = NULL;
+	int * lmds = NULL;
 	struct snode * snew = (struct snode *) calloc(sizeof(struct snode), 1);
+	int * keyroots = NULL;
 	snew->treeNode = root;
 	snew->pNext = stack;
 	stack = snew;
-	int j = 0;
-	int c;
 
 	while (stack != NULL) {
 		struct snode * sthis = stack;
-		stack = stack->pNext;
-
 		int nid = j;
 		struct cArray * children = get_children(sthis->treeNode);
+		struct pnode * pnew;
+		stack = stack->pNext;
+
 		for (c = 0; c < children->c; c++) {
 			snew = (struct snode *) calloc(sizeof(struct snode), 1);
 			snew->treeNode = children->rg[c];
@@ -149,7 +155,7 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 			snew->pNext = stack;
 			stack = snew;
 		}
-		struct pnode * pnew = (struct pnode *) calloc(sizeof(struct pnode), 1);
+		pnew = (struct pnode *) calloc(sizeof(struct pnode), 1);
 		pnew->treeNode = sthis->treeNode;
 		pnew->nodeId = nid;
 		pnew->anc = sthis->anc;
@@ -162,16 +168,14 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		// free(children);
 	}
 
-	struct aTree * self = (struct aTree *) calloc(sizeof(struct aTree), 1);
+	self = (struct aTree *) calloc(sizeof(struct aTree), 1);
 	self->size = j;
 
-	int * lmds = (int *)malloc(sizeof(int) * j);
+	lmds = (int *)malloc(sizeof(int) * j);
 	memset(lmds, -1, sizeof(int)*j);
-	int * keyroots = (int *)malloc(sizeof(int) * j);
+	keyroots = (int *)malloc(sizeof(int) * j);
 	memset(keyroots, -1, sizeof(int)*j);
 
-	int i;
-	int lmd;
 	i = 0;
 	while (pstack != NULL) {
 		struct pnode * pthis = pstack;
@@ -181,8 +185,8 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		append(&self->ids, pthis->nodeId);
 
 		if (!pthis->hasChildren) {
-			lmd = i;
 			int ii;
+			lmd = i;
 			for (ii = 0; ii < pthis->anc.cItems; ii++) {
 				int a = pthis->anc.rgValues[ii];
 				if (lmds[a] == -1) {
@@ -206,7 +210,6 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 
 	qsort(keyroots, j, sizeof(int), compare);
 
-	int jj;
 	for (jj = 0; jj < j; jj++) {
 		if (keyroots[jj] != -1) {
 			if (self->keyroots.rgValues == NULL) {
@@ -375,12 +378,13 @@ void fillArray(eArray * pa, EditList * p, int fAll)
 EditList * cloneEdits(EditList * p2clone, int fAll)
 {
 	int c = cloneCount(p2clone, fAll);
-
+	EditList * pret = NULL;
+	
 	eArray * pEA = (eArray *)calloc(sizeof(eArray) + sizeof(eElement) * c, 1);
 	pEA->c = 0;
 	fillArray(pEA, p2clone, fAll);
 
-	EditList * pret = (EditList *)calloc(sizeof(EditList), 1);
+	pret = (EditList *)calloc(sizeof(EditList), 1);
 	pret->operation = OP_LIST;
 	pret->left = pEA;
 	pret->cost = p2clone->cost;
@@ -397,24 +401,26 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 
 	EditList ** treedists = (EditList **)calloc(sizeof(EditList *), (a->size)*(b->size));
 	EditList * a_remove = (EditList *)calloc(sizeof(EditList), (a->size));
+	EditLiset * b_insert = (EditList *)calloc(sizeof(EditList), (b->size));
 
 	EditList * fd = (EditList *)malloc(sizeof(EditList) * (a->size+1) * (b->size+1));
-
+	EditList * pret = NULL;
+	
 	int i;
+	int i_1;
+
 	for (i = 0; i < a->size; i++) {
 		a_remove[i].operation = OP_REMOVE;
 		a_remove[i].cost = remove_cost(a->nodes.rgValues[i]);
 		a_remove[i].left = a->nodes.rgValues[i];
 	}
 
-	EditList * b_insert = (EditList *)calloc(sizeof(EditList), (b->size));
 	for (i = 0; i < b->size; i++) {
 		b_insert[i].operation = OP_INSERT;
 		b_insert[i].cost = insert_cost(b->nodes.rgValues[i]);
 		b_insert[i].right = b->nodes.rgValues[i];
 	}
 
-	int i_1;
 	for (i_1 = 0; i_1 < a->keyroots.cItems; i_1++) {
 		int i = a->keyroots.rgValues[i_1];
 		// _CrtCheckMemory();
@@ -424,6 +430,11 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 			// fprintf(stderr, "POINT #3 %d %d\n", i, j);
 			int m = i - a->lmds.rgValues[i] + 2;
 			int n = j - b->lmds.rgValues[j] + 2;
+			int ioff = a->lmds.rgValues[i] - 1;
+			int joff = b->lmds.rgValues[j] - 1;
+			int x;
+			int y;
+			
 			_CrtCheckMemory();
 
 			memset(fd, 0, sizeof(EditList)*m*n);
@@ -431,24 +442,19 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 			_CrtCheckMemory();
 
 
-			int ioff = a->lmds.rgValues[i] - 1;
-			int joff = b->lmds.rgValues[j] - 1;
 			_CrtCheckMemory();
 			
-			int x;
 			for (x = 1; x < m; x++) {
 				Combine(&fd[index(x, 0)], &fd[index(x - 1, 0)], &a_remove[x + ioff]);
 			}
 			_CrtCheckMemory();
 
-			int y;
 			for (y = 1; y < n; y++) {
 				Combine(&fd[index(0, y)], &fd[index(0, y - 1)], &b_insert[y + joff]);
 			}
 
 			// fprintf(stderr, "POINT #4\n");
 			for (x = 1; x < m; x++) {
-				int y;
 				for (y = 1; y < n; y++) {
 					_CrtCheckMemory();
 					int x_ioff = x + ioff;
@@ -538,7 +544,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 	}
 	_CrtCheckMemory();
 
-	EditList * pret = cloneEdits(treedists[tindex(a->size - 1, b->size - 1)], 1);
+	pret = cloneEdits(treedists[tindex(a->size - 1, b->size - 1)], 1);
 
 	// M00TODO finish freeing everything
 	return (eArray *) pret->left;
