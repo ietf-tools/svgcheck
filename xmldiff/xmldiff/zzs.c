@@ -176,10 +176,11 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		mprobe(pnew);
 		mprobe(pnew->anc.rgValues);
 
-		fprintf(stderr, "Annotate #1.3\n"); fflush(stderr);
+		fprintf(stderr, "Annotate #1.3 %p\n", sthis); fflush(stderr);
 		mprobe(sthis);
 		free(sthis);
 		// free(children);
+		fprintf(stderr, "Annotate #1.4\n"); fflush(stderr);
 	}
 
 	fprintf(stderr, "Annotate #2\n"); fflush(stderr);
