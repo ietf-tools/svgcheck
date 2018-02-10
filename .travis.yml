@@ -30,6 +30,7 @@ install:
 script:
   - $PIP install -r requirements.txt
   - pwd
+  - python --version
   - cd rfctools_common && $PYTHON setup.py --quiet install
   - pwd
   - cd rfctools_common && $PYTHON test.py

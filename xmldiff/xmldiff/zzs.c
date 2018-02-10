@@ -172,7 +172,7 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		j += 1;
 
 		fprintf(stderr, "Annotate #1.3\n"); fflush(stderr);
-		free(sthis);
+		//	free(sthis);
 		// free(children);
 	}
 
