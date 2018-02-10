@@ -162,6 +162,8 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 			appendLeft(&snew->anc, nid);
 			snew->pNext = stack;
 			stack = snew;
+			mprobe(snew);
+			mprobe(snew->anc);
 		}
 		pnew = (struct pnode *) calloc(sizeof(struct pnode), 1);
 		pnew->treeNode = sthis->treeNode;
@@ -173,6 +175,7 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		j += 1;
 
 		fprintf(stderr, "Annotate #1.3\n"); fflush(stderr);
+		mprobe(sthis);
 		//	free(sthis);
 		// free(children);
 	}
