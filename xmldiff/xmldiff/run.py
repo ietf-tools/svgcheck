@@ -71,7 +71,7 @@ def main():
                           quiet=False, no_network=False)
     try:
         ll = parser.parse(remove_pis=False).tree
-        leftXml = BuildDiffTree(ll)
+        leftXml = BuildDiffTree(ll, options)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + leftSource, e)
         sys.exit(1)
@@ -84,7 +84,7 @@ def main():
                           quiet=False, no_network=False)
     try:
         rightXml = parser.parse(remove_pis=False)
-        rightXml = BuildDiffTree(rightXml.tree)
+        rightXml = BuildDiffTree(rightXml.tree, options)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + rightSource, e)
         sys.exit(1)
@@ -122,8 +122,8 @@ def main():
     if options.debug:
         print("edit count = " + str(len(editSet)))
         for edit in editSet:
-            print( edit.toString() )
-            
+            print(edit.toString())
+
     leftXml.applyEdits(editSet)
 
     #  DecorateSourceFile(leftXml, leftLines)

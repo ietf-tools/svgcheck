@@ -27,7 +27,7 @@ TextContainers = [
 diffCount = 0
 
 
-def BuildDiffTree(xmlNode):
+def BuildDiffTree(xmlNode, options):
     """ Build the Diff tree from the xml tree """
 
     global diffCount
@@ -61,6 +61,9 @@ def BuildDiffTree(xmlNode):
             root.children.append(DiffPI(element, root))
 
         element = element.getnext()
+
+    if options.debug:
+        print("Number of diff nodes is {0}".format(diffCount))
 
     return root
 

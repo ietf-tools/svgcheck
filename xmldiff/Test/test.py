@@ -10,6 +10,11 @@ from xmldiff.zzs2 import distance
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
 
 
+class OOO(object):
+    def __init__(self):
+        self.debug = True
+
+
 class TestParserMethods(unittest.TestCase):
 
     def test_pycodestyle_conformance(self):
@@ -136,11 +141,12 @@ class TestDistanceMethods(unittest.TestCase):
 
 def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile):
     """ General distance test function """
+    options = OOO()
     diffCount = 0
     left = XmlRfcParser(leftFile, quiet=True, cache_path=None, no_network=True).parse()
-    left = BuildDiffTree(left.tree)
+    left = BuildDiffTree(left.tree, options)
     right = XmlRfcParser(rightFile, quiet=True, cache_path=None, no_network=True).parse()
-    right = BuildDiffTree(right.tree)
+    right = BuildDiffTree(right.tree, options)
 
     editSet = distance(left, right, DiffRoot.get_children,
                        DiffRoot.InsertCost, DiffRoot.DeleteCost, DiffRoot.UpdateCost)
