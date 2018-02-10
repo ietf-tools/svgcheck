@@ -552,7 +552,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 
 	pret = cloneEdits(treedists[tindex(a->size - 1, b->size - 1)], 1);
 
-	fprintf(stderr, "Finished clone in distance\n"); fflush(sderr);
+	fprintf(stderr, "Finished clone in distance\n"); fflush(stderr);
 	// M00TODO finish freeing everything
 	return (eArray *) pret->left;
 }
