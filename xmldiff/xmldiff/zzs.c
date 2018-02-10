@@ -134,8 +134,11 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 	struct pnode * pstack = NULL;
 	struct aTree * self = NULL;
 	int * lmds = NULL;
-	struct snode * snew = (struct snode *) calloc(sizeof(struct snode), 1);
 	int * keyroots = NULL;
+	struct snode * snew = (struct snode *) calloc(sizeof(struct snode), 1);
+	if (snew == NULL) {
+	  return NULL;
+	}
 	snew->treeNode = root;
 	snew->pNext = stack;
 	stack = snew;

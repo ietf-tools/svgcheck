@@ -3,10 +3,12 @@ from xmldiff.DiffNode import DiffElement
 from xmldiff.EditItem import EditItem
 
 all_handles = []
+last_child = None
 
 
 @ffi.def_extern()
 def zzs_get_children(node):
+    global last_child
     treeNode = ffi.from_handle(node)
     childs = []
     for child in treeNode.children:
@@ -15,6 +17,7 @@ def zzs_get_children(node):
         all_handles.append(h)
 
     p = ffi.new("struct cArray *", [len(childs), childs])
+    last_child = p
     return p
 
 
@@ -38,7 +41,8 @@ def zzs_update_cost(node1, node2):
     rightNode = ffi.from_handle(node2)
     if type(leftNode) is not type(rightNode):
         return 100000
-    return leftNode.updateCost(rightNode)
+    cost = leftNode.updateCost(rightNode)
+    return cost
 
 
 def distance(leftXml, rightXml, get_children, insertCost, deleteCost, updateCost):
