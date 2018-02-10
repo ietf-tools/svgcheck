@@ -68,6 +68,31 @@ struct aTree {
     intArray  keyroots;
 };
 
+void my_mprobe(void * p)
+{
+  int i = mprobe(p);
+  switch (i) {
+  case MCHECK_DISABLED:
+    fprintf(stderr, "did not call mcheck\n");
+    break;
+
+  case MCHECK_OK:
+    break;
+
+  case MCHECK_HEAD:
+    fprintf(stderr, "preceeding block is clobbered %p\n", p);
+    break;
+
+  case MCHECK_TRAIL:
+    fprintf(stderr, "following block is clobbered %p\n", p);
+    break;
+    
+  case MCHECK_FREE:
+    fprintf(stderr, "freed twice memory %p\n", p);
+    break;
+  }
+}
+
 void clone(intArray * dest, intArray * src)
 {
     dest->cItems = src->cItems;
@@ -162,8 +187,8 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 			appendLeft(&snew->anc, nid);
 			snew->pNext = stack;
 			stack = snew;
-			mprobe(snew);
-			mprobe(snew->anc.rgValues);
+			my_mprobe(snew);
+			my_mprobe(snew->anc.rgValues);
 		}
 		pnew = (struct pnode *) calloc(sizeof(struct pnode), 1);
 		pnew->treeNode = sthis->treeNode;
@@ -173,11 +198,11 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		pnew->pNext = pstack;
 		pstack = pnew;
 		j += 1;
-		mprobe(pnew);
-		mprobe(pnew->anc.rgValues);
+		my_mprobe(pnew);
+		my_mprobe(pnew->anc.rgValues);
 
 		fprintf(stderr, "Annotate #1.3 %p\n", sthis); fflush(stderr);
-		mprobe(sthis);
+		my_mprobe(sthis);
 		free(sthis);
 		// free(children);
 		fprintf(stderr, "Annotate #1.4\n"); fflush(stderr);
