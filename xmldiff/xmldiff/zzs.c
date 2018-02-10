@@ -543,9 +543,13 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		}
 	}
 	_CrtCheckMemory();
+	fprintf(stderr, "Finished loops distance\n"); fflush(sderr);
+
+	free(fd);
 
 	pret = cloneEdits(treedists[tindex(a->size - 1, b->size - 1)], 1);
 
+	fprintf(stderr, "Finished clone in distance\n"); fflush(sderr);
 	// M00TODO finish freeing everything
 	return (eArray *) pret->left;
 }
