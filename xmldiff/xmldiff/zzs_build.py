@@ -2,7 +2,7 @@ from cffi import FFI
 
 ffibuilder = FFI()
 
-ffibuilder.set_source("xmldiff._zzs", extra_link_args='-lmcheck',
+ffibuilder.set_source("xmldiff._zzs", 
                       r""" // passed to the C compiler
 // contains implementation of things declared in cdef()
 #include <sys/types.h>
@@ -29,7 +29,7 @@ extern struct eArray * Distance(void * leftTree, void *  rightTree,
                                 int (*update)(void *, void *));
 
 
-                      """,
+                      """,extra_link_args='-lmcheck',
                       sources=["xmldiff/zzs.c"],
                       libraries=[])
 
