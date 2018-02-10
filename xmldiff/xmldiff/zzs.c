@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
+#include <mcheck.h>
 
 #define _CrtCheckMemory()
 
@@ -409,6 +410,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 	int(*insert_cost)(void *), int(*remove_cost)(void *),
 	int(*update_cost)(void *, void *))
 {
+  mcheck(NULL);
 	fprintf(stderr, "Distance Point #1\n"); fflush(stderr);
 	struct aTree * a = AnnotateTree(leftTree, get_children);
 	fprintf(stderr, "Distance Point #2\n"); fflush(stderr);
