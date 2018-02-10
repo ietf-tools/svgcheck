@@ -163,7 +163,7 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 			snew->pNext = stack;
 			stack = snew;
 			mprobe(snew);
-			mprobe(snew->anc);
+			mprobe(snew->anc.rgValues);
 		}
 		pnew = (struct pnode *) calloc(sizeof(struct pnode), 1);
 		pnew->treeNode = sthis->treeNode;
