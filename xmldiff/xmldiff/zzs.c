@@ -399,8 +399,11 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 	int(*insert_cost)(void *), int(*remove_cost)(void *),
 	int(*update_cost)(void *, void *))
 {
+	fprintf(stderr, "Distance Point #1\n"); fflush(stderr);
 	struct aTree * a = AnnotateTree(leftTree, get_children);
+	fprintf(stderr, "Distance Point #2\n"); fflush(stderr);
 	struct aTree * b = AnnotateTree(rightTree, get_children);
+	fprintf(stderr, "Distance Point #3\n"); fflush(stderr);
 
 	EditList ** treedists = (EditList **)calloc(sizeof(EditList *), (a->size)*(b->size));
 	EditList * a_remove = (EditList *)calloc(sizeof(EditList), (a->size));
@@ -423,6 +426,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		b_insert[i].cost = insert_cost(b->nodes.rgValues[i]);
 		b_insert[i].right = b->nodes.rgValues[i];
 	}
+	fprintf(stderr, "Distance Point #4\n"); fflush(stderr);
 
 	for (i_1 = 0; i_1 < a->keyroots.cItems; i_1++) {
 		int i = a->keyroots.rgValues[i_1];
