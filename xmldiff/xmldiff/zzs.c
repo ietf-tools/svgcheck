@@ -401,7 +401,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 
 	EditList ** treedists = (EditList **)calloc(sizeof(EditList *), (a->size)*(b->size));
 	EditList * a_remove = (EditList *)calloc(sizeof(EditList), (a->size));
-	EditLiset * b_insert = (EditList *)calloc(sizeof(EditList), (b->size));
+	EditList * b_insert = (EditList *)calloc(sizeof(EditList), (b->size));
 
 	EditList * fd = (EditList *)malloc(sizeof(EditList) * (a->size+1) * (b->size+1));
 	EditList * pret = NULL;
