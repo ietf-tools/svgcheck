@@ -3,7 +3,7 @@ from rfctools_common.parser import XmlRfc
 from rfctools_common import log
 import sys
 from lxml.html import builder as E
-from zzs import EditItem
+from xmldiff.EditItem import EditItem
 
 try:
     import debug
@@ -27,7 +27,7 @@ TextContainers = [
 diffCount = 0
 
 
-def BuildDiffTree(xmlNode):
+def BuildDiffTree(xmlNode, options):
     """ Build the Diff tree from the xml tree """
 
     global diffCount
@@ -61,6 +61,9 @@ def BuildDiffTree(xmlNode):
             root.children.append(DiffPI(element, root))
 
         element = element.getnext()
+
+    if options.debug:
+        print("Number of diff nodes is {0}".format(diffCount))
 
     return root
 
@@ -100,7 +103,8 @@ class DiffRoot(object):
 
     @staticmethod
     def InsertCost(left):
-        item = EditItem(EditItem.OP_INSERT, None, left)
+        item = EditItem()
+        item.setOperation(EditItem.OP_INSERT, None, left)
         item.cost = 1
         return item
 
@@ -111,7 +115,8 @@ class DiffRoot(object):
             that that for text so that doing a rename on texts
             is the preferred operation
         """
-        item = EditItem(EditItem.OP_DELETE, left, None)
+        item = EditItem()
+        item.setOperation(EditItem.OP_DELETE, left, None)
         if isinstance(left, DiffElement):
             item.cost = 10
         else:
@@ -122,15 +127,14 @@ class DiffRoot(object):
     def UpdateCost(left, right):
         #  If the types are not the same, then the cost is extremely high
         if type(left) is not type(right):
-            item = EditItem(EditItem.OP_RENAME, left, right)
+            item = EditItem()
+            item.setOperation(EditItem.OP_RENAME, left, right)
             item.cost = 100000
             return item
         return left.updateCost(right)
 
     def updateCost(self, right):
-        item = EditItem(EditItem.OP_RENAME, self, right)
-        item.cost = 100
-        return item
+        return 100
 
     def _serialize(self, element):
         if sys.version > '3':
@@ -232,9 +236,7 @@ class DiffDocument(DiffRoot):
         return self._serialize(result)
 
     def updateCost(self, right):
-        item = EditItem(EditItem.OP_MATCH, self, right)
-        item.cost = 0
-        return item
+        return 0
 
     def decorateSource(self, sourceLines):
         for child in self.children:
@@ -457,14 +459,10 @@ class DiffPI(DiffRoot):
     def updateCost(self, right):
         if self.xml.target == right.xml.target:
             if self.xml.text == right.xml.text:
-                return EditItem(EditItem.OP_MATCH, self, right)
+                return 0
             else:
-                item = EditItem(EditItem.OP_RENAME, self, right)
-                item.cost = 50
-                return item
-        item = EditItem(EditItem.OP_RENAME, self, right)
-        item.cost = 100
-        return item
+                return 50
+        return 100
 
 
 class DiffElement(DiffRoot):
@@ -601,10 +599,8 @@ class DiffElement(DiffRoot):
 
     def updateCost(self, right):
         if self.xml.tag == right.xml.tag:
-            return EditItem(EditItem.OP_MATCH, self, right)
-        item = EditItem(EditItem.OP_RENAME, self, right)
-        item.cost = 100
-        return item
+            return 0
+        return 100
 
     def decorateSource(self, sourceLines):
         source = sourceLines[self.xml.sourceLine]
@@ -666,10 +662,8 @@ class DiffText(DiffRoot):
 
     def updateCost(self, right):
         if self.text == right.text:
-            return EditItem(EditItem.OP_MATCH, self, right)
-        item = EditItem(EditItem.OP_RENAME, self, right)
-        item.cost = 3
-        return item
+            return 0
+        return 3
 
     def decorateSource(self, sourceLines):
         pass

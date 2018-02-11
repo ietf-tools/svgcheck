@@ -5,8 +5,14 @@ import shutil
 import difflib
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
-from zzs import EditItem, distance
-from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
+from xmldiff.EditItem import EditItem
+from xmldiff.zzs2 import distance
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
+
+
+class OOO(object):
+    def __init__(self):
+        self.debug = True
 
 
 class TestParserMethods(unittest.TestCase):
@@ -14,8 +20,8 @@ class TestParserMethods(unittest.TestCase):
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
-        result = pep8style.check_files(['run.py', 'zzs.py', 'DiffNode.py',
-                                        'test.py'])
+        result = pep8style.check_files(['../xmldiff/run.py', '../xmldiff/zzs2.py',
+                                        '../xmldiff/DiffNode.py', 'test.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -135,14 +141,15 @@ class TestDistanceMethods(unittest.TestCase):
 
 def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile):
     """ General distance test function """
+    options = OOO()
     diffCount = 0
     left = XmlRfcParser(leftFile, quiet=True, cache_path=None, no_network=True).parse()
-    left = BuildDiffTree(left.tree)
+    left = BuildDiffTree(left.tree, options)
     right = XmlRfcParser(rightFile, quiet=True, cache_path=None, no_network=True).parse()
-    right = BuildDiffTree(right.tree)
+    right = BuildDiffTree(right.tree, options)
 
     editSet = distance(left, right, DiffRoot.get_children,
-                       DiffRoot.InsertCost, DiffRoot.DeleteCost, DiffRoot.UpdateCost).toList()
+                       DiffRoot.InsertCost, DiffRoot.DeleteCost, DiffRoot.UpdateCost)
     with open(diffFile, 'r') as f:
         lines2 = f.readlines()
 

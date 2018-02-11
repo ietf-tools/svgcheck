@@ -4,10 +4,10 @@ matrix:
     include:
         - os: linux
           python: 2.7
-          env: PYTHON=python PIP=pip
+          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3
         - os: linux
           python: 3.6
-          env: PYTHON=python PIP=pip
+          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3
         - os: linux
           python: pypy3
           env: PYTHON=python PIP=pip
@@ -30,6 +30,7 @@ install:
 script:
   - $PIP install -r requirements.txt
   - pwd
+  - python --version
   - cd rfctools_common && $PYTHON setup.py --quiet install
   - pwd
   - cd rfctools_common && $PYTHON test.py
@@ -42,8 +43,9 @@ script:
   - cd rfclint
   - $PYTHON test.py
   - cd ../../xmldiff
-  - $PYTHON setup.py --quiet install
-  - cd xmldiff
+  - $PYTHON setup.py install
+  - cd Test
+  - xmldiff Tests/SimpleTree.xml Tests/Simple-AddNode.xml
   - $PYTHON test.py
  
   

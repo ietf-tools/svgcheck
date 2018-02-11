@@ -4,11 +4,12 @@ import optparse
 import os
 import lxml.etree
 import datetime
+import six
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError
 from rfctools_common import log
-from DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
 import string
-from zzs import EditItem, distance
+from xmldiff.zzs2 import EditItem, distance
 
 try:
     import debug
@@ -50,6 +51,8 @@ def main():
     value_options.add_option('-o', '--out', dest='output_filename', metavar='FILE',
                              help='specify an explicit output filename',
                              default="xmldiff.html")
+    value_options.add_option('--debug', action="store_true",
+                             help='Show debugging output')
 
     # --- Parse and validate arguments ----------------------------
 
@@ -68,7 +71,7 @@ def main():
                           quiet=False, no_network=False)
     try:
         ll = parser.parse(remove_pis=False).tree
-        leftXml = BuildDiffTree(ll)
+        leftXml = BuildDiffTree(ll, options)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + leftSource, e)
         sys.exit(1)
@@ -81,23 +84,33 @@ def main():
                           quiet=False, no_network=False)
     try:
         rightXml = parser.parse(remove_pis=False)
-        rightXml = BuildDiffTree(rightXml.tree)
+        rightXml = BuildDiffTree(rightXml.tree, options)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + rightSource, e)
         sys.exit(1)
 
-    with open(leftSource, "rU", encoding="utf8") as f:
-        leftLines = f.readlines()
+    if six.PY2:
+        with open(leftSource, "rU") as f:
+            leftLines = f.readlines()
+    else:
+        with open(leftSource, "rU", encoding="utf8") as f:
+            leftLines = f.readlines()
 
     leftLines = [escape(x).replace(' ', '&nbsp;') for x in leftLines]
 
-    with open(rightSource, "rU", encoding="utf8") as f:
-        rightLines = f.readlines()
+    if six.PY2:
+        with open(rightSource, "rU") as f:
+            rightLines = f.readlines()
+    else:
+        with open(rightSource, "rU", encoding="utf8") as f:
+            rightLines = f.readlines()
 
     rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
 
     templates = {}
     templates_dir = 'Templates'
+    templates_dir = os.path.join(os.path.dirname(__file__), 'Templates')
+
     for filename in ['base.html']:
         file = open(os.path.join(templates_dir, filename), 'r')
         templates[filename] = string.Template(file.read())
@@ -105,8 +118,12 @@ def main():
 
     editSet = distance(leftXml, rightXml, DiffRoot.get_children, DiffRoot.InsertCost,
                        DiffRoot.DeleteCost, DiffRoot.UpdateCost)
-    editSet = editSet.toList()
-    print("edit count = " + str(len(editSet)))
+
+    if options.debug:
+        print("edit count = " + str(len(editSet)))
+        for edit in editSet:
+            print(edit.toString())
+
     leftXml.applyEdits(editSet)
 
     #  DecorateSourceFile(leftXml, leftLines)
@@ -131,7 +148,10 @@ def main():
     filename = options.output_filename
     if not filename:
         filename = basename + ".html"
-    file = open(filename, "w", encoding='utf-8')
+    if six.PY2:
+        file = open(filename, "w")
+    else:
+        file = open(filename, "w", encoding='utf-8')
     file.write(output)
     file.close()
 

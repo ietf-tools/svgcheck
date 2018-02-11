@@ -3,6 +3,9 @@ Samples
 cache
 bin
 Temp
+Release
+Debug
+_zzs.c
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
