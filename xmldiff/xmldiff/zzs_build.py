@@ -29,7 +29,7 @@ extern struct eArray * Distance(void * leftTree, void *  rightTree,
                                 int (*update)(void *, void *));
 
 
-                      """,extra_link_args=['-lmcheck'],
+                      """,
                       sources=["xmldiff/zzs.c"],
                       libraries=[])
 
