@@ -143,8 +143,6 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 	snew->pNext = stack;
 	stack = snew;
 
-	fprintf(stderr, "Annotate #1\n"); fflush(stderr);
-
 	while (stack != NULL) {
 		struct snode * sthis = stack;
 		int nid = j;
@@ -230,7 +228,6 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 	free(lmds);
 	free(keyroots);
 
-	fprintf(stderr, "Annotate #5\n"); fflush(stderr);
 	return self;
 }
 
@@ -403,12 +400,8 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 	int(*insert_cost)(void *), int(*remove_cost)(void *),
 	int(*update_cost)(void *, void *))
 {
-  // mcheck(NULL);
-	fprintf(stderr, "Distance Point #1\n"); fflush(stderr);
 	struct aTree * a = AnnotateTree(leftTree, get_children);
-	fprintf(stderr, "Distance Point #2\n"); fflush(stderr);
 	struct aTree * b = AnnotateTree(rightTree, get_children);
-	fprintf(stderr, "Distance Point #3\n"); fflush(stderr);
 
 	EditList ** treedists = (EditList **)calloc(sizeof(EditList *), (a->size)*(b->size));
 	EditList * a_remove = (EditList *)calloc(sizeof(EditList), (a->size));
@@ -431,7 +424,6 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		b_insert[i].cost = insert_cost(b->nodes.rgValues[i]);
 		b_insert[i].right = b->nodes.rgValues[i];
 	}
-	fprintf(stderr, "Distance Point #4\n"); fflush(stderr);
 
 	for (i_1 = 0; i_1 < a->keyroots.cItems; i_1++) {
 		int i = a->keyroots.rgValues[i_1];
@@ -439,7 +431,6 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		int j_1;
 		for (j_1 = 0; j_1 < b->keyroots.cItems; j_1++) {
 			int j = b->keyroots.rgValues[j_1];
-			// fprintf(stderr, "POINT #3 %d %d\n", i, j);
 			int m = i - a->lmds.rgValues[i] + 2;
 			int n = j - b->lmds.rgValues[j] + 2;
 			int ioff = a->lmds.rgValues[i] - 1;
@@ -465,16 +456,13 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 				Combine(&fd[index(0, y)], &fd[index(0, y - 1)], &b_insert[y + joff]);
 			}
 
-			// fprintf(stderr, "POINT #4\n");
 			for (x = 1; x < m; x++) {
 				for (y = 1; y < n; y++) {
 				  // _CrtCheckMemory();
 					int x_ioff = x + ioff;
 					int y_joff = y + joff;
-					// fprintf(stderr, "POINT #5 %d %d %d %d\n", x, y, x_ioff, y_joff);
 
 					if (a->lmds.rgValues[i] == a->lmds.rgValues[x_ioff] && b->lmds.rgValues[j] == b->lmds.rgValues[y_joff]) {
-					  // fprintf(stderr, "POINT #6\n");
 						//                    +-
 						//                    | δ(l(i1)..i-1, l(j1)..j) + γ(v → λ)
 						//  δ(F1 , F2 ) = min-+ δ(l(i1)..i , l(j1)..j-1) + γ(λ → w)
@@ -512,7 +500,6 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 						_CrtCheckMemory();
 					}
 					else {
-					  // fprintf(stderr, "POINT #7\n");
 						// #                   +-
 						// #                   | δ(l(i1)..i-1, l(j1)..j) + γ(v → λ)
 						// # δ(F1, F2) = min - +δ(l(i1)..i, l(j1)..j - 1) + γ(λ → w)
@@ -525,10 +512,8 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 
 						int op1Cost = fd[index(x - 1, y)].cost + a_remove[x_ioff].cost;
 						int op2Cost = fd[index(x, y - 1)].cost + b_insert[y_joff].cost;
-					  // fprintf(stderr, "POINT #7a\n");
 					  int op3Cost = fd[index(p, q)].cost + ((treedists[tindex(x_ioff, y_joff)] != NULL) ? treedists[tindex(x_ioff, y_joff)]->cost : 0);
 
-						// fprintf(stderr, "POINT #8\n");
 						if (op1Cost < op2Cost) {
 							if (op1Cost < op3Cost) {
 								Combine(&fd[index(x, y)], &fd[index(x - 1, y)], &a_remove[x_ioff]);
@@ -555,13 +540,11 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 		}
 	}
 	_CrtCheckMemory();
-	fprintf(stderr, "Finished loops distance\n"); fflush(stderr);
 
 	free(fd);
 
 	pret = cloneEdits(treedists[tindex(a->size - 1, b->size - 1)], 1);
 
-	fprintf(stderr, "Finished clone in distance\n"); fflush(stderr);
 	// M00TODO finish freeing everything
 	return (eArray *) pret->left;
 }
