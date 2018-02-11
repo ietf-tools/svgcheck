@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
-#include <mcheck.h>
 
 #define _CrtCheckMemory()
 
@@ -68,32 +67,7 @@ struct aTree {
     intArray  keyroots;
 };
 
-void my_mprobe(void * p)
-{
-  int i = mprobe(p);
-  switch (i) {
-  case MCHECK_DISABLED:
-    fprintf(stderr, "did not call mcheck\n");
-    break;
-
-  case MCHECK_OK:
-    break;
-
-  case MCHECK_HEAD:
-    fprintf(stderr, "preceeding block is clobbered %p\n", p);
-    break;
-
-  case MCHECK_TAIL:
-    fprintf(stderr, "following block is clobbered %p\n", p);
-    break;
-    
-  case MCHECK_FREE:
-    fprintf(stderr, "freed twice memory %p\n", p);
-    break;
-  }
-}
-
-void clone(intArray * dest, intArray * src)
+void cloneIntArray(intArray * dest, intArray * src)
 {
     dest->cItems = src->cItems;
     dest->cAlloc = 20;
@@ -105,7 +79,7 @@ void clone(intArray * dest, intArray * src)
     if (dest->rgValues == NULL) {
 	//  error
     }
-    memcpy(dest->rgValues, src->rgValues, src->cItems*sizeof(int));
+    memmove(dest->rgValues, src->rgValues, src->cItems*sizeof(int));
 }
 
 void appendLeft(intArray * dest, int newValue)
@@ -174,21 +148,18 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 	while (stack != NULL) {
 		struct snode * sthis = stack;
 		int nid = j;
-		fprintf(stderr, "Annotate #1.1\n"); fflush(stderr);
+
 		struct cArray * children = get_children(sthis->treeNode);
 		struct pnode * pnew;
 		stack = stack->pNext;
 
-		fprintf(stderr, "Annotate #1.2 %d\n", children->c); fflush(stderr);
 		for (c = 0; c < children->c; c++) {
 			snew = (struct snode *) calloc(sizeof(struct snode), 1);
 			snew->treeNode = children->rg[c];
-			clone(&snew->anc, &sthis->anc);
+			cloneIntArray(&snew->anc, &sthis->anc);
 			appendLeft(&snew->anc, nid);
 			snew->pNext = stack;
 			stack = snew;
-			my_mprobe(snew);
-			my_mprobe(snew->anc.rgValues);
 		}
 		pnew = (struct pnode *) calloc(sizeof(struct pnode), 1);
 		pnew->treeNode = sthis->treeNode;
@@ -198,17 +169,10 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		pnew->pNext = pstack;
 		pstack = pnew;
 		j += 1;
-		my_mprobe(pnew);
-		my_mprobe(pnew->anc.rgValues);
 
-		fprintf(stderr, "Annotate #1.3 %p\n", sthis); fflush(stderr);
-		my_mprobe(sthis);
 		free(sthis);
 		// free(children);
-		fprintf(stderr, "Annotate #1.4\n"); fflush(stderr);
 	}
-
-	fprintf(stderr, "Annotate #2\n"); fflush(stderr);
 
 	self = (struct aTree *) calloc(sizeof(struct aTree), 1);
 	self->size = j;
@@ -249,11 +213,9 @@ struct aTree * AnnotateTree(void * root, struct cArray *(*get_children)(void *))
 		free(pthis->anc.rgValues);
 		free(pthis);
 	}
-	fprintf(stderr, "Annotate #3\n"); fflush(stderr);
 
 	qsort(keyroots, j, sizeof(int), compare);
 
-	fprintf(stderr, "Annotate #4\n"); fflush(stderr);
 	for (jj = 0; jj < j; jj++) {
 		if (keyroots[jj] != -1) {
 			if (self->keyroots.rgValues == NULL) {
@@ -441,7 +403,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 	int(*insert_cost)(void *), int(*remove_cost)(void *),
 	int(*update_cost)(void *, void *))
 {
-  mcheck(NULL);
+  // mcheck(NULL);
 	fprintf(stderr, "Distance Point #1\n"); fflush(stderr);
 	struct aTree * a = AnnotateTree(leftTree, get_children);
 	fprintf(stderr, "Distance Point #2\n"); fflush(stderr);
