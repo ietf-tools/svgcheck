@@ -79,7 +79,7 @@ void cloneIntArray(intArray * dest, intArray * src)
     if (dest->rgValues == NULL) {
 	//  error
     }
-    memmove(dest->rgValues, src->rgValues, src->cItems*sizeof(int));
+    memcpy(dest->rgValues, src->rgValues, src->cItems*sizeof(int));
 }
 
 void appendLeft(intArray * dest, int newValue)
@@ -91,7 +91,7 @@ void appendLeft(intArray * dest, int newValue)
 	dest->rgValues = newArray;
 	dest->cAlloc += 10;
     }
-    memcpy(&dest->rgValues[1], &dest->rgValues[0], dest->cItems*sizeof(int));
+    memmove(&dest->rgValues[1], &dest->rgValues[0], dest->cItems*sizeof(int));
     dest->rgValues[0] = newValue;
     dest->cItems += 1;
 }
