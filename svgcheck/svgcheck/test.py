@@ -22,6 +22,8 @@ class TestCommandLineOptions(unittest.TestCase):
                       None, None)
 
     def test_clear_cache(self):
+        if not os.path.exists('Temp'):
+            os.mkdir('Temp')
         if not os.path.exists('Temp/cache'):
             os.mkdir('Temp/cache')
         shutil.copy('Tests/cache_saved/reference.RFC.1847.xml',
@@ -85,6 +87,8 @@ class TestParserMethods(unittest.TestCase):
         test_rfc_file(self, "rfc.xml")
 
     def test_simple_sub(self):
+        if not os.path.exists('Temp'):
+            os.mkdir('Temp')
         check_process(self, [sys.executable, "run.py", "--out=Temp/rfc.xml",
                              "--repair", "--no-xinclude", "Tests/rfc.xml"],
                       "Results/rfc-01.out", "Results/rfc-01.err",
@@ -105,6 +109,8 @@ class TestParserMethods(unittest.TestCase):
                       "Results/rfc-svg.out", "Results/rfc-svg.err", None, None)
 
     def test_full_tiny(self):
+        if not os.path.exists('Temp'):
+            os.mkdir('Temp')
         check_process(self, [sys.executable, "run.py", "--out=Temp/full-tiny.xml",
                              "--repair", "Tests/full-tiny.xml"],
                       "Results/full-tiny.out", "Results/full-tiny.err",
