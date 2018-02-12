@@ -194,7 +194,7 @@ class Test_Abnf(unittest.TestCase):
                              "Tests/abnf-extras.xml"],
                       "Results/abnf-extras-no.out", "Results/abnf-extras-no.err", None, None)
 
-    def test_extras_doesnt_exit(self):
+    def test_extras_doesnt_exist(self):
         """ An ABNF object needing additional file, but the one given is not real """
         check_process(self, [sys.executable, "run.py", "--no-spell",
                              "--abnf-add-rules=abnf-extras.abnf", "Tests/abnf-extras.xml"],

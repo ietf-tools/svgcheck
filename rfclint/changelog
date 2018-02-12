@@ -1,7 +1,15 @@
+rfclint (0.0.3) distribution(s); urgency=urgency
+
+	* Handle errors when an executable is missing better
+	* Add the ability for having personal and additional dictionaries.
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 11 Feb 2018 19:00:00 -0800
+
+
 rfclint (0.0.2) distribution(s); urgency=urgency
 
- * Create the initial simple version
- * Create python setup program
+	* Create the initial simple version
+	* Create python setup program
 
 -- Jim Schaad <ietf@augustcellars.com>  Fri 26 Jan 2018 09:00:00 -0800
 

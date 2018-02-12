@@ -1,14 +1,6 @@
-svgcheck (0.0.2) distribution(s); urgency=urgency
+xmldiff (0.0.3) distribution(s); urgency=urgency
 
-	* Rewrite style proprety handling to promote items rather than validate in place
-	* Add more test cases to get coverage number above 85%
+	* First drop of code - only does pure xml differences
 
--- Jim Schaad <ietf@augustcellars.com> FRI 25 01 2018 09:00:00 -0800
-
-svgcheck (0.0.1) distribution(s); urgency=urgency
-
- * Create the initial simple version
- * Create python setup program
-
--- Jim Schaad <ietf@augustcellars.com>  Fri 05 Jan 2018 12:00:00 -0800
+-- Jim Schaad <ietf@augustcellars.com>  Sun 11 Feb 2018 19:00:00 -0800
 

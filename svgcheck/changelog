@@ -1,3 +1,9 @@
+svgcheck (0.0.3) distribution(s); urgency=urgency
+
+	* Correct black/white substitutions on RGB colors
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 11 Feb 2018 19:00:00 -0800
+
 svgcheck (0.0.2) distribution(s); urgency=urgency
 
 	* Rewrite style proprety handling to promote items rather than validate in place
