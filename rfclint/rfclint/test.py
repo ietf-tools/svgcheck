@@ -295,6 +295,75 @@ class Test_Spell(unittest.TestCase):
                       "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
 
 
+class Test_Spell_Hunspell(unittest.TestCase):
+    """ Set of tests dealing with the spell checker API """
+    """
+    Disable the following tests because different dictionaries currently cause different
+    sets of results to be suggested.  Until we figure out how to deal with this problem
+    the tests will always be failing someplace.
+
+    def test_error_one(self):
+        "" " Do basic quiet spell checking "" "
+        check_process(self, [sys.executable, "run.py", "--spell-window=0",
+                             "--color=none", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-01.out",
+                      "Results/spell-01.err" if os.name == 'nt'
+                      else "Results/spell-01-60.err", None, None)
+    """
+
+    def test_add_context(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py", "--no-suggest",
+                             "--color=none", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-context.out",
+                      "Results/spell-context.err", None, None)
+
+    def test_error_one_no_suggest(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-no-suggest.out", "Results/spell-no-suggest.err", None, None)
+
+    def test_add_dict(self):
+        """ Add a simple dictionary with my name """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--dictionary=Tests/schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-add-dict.out", "Results/spell-add-dict.err", None, None)
+
+    def test_add_dict_not(self):
+        """ Add a simple dictionary which does not exit """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--dictionary=schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-add-dict-not.out", "Results/spell-add-dict-not.err",
+                      None, None)
+
+    def test_add_personal_dict(self):
+        """ Add a simple dictionary with my name """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--personal=Tests/schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-add-per.out", "Results/spell-add-per.err", None, None)
+
+    def test_add_personal_dict_not(self):
+        """ Add a simple dictionary which does not exist """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--personal=schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-add-per-not.out", "Results/spell-add-per-not.err", None, None)
+
+    @unittest.skipIf(True, "Test is still in progress")
+    def test_spell_utf8(self):
+        """ Need to do some testing of spelling w/ utf-8 characters """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--no-rng", "--spell-program=hunspell", "Tests/spell-utf8.xml"],
+                      "Results/spell-utf8.out", "Results/spell-utf8.err", None, None)
+
+    @unittest.skipIf(True, "Test is still in progress")
+    def test_spell_utf8_with_dict(self):
+        """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--no-rng", "--dictionary=Tests/utf8.wl", "--spell-program=hunspell", "Tests/spell-utf8.xml"],
+                      "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
+
+
 def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):
     """
     Execute a subprocess using args as the command line.

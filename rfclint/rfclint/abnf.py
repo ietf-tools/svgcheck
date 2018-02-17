@@ -34,7 +34,7 @@ class AbnfChecker(object):
                 program = which(program)
                 if not program:
                     raise RfcLintError("The program '{0}' does not exist or is not executable".
-                                       format(bap))
+                                       format(look_for))
         self.abnfProgram = program
 
     def validate(self, tree):
