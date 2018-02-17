@@ -6,6 +6,7 @@ import sys
 import colorama
 import six
 import platform
+import codecs
 from rfctools_common import log
 
 
@@ -24,6 +25,15 @@ class RfcLintError(Exception):
         self.position = line_no
         self.filename = filename
         self.line = line_no
+
+
+def ReplaceWithSpace(exc):
+    if isinstance(exc, UnicodeDecodeError):
+        return ' '
+    elif isinstance(exc, UnicodeEncodeError):
+        return (bytes((exc.end-exc.start)*[32]), exc.end)
+    else:
+        raise TypeError("can't handle %s" % type(exc).__name__)
 
 
 CheckAttributes = {
@@ -116,9 +126,13 @@ class Speller(object):
             self.color_end = colorama.Style.RESET_ALL
 
         if program:
-            if not which(program):
+            look_for = which(program)
+            if not look_for and os.name == 'nt':
+                look_for = which(program + '.exe')
+            if not look_for:
                 raise RfcLintError("The program '{0}' does not exist or is not executable".
                                    format(program))
+            program = look_for
         else:
             if os.name == "nt":
                 look_for = "aspell.exe"
@@ -132,6 +146,8 @@ class Speller(object):
                 raise RfcLintError("The program '{0}' does not exist or is not executable".
                                    format(look_for))
 
+        spellBaseName = os.path.basename(program)
+        spellBaseName = spellBaseName.replace('.exe', '')
         cmdLine = [program, '-a']
         dicts = config.getList('spell', 'dictionaries')
         if dicts:
@@ -162,6 +178,9 @@ class Speller(object):
                 cmdLine.append('-p')
                 cmdLine.append(dict2)
 
+        # cmdLine.append('--encoding=iso-8859-1')
+        # cmdLine.append('-i iso-8859-1')
+        # cmdLine.append('-i utf-8')
         log.note("spell command = '{0}'".format(" ".join(cmdLine)))
         self.p = subprocess.Popen(cmdLine,
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -170,13 +189,34 @@ class Speller(object):
             self.stdin = self.p.stdin
         else:
             self.stdin = io.TextIOWrapper(self.p.stdin, encoding='utf-8', line_buffering=True)
-            self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
+            self.stdout = self.p.stdout #   io.TextIOWrapper(self.p.stdout, encoding='utf-8')
 
         #  Check that we got a good return
-        line = self.stdout.readline()
-        if re.match(r".*International Ispell.*", line) is None:
+        line = self.stdout.readline().decode('utf-8')
+        log.note(line)
+
+        # (#) International Ispell Version 3.1.20 (but really Aspell 0.50.3) --- Aspell line
+        # (#) International Ispell Version 3.2.06 (but really Hunspell 1.3.3) --- Hunspell line
+        # 
+        m = re.match(r".*International Ispell Version [\d.]+ \(but really (\w+) ([\d.]+).*", line)
+        if m is None:
             raise RfcLintError("Error starting the spelling program\n{0}".format(line))
 
+        if m.group(1).lower() != spellBaseName:
+            raise RfcLintError("Error: The wrong spelling program was started.  Expected {0} and got {1}".format(spellBaseName, m.group(1)))
+
+        self.cp1252 = False
+        if spellBaseName == 'aspell':
+            log.note("xx - " + m.group(2))
+            if m.group(2)[2] == '5':
+                # This is the version we are not happy with
+                self.cp1252 = True
+                codecs.register_error('replaceWithSpace', ReplaceWithSpace)
+                log.note("Use 1252")
+
+        self.cp1252 = True
+        codecs.register_error('replaceWithSpace', ReplaceWithSpace)
+        
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
         self.aspell_re = re.compile(r".\s(\w+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
@@ -197,19 +237,36 @@ class Speller(object):
         result = []
         setNo = 0
         for wordSet in allWords:
-            self.stdin.write('^ ' + wordSet[0] + '\n')
+            newLine = u'^ ' + wordSet[0] + u'\n'
+            if self.cp1252:
+                log.note("XXX = " + newLine)
+                newLine = newLine.encode('iso-8859-1', 'replaceWithSpace')
+                newLine = newLine.decode('iso-8859-1')
+            else:
+                newLine = newLine# .encode('utf-8')
+            log.note(newLine)
+            # log.note(" ".join("{:02x}".format(ord(c)) for c in newLine))
+            self.stdin.write(newLine)
             # print('in line = ' + wordSet[0])
 
             index = 0
             running = 0
             while True:
-                line = self.stdout.readline().strip()
+                line = self.stdout.readline()
+                if self.cp1252:
+                    # log.note(" ".join("{:02x}".format(c) for c in line))
+                    line = line.decode('iso-8859-1')
+                else:
+                    line = line # .decode('utf-8')
+                line = line.strip()
                 log.note('spell out line = ' + line)
+
                 if len(line) == 0:
                     break
 
                 if line[0] == '*':
                     continue
+
 
                 m = self.aspell_re.match(line)
                 if not m:
