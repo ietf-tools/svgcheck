@@ -28,7 +28,7 @@ def write_on_line(*args):
 
 def write(*args):
     """ Prints a message to write_out """
-    write_err.write(' '.join(args))
+    write_err.write(u' '.join(args))
     write_err.write('\n')
 
 

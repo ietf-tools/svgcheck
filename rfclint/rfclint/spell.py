@@ -7,6 +7,7 @@ import colorama
 import six
 import platform
 import codecs
+import subprocess
 from rfctools_common import log
 
 
@@ -29,9 +30,12 @@ class RfcLintError(Exception):
 
 def ReplaceWithSpace(exc):
     if isinstance(exc, UnicodeDecodeError):
-        return ' '
+        return u' '
     elif isinstance(exc, UnicodeEncodeError):
-        return (bytes((exc.end-exc.start)*[32]), exc.end)
+        if six.PY2:
+            return ((exc.end-exc.start)*u' ', exc.end)
+        else:
+            return (bytes((exc.end-exc.start)*[32]), exc.end)
     else:
         raise TypeError("can't handle %s" % type(exc).__name__)
 
@@ -148,9 +152,50 @@ class Speller(object):
 
         spellBaseName = os.path.basename(program)
         spellBaseName = spellBaseName.replace('.exe', '')
-        cmdLine = [program, '-a']
+
+        # I want to know what the program and version really are
+
+        p = subprocess.Popen([program, "-v"], stdout=subprocess.PIPE)
+        (versionOut, stderr) = p.communicate()
+        """
+        if p.returncode != 0:
+            raise RfcLintError("The program '{0}' executed with an error code {1}".
+                               format(program, p.returncode))
+        """
+        
+        m = re.match(r".*International Ispell Version [\d.]+ \(but really (\w+) ([\d.]+).*",
+                     versionOut.decode('utf-8'))
+        if m is None:
+            raise RfcLintError("Error starting the spelling program\n{0}".format(line))
+        
+        if m.group(1).lower() != spellBaseName:
+            raise RfcLintError("Error: The wrong spelling program was started.  Expected {0} and got {1}".format(spellBaseName, m.group(1)))
+
+        codecs.register_error('replaceWithSpace', ReplaceWithSpace)
+        
+        self.iso8859 = False
+        if spellBaseName == 'aspell':
+            log.note("xx - " + m.group(2))
+            print(m.group(2)[:2])
+            if m.group(2)[:3] == '0.5':
+                # This version does not support utf-8
+                self.iso8859 = True
+                log.note("Use iso8859")
+        elif spellBaseName == 'hunspell':
+            # minumum version of hunspell is 1.1.6, but that is probably not something
+            # we would find in the wild anymore.  We are therefore not going to check it.
+            # However, right now the only version I have for Windows does not support utf-8
+            # so until I get a better version, force the use of iso8859 there.
+            if os.name == 'nt':
+                self.iso8859 = True
+                log.note("Use iso8859")
+
+        # now let's build the full command
+        
+        cmdLine = [program, '-a']  # always use pipe mode
         dicts = config.getList('spell', 'dictionaries')
         if dicts:
+            dictList = ''
             for dict in dicts:
                 if os.path.isabs(dict):
                     dict2 = dict
@@ -161,8 +206,14 @@ class Speller(object):
                     log.error("Additional Dictionary '{0}' ignored because it was not found".
                               format(dict))
                     continue
-                cmdLine.append("--add-extra-dicts")
-                cmdLine.append(dict2)
+                if spellBaseName == 'aspell':
+                    cmdLine.append("--add-extra-dicts")
+                    cmdLine.append(dict2)
+                else:
+                    dictList = dictList + "," + dict2
+            if spellBaseName == 'hunspell':
+                cmdLine.append('-d')
+                cmdLine.append(dictList)
 
         dict = config.get('spell', 'personal')
         if dict:
@@ -178,9 +229,13 @@ class Speller(object):
                 cmdLine.append('-p')
                 cmdLine.append(dict2)
 
-        # cmdLine.append('--encoding=iso-8859-1')
-        # cmdLine.append('-i iso-8859-1')
-        # cmdLine.append('-i utf-8')
+        if self.iso8859:
+            if spellBaseName == 'aspell':
+                cmdLine.append('--encoding=iso8859-1')
+            else:
+                # Make sure if we have a better version of hunspell that it will do the right thing
+                cmdLine.append('-i iso-8859-1')
+
         log.note("spell command = '{0}'".format(" ".join(cmdLine)))
         self.p = subprocess.Popen(cmdLine,
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -188,34 +243,18 @@ class Speller(object):
             self.stdout = self.p.stdout
             self.stdin = self.p.stdin
         else:
-            self.stdin = io.TextIOWrapper(self.p.stdin, encoding='utf-8', line_buffering=True)
-            self.stdout = self.p.stdout #   io.TextIOWrapper(self.p.stdout, encoding='utf-8')
+            if self.iso8859:
+                self.stdin = io.TextIOWrapper(self.p.stdin, encoding='iso-8859-1',
+                                              errors='replaceWithSpace', line_buffering=True)
+                self.stdout = io.TextIOWrapper(self.p.stdout, encoding='iso-8859-1',
+                                               errors='replaceWithSpace')
+            else:
+                self.stdin = io.TextIOWrapper(self.p.stdin, encoding='utf-8', line_buffering=True)
+                self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
 
         #  Check that we got a good return
-        line = self.stdout.readline().decode('utf-8')
+        line = self.stdout.readline()
         log.note(line)
-
-        # (#) International Ispell Version 3.1.20 (but really Aspell 0.50.3) --- Aspell line
-        # (#) International Ispell Version 3.2.06 (but really Hunspell 1.3.3) --- Hunspell line
-        # 
-        m = re.match(r".*International Ispell Version [\d.]+ \(but really (\w+) ([\d.]+).*", line)
-        if m is None:
-            raise RfcLintError("Error starting the spelling program\n{0}".format(line))
-
-        if m.group(1).lower() != spellBaseName:
-            raise RfcLintError("Error: The wrong spelling program was started.  Expected {0} and got {1}".format(spellBaseName, m.group(1)))
-
-        self.cp1252 = False
-        if spellBaseName == 'aspell':
-            log.note("xx - " + m.group(2))
-            if m.group(2)[2] == '5':
-                # This is the version we are not happy with
-                self.cp1252 = True
-                codecs.register_error('replaceWithSpace', ReplaceWithSpace)
-                log.note("Use 1252")
-
-        self.cp1252 = True
-        codecs.register_error('replaceWithSpace', ReplaceWithSpace)
         
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
@@ -238,26 +277,27 @@ class Speller(object):
         setNo = 0
         for wordSet in allWords:
             newLine = u'^ ' + wordSet[0] + u'\n'
-            if self.cp1252:
-                log.note("XXX = " + newLine)
+            if self.iso8859:
+                print(newLine)
+                log.note(u"Pre Encode = " + newLine)
                 newLine = newLine.encode('iso-8859-1', 'replaceWithSpace')
                 newLine = newLine.decode('iso-8859-1')
             else:
                 newLine = newLine# .encode('utf-8')
             log.note(newLine)
-            # log.note(" ".join("{:02x}".format(ord(c)) for c in newLine))
             self.stdin.write(newLine)
-            # print('in line = ' + wordSet[0])
 
             index = 0
             running = 0
             while True:
                 line = self.stdout.readline()
-                if self.cp1252:
-                    # log.note(" ".join("{:02x}".format(c) for c in line))
+                """
+                if self.iso8859:
+                    log.note(" ".join("{:02x}".format(c) for c in line))
                     line = line.decode('iso-8859-1')
                 else:
                     line = line # .decode('utf-8')
+                """
                 line = line.strip()
                 log.note('spell out line = ' + line)
 
