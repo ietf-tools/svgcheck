@@ -241,7 +241,7 @@ class Speller(object):
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         if six.PY2:
             self.stdout = self.p.stdout
-            self.stdin = self.p.stdin
+            self.stdin = codecs.getwriter('iso-8859-1')(self.p.stdin)
         else:
             if self.iso8859:
                 self.stdin = io.TextIOWrapper(self.p.stdin, encoding='iso-8859-1',
@@ -291,13 +291,12 @@ class Speller(object):
             running = 0
             while True:
                 line = self.stdout.readline()
-                """
-                if self.iso8859:
-                    log.note(" ".join("{:02x}".format(c) for c in line))
-                    line = line.decode('iso-8859-1')
-                else:
-                    line = line # .decode('utf-8')
-                """
+                if six.PY2:
+                    if self.iso8859:
+                        # log.note(" ".join("{:02x}".format(c) for c in line))
+                        line = line.decode('iso-8859-1')
+                    else:
+                        line = line # .decode('utf-8')
                 line = line.strip()
                 log.note('spell out line = ' + line)
 

@@ -11,10 +11,19 @@
 
 import sys
 import os
+import codecs
+import six
 
 quiet = False
 verbose = False
 debug = False
+
+if six.PY2:
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+
+    sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+    sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
 write_out = sys.stdout
 write_err = sys.stderr
@@ -35,7 +44,8 @@ def write(*args):
 def note(*args):
     """ Call for being verbose only """
     if verbose and not quiet:
-        write(*args)
+        write_err.write(u' '.join(args))
+        write_err.write('\n')
 
 
 def warn(*args, **kwargs):
