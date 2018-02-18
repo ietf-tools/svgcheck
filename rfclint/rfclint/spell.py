@@ -240,8 +240,12 @@ class Speller(object):
         self.p = subprocess.Popen(cmdLine,
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         if six.PY2:
-            self.stdout = self.p.stdout
-            self.stdin = codecs.getwriter('iso-8859-1')(self.p.stdin)
+            if os.name == 'nt':
+                self.stdin = codecs.getwriter('iso-8859-1')(self.p.stdin)
+                self.stdout = self.p.stdout
+            else:
+                self.stdin = codecs.getwriter('utf8')(self.p.stdin)
+                self.stdout = self.p.stdout
         else:
             if self.iso8859:
                 self.stdin = io.TextIOWrapper(self.p.stdin, encoding='iso-8859-1',
@@ -283,7 +287,7 @@ class Speller(object):
                 newLine = newLine.encode('iso-8859-1', 'replaceWithSpace')
                 newLine = newLine.decode('iso-8859-1')
             else:
-                newLine = newLine# .encode('utf-8')
+                newLine = newLine # .encode('utf-8')
             log.note(newLine)
             self.stdin.write(newLine)
 
