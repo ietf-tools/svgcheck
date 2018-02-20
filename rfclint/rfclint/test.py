@@ -283,9 +283,13 @@ class Test_Spell(unittest.TestCase):
     @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
+        if sys.platform.startswith('linux'):
+            errFile = "Results/spell-utf8-linux.err"
+        else:
+            errFile = "Results/spell-utf8.err"
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "--no-rng", "Tests/spell-utf8.xml"],
-                      "Results/spell-utf8.out", "Results/spell-utf8.err", None, None)
+                      "Results/empty", errFile, None, None)
 
     @unittest.skipIf(True, "Test is still in progress")
     def test_spell_utf8_with_dict(self):
@@ -354,12 +358,16 @@ class Test_Spell_Hunspell(unittest.TestCase):
                       "Results/spell-add-per-not.out", "Results/spell-add-per-not-hun.err",
                       None, None)
 
-    @unittest.skipIf(True, "Test is still in progress")
+    @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
+        if sys.platform.startswith('linux'):
+            errFile = "Results/spell-utf8-linux.err"
+        else:
+            errFile = "Results/spell-utf8.err"
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "--no-rng", "--spell-program=hunspell", "Tests/spell-utf8.xml"],
-                      "Results/spell-utf8.out", "Results/spell-utf8.err", None, None)
+                      "Results/empty", errFile, None, None)
 
     @unittest.skipIf(True, "Test is still in progress")
     def test_spell_utf8_with_dict(self):
