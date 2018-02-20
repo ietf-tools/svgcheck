@@ -75,10 +75,12 @@ def BuildDiffTree(xmlNode, options):
 
     return root
 
+
 ParagraphMarkers = {
     'artwork': 1,
     't': 1
     }
+
 
 def AddParagraphs(root):
     if not isinstance(root, DiffElement):
@@ -94,6 +96,7 @@ def AddParagraphs(root):
     for c in root.children:
         AddParagraphs(c)
     return root
+
 
 def DecorateSourceFile(diffRoot, sourceLines):
     diffRoot.decorateSource(sourceLines)
@@ -720,7 +723,7 @@ class DiffParagraph(DiffRoot):
     def decorateSource(self):
         for child in self.children:
             child.decorateSource(sourceLines)
-        
+
     def toText(self):
         text = lxml.etree.tostring(self.xml).decode('utf-8')
         i = text.index('>')
@@ -728,7 +731,7 @@ class DiffParagraph(DiffRoot):
         return text
 
     def ToHtml(self, parent):
-            
+
         node = E.LI()
         parent.append(node)
         if self.deleted:
@@ -790,8 +793,6 @@ class DiffParagraph(DiffRoot):
                     if self.preserve:
                         n.text = n.text.replace(' ', nbsp)
                     node.append(n)
-            
-        
 
     def updateCost(self, right):
         leftText = self.toText()
