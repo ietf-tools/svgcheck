@@ -21,7 +21,8 @@ then
     esac
     brew install aspell
     brew install hunspell
-    export DICPATH="$(pwd)/win32/hunspell"
+    cp win32/hunspell/*.dic ~/Library/Spelling
+    cp win32/hunspell/*.aff ~/Library/Spelling
 fi
 
     
