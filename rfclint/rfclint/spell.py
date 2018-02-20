@@ -264,7 +264,7 @@ class Speller(object):
 
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
-        self.aspell_re = re.compile(r".\s(\w+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
+        self.aspell_re = re.compile(r".\s(\S+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
 
     def processLine(self, allWords):
         """
