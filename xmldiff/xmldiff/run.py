@@ -7,9 +7,11 @@ import datetime
 import six
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError
 from rfctools_common import log
-from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, AddParagraphs
 import string
-from xmldiff.zzs2 import EditItem, distance
+from xmldiff.EditItem import EditItem
+from xmldiff.zzs2 import distance
+# from xmldiff.zzs import distance, EditItem
 
 try:
     import debug
@@ -26,6 +28,7 @@ except ImportError:
 def formatLines(lines):
     output = '<div itemprop="text" class="blob-wrapper data type-c">'
     output += '<table class="highlight tab-size js-file-line-container" data-tab-size="8">'
+    output += "<col width='4em'>"
 
     iLine = 1
     for line in lines:
@@ -53,6 +56,8 @@ def main():
                              default="xmldiff.html")
     value_options.add_option('--debug', action="store_true",
                              help='Show debugging output')
+    value_options.add_option('--raw', action="store_true",
+                             help='Diff using the raw tree')
 
     # --- Parse and validate arguments ----------------------------
 
@@ -72,6 +77,8 @@ def main():
     try:
         ll = parser.parse(remove_pis=False).tree
         leftXml = BuildDiffTree(ll, options)
+        if not options.raw:
+            leftXml = AddParagraphs(leftXml)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + leftSource, e)
         sys.exit(1)
@@ -85,6 +92,8 @@ def main():
     try:
         rightXml = parser.parse(remove_pis=False)
         rightXml = BuildDiffTree(rightXml.tree, options)
+        if not options.raw:
+            rightXml = AddParagraphs(rightXml)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + rightSource, e)
         sys.exit(1)

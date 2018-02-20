@@ -41,16 +41,16 @@ def ReplaceWithSpace(exc):
 
 
 CheckAttributes = {
-    "title": ('ascii', 'abbrev'),
-    'seriesInfo': {'name', 'asciiName', 'value', 'asciiValue'},
-    "author": ('asciiFullname', 'asciiInitials', 'asciiSurname', 'fullname', 'surname', 'initials'),
-    'city': {'ascii'},
-    'code': {'ascii'},
-    'country': {'ascii'},
-    'region': {'ascii'},
-    'street': {'ascii'},
-    'blockquote': {'quotedFrom'},
-    'iref': {'item', 'subitem'},
+    "title": ['ascii', 'abbrev'],
+    'seriesInfo': ['name', 'asciiName', 'value', 'asciiValue'],
+    "author": ['asciiFullname', 'asciiInitials', 'asciiSurname', 'fullname', 'surname', 'initials'],
+    'city': ['ascii'],
+    'code': ['ascii'],
+    'country': ['ascii'],
+    'region': ['ascii'],
+    'street': ['ascii'],
+    'blockquote': ['quotedFrom'],
+    'iref': ['item', 'subitem'],
     }
 
 CutNodes = {
@@ -162,21 +162,21 @@ class Speller(object):
             raise RfcLintError("The program '{0}' executed with an error code {1}".
                                format(program, p.returncode))
         """
-        
+
         m = re.match(r".*International Ispell Version [\d.]+ \(but really (\w+) ([\d.]+).*",
                      versionOut.decode('utf-8'))
         if m is None:
             raise RfcLintError("Error starting the spelling program\n{0}".format(line))
-        
+
         if m.group(1).lower() != spellBaseName:
-            raise RfcLintError("Error: The wrong spelling program was started.  Expected {0} and got {1}".format(spellBaseName, m.group(1)))
+            raise RfcLintError("Error: The wrong spelling program was started.  Expected"
+                               "{0} and got {1}".format(spellBaseName, m.group(1)))
 
         codecs.register_error('replaceWithSpace', ReplaceWithSpace)
-        
+
         self.iso8859 = False
         if spellBaseName == 'aspell':
             log.note("xx - " + m.group(2))
-            print(m.group(2)[:2])
             if m.group(2)[:3] == '0.5':
                 # This version does not support utf-8
                 self.iso8859 = True
@@ -191,12 +191,14 @@ class Speller(object):
                 log.note("Use iso8859")
 
         # now let's build the full command
-        
+
         cmdLine = [program, '-a']  # always use pipe mode
         dicts = config.getList('spell', 'dictionaries')
         if dicts:
             dictList = ''
             for dict in dicts:
+                if spellBaseName == 'hunspell':
+                    dict = dict + '.dic'
                 if os.path.isabs(dict):
                     dict2 = dict
                 else:
@@ -204,16 +206,16 @@ class Speller(object):
                 dict2 = os.path.normpath(dict2)
                 if not os.path.exists(dict2):
                     log.error("Additional Dictionary '{0}' ignored because it was not found".
-                              format(dict))
+                              format(dict.replace('.dic', '')))
                     continue
                 if spellBaseName == 'aspell':
                     cmdLine.append("--add-extra-dicts")
                     cmdLine.append(dict2)
                 else:
-                    dictList = dictList + "," + dict2
+                    dictList = dictList + "," + dict2.replace('.dic', '')
             if spellBaseName == 'hunspell':
                 cmdLine.append('-d')
-                cmdLine.append(dictList)
+                cmdLine.append("en_US" + dictList)
 
         dict = config.get('spell', 'personal')
         if dict:
@@ -259,7 +261,7 @@ class Speller(object):
         #  Check that we got a good return
         line = self.stdout.readline()
         log.note(line)
-        
+
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
         self.aspell_re = re.compile(r".\s(\w+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
@@ -282,12 +284,11 @@ class Speller(object):
         for wordSet in allWords:
             newLine = u'^ ' + wordSet[0] + u'\n'
             if self.iso8859:
-                print(newLine)
                 log.note(u"Pre Encode = " + newLine)
                 newLine = newLine.encode('iso-8859-1', 'replaceWithSpace')
                 newLine = newLine.decode('iso-8859-1')
             else:
-                newLine = newLine # .encode('utf-8')
+                newLine = newLine  # .encode('utf-8')
             log.note(newLine)
             self.stdin.write(newLine)
 
@@ -297,10 +298,10 @@ class Speller(object):
                 line = self.stdout.readline()
                 if six.PY2:
                     if self.iso8859:
-                        # log.note(" ".join("{:02x}".format(c) for c in line))
+                        #  log.note(" ".join("{:02x}".format(c) for c in line))
                         line = line.decode('iso-8859-1')
                     else:
-                        line = line # .decode('utf-8')
+                        line = line  # .decode('utf-8')
                 line = line.strip()
                 log.note('spell out line = ' + line)
 
@@ -309,7 +310,6 @@ class Speller(object):
 
                 if line[0] == '*':
                     continue
-
 
                 m = self.aspell_re.match(line)
                 if not m:

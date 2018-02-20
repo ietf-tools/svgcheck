@@ -286,6 +286,7 @@ class Test_Spell(unittest.TestCase):
                              "--no-rng", "Tests/spell-utf8.xml"],
                       "Results/spell-utf8.out", "Results/spell-utf8.err", None, None)
 
+    @unittest.skipIf(True, "Test is still in progress")
     def test_spell_utf8_with_dict(self):
         """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
@@ -314,38 +315,43 @@ class Test_Spell_Hunspell(unittest.TestCase):
         check_process(self, [sys.executable, "run.py", "--no-suggest",
                              "--color=none", "--spell-program=hunspell", "Tests/spell.xml"],
                       "Results/spell-context.out",
-                      "Results/spell-context.err", None, None)
+                      "Results/spell-context-hun.err", None, None)
 
     def test_error_one_no_suggest(self):
         """ Do basic quiet spell checking """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "--spell-program=hunspell", "Tests/spell.xml"],
-                      "Results/spell-no-suggest.out", "Results/spell-no-suggest.err", None, None)
+                      "Results/spell-no-suggest.out", "Results/spell-no-suggest-hun.err",
+                      None, None)
 
     def test_add_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
-                             "--dictionary=Tests/schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
-                      "Results/spell-add-dict.out", "Results/spell-add-dict.err", None, None)
+                             "--dictionary=Tests/schaad", "--spell-program=hunspell",
+                             "Tests/spell.xml"],
+                      "Results/spell-add-dict.out", "Results/spell-add-dict-hun.err", None, None)
 
     def test_add_dict_not(self):
         """ Add a simple dictionary which does not exit """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
-                             "--dictionary=schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
-                      "Results/spell-add-dict-not.out", "Results/spell-add-dict-not.err",
+                             "--dictionary=schaad", "--spell-program=hunspell",
+                             "Tests/spell.xml"],
+                      "Results/spell-add-dict-not.out", "Results/spell-add-dict-not-hun.err",
                       None, None)
 
     def test_add_personal_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
-                             "--personal=Tests/schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
-                      "Results/spell-add-per.out", "Results/spell-add-per.err", None, None)
+                             "--personal=Tests/schaad.wl", "--spell-program=hunspell",
+                             "Tests/spell.xml"],
+                      "Results/spell-add-per.out", "Results/spell-add-per-hun.err", None, None)
 
     def test_add_personal_dict_not(self):
         """ Add a simple dictionary which does not exist """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
-                             "--personal=schaad.wl", "--spell-program=hunspell", "Tests/spell.xml"],
-                      "Results/spell-add-per-not.out", "Results/spell-add-per-not.err", None, None)
+                             "--personal=schaad", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-add-per-not.out", "Results/spell-add-per-not-hun.err",
+                      None, None)
 
     @unittest.skipIf(True, "Test is still in progress")
     def test_spell_utf8(self):
@@ -358,7 +364,8 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_spell_utf8_with_dict(self):
         """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
-                             "--no-rng", "--dictionary=Tests/utf8.wl", "--spell-program=hunspell", "Tests/spell-utf8.xml"],
+                             "--no-rng", "--dictionary=Tests/utf8.wl", "--spell-program=hunspell",
+                             "Tests/spell-utf8.xml"],
                       "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
 
 
@@ -371,7 +378,6 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
 
     p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdoutX, stderr) = p.communicate()
-    p.wait()
 
     returnValue = True
     if stdoutFile is not None:

@@ -1,0 +1,1233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>XML DIFF FOR FOOBAR</title>
+
+    <style>
+      xml-block { margin-left:1em; display:block }
+      .left { color:red; background-color:MistyRose;}
+      .right { color:green; background-color:Lavender;}
+      .error { color:yellow;}
+      ul {padding-left: 6px; }
+      li { list-style: none; padding-left: 6px; }
+      @media screen and (min-width: 1140px) {
+      #leftColumn { float: left; width:33%; overflow: scroll; height: 100vh;}
+      #centerColumn { float: left; width: 33%; margin-left:10px; overflow:scroll; height: 100vh;}
+      #rightColumn { float: right; width:33%; clear:none; overflow: scroll;height: 100vh;}
+
+      .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
+      .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
+      .tab button:hover { background-color: #ddd; }
+      .tab button.active { background-color: #ccc; }
+      .tabcontent { display: none; padding: 6px 12px; border: 1px solid #ccc; border-top: none; }
+      }
+
+      .blob-wrapper { overflow-x:auto; overflow-y:hidden; }
+      .blob-num { width:1%; min-width:50px; padding-right:10px; padding-left:10px;
+      font-family:"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      font-size:12px; line-height:20px; color:rgba(27,31,35,0.3); text-align:right; white-space:nowrap;
+      vertical-align:top; cursor:pointer; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none;
+      user-select:none }
+    </style>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+    <script type="text/javascript">
+function openLeftFile(evt, fileName) {
+    // Declare variables
+    var i, tabcontent, tablinks;
+    //  Get all elements w/ class='tabcontent' and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i=0; i<tabcontent.length; i++) {
+        tabcontent[i].style.display="none";
+    }
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(fileName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+function sync2here(leftFile, leftLine, rightFile, rightLine)
+{
+    if (leftFile != -1) {
+        leftDiv = document.getElementById("leftColumn")
+    }
+		    }
+		    </script>
+</head>
+
+<body>
+    <div id="root">
+      <div id="leftColumn">
+	<div class="tab">
+	  <button id='defaultOpen' class="tablinks" onclick="openLeftFile(event, 'File1')">File1</button>
+	</div>
+	<!-- Tab Content -->
+	<div id="File1" class="tabcontent">
+	  <div itemprop="text" class="blob-wrapper data type-c"><table class="highlight tab-size js-file-line-container" data-tab-size="8"><col width='4em'><tr><td class="blob-num js-line-number" data-line-number="1">1</td><td class="blob-code blob-code-inner js-file-line">&lt;?xml&nbsp;version='1.0'&nbsp;encoding='US-ASCII'?&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="2">2</td><td class="blob-code blob-code-inner js-file-line">&lt;!DOCTYPE&nbsp;rfc&nbsp;SYSTEM&nbsp;"rfc2629.dtd"&nbsp;[
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="3">3</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;RFC7748&nbsp;SYSTEM&nbsp;&nbsp;"http://xml.resource.org/public/rfc/bibxml/reference.RFC.7748.xml"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="4">4</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;RFC8032&nbsp;SYSTEM&nbsp;&nbsp;"http://xml.resource.org/public/rfc/bibxml/reference.RFC.8032.xml"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="5">5</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;RFC8126&nbsp;SYSTEM&nbsp;"http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="6">6</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;CURDLE&nbsp;SYSTEM&nbsp;"http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-curdle-pkix.xml"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="7">7</td><td class="blob-code blob-code-inner js-file-line">]&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="8">8</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="9">9</td><td class="blob-code blob-code-inner js-file-line">&lt;?rfc&nbsp;symrefs="yes"?&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="10">10</td><td class="blob-code blob-code-inner js-file-line">&lt;?rfc&nbsp;sortrefs='yes'?&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="11">11</td><td class="blob-code blob-code-inner js-file-line">&lt;?rfc&nbsp;toc='yes'?&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="12">12</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="13">13</td><td class="blob-code blob-code-inner js-file-line">&lt;rfc&nbsp;docName="draft-schaad-curdle-oid-registry-02"&nbsp;category="info"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="14">14</td><td class="blob-code blob-code-inner js-file-line">&lt;front&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="15">15</td><td class="blob-code blob-code-inner js-file-line">&lt;title&nbsp;abbrev="OID&nbsp;Registry"&gt;IANA&nbsp;Registration&nbsp;for&nbsp;Donated&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;Object&nbsp;Identifier&nbsp;Range&lt;/title&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="16">16</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;author&nbsp;fullname="Jim&nbsp;Schaad"&nbsp;initials="J."&nbsp;surname="Schaad"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="17">17</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;organization&gt;August&nbsp;Cellars&lt;/organization&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="18">18</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;address&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="19">19</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;ietf@augustcellars.com&lt;/email&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="20">20</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/address&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="21">21</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/author&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="22">22</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;author&nbsp;fullname="Rick&nbsp;Andrews"&nbsp;initials="R."&nbsp;surname="Andrews"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="23">23</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;organization&gt;Symantec&nbsp;Website&nbsp;Security&lt;/organization&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="24">24</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;address&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="25">25</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;Rick_Andrews@symantec.com&lt;/email&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="26">26</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/address&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="27">27</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/author&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="28">28</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;date/&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="29">29</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;area&gt;Security&nbsp;Area&lt;/area&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="30">30</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;workgroup&gt;Curdle&lt;/workgroup&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="31">31</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;abstract&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="32">32</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="33">33</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When&nbsp;the&nbsp;Curdle&nbsp;Security&nbsp;Working&nbsp;Group&nbsp;was&nbsp;chartered,&nbsp;a&nbsp;range&nbsp;of&nbsp;object&nbsp;identifiers&nbsp;was&nbsp;donated&nbsp;by&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;for&nbsp;the&nbsp;purpose&nbsp;of&nbsp;registering&nbsp;the&nbsp;Edwards&nbsp;Elliptic&nbsp;Curve&nbsp;key&nbsp;agreement&nbsp;and&nbsp;signature&nbsp;algorithms.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="34">34</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;donated&nbsp;set&nbsp;of&nbsp;OIDs&nbsp;allowed&nbsp;for&nbsp;shorter&nbsp;values&nbsp;than&nbsp;would&nbsp;be&nbsp;possible&nbsp;using&nbsp;the&nbsp;existing&nbsp;S/MIME&nbsp;or&nbsp;PKIX&nbsp;arcs.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="35">35</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;document&nbsp;describes&nbsp;the&nbsp;range&nbsp;of&nbsp;identifiers&nbsp;that&nbsp;were&nbsp;assigned&nbsp;in&nbsp;that&nbsp;donated&nbsp;range,&nbsp;transfers&nbsp;control&nbsp;of&nbsp;that&nbsp;range&nbsp;to&nbsp;IANA,&nbsp;and&nbsp;establishes&nbsp;IANA&nbsp;allocation&nbsp;policies&nbsp;for&nbsp;any&nbsp;future&nbsp;assignments&nbsp;within&nbsp;that&nbsp;range.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="36">36</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="37">37</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/abstract&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="38">38</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;note&nbsp;title="Contributing&nbsp;to&nbsp;this&nbsp;document"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="39">39</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;RFC&nbsp;EDITOR&nbsp;-&nbsp;Please&nbsp;remove&nbsp;this&nbsp;note&nbsp;before&nbsp;publishing&nbsp;--&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="40">40</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="41">41</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;source&nbsp;for&nbsp;this&nbsp;draft&nbsp;is&nbsp;being&nbsp;maintained&nbsp;in&nbsp;GitHub.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="42">42</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suggested&nbsp;changes&nbsp;should&nbsp;be&nbsp;submitted&nbsp;as&nbsp;pull&nbsp;requests&nbsp;&nbsp;at&nbsp;&lt;eref&nbsp;target="https://github.com/lamps-wg/smime"/&gt;.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="43">43</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instructions&nbsp;are&nbsp;on&nbsp;that&nbsp;page&nbsp;as&nbsp;well.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="44">44</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Editorial&nbsp;changes&nbsp;can&nbsp;be&nbsp;managed&nbsp;in&nbsp;GitHub,&nbsp;but&nbsp;any&nbsp;substantial&nbsp;issues&nbsp;need&nbsp;to&nbsp;be&nbsp;discussed&nbsp;on&nbsp;the&nbsp;LAMPS&nbsp;mailing&nbsp;list.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="45">45</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="46">46</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/note&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="47">47</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;/front&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="48">48</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;middle&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="49">49</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;title="Introduction"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="50">50</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="51">51</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When&nbsp;the&nbsp;Curdle&nbsp;Security&nbsp;Working&nbsp;Group&nbsp;was&nbsp;chartered,&nbsp;a&nbsp;range&nbsp;of&nbsp;object&nbsp;identifiers&nbsp;was&nbsp;donated&nbsp;by&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;for&nbsp;use&nbsp;by&nbsp;that&nbsp;working&nbsp;group.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="52">52</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;use&nbsp;of&nbsp;these&nbsp;object&nbsp;identifiers&nbsp;&nbsp;allowed&nbsp;for&nbsp;the&nbsp;Edwards&nbsp;Ellitptic&nbsp;Curve&nbsp;key&nbsp;agreement&nbsp;&lt;xref&nbsp;target="RFC7748"/&gt;&nbsp;and&nbsp;signature&nbsp;&lt;xref&nbsp;target="RFC8032"/&gt;&nbsp;algorithms&nbsp;to&nbsp;be&nbsp;defined&nbsp;with&nbsp;encodings&nbsp;that&nbsp;are&nbsp;smaller&nbsp;than&nbsp;similar&nbsp;ones&nbsp;would&nbsp;be&nbsp;if&nbsp;assigned&nbsp;from&nbsp;the&nbsp;&nbsp;existing&nbsp;S/MIME&nbsp;or&nbsp;PKIX&nbsp;arcs.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="53">53</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;These&nbsp;initial&nbsp;registrations&nbsp;from&nbsp;this&nbsp;arc&nbsp;were&nbsp;done&nbsp;while&nbsp;developing&nbsp;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"/&gt;.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="54">54</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After&nbsp;those&nbsp;registrations&nbsp;were&nbsp;done,&nbsp;there&nbsp;were&nbsp;still&nbsp;some&nbsp;unused&nbsp;values&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;other&nbsp;security&nbsp;groups,&nbsp;there&nbsp;were&nbsp;still&nbsp;some&nbsp;unused&nbsp;values.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="55">55</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="56">56</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="57">57</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="58">58</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object&nbsp;identifiers&nbsp;are&nbsp;primarily&nbsp;used&nbsp;with&nbsp;Abstract&nbsp;Syntax&nbsp;Notation&nbsp;(ASN.1)&nbsp;&lt;xref&nbsp;target="ASN.1"/&gt;.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="59">59</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ASN.1&nbsp;specifications&nbsp;continue&nbsp;to&nbsp;evolve,&nbsp;but&nbsp;object&nbsp;identifiers&nbsp;can&nbsp;be&nbsp;used&nbsp;with&nbsp;any&nbsp;and&nbsp;all&nbsp;versions&nbsp;of&nbsp;ASN.1.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="60">60</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="61">61</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="62">62</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="63">63</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;document&nbsp;describes&nbsp;the&nbsp;object&nbsp;identifiers&nbsp;that&nbsp;were&nbsp;assigned&nbsp;in&nbsp;that&nbsp;donated&nbsp;range,&nbsp;transfers&nbsp;control&nbsp;of&nbsp;the&nbsp;range&nbsp;to&nbsp;IANA,&nbsp;and&nbsp;establishes&nbsp;IANA&nbsp;allocation&nbsp;policies&nbsp;for&nbsp;any&nbsp;future&nbsp;assignments.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="64">64</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="65">65</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="66">66</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="67">67</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;donated&nbsp;range&nbsp;from&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;is:
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="68">68</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;figure&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="69">69</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artwork&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="70">70</td><td class="blob-code blob-code-inner js-file-line">first:&nbsp;{&nbsp;iso&nbsp;(1)&nbsp;identified-organization&nbsp;(3)&nbsp;thawte&nbsp;(101)&nbsp;100&nbsp;}
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="71">71</td><td class="blob-code blob-code-inner js-file-line">last:&nbsp;{&nbsp;iso&nbsp;(1)&nbsp;identified-organization&nbsp;(3)&nbsp;thawte&nbsp;(101)&nbsp;127&nbsp;}
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="72">72</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/artwork&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="73">73</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/figure&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="74">74</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="75">75</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="76">76</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="77">77</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="78">78</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;title="IANA&nbsp;Considerations"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="79">79</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="80">80</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IANA&nbsp;is&nbsp;asked&nbsp;to&nbsp;create&nbsp;one&nbsp;new&nbsp;registry&nbsp;table.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="81">81</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="82">82</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="83">83</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;title='"SMI&nbsp;Security&nbsp;for&nbsp;Cryptographic&nbsp;Algorithms"&nbsp;Registry'&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="84">84</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="85">85</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Within&nbsp;the&nbsp;SMI-numbers&nbsp;registry,&nbsp;add&nbsp;an&nbsp;"SMI&nbsp;Security&nbsp;for&nbsp;Cryptographic&nbsp;Algorithms"&nbsp;table&nbsp;with&nbsp;the&nbsp;three&nbsp;columns:
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="86">86</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="87">87</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="88">88</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;FOR&nbsp;IANA&nbsp;-&nbsp;Please&nbsp;place&nbsp;on&nbsp;the&nbsp;SMI&nbsp;Numbers&nbsp;page&nbsp;under&nbsp;the&nbsp;SMI&nbsp;Security&nbsp;Codes&nbsp;section&nbsp;--&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="89">89</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="90">90</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;texttable&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="91">91</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ttcol&gt;Decimal&lt;/ttcol&gt;&lt;ttcol&gt;Description&lt;/ttcol&gt;&lt;ttcol&gt;References&lt;/ttcol&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="92">92</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c&gt;100&lt;/c&gt;&lt;c&gt;Reserved&nbsp;for&nbsp;child&nbsp;reg&lt;/c&gt;&lt;c/&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="93">93</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c&gt;110&lt;/c&gt;&lt;c&gt;id-X25519&lt;/c&gt;&lt;c&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"/&gt;&lt;/c&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="94">94</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c&gt;111&lt;/c&gt;&lt;c&gt;id-X448&lt;/c&gt;&lt;c&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"/&gt;&lt;/c&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="95">95</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c&gt;112&lt;/c&gt;&lt;c&gt;id-EdDSA25519&lt;/c&gt;&lt;c&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"/&gt;&lt;/c&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="96">96</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c&gt;113&lt;/c&gt;&lt;c&gt;id-EdDSA448&lt;/c&gt;&lt;c&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"/&gt;&lt;/c&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="97">97</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;rfc-editor&nbsp;The&nbsp;next&nbsp;two&nbsp;items&nbsp;are&nbsp;in&nbsp;-03&nbsp;of&nbsp;the&nbsp;draft&nbsp;and&nbsp;not&nbsp;in&nbsp;the&nbsp;final&nbsp;version,&nbsp;please&nbsp;adjust&nbsp;the&nbsp;reference&nbsp;accordingly.&nbsp;--&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="98">98</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c&gt;114&lt;/c&gt;&lt;c&gt;Reserved&nbsp;for&nbsp;id-EdDSA25519-ph&lt;/c&gt;&lt;c&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"/&gt;-03&lt;/c&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="99">99</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;c&gt;115&lt;/c&gt;&lt;c&gt;Reserved&nbsp;for&nbsp;id-EdDSA448-ph&lt;/c&gt;&lt;c&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"/&gt;-03&lt;/c&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="100">100</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="101">101</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/texttable&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="102">102</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="103">103</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="104">104</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;column&nbsp;'Decimal'&nbsp;is&nbsp;required&nbsp;to&nbsp;be&nbsp;a&nbsp;number&nbsp;between&nbsp;100&nbsp;and&nbsp;127&nbsp;inclusive.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="105">105</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="106">106</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="107">107</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="108">108</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;value&nbsp;of&nbsp;100&nbsp;has&nbsp;been&nbsp;reserved&nbsp;so&nbsp;that&nbsp;a&nbsp;new&nbsp;arc&nbsp;below&nbsp;that&nbsp;point&nbsp;can&nbsp;be&nbsp;established&nbsp;in&nbsp;the&nbsp;future.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="109">109</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(I.e.&nbsp;starting&nbsp;at&nbsp;1.3.101.100.1)
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="110">110</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;new&nbsp;child&nbsp;registry&nbsp;is&nbsp;established,&nbsp;a&nbsp;name&nbsp;for&nbsp;this&nbsp;value&nbsp;is&nbsp;to&nbsp;be&nbsp;assigned&nbsp;at&nbsp;that&nbsp;point.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="111">111</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;experts&nbsp;can,&nbsp;at&nbsp;their&nbsp;discretion,&nbsp;assign&nbsp;an&nbsp;algorithm&nbsp;OID&nbsp;instead.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="112">112</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="113">113</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="114">114</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="115">115</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;registry&nbsp;is&nbsp;to&nbsp;be&nbsp;created&nbsp;using&nbsp;the&nbsp;"Specification&nbsp;Required"&nbsp;policy&nbsp;as&nbsp;defined&nbsp;in&nbsp;&lt;xref&nbsp;target="RFC8126"/&gt;.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="116">116</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="117">117</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="118">118</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="119">119</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;title="Security&nbsp;Considerations"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="120">120</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="121">121</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;document&nbsp;populates&nbsp;an&nbsp;IANA&nbsp;registry,&nbsp;and&nbsp;it&nbsp;raises&nbsp;no&nbsp;new&nbsp;security&nbsp;considerations.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="122">122</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;protocols&nbsp;that&nbsp;specify&nbsp;these&nbsp;values&nbsp;include&nbsp;the&nbsp;security&nbsp;considerations&nbsp;associated&nbsp;with&nbsp;their&nbsp;usage.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="123">123</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="124">124</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="125">125</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="126">126</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="127">127</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;/middle&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="128">128</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;back&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="129">129</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;references&nbsp;title="Normative&nbsp;References"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="130">130</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;reference&nbsp;anchor="ASN.1"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="131">131</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;front&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="132">132</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Information&nbsp;Technology&nbsp;-&nbsp;Abstract&nbsp;Syntax
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="133">133</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notation&nbsp;One&nbsp;(ASN.1):&nbsp;&nbsp;Specification&nbsp;of&nbsp;basic&nbsp;notation.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="134">134</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ITU-T&nbsp;Recommendation&nbsp;X.680&nbsp;(2008)
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="135">135</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/title&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="136">136</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;author/&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="137">137</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;date&nbsp;month="November"&nbsp;year="2008"/&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="138">138</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/front&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="139">139</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;seriesInfo&nbsp;name="ITU-T"&nbsp;value="X.680"/&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="140">140</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;seriesInfo&nbsp;name="ISO/IEC"&nbsp;&nbsp;value="8824-1:2008"/&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="141">141</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/reference&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="142">142</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/references&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="143">143</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="144">144</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;references&nbsp;title="Informational&nbsp;References"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="145">145</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;RFC7748;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="146">146</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;RFC8032;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="147">147</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;RFC8126;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="148">148</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;CURDLE;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="149">149</td><td class="blob-code blob-code-inner js-file-line">&lt;!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;CURDLE-V3;&nbsp;--&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="150">150</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/references&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="151">151</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="152">152</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;title="Acknowledgments"&nbsp;numbered="no"&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="153">153</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="154">154</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our&nbsp;thanks&nbsp;go&nbsp;out&nbsp;to&nbsp;Symantec&nbsp;for&nbsp;donating&nbsp;the&nbsp;range&nbsp;of&nbsp;OIDs&nbsp;covered&nbsp;in&nbsp;this&nbsp;document.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="155">155</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="156">156</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="157">157</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;document&nbsp;uses&nbsp;a&nbsp;lot&nbsp;of&nbsp;text&nbsp;from&nbsp;a&nbsp;similar&nbsp;document&nbsp;by&nbsp;Russ&nbsp;Housley.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="158">158</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copying&nbsp;always&nbsp;makes&nbsp;things&nbsp;easier&nbsp;and&nbsp;less&nbsp;error&nbsp;prone.
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="159">159</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/t&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="160">160</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="161">161</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;/back&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="162">162</td><td class="blob-code blob-code-inner js-file-line">&lt;/rfc&gt;
+</td></tr></table></div>
+	</div>
+      </div>
+      <div id="centerColumn">
+	  <div class="center" id="jstree_demo_div"><ul class="jstree-open">
+<li>&lt;?rfc symrefs="yes"?&gt;</li>
+<li>&lt;?rfc sortrefs='yes'?&gt;</li>
+<li>&lt;?rfc toc='yes'?&gt;</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 13,  1, 11)">&lt;rfc<span class="left"> docName="draft-schaad-curdle-oid-registry-02"</span><span class="left"> category="info"</span><span> obsoletes=""</span><span> updates=""</span><span> submissionType="IETF"</span><span> {http://www.w3.org/XML/1998/namespace}lang="en"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 14,  1, 12)">&lt;front<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 15,  1, 13)">&lt;title<span> abbrev="OID Registry"</span><span>&gt;</span></a><ul>
+<li>IANA Registration for Donated Symantec Website Security Object Identifier Range</li>
+<li class="jstree-open">&lt;/title&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 14)"><span class="right">&lt;seriesInfo name="Internet-Draft" value="draft-schaad-curdle-oid-registry-02"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 15)"><span class="right">&lt;seriesInfo name="info" value=""</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 16,  1, 16)">&lt;author<span> fullname="Jim Schaad"</span><span> initials="J."</span><span> surname="Schaad"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 17,  1, 17)">&lt;organization<span>&gt;</span></a><ul>
+<li>August Cellars</li>
+<li class="jstree-open">&lt;/organization&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 18,  1, 18)">&lt;address<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 19,  1, 19)">&lt;email<span>&gt;</span></a><ul>
+<li>ietf@augustcellars.com</li>
+<li class="jstree-open">&lt;/email&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/address&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 22,  1, 22)">&lt;author<span> fullname="Rick Andrews"</span><span> initials="R."</span><span> surname="Andrews"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 23,  1, 23)">&lt;organization<span>&gt;</span></a><ul>
+<li>Symantec Website Security</li>
+<li class="jstree-open">&lt;/organization&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 24,  1, 24)">&lt;address<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 25,  1, 25)">&lt;email<span>&gt;</span></a><ul>
+<li>Rick_Andrews@symantec.com</li>
+<li class="jstree-open">&lt;/email&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/address&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 28,  1, 28)">&lt;date<span>/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 29,  1, 29)">&lt;area<span>&gt;</span></a><ul>
+<li>Security Area</li>
+<li class="jstree-open">&lt;/area&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 30,  1, 30)">&lt;workgroup<span>&gt;</span></a><ul>
+<li>Curdle</li>
+<li class="jstree-open">&lt;/workgroup&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 31,  1, 31)">&lt;abstract<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 32,  1, 32)">&lt;t<span>&gt;</span></a><ul>
+<li><span>When the Curdle Security Working Group was chartered, a range of object identifiers was donated by Symantec Website Security for the purpose of registering the Edwards Elliptic Curve key agreement and signature algorithms.  This donated set of OIDs allowed for shorter values than would be possible using the existing S/MIME or PKIX arcs.  This document describes the range of identifiers that were assigned in that donated range, transfers control of that range to IANA, and establishes IANA allocation policies for any future assignments within that range.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/abstract&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 38,  1, 34)">&lt;note<span class="left"> title="Contributing to this document"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 35)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">Contributing to this document</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 40,  1, 37)">&lt;t<span>&gt;</span></a><ul>
+<li><span>The source for this draft is being maintained in GitHub.  Suggested changes should be submitted as pull requests  at &lt;eref target="https://github.com/lamps-wg/smime"/&gt;.  Instructions are on that page as well.  Editorial changes can be managed in GitHub, but any substantial issues need to be discussed on the LAMPS mailing list.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/note&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/front&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 48,  1, 40)">&lt;middle<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 49,  1, 41)">&lt;section<span class="left"> title="Introduction"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 42)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">Introduction</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 50,  1, 43)">&lt;t<span>&gt;</span></a><ul>
+<li>
+<span>When the Curdle Security Working Group was chartered, a range of object identifiers was donated by Symantec Website Security for use by that working group.  The use of these object identifiers  allowed for the Edwards Ellitptic Curve key agreement &lt;xref target="RFC7748" </span><span class="right">format="default" </span><span>pageno="false</span><span class="left">" format="default</span><span>"/&gt; and signature &lt;xref target="RFC8032" </span><span class="right">format="default" </span><span>pageno="false</span><span class="left">" format="default</span><span>"/&gt; algorithms to be defined with encodings that are smaller than similar ones would be if assigned from the  existing S/MIME or PKIX arcs.  These initial registrations from this arc were done while developing &lt;xref target="I-D.ietf-curdle-pkix" </span><span class="right">format="default" </span><span>pageno="false</span><span class="left">" format="default</span><span>"/&gt;.  After those registrations were done, there were still some unused values that can be used for other security groups, there were still some unused values.  </span>
+</li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 57,  1, 44)">&lt;t<span>&gt;</span></a><ul>
+<li>
+<span>Object identifiers are primarily used with Abstract Syntax Notation (ASN.1) &lt;xref target="ASN.1" </span><span class="right">format="default" </span><span>pageno="false</span><span class="left">" format="default</span><span>"/&gt;.  The ASN.1 specifications continue to evolve, but object identifiers can be used with any and all versions of ASN.1.  </span>
+</li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 62,  1, 45)">&lt;t<span>&gt;</span></a><ul>
+<li><span>This document describes the object identifiers that were assigned in that donated range, transfers control of the range to IANA, and establishes IANA allocation policies for any future assignments.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 66,  1, 46)">&lt;t<span>&gt;</span></a><ul>
+<li><span class="left">The donated range from Symantec Website Security is: &lt;figure title="" suppress-title="false" align="left" alt="" width="" height=""&gt;&lt;artwork xml:space="preserve" name="" type="" align="left" alt="" width="" height=""&gt;
+first: { iso (1) identified-organization (3) thawte (101) 100 }
+last: { iso (1) identified-organization (3) thawte (101) 127 }
+          &lt;/artwork&gt;&lt;/figure&gt; </span></li>
+<li><span class="right">The donated range from Symantec Website Security is: </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 47)"><span class="right">&lt;figure title="" suppress-title="false" align="left" alt="" width="" height=""</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 48)"><span class="right">&lt;artwork name="" type="" align="left" alt="" {http://www.w3.org/XML/1998/namespace}space="preserve" width="" height=""</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">
+first:&#160;{&#160;iso&#160;(1)&#160;identified-organization&#160;(3)&#160;thawte&#160;(101)&#160;100</span></li>
+<li class="jstree-open right">&lt;/artwork&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/figure&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/section&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 78,  1, 54)">&lt;section<span class="left"> title="IANA Considerations"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 55)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">IANA Considerations</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 79,  1, 56)">&lt;t<span>&gt;</span></a><ul>
+<li><span>IANA is asked to create one new registry table.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 83,  1, 57)">&lt;section<span class="left"> title=""SMI Security for Cryptographic Algorithms" Registry"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 58)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">"SMI Security for Cryptographic Algorithms" Registry</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 84,  1, 59)">&lt;t<span>&gt;</span></a><ul>
+<li><span>Within the SMI-numbers registry, add an "SMI Security for Cryptographic Algorithms" table with the three columns: </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 90, -1, 0)"><span class="left">&lt;texttable title="" suppress-title="false" align="center" style="full"</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 61)"><span class="right">&lt;table</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 62)"><span class="right">&lt;thead</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 63)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 91, -1, 0)"><span class="left">&lt;ttcol align="left"</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 64)"><span class="right">&lt;th align="left"</span><span class="right">&gt;</span></a><ul>
+<li>Decimal</li>
+<li class="jstree-open right">&lt;/th&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/ttcol&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 91, -1, 0)"><span class="left">&lt;ttcol align="left"</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 65)"><span class="right">&lt;th align="left"</span><span class="right">&gt;</span></a><ul>
+<li>Description</li>
+<li class="jstree-open right">&lt;/th&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/ttcol&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 91, -1, 0)"><span class="left">&lt;ttcol align="left"</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 66)"><span class="right">&lt;th align="left"</span><span class="right">&gt;</span></a><ul>
+<li>References</li>
+<li class="jstree-open right">&lt;/th&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/ttcol&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/thead&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 69)"><span class="right">&lt;tbody</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 70)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 92, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 71)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>100</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 92, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 72)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>Reserved for child reg</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 73)"><span class="right">&lt;td align="left"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 92, -1, 0)"><span class="left">&lt;c</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 75)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 93, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 76)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>110</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 93, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 77)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>id-X25519</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 93, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 78)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 93,  1, 79)">&lt;xref<span> target="I-D.ietf-curdle-pkix"</span><span> pageno="false"</span><span> format="default"</span><span>/&gt;</span></a></li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 82)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 94, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 83)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>111</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 94, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 84)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>id-X448</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 94, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 85)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 94,  1, 86)">&lt;xref<span> target="I-D.ietf-curdle-pkix"</span><span> pageno="false"</span><span> format="default"</span><span>/&gt;</span></a></li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 89)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 95, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 90)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>112</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 95, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 91)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>id-EdDSA25519</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 95, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 92)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 95,  1, 93)">&lt;xref<span> target="I-D.ietf-curdle-pkix"</span><span> pageno="false"</span><span> format="default"</span><span>/&gt;</span></a></li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 96)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 96, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 97)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>113</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 96, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 98)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>id-EdDSA448</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 96, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 99)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 96,  1, 100)">&lt;xref<span> target="I-D.ietf-curdle-pkix"</span><span> pageno="false"</span><span> format="default"</span><span>/&gt;</span></a></li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 103)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 98, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 104)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>114</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 98, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 105)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>Reserved for id-EdDSA25519-ph</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 98, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 106)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 98,  1, 106)">&lt;xref<span> target="I-D.ietf-curdle-pkix"</span><span> pageno="false"</span><span> format="default"</span><span>/&gt;</span></a></li>
+<li>-03</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 108)"><span class="right">&lt;tr</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 99, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 109)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>115</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 99, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 110)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li>Reserved for id-EdDSA448-ph</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 99, -1, 0)"><span class="left">&lt;c</span><span class="left">&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 111)"><span class="right">&lt;td align="left"</span><span class="right">&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 99,  1, 111)">&lt;xref<span> target="I-D.ietf-curdle-pkix"</span><span> pageno="false"</span><span> format="default"</span><span>/&gt;</span></a></li>
+<li>-03</li>
+<li class="jstree-open right">&lt;/td&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/c&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tr&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/tbody&gt;</li>
+</ul>
+</li>
+<li class="jstree-open right">&lt;/table&gt;</li>
+</ul>
+</li>
+<li class="jstree-open left">&lt;/texttable&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 103,  1, 115)">&lt;t<span>&gt;</span></a><ul>
+<li><span>The column 'Decimal' is required to be a number between 100 and 127 inclusive.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 107,  1, 116)">&lt;t<span>&gt;</span></a><ul>
+<li><span>The value of 100 has been reserved so that a new arc below that point can be established in the future.  (I.e. starting at 1.3.101.100.1) If the new child registry is established, a name for this value is to be assigned at that point.  The experts can, at their discretion, assign an algorithm OID instead.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 114,  1, 117)">&lt;t<span>&gt;</span></a><ul>
+<li>
+<span>The registry is to be created using the "Specification Required" policy as defined in &lt;xref target="RFC8126" </span><span class="left">pageno="false" </span><span>format="default"</span><span class="right"> pageno="false"</span><span>/&gt;.  </span>
+</li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/section&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/section&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 119,  1, 120)">&lt;section<span class="left"> title="Security Considerations"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 121)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">Security Considerations</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 120,  1, 122)">&lt;t<span>&gt;</span></a><ul>
+<li><span>This document populates an IANA registry, and it raises no new security considerations.  The protocols that specify these values include the security considerations associated with their usage.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/section&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/middle&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 128,  1, 125)">&lt;back<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 129,  1, 126)">&lt;references<span class="left"> title="Normative References"</span><span class="right"> title="References"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 127)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">Normative References</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 130,  1, 128)">&lt;reference<span> anchor="ASN.1"</span><span> quote-title="true"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 131,  1, 129)">&lt;front<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 132,  1, 130)">&lt;title<span>&gt;</span></a><ul>
+<li>Information Technology - Abstract Syntax Notation One (ASN.1):  Specification of basic notation.  ITU-T Recommendation X.680 (2008) </li>
+<li class="jstree-open">&lt;/title&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 131)"><span class="right">&lt;seriesInfo name="ISO/IEC" value="8824-1:2008"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 132)"><span class="right">&lt;seriesInfo name="ITU-T" value="X.680"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 136,  1, 133)">&lt;author<span>/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 137,  1, 134)">&lt;date<span> month="November"</span><span> year="2008"</span><span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/front&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 139, -1, 0)"><span class="left">&lt;seriesInfo name="ITU-T" value="X.680"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 140, -1, 0)"><span class="left">&lt;seriesInfo name="ISO/IEC" value="8824-1:2008"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open">&lt;/reference&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/references&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 144,  1, 138)">&lt;references<span class="left"> title="Informational References"</span><span class="right"> title="References"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">Informational References</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 3,  1, 138)">&lt;reference<span> anchor="RFC7748"</span><span> target="https://www.rfc-editor.org/info/rfc7748"</span><span> quote-title="true"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 4,  1, 138)">&lt;front<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 5,  1, 138)">&lt;title<span>&gt;</span></a><ul>
+<li>Elliptic Curves for Security</li>
+<li class="jstree-open">&lt;/title&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="DOI" value="10.17487/RFC7748"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="RFC" value="7748"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 6,  1, 138)">&lt;author<span> initials="A."</span><span> surname="Langley"</span><span> fullname="A. Langley"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 6,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 7,  1, 138)">&lt;author<span> initials="M."</span><span> surname="Hamburg"</span><span> fullname="M. Hamburg"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 7,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 8,  1, 138)">&lt;author<span> initials="S."</span><span> surname="Turner"</span><span> fullname="S. Turner"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 8,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 9,  1, 138)">&lt;date<span> year="2016"</span><span> month="January"</span><span>/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 10,  1, 138)">&lt;abstract<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 10,  1, 138)">&lt;t<span>&gt;</span></a><ul>
+<li><span>This memo specifies two elliptic curves over prime fields that offer a high level of practical security in cryptographic applications, including Transport Layer Security (TLS).  These curves are intended to operate at the ~128-bit and ~224-bit security level, respectively, and are generated deterministically based on a list of required properties.</span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/abstract&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/front&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 12, -1, 0)"><span class="left">&lt;seriesInfo name="RFC" value="7748"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 13, -1, 0)"><span class="left">&lt;seriesInfo name="DOI" value="10.17487/RFC7748"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open">&lt;/reference&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 3,  1, 138)">&lt;reference<span> anchor="RFC8032"</span><span> target="https://www.rfc-editor.org/info/rfc8032"</span><span> quote-title="true"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 4,  1, 138)">&lt;front<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 5,  1, 138)">&lt;title<span>&gt;</span></a><ul>
+<li>Edwards-Curve Digital Signature Algorithm (EdDSA)</li>
+<li class="jstree-open">&lt;/title&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="DOI" value="10.17487/RFC8032"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="RFC" value="8032"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 6,  1, 138)">&lt;author<span> initials="S."</span><span> surname="Josefsson"</span><span> fullname="S. Josefsson"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 6,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 7,  1, 138)">&lt;author<span> initials="I."</span><span> surname="Liusvaara"</span><span> fullname="I. Liusvaara"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 7,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 8,  1, 138)">&lt;date<span> year="2017"</span><span> month="January"</span><span>/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 9,  1, 138)">&lt;abstract<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 9,  1, 138)">&lt;t<span>&gt;</span></a><ul>
+<li><span>This document describes elliptic curve signature scheme Edwards-curve Digital Signature Algorithm (EdDSA).  The algorithm is instantiated with recommended parameters for the edwards25519 and edwards448 curves.  An example implementation and test vectors are provided.</span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/abstract&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/front&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 11, -1, 0)"><span class="left">&lt;seriesInfo name="RFC" value="8032"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 12, -1, 0)"><span class="left">&lt;seriesInfo name="DOI" value="10.17487/RFC8032"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open">&lt;/reference&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 3,  1, 138)">&lt;reference<span> anchor="RFC8126"</span><span> target="https://www.rfc-editor.org/info/rfc8126"</span><span> quote-title="true"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 4,  1, 138)">&lt;front<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 5,  1, 138)">&lt;title<span>&gt;</span></a><ul>
+<li>Guidelines for Writing an IANA Considerations Section in RFCs</li>
+<li class="jstree-open">&lt;/title&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="DOI" value="10.17487/RFC8126"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="RFC" value="8126"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="BCP" value="26"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 6,  1, 138)">&lt;author<span> initials="M."</span><span> surname="Cotton"</span><span> fullname="M. Cotton"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 6,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 7,  1, 138)">&lt;author<span> initials="B."</span><span> surname="Leiba"</span><span> fullname="B. Leiba"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 7,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 8,  1, 138)">&lt;author<span> initials="T."</span><span> surname="Narten"</span><span> fullname="T. Narten"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 8,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 9,  1, 138)">&lt;date<span> year="2017"</span><span> month="June"</span><span>/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 10,  1, 138)">&lt;abstract<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 10,  1, 138)">&lt;t<span>&gt;</span></a><ul>
+<li><span>Many protocols make use of points of extensibility that use constants to identify various protocol parameters.  To ensure that the values in these fields do not have conflicting uses and to promote interoperability, their allocations are often coordinated by a central record keeper.  For IETF protocols, that role is filled by the Internet Assigned Numbers Authority (IANA).</span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 10,  1, 138)">&lt;t<span>&gt;</span></a><ul>
+<li><span>To make assignments in a given registry prudently, guidance describing the conditions under which new values should be assigned, as well as when and how modifications to existing values can be made, is needed.  This document defines a framework for the documentation of these guidelines by specification authors, in order to assure that the provided guidance for the IANA Considerations is clear and addresses the various issues that are likely in the operation of a registry.</span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 10,  1, 138)">&lt;t<span>&gt;</span></a><ul>
+<li><span>This is the third edition of this document; it obsoletes RFC 5226.</span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/abstract&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/front&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 12, -1, 0)"><span class="left">&lt;seriesInfo name="BCP" value="26"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 13, -1, 0)"><span class="left">&lt;seriesInfo name="RFC" value="8126"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 14, -1, 0)"><span class="left">&lt;seriesInfo name="DOI" value="10.17487/RFC8126"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open">&lt;/reference&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 3,  1, 138)">&lt;reference<span> anchor="I-D.ietf-curdle-pkix"</span><span> quote-title="true"</span><span class="right"> target="http://www.ietf.org/internet-drafts/draft-ietf-curdle-pkix-07.txt"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 4,  1, 138)">&lt;front<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 5,  1, 138)">&lt;title<span>&gt;</span></a><ul>
+<li>Algorithm Identifiers for Ed25519, Ed448, X25519 and X448 for use in the Internet X.509 Public Key Infrastructure</li>
+<li class="jstree-open">&lt;/title&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(-1, 0, 1, 138)"><span class="right">&lt;seriesInfo name="Internet-Draft" value="draft-ietf-curdle-pkix-07"</span><span class="right">/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 7,  1, 138)">&lt;author<span> initials="S"</span><span> surname="Josefsson"</span><span> fullname="Simon Josefsson"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 8,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 11,  1, 138)">&lt;author<span> initials="J"</span><span> surname="Schaad"</span><span> fullname="Jim Schaad"</span><span>&gt;</span></a><ul>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 12,  1, 138)">&lt;organization<span>/&gt;</span></a></li>
+<li class="jstree-open">&lt;/author&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 15,  1, 138)">&lt;date<span> month="November"</span><span> day="14"</span><span> year="2017"</span><span>/&gt;</span></a></li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 17,  1, 138)">&lt;abstract<span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 17,  1, 138)">&lt;t<span>&gt;</span></a><ul>
+<li><span>This document specifies algorithm identifiers and ASN.1 encoding formats for Elliptic Curve constructs using the curve25519 and curve448 curves.  The signature algorithms covered are Ed25519 and Ed448.  The key agreement algorithm covered are X25519 and X448.  The encoding for Public Key, Private Key and EdDSA digital signature structures is provided.</span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/abstract&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/front&gt;</li>
+</ul>
+</li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 21, -1, 0)"><span class="left">&lt;seriesInfo name="Internet-Draft" value="draft-ietf-curdle-pkix-07"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open"><a href="#" onclick="return sync2here(1, 23, -1, 0)"><span class="left">&lt;format type="TXT" target="http://www.ietf.org/internet-drafts/draft-ietf-curdle-pkix-07.txt"</span><span class="left">/&gt;</span></a></li>
+<li class="jstree-open">&lt;/reference&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/references&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 152,  1, 139)">&lt;section<span class="left"> title="Acknowledgments"</span><span class="left"> numbered="no"</span><span class="right"> numbered="false"</span><span> toc="default"</span><span>&gt;</span></a><ul>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(-1, 0, 1, 140)"><span class="right">&lt;name</span><span class="right">&gt;</span></a><ul>
+<li><span class="right">Acknowledgments</span></li>
+<li class="jstree-open right">&lt;/name&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 153,  1, 141)">&lt;t<span>&gt;</span></a><ul>
+<li><span>Our thanks go out to Symantec for donating the range of OIDs covered in this document.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">
+<a href="#" onclick="return sync2here(1, 156,  1, 142)">&lt;t<span>&gt;</span></a><ul>
+<li><span>This document uses a lot of text from a similar document by Russ Housley.  Copying always makes things easier and less error prone.  </span></li>
+<li class="jstree-open">&lt;/t&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/section&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/back&gt;</li>
+</ul>
+</li>
+<li class="jstree-open">&lt;/rfc&gt;</li>
+</ul>
+</li>
+</ul></div>
+
+      </div>
+      <div id="rightColumn">
+	&lt;?xml&nbsp;version='1.0'&nbsp;encoding='utf-8'?&gt;
+<br/>&lt;!DOCTYPE&nbsp;rfc&nbsp;SYSTEM&nbsp;"rfc2629.dtd"&nbsp;[
+<br/>&lt;!ENTITY&nbsp;RFC7748&nbsp;SYSTEM&nbsp;"http://xml.resource.org/public/rfc/bibxml/reference.RFC.7748.xml"&gt;
+<br/>&lt;!ENTITY&nbsp;RFC8032&nbsp;SYSTEM&nbsp;"http://xml.resource.org/public/rfc/bibxml/reference.RFC.8032.xml"&gt;
+<br/>&lt;!ENTITY&nbsp;RFC8126&nbsp;SYSTEM&nbsp;"http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"&gt;
+<br/>&lt;!ENTITY&nbsp;CURDLE&nbsp;SYSTEM&nbsp;"http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-curdle-pkix.xml"&gt;
+<br/>]&gt;
+<br/>&lt;?rfc&nbsp;symrefs="yes"?&gt;
+<br/>&lt;?rfc&nbsp;sortrefs='yes'?&gt;
+<br/>&lt;?rfc&nbsp;toc='yes'?&gt;
+<br/>&lt;rfc&nbsp;obsoletes=""&nbsp;updates=""&nbsp;submissionType="IETF"&nbsp;xml:lang="en"&gt;
+<br/>&nbsp;&nbsp;&lt;front&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&nbsp;abbrev="OID&nbsp;Registry"&gt;IANA&nbsp;Registration&nbsp;for&nbsp;Donated&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;Object&nbsp;Identifier&nbsp;Range&lt;/title&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;seriesInfo&nbsp;name="Internet-Draft"&nbsp;value="draft-schaad-curdle-oid-registry-02"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;seriesInfo&nbsp;name="info"&nbsp;value=""/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;author&nbsp;fullname="Jim&nbsp;Schaad"&nbsp;initials="J."&nbsp;surname="Schaad"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;organization&gt;August&nbsp;Cellars&lt;/organization&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;address&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;ietf@augustcellars.com&lt;/email&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/address&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/author&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;author&nbsp;fullname="Rick&nbsp;Andrews"&nbsp;initials="R."&nbsp;surname="Andrews"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;organization&gt;Symantec&nbsp;Website&nbsp;Security&lt;/organization&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;address&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;email&gt;Rick_Andrews@symantec.com&lt;/email&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/address&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/author&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;date/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;area&gt;Security&nbsp;Area&lt;/area&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;workgroup&gt;Curdle&lt;/workgroup&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;abstract&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;When&nbsp;the&nbsp;Curdle&nbsp;Security&nbsp;Working&nbsp;Group&nbsp;was&nbsp;chartered,&nbsp;a&nbsp;range&nbsp;of&nbsp;object&nbsp;identifiers&nbsp;was&nbsp;donated&nbsp;by&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;for&nbsp;the&nbsp;purpose&nbsp;of&nbsp;registering&nbsp;the&nbsp;Edwards&nbsp;Elliptic&nbsp;Curve&nbsp;key&nbsp;agreement&nbsp;and&nbsp;signature&nbsp;algorithms.&nbsp;&nbsp;This&nbsp;donated&nbsp;set&nbsp;of&nbsp;OIDs&nbsp;allowed&nbsp;for&nbsp;shorter&nbsp;values&nbsp;than&nbsp;would&nbsp;be&nbsp;possible&nbsp;using&nbsp;the&nbsp;existing&nbsp;S/MIME&nbsp;or&nbsp;PKIX&nbsp;arcs.&nbsp;&nbsp;This&nbsp;document&nbsp;describes&nbsp;the&nbsp;range&nbsp;of&nbsp;identifiers&nbsp;that&nbsp;were&nbsp;assigned&nbsp;in&nbsp;that&nbsp;donated&nbsp;range,&nbsp;transfers&nbsp;control&nbsp;of&nbsp;that&nbsp;range&nbsp;to&nbsp;IANA,&nbsp;and&nbsp;establishes&nbsp;IANA&nbsp;allocation&nbsp;policies&nbsp;for&nbsp;any&nbsp;future&nbsp;assignments&nbsp;within&nbsp;that&nbsp;range.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/abstract&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;note&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;Contributing&nbsp;to&nbsp;this&nbsp;document&lt;/name&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--RFC&nbsp;EDITOR&nbsp;-&nbsp;Please&nbsp;remove&nbsp;this&nbsp;note&nbsp;before&nbsp;publishing&nbsp;--&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;The&nbsp;source&nbsp;for&nbsp;this&nbsp;draft&nbsp;is&nbsp;being&nbsp;maintained&nbsp;in&nbsp;GitHub.&nbsp;&nbsp;Suggested&nbsp;changes&nbsp;should&nbsp;be&nbsp;submitted&nbsp;as&nbsp;pull&nbsp;requests&nbsp;&nbsp;at&nbsp;&lt;eref&nbsp;target="https://github.com/lamps-wg/smime"/&gt;.&nbsp;&nbsp;Instructions&nbsp;are&nbsp;on&nbsp;that&nbsp;page&nbsp;as&nbsp;well.&nbsp;&nbsp;Editorial&nbsp;changes&nbsp;can&nbsp;be&nbsp;managed&nbsp;in&nbsp;GitHub,&nbsp;but&nbsp;any&nbsp;substantial&nbsp;issues&nbsp;need&nbsp;to&nbsp;be&nbsp;discussed&nbsp;on&nbsp;the&nbsp;LAMPS&nbsp;mailing&nbsp;list.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/note&gt;
+<br/>&nbsp;&nbsp;&lt;/front&gt;
+<br/>&nbsp;&nbsp;&lt;middle&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;numbered="true"&nbsp;toc="default"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;Introduction&lt;/name&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;When&nbsp;the&nbsp;Curdle&nbsp;Security&nbsp;Working&nbsp;Group&nbsp;was&nbsp;chartered,&nbsp;a&nbsp;range&nbsp;of&nbsp;object&nbsp;identifiers&nbsp;was&nbsp;donated&nbsp;by&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;for&nbsp;use&nbsp;by&nbsp;that&nbsp;working&nbsp;group.&nbsp;&nbsp;The&nbsp;use&nbsp;of&nbsp;these&nbsp;object&nbsp;identifiers&nbsp;&nbsp;allowed&nbsp;for&nbsp;the&nbsp;Edwards&nbsp;Ellitptic&nbsp;Curve&nbsp;key&nbsp;agreement&nbsp;&lt;xref&nbsp;target="RFC7748"&nbsp;format="default"/&gt;&nbsp;and&nbsp;signature&nbsp;&lt;xref&nbsp;target="RFC8032"&nbsp;format="default"/&gt;&nbsp;algorithms&nbsp;to&nbsp;be&nbsp;defined&nbsp;with&nbsp;encodings&nbsp;that&nbsp;are&nbsp;smaller&nbsp;than&nbsp;similar&nbsp;ones&nbsp;would&nbsp;be&nbsp;if&nbsp;assigned&nbsp;from&nbsp;the&nbsp;&nbsp;existing&nbsp;S/MIME&nbsp;or&nbsp;PKIX&nbsp;arcs.&nbsp;&nbsp;These&nbsp;initial&nbsp;registrations&nbsp;from&nbsp;this&nbsp;arc&nbsp;were&nbsp;done&nbsp;while&nbsp;developing&nbsp;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"&nbsp;format="default"/&gt;.&nbsp;&nbsp;After&nbsp;those&nbsp;registrations&nbsp;were&nbsp;done,&nbsp;there&nbsp;were&nbsp;still&nbsp;some&nbsp;unused&nbsp;values&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;other&nbsp;security&nbsp;groups,&nbsp;there&nbsp;were&nbsp;still&nbsp;some&nbsp;unused&nbsp;values.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;Object&nbsp;identifiers&nbsp;are&nbsp;primarily&nbsp;used&nbsp;with&nbsp;Abstract&nbsp;Syntax&nbsp;Notation&nbsp;(ASN.1)&nbsp;&lt;xref&nbsp;target="ASN.1"&nbsp;format="default"/&gt;.&nbsp;&nbsp;The&nbsp;ASN.1&nbsp;specifications&nbsp;continue&nbsp;to&nbsp;evolve,&nbsp;but&nbsp;object&nbsp;identifiers&nbsp;can&nbsp;be&nbsp;used&nbsp;with&nbsp;any&nbsp;and&nbsp;all&nbsp;versions&nbsp;of&nbsp;ASN.1.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;This&nbsp;document&nbsp;describes&nbsp;the&nbsp;object&nbsp;identifiers&nbsp;that&nbsp;were&nbsp;assigned&nbsp;in&nbsp;that&nbsp;donated&nbsp;range,&nbsp;transfers&nbsp;control&nbsp;of&nbsp;the&nbsp;range&nbsp;to&nbsp;IANA,&nbsp;and&nbsp;establishes&nbsp;IANA&nbsp;allocation&nbsp;policies&nbsp;for&nbsp;any&nbsp;future&nbsp;assignments.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;The&nbsp;donated&nbsp;range&nbsp;from&nbsp;Symantec&nbsp;Website&nbsp;Security&nbsp;is:&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;figure&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artwork&nbsp;name=""&nbsp;type=""&nbsp;align="left"&nbsp;alt=""&gt;&lt;![CDATA[
+<br/>first:&nbsp;{&nbsp;iso&nbsp;(1)&nbsp;identified-organization&nbsp;(3)&nbsp;thawte&nbsp;(101)&nbsp;100&nbsp;}
+<br/>last:&nbsp;{&nbsp;iso&nbsp;(1)&nbsp;identified-organization&nbsp;(3)&nbsp;thawte&nbsp;(101)&nbsp;127&nbsp;}
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]&gt;&lt;/artwork&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/figure&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;numbered="true"&nbsp;toc="default"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;IANA&nbsp;Considerations&lt;/name&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;IANA&nbsp;is&nbsp;asked&nbsp;to&nbsp;create&nbsp;one&nbsp;new&nbsp;registry&nbsp;table.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;numbered="true"&nbsp;toc="default"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;"SMI&nbsp;Security&nbsp;for&nbsp;Cryptographic&nbsp;Algorithms"&nbsp;Registry&lt;/name&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;Within&nbsp;the&nbsp;SMI-numbers&nbsp;registry,&nbsp;add&nbsp;an&nbsp;"SMI&nbsp;Security&nbsp;for&nbsp;Cryptographic&nbsp;Algorithms"&nbsp;table&nbsp;with&nbsp;the&nbsp;three&nbsp;columns:&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--FOR&nbsp;IANA&nbsp;-&nbsp;Please&nbsp;place&nbsp;on&nbsp;the&nbsp;SMI&nbsp;Numbers&nbsp;page&nbsp;under&nbsp;the&nbsp;SMI&nbsp;Security&nbsp;Codes&nbsp;section&nbsp;--&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;table&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;thead&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&nbsp;align="left"&gt;Decimal&lt;/th&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&nbsp;align="left"&gt;Description&lt;/th&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&nbsp;align="left"&gt;References&lt;/th&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/thead&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tbody&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;100&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;Reserved&nbsp;for&nbsp;child&nbsp;reg&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;110&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;id-X25519&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"&nbsp;format="default"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;111&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;id-X448&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"&nbsp;format="default"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;112&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;id-EdDSA25519&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"&nbsp;format="default"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;113&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;id-EdDSA448&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"&nbsp;format="default"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;114&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;Reserved&nbsp;for&nbsp;id-EdDSA25519-ph&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"&nbsp;format="default"/&gt;-03&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;115&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;Reserved&nbsp;for&nbsp;id-EdDSA448-ph&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;align="left"&gt;&lt;xref&nbsp;target="I-D.ietf-curdle-pkix"&nbsp;format="default"/&gt;-03&lt;/td&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tbody&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/table&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;The&nbsp;column&nbsp;'Decimal'&nbsp;is&nbsp;required&nbsp;to&nbsp;be&nbsp;a&nbsp;number&nbsp;between&nbsp;100&nbsp;and&nbsp;127&nbsp;inclusive.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;The&nbsp;value&nbsp;of&nbsp;100&nbsp;has&nbsp;been&nbsp;reserved&nbsp;so&nbsp;that&nbsp;a&nbsp;new&nbsp;arc&nbsp;below&nbsp;that&nbsp;point&nbsp;can&nbsp;be&nbsp;established&nbsp;in&nbsp;the&nbsp;future.&nbsp;&nbsp;(I.e.&nbsp;starting&nbsp;at&nbsp;1.3.101.100.1)&nbsp;If&nbsp;the&nbsp;new&nbsp;child&nbsp;registry&nbsp;is&nbsp;established,&nbsp;a&nbsp;name&nbsp;for&nbsp;this&nbsp;value&nbsp;is&nbsp;to&nbsp;be&nbsp;assigned&nbsp;at&nbsp;that&nbsp;point.&nbsp;&nbsp;The&nbsp;experts&nbsp;can,&nbsp;at&nbsp;their&nbsp;discretion,&nbsp;assign&nbsp;an&nbsp;algorithm&nbsp;OID&nbsp;instead.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;The&nbsp;registry&nbsp;is&nbsp;to&nbsp;be&nbsp;created&nbsp;using&nbsp;the&nbsp;"Specification&nbsp;Required"&nbsp;policy&nbsp;as&nbsp;defined&nbsp;in&nbsp;&lt;xref&nbsp;target="RFC8126"&nbsp;format="default"/&gt;.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;numbered="true"&nbsp;toc="default"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;Security&nbsp;Considerations&lt;/name&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;This&nbsp;document&nbsp;populates&nbsp;an&nbsp;IANA&nbsp;registry,&nbsp;and&nbsp;it&nbsp;raises&nbsp;no&nbsp;new&nbsp;security&nbsp;considerations.&nbsp;&nbsp;The&nbsp;protocols&nbsp;that&nbsp;specify&nbsp;these&nbsp;values&nbsp;include&nbsp;the&nbsp;security&nbsp;considerations&nbsp;associated&nbsp;with&nbsp;their&nbsp;usage.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+<br/>&nbsp;&nbsp;&lt;/middle&gt;
+<br/>&nbsp;&nbsp;&lt;back&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;references&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;Normative&nbsp;References&lt;/name&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;reference&nbsp;anchor="ASN.1"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;front&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Information&nbsp;Technology&nbsp;-&nbsp;Abstract&nbsp;Syntax&nbsp;Notation&nbsp;One&nbsp;(ASN.1):&nbsp;&nbsp;Specification&nbsp;of&nbsp;basic&nbsp;notation.&nbsp;&nbsp;ITU-T&nbsp;Recommendation&nbsp;X.680&nbsp;(2008)&nbsp;&lt;/title&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;seriesInfo&nbsp;name="ISO/IEC"&nbsp;value="8824-1:2008"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;seriesInfo&nbsp;name="ITU-T"&nbsp;value="X.680"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;author/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;date&nbsp;month="November"&nbsp;year="2008"/&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/front&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/reference&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/references&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;references&gt;&lt;name&gt;Informational&nbsp;References&lt;/name&gt;&lt;reference&nbsp;anchor="RFC7748"&nbsp;target="https://www.rfc-editor.org/info/rfc7748"&gt;&lt;front&gt;&lt;title&gt;Elliptic&nbsp;Curves&nbsp;for&nbsp;Security&lt;/title&gt;&lt;seriesInfo&nbsp;name="DOI"&nbsp;value="10.17487/RFC7748"/&gt;&lt;seriesInfo&nbsp;name="RFC"&nbsp;value="7748"/&gt;&lt;author&nbsp;initials="A."&nbsp;surname="Langley"&nbsp;fullname="A.&nbsp;Langley"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;author&nbsp;initials="M."&nbsp;surname="Hamburg"&nbsp;fullname="M.&nbsp;Hamburg"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;author&nbsp;initials="S."&nbsp;surname="Turner"&nbsp;fullname="S.&nbsp;Turner"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;date&nbsp;year="2016"&nbsp;month="January"/&gt;&lt;abstract&gt;&lt;t&gt;This&nbsp;memo&nbsp;specifies&nbsp;two&nbsp;elliptic&nbsp;curves&nbsp;over&nbsp;prime&nbsp;fields&nbsp;that&nbsp;offer&nbsp;a&nbsp;high&nbsp;level&nbsp;of&nbsp;practical&nbsp;security&nbsp;in&nbsp;cryptographic&nbsp;applications,&nbsp;including&nbsp;Transport&nbsp;Layer&nbsp;Security&nbsp;(TLS).&nbsp;&nbsp;These&nbsp;curves&nbsp;are&nbsp;intended&nbsp;to&nbsp;operate&nbsp;at&nbsp;the&nbsp;~128-bit&nbsp;and&nbsp;~224-bit&nbsp;security&nbsp;level,&nbsp;respectively,&nbsp;and&nbsp;are&nbsp;generated&nbsp;deterministically&nbsp;based&nbsp;on&nbsp;a&nbsp;list&nbsp;of&nbsp;required&nbsp;properties.&lt;/t&gt;&lt;/abstract&gt;&lt;/front&gt;&lt;/reference&gt;&nbsp;&lt;reference&nbsp;anchor="RFC8032"&nbsp;target="https://www.rfc-editor.org/info/rfc8032"&gt;&lt;front&gt;&lt;title&gt;Edwards-Curve&nbsp;Digital&nbsp;Signature&nbsp;Algorithm&nbsp;(EdDSA)&lt;/title&gt;&lt;seriesInfo&nbsp;name="DOI"&nbsp;value="10.17487/RFC8032"/&gt;&lt;seriesInfo&nbsp;name="RFC"&nbsp;value="8032"/&gt;&lt;author&nbsp;initials="S."&nbsp;surname="Josefsson"&nbsp;fullname="S.&nbsp;Josefsson"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;author&nbsp;initials="I."&nbsp;surname="Liusvaara"&nbsp;fullname="I.&nbsp;Liusvaara"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;date&nbsp;year="2017"&nbsp;month="January"/&gt;&lt;abstract&gt;&lt;t&gt;This&nbsp;document&nbsp;describes&nbsp;elliptic&nbsp;curve&nbsp;signature&nbsp;scheme&nbsp;Edwards-curve&nbsp;Digital&nbsp;Signature&nbsp;Algorithm&nbsp;(EdDSA).&nbsp;&nbsp;The&nbsp;algorithm&nbsp;is&nbsp;instantiated&nbsp;with&nbsp;recommended&nbsp;parameters&nbsp;for&nbsp;the&nbsp;edwards25519&nbsp;and&nbsp;edwards448&nbsp;curves.&nbsp;&nbsp;An&nbsp;example&nbsp;implementation&nbsp;and&nbsp;test&nbsp;vectors&nbsp;are&nbsp;provided.&lt;/t&gt;&lt;/abstract&gt;&lt;/front&gt;&lt;/reference&gt;&nbsp;&lt;reference&nbsp;anchor="RFC8126"&nbsp;target="https://www.rfc-editor.org/info/rfc8126"&gt;&lt;front&gt;&lt;title&gt;Guidelines&nbsp;for&nbsp;Writing&nbsp;an&nbsp;IANA&nbsp;Considerations&nbsp;Section&nbsp;in&nbsp;RFCs&lt;/title&gt;&lt;seriesInfo&nbsp;name="DOI"&nbsp;value="10.17487/RFC8126"/&gt;&lt;seriesInfo&nbsp;name="RFC"&nbsp;value="8126"/&gt;&lt;seriesInfo&nbsp;name="BCP"&nbsp;value="26"/&gt;&lt;author&nbsp;initials="M."&nbsp;surname="Cotton"&nbsp;fullname="M.&nbsp;Cotton"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;author&nbsp;initials="B."&nbsp;surname="Leiba"&nbsp;fullname="B.&nbsp;Leiba"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;author&nbsp;initials="T."&nbsp;surname="Narten"&nbsp;fullname="T.&nbsp;Narten"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;date&nbsp;year="2017"&nbsp;month="June"/&gt;&lt;abstract&gt;&lt;t&gt;Many&nbsp;protocols&nbsp;make&nbsp;use&nbsp;of&nbsp;points&nbsp;of&nbsp;extensibility&nbsp;that&nbsp;use&nbsp;constants&nbsp;to&nbsp;identify&nbsp;various&nbsp;protocol&nbsp;parameters.&nbsp;&nbsp;To&nbsp;ensure&nbsp;that&nbsp;the&nbsp;values&nbsp;in&nbsp;these&nbsp;fields&nbsp;do&nbsp;not&nbsp;have&nbsp;conflicting&nbsp;uses&nbsp;and&nbsp;to&nbsp;promote&nbsp;interoperability,&nbsp;their&nbsp;allocations&nbsp;are&nbsp;often&nbsp;coordinated&nbsp;by&nbsp;a&nbsp;central&nbsp;record&nbsp;keeper.&nbsp;&nbsp;For&nbsp;IETF&nbsp;protocols,&nbsp;that&nbsp;role&nbsp;is&nbsp;filled&nbsp;by&nbsp;the&nbsp;Internet&nbsp;Assigned&nbsp;Numbers&nbsp;Authority&nbsp;(IANA).&lt;/t&gt;&lt;t&gt;To&nbsp;make&nbsp;assignments&nbsp;in&nbsp;a&nbsp;given&nbsp;registry&nbsp;prudently,&nbsp;guidance&nbsp;describing&nbsp;the&nbsp;conditions&nbsp;under&nbsp;which&nbsp;new&nbsp;values&nbsp;should&nbsp;be&nbsp;assigned,&nbsp;as&nbsp;well&nbsp;as&nbsp;when&nbsp;and&nbsp;how&nbsp;modifications&nbsp;to&nbsp;existing&nbsp;values&nbsp;can&nbsp;be&nbsp;made,&nbsp;is&nbsp;needed.&nbsp;&nbsp;This&nbsp;document&nbsp;defines&nbsp;a&nbsp;framework&nbsp;for&nbsp;the&nbsp;documentation&nbsp;of&nbsp;these&nbsp;guidelines&nbsp;by&nbsp;specification&nbsp;authors,&nbsp;in&nbsp;order&nbsp;to&nbsp;assure&nbsp;that&nbsp;the&nbsp;provided&nbsp;guidance&nbsp;for&nbsp;the&nbsp;IANA&nbsp;Considerations&nbsp;is&nbsp;clear&nbsp;and&nbsp;addresses&nbsp;the&nbsp;various&nbsp;issues&nbsp;that&nbsp;are&nbsp;likely&nbsp;in&nbsp;the&nbsp;operation&nbsp;of&nbsp;a&nbsp;registry.&lt;/t&gt;&lt;t&gt;This&nbsp;is&nbsp;the&nbsp;third&nbsp;edition&nbsp;of&nbsp;this&nbsp;document;&nbsp;it&nbsp;obsoletes&nbsp;RFC&nbsp;5226.&lt;/t&gt;&lt;/abstract&gt;&lt;/front&gt;&lt;/reference&gt;&nbsp;&lt;reference&nbsp;anchor="I-D.ietf-curdle-pkix"&nbsp;target="http://www.ietf.org/internet-drafts/draft-ietf-curdle-pkix-07.txt"&gt;&lt;front&gt;&lt;title&gt;Algorithm&nbsp;Identifiers&nbsp;for&nbsp;Ed25519,&nbsp;Ed448,&nbsp;X25519&nbsp;and&nbsp;X448&nbsp;for&nbsp;use&nbsp;in&nbsp;the&nbsp;Internet&nbsp;X.509&nbsp;Public&nbsp;Key&nbsp;Infrastructure&lt;/title&gt;&lt;seriesInfo&nbsp;name="Internet-Draft"&nbsp;value="draft-ietf-curdle-pkix-07"/&gt;&lt;author&nbsp;initials="S"&nbsp;surname="Josefsson"&nbsp;fullname="Simon&nbsp;Josefsson"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;author&nbsp;initials="J"&nbsp;surname="Schaad"&nbsp;fullname="Jim&nbsp;Schaad"&gt;&lt;organization/&gt;&lt;/author&gt;&lt;date&nbsp;month="November"&nbsp;day="14"&nbsp;year="2017"/&gt;&lt;abstract&gt;&lt;t&gt;This&nbsp;document&nbsp;specifies&nbsp;algorithm&nbsp;identifiers&nbsp;and&nbsp;ASN.1&nbsp;encoding&nbsp;formats&nbsp;for&nbsp;Elliptic&nbsp;Curve&nbsp;constructs&nbsp;using&nbsp;the&nbsp;curve25519&nbsp;and&nbsp;curve448&nbsp;curves.&nbsp;&nbsp;The&nbsp;signature&nbsp;algorithms&nbsp;covered&nbsp;are&nbsp;Ed25519&nbsp;and&nbsp;Ed448.&nbsp;&nbsp;The&nbsp;key&nbsp;agreement&nbsp;algorithm&nbsp;covered&nbsp;are&nbsp;X25519&nbsp;and&nbsp;X448.&nbsp;&nbsp;The&nbsp;encoding&nbsp;for&nbsp;Public&nbsp;Key,&nbsp;Private&nbsp;Key&nbsp;and&nbsp;EdDSA&nbsp;digital&nbsp;signature&nbsp;structures&nbsp;is&nbsp;provided.&lt;/t&gt;&lt;/abstract&gt;&lt;/front&gt;&lt;/reference&gt;&nbsp;&lt;!--&amp;CURDLE-V3;&nbsp;--&gt;&lt;/references&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;section&nbsp;numbered="false"&nbsp;toc="default"&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;Acknowledgments&lt;/name&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;Our&nbsp;thanks&nbsp;go&nbsp;out&nbsp;to&nbsp;Symantec&nbsp;for&nbsp;donating&nbsp;the&nbsp;range&nbsp;of&nbsp;OIDs&nbsp;covered&nbsp;in&nbsp;this&nbsp;document.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;t&gt;This&nbsp;document&nbsp;uses&nbsp;a&nbsp;lot&nbsp;of&nbsp;text&nbsp;from&nbsp;a&nbsp;similar&nbsp;document&nbsp;by&nbsp;Russ&nbsp;Housley.&nbsp;&nbsp;Copying&nbsp;always&nbsp;makes&nbsp;things&nbsp;easier&nbsp;and&nbsp;less&nbsp;error&nbsp;prone.&nbsp;&nbsp;&lt;/t&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/section&gt;
+<br/>&nbsp;&nbsp;&lt;/back&gt;
+<br/>&lt;/rfc&gt;
+
+      </div>
+    </div>
+    <script>
+      $(function() { $('#jstree_demo_div').jstree({"core":{ "themes" : {"icons": false}}}); });
+    </script>
+
+	<script>
+	  // Get the element with id="defaultOpen" and click on it
+	  document.getElementById("defaultOpen").click();
+	</script>	
+</body>
+</html>

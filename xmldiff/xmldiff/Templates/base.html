@@ -9,15 +9,15 @@
 
     <style>
       xml-block { margin-left:1em; display:block }
-      .left { color:red; }
-      .right { color:green;}
+      .left { color:red; background-color:MistyRose;}
+      .right { color:green; background-color:Lavender;}
       .error { color:yellow;}
       ul {padding-left: 6px; }
       li { list-style: none; padding-left: 6px; }
       @media screen and (min-width: 1140px) {
-      #leftColumn { float: left; width:33%; overflow: scroll; height: 900px;}
-      #centerColumn { float: left; width: 33%; margin-left:10px; overflow:scroll; height: 900px;}
-      #rightColumn { float: right; width:33%; clear:none; overflow: scroll;height: 900px;}
+      #leftColumn { float: left; width:33%; overflow: scroll; height: 100vh;}
+      #centerColumn { float: left; width: 33%; margin-left:10px; overflow:scroll; height: 100vh;}
+      #rightColumn { float: right; width:33%; clear:none; overflow: scroll;height: 100vh;}
 
       .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
       .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
@@ -71,16 +71,12 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
     <div id="root">
       <div id="leftColumn">
 	<div class="tab">
-	  <button class="tablinks" onclick="openLeftFile(event, 'File1')">File1</button>
+	  <button id='defaultOpen' class="tablinks" onclick="openLeftFile(event, 'File1')">File1</button>
 	</div>
 	<!-- Tab Content -->
-	<div id="File1" class="tabcontent" id="defaultOpen">
+	<div id="File1" class="tabcontent">
 	  $leftFile
 	</div>
-	<script>
-	  // Get the element with id="defaultOpen" and click on it
-	  document.getElementById("defaultOpen").click();
-	</script>	
       </div>
       <div id="centerColumn">
 	  $body
@@ -90,8 +86,12 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
       </div>
     </div>
     <script>
-<!--      $$(function() { $$('#jstree_demo_div').jstree(); }); -->
+      $$(function() { $$('#jstree_demo_div').jstree({"core":{ "themes" : {"icons": false}}}); });
     </script>
 
+	<script>
+	  // Get the element with id="defaultOpen" and click on it
+	  document.getElementById("defaultOpen").click();
+	</script>	
 </body>
 </html>

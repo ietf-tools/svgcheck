@@ -30,7 +30,7 @@ test_script:
   - dir
   - set PATH=%PATH%;%cd%\win32\aspell\bin;%cd%\win32\hunspell
   - set DICTIONARY=en_US
-  - set DICDIR=%cd%\win32\hunspell
+  - set DICPATH=%cd%\win32\hunspell
   - cd rfctools_common
   - "%PYTHON%\\%EXECUTABLE% setup.py install"
   - cd rfctools_common

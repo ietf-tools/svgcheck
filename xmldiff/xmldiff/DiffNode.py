@@ -1,9 +1,12 @@
 import lxml.etree
 from rfctools_common.parser import XmlRfc
 from rfctools_common import log
+import math
 import sys
+import difflib
 from lxml.html import builder as E
 from xmldiff.EditItem import EditItem
+# from xmldiff.zzs import EditItem
 
 try:
     import debug
@@ -25,6 +28,7 @@ TextContainers = [
 ]
 
 diffCount = 0
+nbsp = unichr(0xa0)
 
 
 def BuildDiffTree(xmlNode, options):
@@ -67,6 +71,25 @@ def BuildDiffTree(xmlNode, options):
 
     return root
 
+ParagraphMarkers = {
+    'artwork': 1,
+    't': 1
+    }
+
+def AddParagraphs(root):
+    if not isinstance(root, DiffElement):
+        for c in root.children:
+            AddParagraphs(c)
+        return root
+    if root.xml.tag in ParagraphMarkers:
+        if ParagraphMarkers[root.xml.tag] == 1:
+            p = DiffParagraph(root.xml, root)
+            p.children = root.children
+            root.children = [p]
+            return root
+    for c in root.children:
+        AddParagraphs(c)
+    return root
 
 def DecorateSourceFile(diffRoot, sourceLines):
     diffRoot.decorateSource(sourceLines)
@@ -667,3 +690,108 @@ class DiffText(DiffRoot):
 
     def decorateSource(self, sourceLines):
         pass
+
+
+class DiffParagraph(DiffRoot):
+    def __init__(self, node, parent):
+        if not isinstance(node, DiffParagraph):
+            DiffRoot.__init__(self, node, parent)
+        else:
+            DiffRoot.__init__(self, node.xml, parent)
+        self.preserve = False
+        if '{http://www.w3.org/XML/1998/namespace}space' in self.xml.attrib:
+            if self.xml.attrib['{http://www.w3.org/XML/1998/namespace}space'] == 'preserve':
+                self.preserve = True
+
+    def cloneTree(self, root):
+        clone = DiffParagraph(self, root)
+        clone.matchNode = self
+        clone.inserted = True
+        self.matchNode = clone
+
+        for child in self.children:
+            clone.children.append(child.cloneTree(clone))
+        return clone
+
+    def decorateSource(self):
+        for child in self.children:
+            child.decorateSource(sourceLines)
+        
+    def toText(self):
+        text = lxml.etree.tostring(self.xml).decode('utf-8')
+        i = text.index('>')
+        text = text[i+1:-i-2]
+        return text
+
+    def ToHtml(self, parent):
+            
+        node = E.LI()
+        parent.append(node)
+        if self.deleted:
+            n = E.SPAN()
+            n.attrib["class"] = 'left'
+            n.text = self.toText()
+            if self.preserve:
+                n.text = n.text.replace(' ', nbsp)
+            node.append(n)
+        elif self.inserted:
+            n = E.SPAN()
+            n.attrib['class'] = 'right'
+            n.text = self.toText()
+            if self.preserve:
+                n.text = n.text.replace(' ', nbsp)
+            node.append(n)
+        elif self.matchNode is None:
+            n = E.SPAN()
+            n.attrib['class'] = 'error'
+            n.text = self.toText()
+            if self.preserve:
+                n.text = n.text.replace(' ', nbsp)
+            node.append(n)
+        else:
+            left = self.toText()
+            right = self.matchNode.toText()
+            differ = difflib.SequenceMatcher(None, left, right)
+            for tag, i1, i2, j1, j2 in differ.get_opcodes():
+                if tag == 'equal':
+                    n = E.SPAN()
+                    n.text = left[i1:i2]
+                    if self.preserve:
+                        n.text = n.text.replace(' ', nbsp)
+                    node.append(n)
+                elif tag == 'delete':
+                    n = E.SPAN()
+                    n.attrib['class'] = 'left'
+                    n.text = left[i1:i2]
+                    if self.preserve:
+                        n.text = n.text.replace(' ', nbsp)
+                    node.append(n)
+                elif tag == 'insert':
+                    n = E.SPAN()
+                    n.attrib['class'] = 'right'
+                    n.text = right[j1:j2]
+                    if self.preserve:
+                        n.text = n.text.replace(' ', nbsp)
+                    node.append(n)
+                else:
+                    n = E.SPAN()
+                    n.attrib['class'] = 'left'
+                    n.text = left[i1:i2]
+                    if self.preserve:
+                        n.text = n.text.replace(' ', nbsp)
+                    node.append(n)
+                    n = E.SPAN()
+                    n.attrib['class'] = 'right'
+                    n.text = right[j1:j2]
+                    if self.preserve:
+                        n.text = n.text.replace(' ', nbsp)
+                    node.append(n)
+            
+        
+
+    def updateCost(self, right):
+        leftText = self.toText()
+        rightText = right.toText()
+        differ = difflib.SequenceMatcher(a=leftText, b=rightText)
+        ratio = differ.quick_ratio()
+        return 10 - int(math.floor(ratio*10))

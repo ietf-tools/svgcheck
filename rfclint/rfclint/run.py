@@ -288,4 +288,5 @@ if __name__ == '__main__':
         print("Can't proceed, quitting.")
         exit()
 
+    # print("E = " + sys.stdout.encoding)
     main()
