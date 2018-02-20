@@ -23,6 +23,7 @@ addons:
     packages:
       - aspell
       - aspell-en
+      - hunspell
 
 install:
     - ./install.sh
