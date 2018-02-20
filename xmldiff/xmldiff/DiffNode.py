@@ -4,6 +4,7 @@ from rfctools_common import log
 import math
 import sys
 import difflib
+import six
 from lxml.html import builder as E
 from xmldiff.EditItem import EditItem
 # from xmldiff.zzs import EditItem
@@ -28,7 +29,10 @@ TextContainers = [
 ]
 
 diffCount = 0
-nbsp = unichr(0xa0)
+if six.PY2:
+    nbsp = unichr(0xa0)
+else:
+    nbsp = chr(0xa0)
 
 
 def BuildDiffTree(xmlNode, options):

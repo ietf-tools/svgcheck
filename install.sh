@@ -20,6 +20,7 @@ then
 
     esac
     brew install aspell
+    brew install hunspell
 fi
 
     
