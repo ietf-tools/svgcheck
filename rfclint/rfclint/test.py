@@ -280,7 +280,7 @@ class Test_Spell(unittest.TestCase):
                              "Tests/spell.xml"],
                       "Results/spell-no-program.out", "Results/spell-no-program.err", None, None)
 
-    @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
+    # @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
         if sys.platform.startswith('linux'):
@@ -358,7 +358,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
                       "Results/spell-add-per-not.out", "Results/spell-add-per-not-hun.err",
                       None, None)
 
-    @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
+    # @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
         if sys.platform.startswith('linux'):
@@ -416,12 +416,14 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             returnValue = False
 
     if errFile is not None:
-        with open(errFile, 'r') as f:
-            lines2 = f.readlines()
 
         if six.PY2:
+            with open(errFile, 'r') as f:
+                lines2 = f.readlines()
             lines1 = stderr.splitlines(True)
         else:
+            with open(errFile, 'r', encoding='utf8') as f:
+                lines2 = f.readlines()
             lines1 = stderr.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':

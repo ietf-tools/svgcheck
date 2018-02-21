@@ -237,6 +237,8 @@ class Speller(object):
             else:
                 # Make sure if we have a better version of hunspell that it will do the right thing
                 cmdLine.append('-i iso-8859-1')
+        else:
+            cmdLine.append('-i utf-8')
 
         log.note("spell command = '{0}'".format(" ".join(cmdLine)))
         self.p = subprocess.Popen(cmdLine,
@@ -264,7 +266,7 @@ class Speller(object):
 
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
-        self.aspell_re = re.compile(r".\s(\S+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
+        self.aspell_re = re.compile(r".\s(\S+)\s(\d+)\s*((\d+): (.+))?", re.UNICODE)
 
     def processLine(self, allWords):
         """
@@ -313,7 +315,7 @@ class Speller(object):
 
                 m = self.aspell_re.match(line)
                 if not m:
-                    log.error("Internal error trying to match the line '{0}".format(line))
+                    log.error("Internal error trying to match the line '{0}'".format(line))
                     continue
 
                 if line[0] == '#':
@@ -399,7 +401,7 @@ class Speller(object):
                 log.error("Misspelled word '{0}' in attribute '{1}'".format(r[3], attributeName),
                           where=r[2])
             else:
-                log.error("Misspelled word was found '{0}'".format(r[3]), where=r[2])
+                log.error(u"Misspelled word was found '{0}'".format(r[3]), where=r[2])
             if self.window > 0:
                 q = self.wordIndex(r[1], r[2], matchGroups)
                 if q >= 0:

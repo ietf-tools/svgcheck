@@ -18,20 +18,25 @@ quiet = False
 verbose = False
 debug = False
 
-if six.PY2:
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
-
-    sys.stdout = codecs.getwriter('utf8')(sys.stdout)
-    sys.stderr = codecs.getwriter('utf8')(sys.stderr)
-
 write_out = sys.stdout
 write_err = sys.stderr
+
+logging_codePage = 'utf8'
+
+if not six.PY2 and os.name == 'nt' and os.isatty(2):
+    logging_codePage = sys.stdout.encoding
+
+
+def write_to(file, unicodeString):
+    if six.PY2:
+        file.write(unicodeString.encode(logging_codePage))
+    else:
+        file.buffer.write(unicodeString.encode(logging_codePage))
 
 
 def write_on_line(*args):
     """ Writes a message without ending the line, i.e. in a loading bar """
-    write_err.write(' '.join(args))
+    write_err.write(' '.join(args).encode('utf8'))
     write_err.flush()
 
 
@@ -80,8 +85,10 @@ def error(*args, **kwargs):
         prefix = "{0}:{1}: ".format(fileName, kwargs['line'])
     if 'additional' in kwargs:
         prefix = ' '*kwargs['additional']
-    write_err.write(prefix + u' '.join(args))
-    write_err.write(u'\n')
+
+    write_to(write_err, (prefix + u' '.join(args)))
+    write_to(write_err, u'\n')
+    write_err.flush()
 
 
 def exception(message, list):
