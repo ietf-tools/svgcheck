@@ -29,7 +29,8 @@ if not six.PY2 and os.name == 'nt' and os.isatty(2):
 
 def write_to(file, unicodeString):
     if six.PY2:
-        file.write(unicodeString.encode(logging_codePage))
+        # file.write(unicodeString.encode(logging_codePage))
+        file.write(unicodeString)
     else:
         file.buffer.write(unicodeString.encode(logging_codePage))
 
@@ -42,7 +43,8 @@ def write_on_line(*args):
 
 def write(*args):
     """ Prints a message to write_out """
-    write_err.write(u' '.join(args))
+    # write_err.write(u' '.join(args))
+    write_to(write_err, u' '.join(args))
     write_err.write('\n')
 
 
@@ -98,9 +100,17 @@ def exception(message, list):
     for e in list:
         attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e)
                      if not n.startswith("_")])
-        if attr["message"].endswith(", got "):
-            attr["message"] += "nothing."
-        attr["filename"] = make_relative(attr["filename"])
+        if 'message' in attr:
+            if attr["message"].endswith(", got "):
+                attr["message"] += "nothing."
+        else:
+            attr['message'] = '-- none --'
+        if 'filename' in attr:
+            attr["filename"] = make_relative(attr["filename"])
+        else:
+            attr['filename'] = 'unknown'
+        if 'line' not in attr:
+            attr['line'] = -1
         write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
 
 

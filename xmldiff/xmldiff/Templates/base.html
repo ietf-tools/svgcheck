@@ -3,21 +3,21 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 
   <title>$title</title>
 
     <style>
       xml-block { margin-left:1em; display:block }
-      .left { color:red; background-color:MistyRose;}
-      .right { color:green; background-color:Lavender;}
-      .error { color:yellow;}
+      .left { color:red; background-color:MistyRose}
+      .right { color:green; background-color:Lavender; }
+      .error { color:yellow; background-color:black; }
       ul {padding-left: 6px; }
       li { list-style: none; padding-left: 6px; }
       @media screen and (min-width: 1140px) {
-      #leftColumn { float: left; width:33%; overflow: scroll; height: 100vh;}
-      #centerColumn { float: left; width: 33%; margin-left:10px; overflow:scroll; height: 100vh;}
-      #rightColumn { float: right; width:33%; clear:none; overflow: scroll;height: 100vh;}
+      #leftColumn { overflow: scroll; height: calc(100vh - 20px);}
+      #centerColumn { overflow:scroll; height: calc(100vh - 20px);}
+      #rightColumn { overflow: scroll;height:  calc(100vh - 20px);}
 
       .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
       .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
@@ -32,11 +32,18 @@
       font-size:12px; line-height:20px; color:rgba(27,31,35,0.3); text-align:right; white-space:nowrap;
       vertical-align:top; cursor:pointer; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none;
       user-select:none }
+
+      .jstree-default a { white-space:normal !important; height: auto; }
+      .jstree-anchor { height: auto !important; }
+      .jstree-default li > ins { vertical-align: top; }
+      .jstree-leaf { height: auto; }
+      .jstree-leaf a { height: auto !important; }
     </style>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script src="file:///d:/Projects/v3/RfcEditor/xmldiff/xmldiff/Templates/colResizable-1.6.min.js"></script>
 
     <script type="text/javascript">
 function openLeftFile(evt, fileName) {
@@ -68,23 +75,33 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
 </head>
 
 <body>
-    <div id="root">
-      <div id="leftColumn">
-	<div class="tab">
-	  <button id='defaultOpen' class="tablinks" onclick="openLeftFile(event, 'File1')">File1</button>
-	</div>
-	<!-- Tab Content -->
-	<div id="File1" class="tabcontent">
-	  $leftFile
-	</div>
-      </div>
-      <div id="centerColumn">
-	  $body
-      </div>
-      <div id="rightColumn">
-	$rightFile
-      </div>
-    </div>
+  <div id="root">
+    <table width=100%>
+      <tr>
+	<td width=25%>
+	  <div id="leftColumn">
+	    <div class="tab">
+	      <button id='defaultOpen' class="tablinks" onclick="openLeftFile(event, 'File1')">File1</button>
+	    </div>
+	    <!-- Tab Content -->
+	    <div id="File1" class="tabcontent">
+	      $leftFile
+	    </div>
+	  </div>
+	</td>
+	<td width=50%>
+	  <div id="centerColumn">
+	    $body
+	  </div>
+	</td>
+	<td width=25%>
+	  <div id="rightColumn">
+	    $rightFile
+	  </div>
+	</td>
+      </tr>
+    </table>
+
     <script>
       $$(function() { $$('#jstree_demo_div').jstree({"core":{ "themes" : {"icons": false}}}); });
     </script>
@@ -92,6 +109,11 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
 	<script>
 	  // Get the element with id="defaultOpen" and click on it
 	  document.getElementById("defaultOpen").click();
-	</script>	
+
+	  $$(function() {
+	    $$("table").colResizable();
+	  });
+	</script>
+
 </body>
 </html>
