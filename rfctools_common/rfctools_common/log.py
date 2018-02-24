@@ -28,10 +28,16 @@ if not six.PY2 and os.name == 'nt' and os.isatty(2):
 
 
 def write_to(file, unicodeString):
-    if six.PY2:
-        file.write(unicodeString.encode(logging_codePage))
+    if os.name == 'nt':
+        if six.PY2:
+            file.write(unicodeString.encode(logging_codePage))
+        else:
+            file.buffer.write(unicodeString.encode(logging_codePage))
     else:
-        file.buffer.write(unicodeString.encode(logging_codePage))
+        if six.PY2:
+            file.write(unicodeString.encode(logging_codePage))
+        else:
+            file.write(unicodeString)
 
 
 def write_on_line(*args):
