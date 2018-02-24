@@ -13,6 +13,7 @@ import sys
 import os
 import codecs
 import six
+import io
 
 quiet = False
 verbose = False
@@ -30,12 +31,18 @@ if not six.PY2 and os.name == 'nt' and os.isatty(2):
 def write_to(file, unicodeString):
     if os.name == 'nt':
         if six.PY2:
-            file.write(unicodeString.encode(logging_codePage))
+            if isinstance(file, io.StringIO):
+                file.write(unicodeString)
+            else:
+                file.write(unicodeString.encode(logging_codePage))
         else:
             file.buffer.write(unicodeString.encode(logging_codePage))
     else:
         if six.PY2:
-            file.write(unicodeString.encode(logging_codePage))
+            if isinstance(file, io.StringIO):
+                file.write(unicodeString)
+            else:
+                file.write(unicodeString.encode(logging_codePage))
         else:
             file.write(unicodeString)
 
