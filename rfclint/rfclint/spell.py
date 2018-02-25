@@ -237,7 +237,7 @@ class Speller(object):
             else:
                 # Make sure if we have a better version of hunspell that it will do the right thing
                 cmdLine.append('-i iso-8859-1')
-        else:
+        elif spellBaseName == 'hunspell':
             cmdLine.append('-i utf-8')
 
         log.note("spell command = '{0}'".format(" ".join(cmdLine)))
@@ -250,6 +250,7 @@ class Speller(object):
             else:
                 self.stdin = codecs.getwriter('utf8')(self.p.stdin)
                 self.stdout = self.p.stdout
+                # self.stdout = codecs.getreader('utf8')(self.p.stdout)
         else:
             if self.iso8859:
                 self.stdin = io.TextIOWrapper(self.p.stdin, encoding='iso-8859-1',
@@ -303,7 +304,7 @@ class Speller(object):
                         #  log.note(" ".join("{:02x}".format(c) for c in line))
                         line = line.decode('iso-8859-1')
                     else:
-                        line = line  # .decode('utf-8')
+                        line = line.decode('utf-8')
                 line = line.strip()
                 log.note('spell out line = ' + line)
 

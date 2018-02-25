@@ -362,7 +362,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
         if sys.platform.startswith('linux'):
-            errFile = "Results/spell-utf8-linux.err"
+            errFile = "Results/spell-utf8-linux-hun.err"
         else:
             errFile = "Results/spell-utf8.err"
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
