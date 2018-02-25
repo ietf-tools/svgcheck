@@ -1,3 +1,24 @@
+xmldiff (0.5.0) distribution(s); urgency=low
+
+	* Many different css changes applied.  Changes include: resize
+	the different columns, add background coloration, wrap lines and
+	make the tree leafs of variable height, change the charset to allow
+	Utf-8 characters.  Long term should point to the column change code,
+	but currently I don't know of a good place.
+	* Format paragraphs as a single node in the tree rather than spreading
+	them out over the tree structure.  This improves readablity substantially.
+	* Force the matching of some v2 and v3 elements which provide equivalent
+	functionality, but have different names.
+	* Include comments as nodes in the displayed tree.
+	* Fix some errors in the tree merging code so that elements are placed in
+	the correct location.
+	* Need to separate the left/right class taging from the li element as it
+	gets clobbered by the tree code.  Thus the addition of span elements all
+	over the place.
+	* Clean up some memory leaks in the distance algorithm.
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 25 Feb 2018 19:00:00 -0800
+
 xmldiff (0.0.3) distribution(s); urgency=urgency
 
 	* First drop of code - only does pure xml differences
