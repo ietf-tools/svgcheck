@@ -1,3 +1,14 @@
+rfctools_common (0.5.0) distribution(s); urgency=urgency
+
+	* Setup log routines so that UTF-8 strings can be written on
+	all consoles.  This is a problem as Python v2 thinks consoles
+	are written assumed to be ASCII and for Windows it is the code
+	page of the console.  Pipes have a third method of making this decision
+	* Swap the order of two attributes to match the order in the
+	xmlrfc v2 to v3 upgrade program.
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 25 Feb 2018 19:00:00 -0800
+
 rfctools_common (0.0.3) distribution(s); urgency=urgency
 
 	* For python 3.x read file as binary not text, deals with UTF-8 problems
