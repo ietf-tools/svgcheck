@@ -33,19 +33,19 @@ V2NonTextElements = [
 ]
 
 tagMatching = {
-    "c" : {"td" },
-    "dd" : {"t" },
-    "dl" : {"list" },
-    "li" : { "t" },
-    "list" : {"dl", "ol", "ul" },
-    "ol" : { "list" },
-    "t" : {"dd", "li" },
-    "table" : {"texttable" },
-    "td" : {"c" },
-    "texttable" : { "table" },
-    "th" : {"ttcol" },
-    "ttcol" : {"th" },
-    "ul" : {"list" },
+    "c": {"td"},
+    "dd": {"t"},
+    "dl": {"list"},
+    "li": {"t"},
+    "list": {"dl", "ol", "ul"},
+    "ol": {"list"},
+    "t": {"dd", "li"},
+    "table": {"texttable"},
+    "td": {"c"},
+    "texttable": {"table"},
+    "th": {"ttcol"},
+    "ttcol": {"th"},
+    "ul": {"list"},
 }
 
 diffCount = 0
@@ -53,6 +53,12 @@ if six.PY2:
     nbsp = unichr(0xa0)
 else:
     nbsp = chr(0xa0)
+
+
+def ChangeTagMatching(newMatching):
+    global tagMatching
+
+    tagMatching = newMatching
 
 
 def BuildDiffTree(xmlNode, options):
@@ -107,20 +113,21 @@ def BuildDiffTree(xmlNode, options):
 # We ignore those elements which can only simple text and do not
 # treat them as paragarphs
 
+
 ParagraphMarkers = {
-    'annotation' : 1,
+    'annotation': 1,
     'artwork': 2,  # need to deal with perserveSpace
     'blockquote': 2,
-    'c': 3, 
-    'dd' : 2,
-    'dt' : 1,
-    'li' : 1,
-    'refcontent' : 1,
-    'sourcecode' : 1,  # need to deal with perserveSpace
+    'c': 3,
+    'dd': 2,
+    'dt': 1,
+    'li': 1,
+    'refcontent': 1,
+    'sourcecode': 1,  # need to deal with perserveSpace
     't': 4,
-    'td' : 2,
-    'th' : 2,
-    'ttcol' : 3,
+    'td': 2,
+    'th': 2,
+    'ttcol': 3,
     }
 
 
@@ -131,7 +138,7 @@ def AddParagraphs(root):
         return root
     if root.xml.tag in ParagraphMarkers:
         if ParagraphMarkers[root.xml.tag] == 1 or \
-            ParagraphMarkers[root.xml.tag] == 3:
+           ParagraphMarkers[root.xml.tag] == 3:
             p = DiffParagraph(root.xml, root)
             p.children = root.children
             root.children = [p]
@@ -158,7 +165,7 @@ def AddParagraphs(root):
             for child in root.children:
                 if not isinstance(child, DiffElement):
                     p.children.append(child)
-                elif not child.xml.tag in V2NonTextElements:
+                elif child.xml.tag not in V2NonTextElements:
                     p.children.append(child)
                 else:
                     if len(p.children) > 0:
@@ -596,6 +603,7 @@ class DiffPI(DiffRoot):
                 return 50
         return 100
 
+
 class DiffComment(DiffRoot):
     def __init__(self, xmlNode, parent):
         DiffRoot.__init__(self, xmlNode, parent)
@@ -641,6 +649,7 @@ class DiffComment(DiffRoot):
             return 0
         else:
             return 50
+
 
 class DiffElement(DiffRoot):
     def __init__(self, xmlNode, parent):
@@ -762,9 +771,9 @@ class DiffElement(DiffRoot):
             li.append(s)
             s.text = "</" + self.xml.tag + ">"
             if self.deleted:
-                s.attrib['class'] = ' left'
+                s.attrib['class'] = 'left'
             elif self.inserted:
-                s.attrib['class'] = ' right'
+                s.attrib['class'] = 'right'
             ul.append(li)
             root.append(ul)
         else:
@@ -886,7 +895,7 @@ class DiffParagraph(DiffRoot):
             if type(x).__name__ == 'bytes':
                 x = x.decode('utf-8')
             text += x
-            
+
         return text
 
     def fixPreserveSpace(self, node, text):
@@ -894,7 +903,7 @@ class DiffParagraph(DiffRoot):
             text = text.splitlines()
             n = None
             for line in text:
-                if node.text == None:
+                if node.text is None:
                     node.text = line.replace(' ', nbsp)
                     n = E.BR()
                 else:
@@ -903,7 +912,7 @@ class DiffParagraph(DiffRoot):
                     n = E.BR()
         else:
             node.text = text
-        
+
     def ToHtml(self, parent):
 
         node = E.LI()
