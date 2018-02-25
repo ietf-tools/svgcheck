@@ -8,6 +8,7 @@ from rfctools_common.parser import XmlRfcError
 from xmldiff.EditItem import EditItem
 from xmldiff.zzs2 import distance
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
+from xmldiff.DiffNode import ChangeTagMatching, tagMatching
 
 
 class OOO(object):
@@ -135,8 +136,13 @@ class TestDistanceMethods(unittest.TestCase):
 
     def test_Table1(self):
         """ Add a layer to a tree """
+        global tagMatching
+
+        hold = tagMatching
+        ChangeTagMatching(None)
         DistanceTest(self, "Tests/Table1.xml", "Tests/Table2.xml",
                      "Results/Table1.txt", "Results/Table1.html")
+        ChangeTagMatching(hold)
 
 
 def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile):

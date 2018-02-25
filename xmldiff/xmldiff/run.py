@@ -5,11 +5,14 @@ import os
 import lxml.etree
 import datetime
 import six
+import sys
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError
 from rfctools_common import log
-from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, AddParagraphs, tagMatching
 import string
-from xmldiff.zzs2 import EditItem, distance
+from xmldiff.EditItem import EditItem
+from xmldiff.zzs2 import distance
+# from xmldiff.zzs import distance, EditItem
 
 try:
     import debug
@@ -26,6 +29,7 @@ except ImportError:
 def formatLines(lines):
     output = '<div itemprop="text" class="blob-wrapper data type-c">'
     output += '<table class="highlight tab-size js-file-line-container" data-tab-size="8">'
+    output += "<col width='4em'>"
 
     iLine = 1
     for line in lines:
@@ -53,6 +57,8 @@ def main():
                              default="xmldiff.html")
     value_options.add_option('--debug', action="store_true",
                              help='Show debugging output')
+    value_options.add_option('--raw', action="store_true",
+                             help='Diff using the raw tree')
 
     # --- Parse and validate arguments ----------------------------
 
@@ -70,8 +76,10 @@ def main():
     parser = XmlRfcParser(leftSource, verbose=True,
                           quiet=False, no_network=False)
     try:
-        ll = parser.parse(remove_pis=False).tree
+        ll = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False).tree
         leftXml = BuildDiffTree(ll, options)
+        if not options.raw:
+            leftXml = AddParagraphs(leftXml)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + leftSource, e)
         sys.exit(1)
@@ -83,11 +91,16 @@ def main():
     parser = XmlRfcParser(rightSource, verbose=True,
                           quiet=False, no_network=False)
     try:
-        rightXml = parser.parse(remove_pis=False)
+        rightXml = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False)
         rightXml = BuildDiffTree(rightXml.tree, options)
+        if not options.raw:
+            rightXml = AddParagraphs(rightXml)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + rightSource, e)
         sys.exit(1)
+
+    if options.raw:
+        tagMatching = None
 
     if six.PY2:
         with open(leftSource, "rU") as f:

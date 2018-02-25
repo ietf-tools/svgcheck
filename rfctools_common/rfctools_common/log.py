@@ -11,6 +11,9 @@
 
 import sys
 import os
+import codecs
+import six
+import io
 
 quiet = False
 verbose = False
@@ -19,23 +22,52 @@ debug = False
 write_out = sys.stdout
 write_err = sys.stderr
 
+logging_codePage = 'utf8'
+
+if not six.PY2 and os.name == 'nt' and os.isatty(2):
+    logging_codePage = sys.stdout.encoding
+
+
+def write_to(file, unicodeString):
+    if os.name == 'nt':
+        if six.PY2:
+            if isinstance(file, io.StringIO):
+                file.write(unicodeString)
+            else:
+                file.write(unicodeString.encode(logging_codePage))
+        else:
+            if isinstance(file, io.StringIO):
+                file.write(unicodeString)
+            else:
+                file.buffer.write(unicodeString.encode(logging_codePage))
+    else:
+        if six.PY2:
+            if isinstance(file, io.StringIO):
+                file.write(unicodeString)
+            else:
+                file.write(unicodeString.encode(logging_codePage))
+        else:
+            file.write(unicodeString)
+
 
 def write_on_line(*args):
     """ Writes a message without ending the line, i.e. in a loading bar """
-    write_err.write(' '.join(args))
+    write_err.write(' '.join(args).encode('utf8'))
     write_err.flush()
 
 
 def write(*args):
     """ Prints a message to write_out """
-    write_err.write(' '.join(args))
+    # write_err.write(u' '.join(args))
+    write_to(write_err, u' '.join(args))
     write_err.write('\n')
 
 
 def note(*args):
     """ Call for being verbose only """
     if verbose and not quiet:
-        write(*args)
+        write_err.write(u' '.join(args))
+        write_err.write('\n')
 
 
 def warn(*args, **kwargs):
@@ -70,8 +102,10 @@ def error(*args, **kwargs):
         prefix = "{0}:{1}: ".format(fileName, kwargs['line'])
     if 'additional' in kwargs:
         prefix = ' '*kwargs['additional']
-    write_err.write(prefix + u' '.join(args))
-    write_err.write(u'\n')
+
+    write_to(write_err, (prefix + u' '.join(args)))
+    write_to(write_err, u'\n')
+    write_err.flush()
 
 
 def exception(message, list):
@@ -81,9 +115,17 @@ def exception(message, list):
     for e in list:
         attr = dict([(n, str(getattr(e, n)).replace("\n", " ")) for n in dir(e)
                      if not n.startswith("_")])
-        if attr["message"].endswith(", got "):
-            attr["message"] += "nothing."
-        attr["filename"] = make_relative(attr["filename"])
+        if 'message' in attr:
+            if attr["message"].endswith(", got "):
+                attr["message"] += "nothing."
+        else:
+            attr['message'] = '-- none --'
+        if 'filename' in attr:
+            attr["filename"] = make_relative(attr["filename"])
+        else:
+            attr['filename'] = 'unknown'
+        if 'line' not in attr:
+            attr['line'] = -1
         write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
 
 

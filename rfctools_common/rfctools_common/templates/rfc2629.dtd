@@ -219,9 +219,9 @@
 <!ELEMENT xref        (%CTEXT;)>
 <!ATTLIST xref
           target      IDREF              #REQUIRED
-          pageno      (true|false)       "false"
           format      (counter|title|none|default)
-                                         "default">
+                                         "default"
+          pageno      (true|false)       "false">
 
 <!ELEMENT eref        (%CTEXT;)>
 <!ATTLIST eref

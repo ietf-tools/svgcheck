@@ -141,7 +141,7 @@
 	  dup checks <cref display="true"> this is not part of it</cref> checks gets a dup.
 	  <em> Text here <tt>can be nstted</tt> for fun</em>
 	  <eref target="targetURL">can have content</eref>
-	  <iref item="index2"/>
+	  <iref item="index 2"/>
 	  <relref section="2.3" target="MSG"> the protocol overrreview</relref>
 	  <strong>THis is a normal text item.</strong> <sub>THis is a normal textt item</sub>
 	  <sup>Need to text de-duplicatte</sup>

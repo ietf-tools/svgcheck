@@ -1,5 +1,5 @@
 from xmldiff._zzs import ffi, lib
-from xmldiff.DiffNode import DiffElement
+from xmldiff.DiffNode import DiffElement, DiffParagraph
 from xmldiff.EditItem import EditItem
 
 all_handles = []
@@ -11,10 +11,11 @@ def zzs_get_children(node):
     global last_child
     treeNode = ffi.from_handle(node)
     childs = []
-    for child in treeNode.children:
-        h = ffi.new_handle(child)
-        childs.append(h)
-        all_handles.append(h)
+    if not isinstance(treeNode, DiffParagraph):
+        for child in treeNode.children:
+            h = ffi.new_handle(child)
+            childs.append(h)
+            all_handles.append(h)
 
     p = ffi.new("struct cArray *", [len(childs), childs])
     last_child = p
