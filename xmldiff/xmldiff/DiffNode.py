@@ -20,13 +20,6 @@ TextElements = [
     "bcp14", "br", "cref", "em", "eref", "iref", "strong", "relref", "sub",
     "sup", "tt", "xref", "vspace"
 ]
-TextContainers = [
-    "annotation", "area", "artwork", "blockquote", "city", "code", "country",
-    "dd", "dt", "email", "keyword", "li", "organization",
-    "phone", "postalline", "refcontent", "region", "sourcecode",
-    "street", "t", "td", "th", "title", "uri", "workgroup",
-    "c", "facsimile", "postamble", "preamble", "spanx", "ttcol"
-]
 
 V2NonTextElements = [
     "list", "figure"
@@ -47,6 +40,8 @@ tagMatching = {
     "ttcol": {"th"},
     "ul": {"list"},
 }
+
+PreserveSpace = ['artwork', 'sourcecode']
 
 diffCount = 0
 if six.PY2:
@@ -128,6 +123,12 @@ ParagraphMarkers = {
     'td': 2,
     'th': 2,
     'ttcol': 3,
+    '{http://relaxng.org/ns/structure/1.0}desc': 1,
+    '{http://relaxng.org/ns/structure/1.0}svgTitle': 1,
+    '{http://relaxng.org/ns/structure/1.0}a': 1,
+    '{http://relaxng.org/ns/structure/1.0}text': 1,
+    '{http://relaxng.org/ns/structure/1.0}textArea': 1,
+    '{http://relaxng.org/ns/structure/1.0}tspan': 1
     }
 
 
@@ -873,6 +874,8 @@ class DiffParagraph(DiffRoot):
         if '{http://www.w3.org/XML/1998/namespace}space' in self.xml.attrib:
             if self.xml.attrib['{http://www.w3.org/XML/1998/namespace}space'] == 'preserve':
                 self.preserve = True
+        elif self.xml.tag in PreserveSpace:
+            self.preserve = True
 
     def cloneTree(self, root):
         clone = DiffParagraph(self, root)
@@ -920,9 +923,7 @@ class DiffParagraph(DiffRoot):
         if self.deleted:
             n = E.SPAN()
             n.attrib["class"] = 'left'
-            n.text = self.toText()
-            if self.preserve:
-                n.text = n.text.replace(' ', nbsp)
+            self.fixPreserveSpace(n, self.toText())
             node.append(n)
         elif self.inserted:
             n = E.SPAN()
@@ -932,9 +933,7 @@ class DiffParagraph(DiffRoot):
         elif self.matchNode is None:
             n = E.SPAN()
             n.attrib['class'] = 'error'
-            n.text = self.toText()
-            if self.preserve:
-                n.text = n.text.replace(' ', nbsp)
+            self.fixPreserveSpace(n, self.toText())
             node.append(n)
         else:
             left = self.toText()
@@ -943,36 +942,26 @@ class DiffParagraph(DiffRoot):
             for tag, i1, i2, j1, j2 in differ.get_opcodes():
                 if tag == 'equal':
                     n = E.SPAN()
-                    n.text = left[i1:i2]
-                    if self.preserve:
-                        n.text = n.text.replace(' ', nbsp)
+                    self.fixPreserveSpace(n, left[i1:i2])
                     node.append(n)
                 elif tag == 'delete':
                     n = E.SPAN()
                     n.attrib['class'] = 'left'
-                    n.text = left[i1:i2]
-                    if self.preserve:
-                        n.text = n.text.replace(' ', nbsp)
+                    self.fixPreserveSpace(n, left[i1:i2])
                     node.append(n)
                 elif tag == 'insert':
                     n = E.SPAN()
                     n.attrib['class'] = 'right'
-                    n.text = right[j1:j2]
-                    if self.preserve:
-                        n.text = n.text.replace(' ', nbsp)
+                    self.fixPreserveSpace(n, right[j1:j2])
                     node.append(n)
                 else:
                     n = E.SPAN()
                     n.attrib['class'] = 'left'
-                    n.text = left[i1:i2]
-                    if self.preserve:
-                        n.text = n.text.replace(' ', nbsp)
+                    self.fixPreserveSpace(n, left[i1:i2])
                     node.append(n)
                     n = E.SPAN()
                     n.attrib['class'] = 'right'
-                    n.text = right[j1:j2]
-                    if self.preserve:
-                        n.text = n.text.replace(' ', nbsp)
+                    self.fixPreserveSpace(n, right[j1:j2])
                     node.append(n)
 
     def updateCost(self, right):
