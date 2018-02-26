@@ -257,9 +257,10 @@ class DiffRoot(object):
     def _serialize(self, element):
         if sys.version > '3':
             return lxml.html.tostring(element, pretty_print=True, method='html',
-                                      encoding='utf-8').decode('utf-8')
+                                      encoding='ascii').decode('ascii')
         else:
-            return lxml.html.tostring(element, pretty_print=True, method='html')
+            return lxml.html.tostring(element, pretty_print=True, method='html',
+                                      encoding='ascii').decode('ascii')
 
     def markInsertTrees(self):
         insertTree = True

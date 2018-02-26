@@ -195,8 +195,8 @@ def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile, markParagraphs
     left.applyEdits(editSet)
     x = left.ToString()
     x = x.splitlines()
-    with open(htmlFile, 'r') as f:
-        lines2 = f.readlines()
+    with open(htmlFile, 'rb') as f:
+        lines2 = f.read().decode('utf-8').splitlines()
     lines2 = [line.rstrip() for line in lines2]
 
     result = list(d.compare(x, lines2))
