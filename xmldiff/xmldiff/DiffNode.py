@@ -201,6 +201,7 @@ class DiffRoot(object):
         diffCount += 1
         self.index = diffCount
         self.deleteTree = False
+        self.preserve = False
 
     def ToString(self):
         node = E.DIV()
@@ -345,6 +346,61 @@ class DiffRoot(object):
             siblingNode.parent.children.insert(i, newNode)
         newNode.parent = siblingNode.parent
 
+    def fixPreserveSpace(self, node, text):
+        if self.preserve:
+            text = text.splitlines()
+            n = None
+            for line in text:
+                if node.text is None:
+                    node.text = line.replace(' ', nbsp)
+                    n = E.BR()
+                else:
+                    n.tail = line.replace(' ', nbsp)
+                    node.append(n)
+                    n = E.BR()
+        else:
+            node.text = text
+
+    def diffTextToHtml(self, leftText, rightText, node):
+        if not rightText:
+            if not leftText:
+                return
+            n = E.SPAN()
+            n.attrib["class"] = 'left'
+            self.fixPreserveSpace(n, leftText)
+            node.append(n)
+        elif not leftText:
+            n = E.SPAN()
+            n.attrib['class'] = 'right'
+            self.fixPreserveSpace(n, rightText)
+            node.append(n)
+        else:
+            differ = difflib.SequenceMatcher(None, leftText, rightText)
+            for tag, i1, i2, j1, j2 in differ.get_opcodes():
+                if tag == 'equal':
+                    n = E.SPAN()
+                    self.fixPreserveSpace(n, leftText[i1:i2])
+                    node.append(n)
+                elif tag == 'delete':
+                    n = E.SPAN()
+                    n.attrib['class'] = 'left'
+                    self.fixPreserveSpace(n, leftText[i1:i2])
+                    node.append(n)
+                elif tag == 'insert':
+                    n = E.SPAN()
+                    n.attrib['class'] = 'right'
+                    self.fixPreserveSpace(n, rightText[j1:j2])
+                    node.append(n)
+                else:
+                    n = E.SPAN()
+                    n.attrib['class'] = 'left'
+                    self.fixPreserveSpace(n, leftText[i1:i2])
+                    node.append(n)
+                    n = E.SPAN()
+                    n.attrib['class'] = 'right'
+                    self.fixPreserveSpace(n, rightText[j1:j2])
+                    node.append(n)
+
 
 class DiffDocument(DiffRoot):
     """ Represent the XML document.  We want to have a common
@@ -362,6 +418,25 @@ class DiffDocument(DiffRoot):
         ul = E.UL()
         result.append(ul)
         ul.attrib['class'] = 'jstree-open'
+
+        #  Insert xml declarations
+
+        n = E.LI()
+        leftText = '<?xml version="{0}" encoding="{1}"?>'.format(self.xml.docinfo.xml_version,
+                                                                 self.xml.docinfo.encoding)
+        rightText = '<?xml version="{0}" encoding="{1}"?>'. \
+            format(self.matchNode.xml.docinfo.xml_version,
+                   self.matchNode.xml.docinfo.encoding)
+        self.diffTextToHtml(leftText, rightText, n)
+        ul.append(n)
+
+        # Insert DTD declaration if one exists
+        n = E.LI()
+        if self.xml.docinfo.doctype or self.matchNode.xml.docinfo.doctype:
+            self.diffTextToHtml(self.xml.docinfo.doctype, self.matchNode.xml.docinfo.doctype, n)
+            ul.append(n)
+
+        # now put all of the children into HTML
 
         for child in self.children:
             child.ToHtml(ul)
@@ -683,6 +758,8 @@ class DiffElement(DiffRoot):
         return clone
 
     def ToHtml(self, parent):
+        # If we have the right doc info - then emit the <?xml?> line
+
         root = E.LI()
         parent.append(root)
         root.attrib['class'] = 'jstree-open'
@@ -902,21 +979,6 @@ class DiffParagraph(DiffRoot):
 
         return text
 
-    def fixPreserveSpace(self, node, text):
-        if self.preserve:
-            text = text.splitlines()
-            n = None
-            for line in text:
-                if node.text is None:
-                    node.text = line.replace(' ', nbsp)
-                    n = E.BR()
-                else:
-                    n.tail = line.replace(' ', nbsp)
-                    node.append(n)
-                    n = E.BR()
-        else:
-            node.text = text
-
     def ToHtml(self, parent):
 
         node = E.LI()
@@ -937,33 +999,7 @@ class DiffParagraph(DiffRoot):
             self.fixPreserveSpace(n, self.toText())
             node.append(n)
         else:
-            left = self.toText()
-            right = self.matchNode.toText()
-            differ = difflib.SequenceMatcher(None, left, right)
-            for tag, i1, i2, j1, j2 in differ.get_opcodes():
-                if tag == 'equal':
-                    n = E.SPAN()
-                    self.fixPreserveSpace(n, left[i1:i2])
-                    node.append(n)
-                elif tag == 'delete':
-                    n = E.SPAN()
-                    n.attrib['class'] = 'left'
-                    self.fixPreserveSpace(n, left[i1:i2])
-                    node.append(n)
-                elif tag == 'insert':
-                    n = E.SPAN()
-                    n.attrib['class'] = 'right'
-                    self.fixPreserveSpace(n, right[j1:j2])
-                    node.append(n)
-                else:
-                    n = E.SPAN()
-                    n.attrib['class'] = 'left'
-                    self.fixPreserveSpace(n, left[i1:i2])
-                    node.append(n)
-                    n = E.SPAN()
-                    n.attrib['class'] = 'right'
-                    self.fixPreserveSpace(n, right[j1:j2])
-                    node.append(n)
+            self.diffTextToHtml(self.toText(), self.matchNode.toText(), node)
 
     def updateCost(self, right):
         leftText = self.toText()
