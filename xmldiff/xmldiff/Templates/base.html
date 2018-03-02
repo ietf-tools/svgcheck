@@ -7,11 +7,15 @@
 
   <title>$title</title>
 
+    <script src="Templates/mktree.js"></script>
+    <link rel="stylesheet" href="Templates/mktree.css" type="text/css">
+
     <style>
       xml-block { margin-left:1em; display:block }
       .left { color:red; background-color:MistyRose}
       .right { color:green; background-color:Lavender; }
       .error { color:yellow; background-color:black; }
+      .artwork { font-family: monospace; }
       ul {padding-left: 6px; }
       li { list-style: none; padding-left: 6px; }
       @media screen and (min-width: 1140px) {
@@ -26,23 +30,13 @@
       .tabcontent { display: none; padding: 6px 12px; border: 1px solid #ccc; border-top: none; }
       }
 
-      .blob-wrapper { overflow-x:auto; overflow-y:hidden; }
-      .blob-num { width:1%; min-width:50px; padding-right:10px; padding-left:10px;
-      font-family:"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-      font-size:12px; line-height:20px; color:rgba(27,31,35,0.3); text-align:right; white-space:nowrap;
-      vertical-align:top; cursor:pointer; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none;
-      user-select:none }
-
-      .jstree-default a { white-space:normal !important; height: auto; }
-      .jstree-anchor { height: auto !important; }
-      .jstree-default li > ins { vertical-align: top; }
-      .jstree-leaf { height: auto; }
-      .jstree-leaf a { height: auto !important; }
     </style>
-    <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    
     <script type="text/javascript">
 // colResizable 1.6 - a jQuery plugin by Alvaro Prieto Lauroba http://www.bacubacu.com/colresizable/
 
@@ -94,6 +88,11 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
 	  </div>
 	</td>
 	<td width=50%>
+	  <div class="topnav">
+	    <button type="button" onclick="expandTree('diffRoot')">Expand All</button>
+	    <button type="button" onclick="collapseTree('diffRoot')">Collapse All</button>
+	    <button type="button" onclick="expandDiffs('diffRoot')">Expand Diffs</button>
+	  </div>
 	  <div id="centerColumn">
 	    $body
 	  </div>
@@ -107,17 +106,16 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
     </table>
 
     <script>
-      $$(function() { $$('#jstree_demo_div').jstree({"core":{ "themes" : {"icons": false}}}); });
+      convertTrees()
+      expandTree("diffRoot")
+
+      // Get the element with id="defaultOpen" and click on it
+      document.getElementById("defaultOpen").click();
+
+      $$(function() {
+        $$("table").colResizable();
+      });      
     </script>
-
-	<script>
-	  // Get the element with id="defaultOpen" and click on it
-	  document.getElementById("defaultOpen").click();
-
-	  $$(function() {
-	    $$("table").colResizable();
-	  });
-	</script>
 
 </body>
 </html>

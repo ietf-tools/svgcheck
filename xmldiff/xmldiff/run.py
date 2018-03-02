@@ -124,7 +124,7 @@ def main():
     templates_dir = 'Templates'
     templates_dir = os.path.join(os.path.dirname(__file__), 'Templates')
 
-    for filename in ['base.html']:
+    for filename in ['base.html', 'single.html']:
         file = open(os.path.join(templates_dir, filename), 'r')
         templates[filename] = string.Template(file.read())
         file.close
@@ -157,6 +157,7 @@ def main():
         'rightFile': "<br/>".join(rightLines)
         }
     output = templates['base.html'].substitute(subs)
+    # output = templates['single.html'].substitute(subs)
 
     filename = options.output_filename
     if not filename:
