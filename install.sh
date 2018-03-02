@@ -11,11 +11,11 @@ then
     case "${TOXENV}" in
 	py27)
 	# default version w/ the OS
-            brew upgrade python
+           #  brew upgrade python
 	;;
 
 	py36)
-	    brew install python3
+	    brew upgrade python
 	    ;;
 
     esac

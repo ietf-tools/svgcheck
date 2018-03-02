@@ -362,6 +362,11 @@ class DiffRoot(object):
             node.text = text
 
     def diffTextToHtml(self, leftText, rightText, node):
+        if self.preserve:
+            n = E.SPAN()
+            n.attrib['class'] = 'artwork'
+            node.append(n)
+            node = n
         if not rightText:
             if not leftText:
                 return
@@ -413,11 +418,11 @@ class DiffDocument(DiffRoot):
     def ToString(self):
         result = E.DIV()
         result.attrib['class'] = 'center'
-        result.attrib['id'] = 'jstree_demo_div'
 
         ul = E.UL()
         result.append(ul)
-        ul.attrib['class'] = 'jstree-open'
+        ul.attrib['class'] = 'mktree'
+        ul.attrib['id'] = 'diffRoot'
 
         #  Insert xml declarations
 
@@ -762,12 +767,14 @@ class DiffElement(DiffRoot):
 
         root = E.LI()
         parent.append(root)
-        root.attrib['class'] = 'jstree-open'
-        anchor = E.A()
-        anchor.attrib["href"] = '#'
-        root.append(anchor)
+        # root.attrib['class'] = 'jstree-open'
+        # anchor = E.A()
+        # anchor.attrib["href"] = '#'
+        # root.append(anchor)
+        anchor = root
         if self.deleted:
-            anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 0)'.format(self.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 0)'.
+            # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib["class"] = 'left'
             node.text = "<" + self.xml.tag
@@ -776,7 +783,8 @@ class DiffElement(DiffRoot):
                 for key in self.xml.attrib.iterkeys():
                     node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
         elif self.inserted:
-            anchor.attrib['onclick'] = 'return sync2here(-1, 0, 1, {0})'.format(self.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(-1, 0, 1, {0})'.
+            # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib['class'] = 'right'
             node.text = "<" + self.xml.tag
@@ -785,7 +793,8 @@ class DiffElement(DiffRoot):
                 for key in self.xml.attrib.iterkeys():
                     node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
         elif self.matchNode is None:
-            anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 1)'.format(self.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 1)'.
+            # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib['class'] = 'error'
             node.text = "<" + self.xml.tag
@@ -794,8 +803,8 @@ class DiffElement(DiffRoot):
                 for key in self.xml.attrib.iterkeys():
                     node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
         else:
-            anchor.attrib['onclick'] = 'return sync2here(1, {0},  1, {1})' \
-                  .format(self.xml.sourceline, self.matchNode.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(1, {0},  1, {1})' \
+            #      .format(self.xml.sourceline, self.matchNode.xml.sourceline)
             if self.xml.tag == self.matchNode.xml.tag:
                 anchor.text = "<" + self.xml.tag
             else:
@@ -825,6 +834,7 @@ class DiffElement(DiffRoot):
                             node.attrib['class'] = 'right'
                             node.text = " " + key + '="' + self.matchNode.xml.attrib[key] + '"'
                             anchor.append(node)
+
             for key in self.matchNode.xml.attrib.iterkeys():
                 if key not in self.xml.attrib:
                     node = E.SPAN()
@@ -845,7 +855,7 @@ class DiffElement(DiffRoot):
                 child.ToHtml(ul)
 
             li = E.LI()
-            li.attrib['class'] = 'jstree-open'
+            # li.attrib['class'] = 'jstree-open'
             s = E.SPAN()
             li.append(s)
             s.text = "</" + self.xml.tag + ">"
