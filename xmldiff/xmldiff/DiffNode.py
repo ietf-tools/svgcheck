@@ -772,9 +772,9 @@ class DiffElement(DiffRoot):
         # anchor.attrib["href"] = '#'
         # root.append(anchor)
         anchor = root
-        hasDiff = False
         if self.deleted:
-            anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 0)'.format(self.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 0)'.
+            # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib["class"] = 'left'
             node.text = "<" + self.xml.tag
@@ -782,9 +782,9 @@ class DiffElement(DiffRoot):
             if len(self.xml.attrib):
                 for key in self.xml.attrib.iterkeys():
                     node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
-            hasDiff = True
         elif self.inserted:
-            anchor.attrib['onclick'] = 'return sync2here(-1, 0, 1, {0})'.format(self.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(-1, 0, 1, {0})'.
+            # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib['class'] = 'right'
             node.text = "<" + self.xml.tag
@@ -792,9 +792,9 @@ class DiffElement(DiffRoot):
             if len(self.xml.attrib):
                 for key in self.xml.attrib.iterkeys():
                     node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
-            hasDiff = True
         elif self.matchNode is None:
-            anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 1)'.format(self.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 1)'.
+            # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib['class'] = 'error'
             node.text = "<" + self.xml.tag
@@ -803,8 +803,8 @@ class DiffElement(DiffRoot):
                 for key in self.xml.attrib.iterkeys():
                     node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
         else:
-            anchor.attrib['onclick'] = 'return sync2here(1, {0},  1, {1})' \
-                  .format(self.xml.sourceline, self.matchNode.xml.sourceline)
+            # anchor.attrib['onclick'] = 'return sync2here(1, {0},  1, {1})' \
+            #      .format(self.xml.sourceline, self.matchNode.xml.sourceline)
             if self.xml.tag == self.matchNode.xml.tag:
                 anchor.text = "<" + self.xml.tag
             else:
@@ -817,7 +817,6 @@ class DiffElement(DiffRoot):
                 node.attrib['class'] = 'right'
                 node.text = self.matchNode.xml.tag
                 anchor.append(node)
-                hasDiff = True
             if len(self.xml.attrib):
                 for key in self.xml.attrib.iterkeys():
                     if key in self.matchNode.xml.attrib and \
@@ -835,7 +834,6 @@ class DiffElement(DiffRoot):
                             node.attrib['class'] = 'right'
                             node.text = " " + key + '="' + self.matchNode.xml.attrib[key] + '"'
                             anchor.append(node)
-                        hasDiff = True
 
             for key in self.matchNode.xml.attrib.iterkeys():
                 if key not in self.xml.attrib:
@@ -843,7 +841,6 @@ class DiffElement(DiffRoot):
                     node.attrib['class'] = 'right'
                     node.text = " " + key + '="' + self.matchNode.xml.attrib[key] + '"'
                     anchor.append(node)
-                    hasDiff = True
 
         if len(self.children):
             s = E.SPAN()
@@ -876,8 +873,6 @@ class DiffElement(DiffRoot):
             elif self.inserted:
                 s.attrib['class'] = 'right'
             anchor.append(s)
-        if hasDiff:
-            root.attrib['class'] = 'diff'
 
     def updateCost(self, right):
         if self.xml.tag == right.xml.tag:
