@@ -29,14 +29,33 @@ xmldiff accepts a pair of XML documents as input and outputs an HTML document.
     ``-C``           ``--clear-cache``       purge the cache and exit
     ``-h``           ``--help``              show the help message and exit
     ``-N``           ``--no-network``        don't use the network to resolve references
-    ``-q``           ``--quiet``             dont print anything
+    ``-q``           ``--quiet``             don't print anything
+    ``-r``           ``--raw``               don't use the xml2rfc vocabulary when matching
     ``-v``           ``--verbose``           print extra information
     ``-V``           ``--version``           display the version number and exit
     ``-X``           ``--no-xinclude``       don't resolve xi:include elements
 
     ``-o FILENAME``  ``--out=FILENAME``      specify an output filename
+    ``-t FILENAME``  ``--template=FILENAME`` specify HTML template filename
+    x                ``--resource-url=URL``  specify the URL for resources in the template
     ===============  ======================= ==================================================
 
+Templates
+=========
+
+Two template files are installed with the package:
+
+    * single.html - provides just the XML difference between the two files.  This is the default template
+    * base.html - provides three columns containing the left source files, the XML difference and the right source files.
+
+For new template files, the following variables are define:
+
+   * title - provides a default window title
+   * body - contains the XML difference HTML
+   * leftFile - contains the left source files
+   * rightFile - contains the right source files
+   * resource_dir - contains the URL to find the resources.  This defaults to the Template directory of the package.
+    
 Dependencies
 ============
 
