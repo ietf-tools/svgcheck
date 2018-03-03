@@ -128,7 +128,7 @@ def main():
     rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
 
     templates_dir = os.path.join(os.path.dirname(__file__), 'Templates')
-    
+
     template_file = options.template
     if not os.path.exists(options.template):
         template_file = os.path.join(templates_dir, options.template)
