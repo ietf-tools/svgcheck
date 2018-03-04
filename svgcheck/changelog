@@ -1,3 +1,9 @@
+svgcheck (0.5.1) distribution(s); urgency=low
+
+	* Setup things so it publishes to PyPI
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun XX MAR 2018 19:00:00 -0800
+
 svgcheck (0.5.0) distribution(s); urgency=low
 
 	* No changes
