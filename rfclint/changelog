@@ -1,3 +1,9 @@
+rfclint (0.5.1) distribution(s); urgency=low
+
+	* Set up to all for publishing to PyPI
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun XX Mar 2018 19:00:00 -0800
+
 rfclint (0.5.0) distribution(s); urgency=urgency
 
 	* If ANBF program not found, then wrong name was printed
