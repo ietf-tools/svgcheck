@@ -13,6 +13,7 @@ here = path.abspath(path.dirname(__file__))
 # Get the long description from the README file
 with open(path.join(here, 'README.rst'), mode='rU', encoding='utf-8') as file:
     long_description = file.read()
+    long_description = long_description.replace('\r', '')
 
 # Get the requirements from the local requirements.txt file
 with open(path.join(here, 'requirements.txt'), encoding='utf-8') as file:
@@ -63,15 +64,17 @@ Changelog
 
 """ + "\n".join([ changelog_entry_template % entry for entry in parse("changelog")[:3] ])
 
+long_description = long_description.replace('\r', '')
+print(long_description)
 import xmldiff
 
 setup(
-    name='xmldiff',
+    name='rfc-xmldiff',
 
     # Versions should comply with PEP440.
     version=xmldiff.__version__,
 
-    description="Verify that an svg file is compliant with the RFC standards.",
+    description="Create an HTML difference display from two XML input files.",
     long_description=long_description,
     
     # The projects main homepage.
@@ -117,7 +120,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'xmldiff=xmldiff.run:main'
+            'rfc-xmldiff=xmldiff.run:main'
         ]
     },
     include_package_data = True,
