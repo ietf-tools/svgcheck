@@ -56,7 +56,7 @@ script:
   - cp dist/* ../dist
   - cd Test
   - $PYTHON test.py
-  - ../..
+  - cd ../..
   - ls dist
 
 before_deploy:

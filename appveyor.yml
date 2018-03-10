@@ -52,10 +52,11 @@ test_script:
   - "%PYTHON%\\%EXECUTABLE% test.py"
   
 after_test:
+  - cd ..
   - "%PYTHON%\\%EXECUTABLE% setup.py bdist_wheel"
 
 artifacts:
-  - path: dist\*
+  - path: xmldiff\dist\*
 
 #matrix:
 #  fast_finish: true
