@@ -40,28 +40,24 @@ script:
   - mkdir dist
   - python --version
   - cd rfctools_common && $PYTHON setup.py --quiet install
-  - $PYTHON setup.py --quite bdist_wheel
-  - cp dist/* ../dist
   - pwd
   - cd rfctools_common && $PYTHON test.py
   - cd ../../svgcheck
   - $PYTHON setup.py --quiet install
-  - $PYTHON setup.py --quite bdist_wheel
-  - cp dist/* ../dist
   - cd svgcheck
   - $PYTHON test.py
   - cd ../../rfclint
   - $PYTHON setup.py --quiet install
-  - $PYTHON setup.py --quite bdist_wheel
-  - cp dist/* ../dist
   - cd rfclint
   - $PYTHON test.py
   - cd ../../xmldiff
   - $PYTHON setup.py --quiet install
-  - $PYTHON setup.py --quite bdist_wheel
+  - $PYTHON setup.py --quiet bdist_wheel
   - cp dist/* ../dist
   - cd Test
   - $PYTHON test.py
+  - ../..
+  - ls dist
 
 before_deploy:
   openssl aes-256-cbc -K $encrypted_b97c0a903367_key -iv $encrypted_b97c0a903367_iv -in deploy_key.enc -out deploy_key -d
