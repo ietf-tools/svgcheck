@@ -409,6 +409,7 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 
 	EditList * fd = (EditList *)malloc(sizeof(EditList) * (a->size+1) * (b->size+1));
 	EditList * pret = NULL;
+	eArray * pret2;
 	
 	int i;
 	int i_1;
@@ -545,6 +546,18 @@ struct eArray * Distance(void * leftTree, void * rightTree, struct cArray *(*get
 
 	pret = cloneEdits(treedists[tindex(a->size - 1, b->size - 1)], 1);
 
+	for (i=0; i<a->size*b->size; i++) {
+	  if (treedists[i]->operation == OP_LIST) {
+	    free(treedists[i]->left);
+	    free(treedists[i]);
+	  }
+	}
+	free(treedists);
+	free(a_remove);
+	free(b_insert);
+
+	pret2 = pret->left;
+	free(pret);
 	// M00TODO finish freeing everything
-	return (eArray *) pret->left;
+	return pret2;
 }

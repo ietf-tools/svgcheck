@@ -1,3 +1,19 @@
+rfclint (0.5.1) distribution(s); urgency=low
+
+	* Set up to all for publishing to PyPI
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun XX Mar 2018 19:00:00 -0800
+
+rfclint (0.5.0) distribution(s); urgency=urgency
+
+	* If ANBF program not found, then wrong name was printed
+	* Allow for both hunspell and aspell to be used for spell checking
+	* On windows, do not require the .exe extension to be specified
+	* Enable characters outside of the ASCII range to be spell checked
+	  This is not supported on all platforms and with all spell programs
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 25 Feb 2018 19:00:00 -0800
+
 rfclint (0.0.3) distribution(s); urgency=urgency
 
 	* Handle errors when an executable is missing better

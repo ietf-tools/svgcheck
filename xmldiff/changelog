@@ -1,3 +1,31 @@
+xmldiff (0.5.1) distribution(s); urgency=low
+
+	* Tag artwork and sourcecode correctly so that they are formatted as space preserving.
+	* Emit the xml declaration and DOCTYPE declaration
+	* Switch to a new tree paradigm as the old one did not allow needed cut and paste features.
+	* Implement a button to just open modified nodes
+	* Setup to have and be able to select from multiple HTML templates.
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun XX Feb 2018 19:00:00 -0800
+
+xmldiff (0.5.0) distribution(s); urgency=low
+
+	* Many different css changes applied.  Changes include: resize the different columns,
+	  add background coloration, wrap lines and make the tree leafs of variable height,
+	  change the charset to allow Utf-8 characters.  Long term should point to the column change code,
+	  but currently I don't know of a good place.
+	* Format paragraphs as a single node in the tree rather than spreading them out over the tree
+	  structure.  This improves readability substantially.
+	* Force the matching of some v2 and v3 elements which provide equivalent functionality, but have
+	  different names.
+	* Include comments as nodes in the displayed tree.
+	* Fix some errors in the tree merging code so that elements are placed in the correct location.
+	* Need to separate the left/right class tagging from the li element as it gets clobbered by the
+	  tree code.  Thus the addition of span elements all over the place.
+	* Clean up some memory leaks in the distance algorithm.
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 25 Feb 2018 19:00:00 -0800
+
 xmldiff (0.0.3) distribution(s); urgency=urgency
 
 	* First drop of code - only does pure xml differences
