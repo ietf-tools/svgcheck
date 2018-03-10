@@ -6,7 +6,7 @@ import re
 import os
 import six
 from rfctools_common import log
-from rfclint.spell import which
+from rfclint.spell import which, RfcLintError
 
 
 class AbnfChecker(object):
@@ -15,8 +15,8 @@ class AbnfChecker(object):
         self.dictionaries = config.getList('abnf', 'addrules')
         if program:
             if not which(program):
-                log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), program)
+                raise RfcLintError("The program '{0}' does not exist or is not executable".
+                                   format(program))
         else:
             # look on the path first
             look_for = "bap"
@@ -33,7 +33,8 @@ class AbnfChecker(object):
                     program = os.path.dirname(os.path.realpath(__file__)) + "/../bin/bap"
                 program = which(program)
                 if not program:
-                    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), bap)
+                    raise RfcLintError("The program '{0}' does not exist or is not executable".
+                                       format(look_for))
         self.abnfProgram = program
 
     def validate(self, tree):
@@ -47,8 +48,8 @@ class AbnfChecker(object):
         if self.dictionaries:
             for dict in self.dictionaries:
                 if not os.path.exists(dict):
-                    log.error("Additional ABNF rule file '{0}' does not exist".format(dict))
-                    return
+                    raise RfcLintError("Additional ABNF rule file '{0}' does not exist".
+                                       format(dict))
                 cmds.append("-i")
                 cmds.append(dict)
 
@@ -80,9 +81,6 @@ class SourceExtracter(object):
     def __init__(self, tree, sourceType):
         self.tree = tree
         self.sourceType = sourceType
-
-    def ExtractToMemoryFile(self):
-        pass
 
     def ExtractToFile(self, file):
         """

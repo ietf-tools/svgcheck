@@ -6,7 +6,10 @@ import sys
 import colorama
 import six
 import platform
+import codecs
+import subprocess
 from rfctools_common import log
+
 
 if six.PY2:
     import subprocess32
@@ -15,17 +18,39 @@ else:
     import subprocess
 
 
+class RfcLintError(Exception):
+    """ RFC Lint internal errors """
+    def __init__(self, msg, filename=None, line_no=0):
+        self.msg = msg
+        self.message = msg
+        self.position = line_no
+        self.filename = filename
+        self.line = line_no
+
+
+def ReplaceWithSpace(exc):
+    if isinstance(exc, UnicodeDecodeError):
+        return u' '
+    elif isinstance(exc, UnicodeEncodeError):
+        if six.PY2:
+            return ((exc.end-exc.start)*u' ', exc.end)
+        else:
+            return (bytes((exc.end-exc.start)*[32]), exc.end)
+    else:
+        raise TypeError("can't handle %s" % type(exc).__name__)
+
+
 CheckAttributes = {
-    "title": ('ascii', 'abbrev'),
-    'seriesInfo': {'name', 'asciiName', 'value', 'asciiValue'},
-    "author": ('asciiFullname', 'asciiInitials', 'asciiSurname', 'fullname', 'surname', 'initials'),
-    'city': {'ascii'},
-    'code': {'ascii'},
-    'country': {'ascii'},
-    'region': {'ascii'},
-    'street': {'ascii'},
-    'blockquote': {'quotedFrom'},
-    'iref': {'item', 'subitem'},
+    "title": ['ascii', 'abbrev'],
+    'seriesInfo': ['name', 'asciiName', 'value', 'asciiValue'],
+    "author": ['asciiFullname', 'asciiInitials', 'asciiSurname', 'fullname', 'surname', 'initials'],
+    'city': ['ascii'],
+    'code': ['ascii'],
+    'country': ['ascii'],
+    'region': ['ascii'],
+    'street': ['ascii'],
+    'blockquote': ['quotedFrom'],
+    'iref': ['item', 'subitem'],
     }
 
 CutNodes = {
@@ -105,9 +130,13 @@ class Speller(object):
             self.color_end = colorama.Style.RESET_ALL
 
         if program:
-            if not which(program):
-                log.error("The program '{0}' does not exist or is not executable".format(program))
-                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), program)
+            look_for = which(program)
+            if not look_for and os.name == 'nt':
+                look_for = which(program + '.exe')
+            if not look_for:
+                raise RfcLintError("The program '{0}' does not exist or is not executable".
+                                   format(program))
+            program = look_for
         else:
             if os.name == "nt":
                 look_for = "aspell.exe"
@@ -118,49 +147,127 @@ class Speller(object):
                 look_for = "aspell"
                 program = which(look_for)
             if not program:
-                log.error("Cannot locate the program '{0}' on the path".format(look_for))
-                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), look_for)
+                raise RfcLintError("The program '{0}' does not exist or is not executable".
+                                   format(look_for))
 
-        cmdLine = [program, '-a']
+        spellBaseName = os.path.basename(program)
+        spellBaseName = spellBaseName.replace('.exe', '')
+
+        # I want to know what the program and version really are
+
+        p = subprocess.Popen([program, "-v"], stdout=subprocess.PIPE)
+        (versionOut, stderr) = p.communicate()
+        """
+        if p.returncode != 0:
+            raise RfcLintError("The program '{0}' executed with an error code {1}".
+                               format(program, p.returncode))
+        """
+
+        m = re.match(r".*International Ispell Version [\d.]+ \(but really (\w+) ([\d.]+).*",
+                     versionOut.decode('utf-8'))
+        if m is None:
+            raise RfcLintError("Error starting the spelling program\n{0}".format(line))
+
+        if m.group(1).lower() != spellBaseName:
+            raise RfcLintError("Error: The wrong spelling program was started.  Expected"
+                               "{0} and got {1}".format(spellBaseName, m.group(1)))
+
+        codecs.register_error('replaceWithSpace', ReplaceWithSpace)
+
+        self.iso8859 = False
+        if spellBaseName == 'aspell':
+            log.note("xx - " + m.group(2))
+            if m.group(2)[:3] == '0.5':
+                # This version does not support utf-8
+                self.iso8859 = True
+                log.note("Use iso8859")
+        elif spellBaseName == 'hunspell':
+            # minumum version of hunspell is 1.1.6, but that is probably not something
+            # we would find in the wild anymore.  We are therefore not going to check it.
+            # However, right now the only version I have for Windows does not support utf-8
+            # so until I get a better version, force the use of iso8859 there.
+            if os.name == 'nt':
+                self.iso8859 = True
+                log.note("Use iso8859")
+
+        # now let's build the full command
+
+        cmdLine = [program, '-a']  # always use pipe mode
         dicts = config.getList('spell', 'dictionaries')
         if dicts:
+            dictList = ''
             for dict in dicts:
-                cmdLine.append("--add-extra-dicts")
+                if spellBaseName == 'hunspell':
+                    dict = dict + '.dic'
                 if os.path.isabs(dict):
                     dict2 = dict
                 else:
                     dict2 = os.path.join(os.getcwd(), dict)
                 dict2 = os.path.normpath(dict2)
-                cmdLine.append(dict2)
+                if not os.path.exists(dict2):
+                    log.error("Additional Dictionary '{0}' ignored because it was not found".
+                              format(dict.replace('.dic', '')))
+                    continue
+                if spellBaseName == 'aspell':
+                    cmdLine.append("--add-extra-dicts")
+                    cmdLine.append(dict2)
+                else:
+                    dictList = dictList + "," + dict2.replace('.dic', '')
+            if spellBaseName == 'hunspell':
+                cmdLine.append('-d')
+                cmdLine.append("en_US" + dictList)
 
         dict = config.get('spell', 'personal')
         if dict:
-            cmdLine.append('-p')
             if os.path.isabs(dict):
                 dict2 = dict
             else:
                 dict2 = os.path.join(os.getcwd(), dict)
             dict2 = os.path.normpath(dict2)
-            cmdLine.append(dict2)
+            if not os.path.exists(dict2):
+                log.error("Personal Dictionary '{0}' ignored because it was not found".
+                          format(dict))
+            else:
+                cmdLine.append('-p')
+                cmdLine.append(dict2)
+
+        if self.iso8859:
+            if spellBaseName == 'aspell':
+                cmdLine.append('--encoding=iso8859-1')
+            else:
+                # Make sure if we have a better version of hunspell that it will do the right thing
+                cmdLine.append('-i iso-8859-1')
+        elif spellBaseName == 'hunspell':
+            cmdLine.append('-i utf-8')
 
         log.note("spell command = '{0}'".format(" ".join(cmdLine)))
         self.p = subprocess.Popen(cmdLine,
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         if six.PY2:
-            self.stdout = self.p.stdout
-            self.stdin = self.p.stdin
+            if os.name == 'nt':
+                self.stdin = codecs.getwriter('iso-8859-1')(self.p.stdin)
+                self.stdout = self.p.stdout
+            else:
+                self.stdin = codecs.getwriter('utf8')(self.p.stdin)
+                self.stdout = self.p.stdout
+                # self.stdout = codecs.getreader('utf8')(self.p.stdout)
         else:
-            self.stdin = io.TextIOWrapper(self.p.stdin, encoding='utf-8', line_buffering=True)
-            self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
+            if self.iso8859:
+                self.stdin = io.TextIOWrapper(self.p.stdin, encoding='iso-8859-1',
+                                              errors='replaceWithSpace', line_buffering=True)
+                self.stdout = io.TextIOWrapper(self.p.stdout, encoding='iso-8859-1',
+                                               errors='replaceWithSpace')
+            else:
+                self.stdin = io.TextIOWrapper(self.p.stdin, encoding='utf-8', line_buffering=True)
+                self.stdout = io.TextIOWrapper(self.p.stdout, encoding='utf-8')
 
         #  Check that we got a good return
         line = self.stdout.readline()
-        if re.match(r".*International Ispell.*", line) is None:
-            log.error("Error starting the spelling program\n{0}".format(line))
+        log.note(line)
 
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
-        self.aspell_re = re.compile(r".\s(\w+)\s(\d+)(\s(\d+): (.+))?", re.UNICODE)
+        self.aspell_re = re.compile(r".\s(\S+)\s(\d+)\s*((\d+): (.+))?", re.UNICODE)
 
     def processLine(self, allWords):
         """
@@ -178,14 +285,29 @@ class Speller(object):
         result = []
         setNo = 0
         for wordSet in allWords:
-            self.stdin.write('^ ' + wordSet[0] + '\n')
-            # print('in line = ' + wordSet[0])
+            newLine = u'^ ' + wordSet[0] + u'\n'
+            if self.iso8859:
+                log.note(u"Pre Encode = " + newLine)
+                newLine = newLine.encode('iso-8859-1', 'replaceWithSpace')
+                newLine = newLine.decode('iso-8859-1')
+            else:
+                newLine = newLine  # .encode('utf-8')
+            log.note(newLine)
+            self.stdin.write(newLine)
 
             index = 0
             running = 0
             while True:
-                line = self.stdout.readline().strip()
+                line = self.stdout.readline()
+                if six.PY2:
+                    if self.iso8859:
+                        #  log.note(" ".join("{:02x}".format(c) for c in line))
+                        line = line.decode('iso-8859-1')
+                    else:
+                        line = line.decode('utf-8')
+                line = line.strip()
                 log.note('spell out line = ' + line)
+
                 if len(line) == 0:
                     break
 
@@ -194,7 +316,7 @@ class Speller(object):
 
                 m = self.aspell_re.match(line)
                 if not m:
-                    log.error("Internal error trying to match the line '{0}".format(line))
+                    log.error("Internal error trying to match the line '{0}'".format(line))
                     continue
 
                 if line[0] == '#':
@@ -280,7 +402,7 @@ class Speller(object):
                 log.error("Misspelled word '{0}' in attribute '{1}'".format(r[3], attributeName),
                           where=r[2])
             else:
-                log.error("Misspelled word was found '{0}'".format(r[3]), where=r[2])
+                log.error(u"Misspelled word was found '{0}'".format(r[3]), where=r[2])
             if self.window > 0:
                 q = self.wordIndex(r[1], r[2], matchGroups)
                 if q >= 0:

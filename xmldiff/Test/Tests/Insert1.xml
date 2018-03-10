@@ -1,0 +1,19 @@
+<root>
+  <nodeI>
+  <node3>
+    text 3
+  </node3>
+  <node3>
+    text 4
+  </node3>
+  <node1>
+    text
+  </node1>
+  <node5>
+    text 5
+  </node5>
+  <node2>
+    text2
+  </node2>
+  </nodeI>
+</root>

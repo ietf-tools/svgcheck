@@ -1,6 +1,7 @@
 Perform Validation checks on Internet-Drafts
 ============================================
 
+
 There are a number of tasks that need to be performed when an Internet-Draft_ is
 begin process to create an RFC_. This tool performs a subset of those actions.
 The actions performed are:
@@ -51,28 +52,27 @@ of the document.
     ================ ========================= ==================================================
 
     
-
 **Spelling Options**
 
     The following options affect how the spell checking is performed.
-
-    ===============  ======================= ==================================================
-    Short            Long                    Description
-    ===============  ======================= ==================================================
-                     ``--no-dup-detection``  don't perform duplicate detection
-                     ``--no-spell``          don't perform spell checking on the source
-                     ``--no-suggest``        don't provide suggestions for misspelled words
-                     ``--no-spell``          provide suggestions for misspelled words (default)
+    
+    ===============  ============================ ==================================================
+    Short            Long                         Description
+    ===============  ============================ ==================================================
+    x                ``--no-dup-detection``       don't perform duplicate detection
+    x                ``--no-spell``               don't perform spell checking on the source
+    x                ``--no-suggest``             don't provide suggestions for misspelled words
+    x                ``--no-spell``               provide suggestions for misspelled words (default)
     		     
-                     ``--color=TEXT``        specify the color to use for word highlighting
-                     ``--dictionary=FILENAME`` specify an additional dictionary to use
-                     ``--personal=FILENAME`` specify the personal dictionary to use
-                     ``--spell-program=FILENAME`` program to use for spell checking
-                     ``--spell-window=NUM``  how many words to display as part of the context
-    ===============  ======================= ==================================================
+    x                ``--color=TEXT``             specify the color to use for word highlighting
+    x                ``--dictionary=FILENAME``    specify an additional dictionary to use
+    x                ``--personal=FILENAME``      specify the personal dictionary to use
+    x                ``--spell-program=FILENAME`` program to use for spell checking
+    x                ``--spell-window=NUM``       how many words to display as part of the context
+    ===============  ============================ ==================================================
 
     It is assumed that the spell checking program is aspell and that aspell is on the path.
-    For Windows systems, it additionally look in "C:\Program Files (x86)\Aspell\bin" for the program.
+    For Windows systems, it additionally look in "C:\\Program Files (x86)\\Aspell\\bin" for the program.
     If a different program is given, then it should be either an absolute path or on the path so that
     it can be located.
 
@@ -85,22 +85,22 @@ of the document.
     If the value of spell-window is 0, then no context will be displayed.
     
 **ABNF Checking Options**
+    
+    ===============  =========================== ==================================================
+    Short            Long                        Description
+    ===============  =========================== ==================================================
+    x                ``--no-abnf``               don't perform abnf checking on the source
 
-    ===============  ======================= ==================================================
-    Short            Long                    Description
-    ===============  ======================= ==================================================
-                     ``--no-abnf``           don't perform abnf checking on the source
-
-                     ``--abnf-add-rules``    ABNF file to include when checking
-                     ``--abnf-program=FILENAME`` specify program to use for ABNF checking
-    ===============  ======================= ==================================================
+    x                ``--abnf-add-rules``        ABNF file to include when checking
+    x                ``--abnf-program=FILENAME`` specify program to use for ABNF checking
+    ===============  =========================== ==================================================
 
 Configuration File
 ==================
 
 rfclint keeps configuration information in a configuration file.  By default the file is stored at
 
-    * On Windows: c:\Users\USER\AppDatea\Local\rfclint\IETF\rfclint.cfg
+    * On Windows: c:\\Users\\USER\\AppData\\Local\\rfclint\\IETF\\rfclint.cfg
     * Otherwise: /home/USER/.local/share/rfclint/rfclint.cfg
 
 The format of the configuration file is the standard INI file format.

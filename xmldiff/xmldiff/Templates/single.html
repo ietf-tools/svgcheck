@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+
+  <title>$title</title>
+
+    <script src="$resource_dir/mktree.js"></script>
+    <link rel="stylesheet" href="$resource_dir/mktree.css" type="text/css">
+
+    <style>
+      xml-block { margin-left:1em; display:block }
+      .left { color:red; background-color:MistyRose}
+      .right { color:green; background-color:Lavender; }
+      .error { color:yellow; background-color:black; }
+      .artwork { font-family: monospace; }
+      ul {padding-left: 6px; }
+      li { list-style: none; padding-left: 6px; }
+      @media screen and (min-width: 1140px) {
+      #leftColumn { overflow: scroll; height: calc(100vh - 20px);}
+      #centerColumn { }
+      #rightColumn { overflow: scroll;height:  calc(100vh - 20px);}
+
+      .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
+      .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
+      .tab button:hover { background-color: #ddd; }
+      .tab button.active { background-color: #ccc; }
+      .tabcontent { display: none; padding: 6px 12px; border: 1px solid #ccc; border-top: none; }
+
+    </style>
+
+</head>
+
+<body>
+  <div id="root">
+    <div class="topnav">
+      <button type="button" onclick="expandTree('diffRoot')">Expand All</button>
+      <button type="button" onclick="collapseTree('diffRoot')">Collapse All</button>
+      <button type="button" onclick="expandDiffs('diffRoot')">Expand Diffs</button>
+    </div>
+    <div id="centerColumn">
+      $body
+    </div>
+
+    <script>
+      convertTrees()
+      expandTree("diffRoot")
+    </script>
+
+
+</body>
+</html>

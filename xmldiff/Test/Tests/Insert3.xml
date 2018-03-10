@@ -1,0 +1,16 @@
+<root>
+  <node3>
+    text 3
+  </node3>
+  <nodeI>
+  <node1>
+    text
+  </node1>
+  <node5>
+    text 5
+  </node5>
+  </nodeI>
+  <node2>
+    text2
+  </node2>
+</root>

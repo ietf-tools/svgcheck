@@ -1,0 +1,6 @@
+[run]
+branch=True
+omit =
+     */rfctools_common/*
+     */svgcheck/*
+parallel=True

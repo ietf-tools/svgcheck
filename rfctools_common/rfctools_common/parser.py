@@ -466,8 +466,8 @@ class XmlRfcParser:
         if six.PY2:
             self.text = open(self.source, "rU").read()
         else:
-            file = open(self.source, "r", encoding='utf8')
-            self.text = six.binary_type(file.read(), 'utf8')
+            file = open(self.source, "rb")
+            self.text = six.binary_type(file.read())
             file.close()
 
         # Get an iterating parser object

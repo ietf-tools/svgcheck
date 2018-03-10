@@ -1,0 +1,4 @@
+OP=4 left=   4 right=   4
+OP=4 left=   3 right=   3
+OP=4 left=   2 right=   2
+OP=4 left=   1 right=   1

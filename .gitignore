@@ -1,9 +1,12 @@
 #in progress
-xmldiff
 Samples
 cache
 bin
 Temp
+Release
+Debug
+_zzs.c
+Torture
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,3 +1,21 @@
+svgcheck (0.5.1) distribution(s); urgency=low
+
+	* Setup things so it publishes to PyPI
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun XX MAR 2018 19:00:00 -0800
+
+svgcheck (0.5.0) distribution(s); urgency=low
+
+	* No changes
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 25 Feb 2018 19:00:00 -0800
+
+svgcheck (0.0.3) distribution(s); urgency=urgency
+
+	* Correct black/white substitutions on RGB colors
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 11 Feb 2018 19:00:00 -0800
+
 svgcheck (0.0.2) distribution(s); urgency=urgency
 
 	* Rewrite style proprety handling to promote items rather than validate in place

@@ -194,6 +194,12 @@ class Test_Abnf(unittest.TestCase):
                              "Tests/abnf-extras.xml"],
                       "Results/abnf-extras-no.out", "Results/abnf-extras-no.err", None, None)
 
+    def test_extras_doesnt_exist(self):
+        """ An ABNF object needing additional file, but the one given is not real """
+        check_process(self, [sys.executable, "run.py", "--no-spell",
+                             "--abnf-add-rules=abnf-extras.abnf", "Tests/abnf-extras.xml"],
+                      "Results/abnf-extras-not.out", "Results/abnf-extras-not.err", None, None)
+
     def test_error_one_skip(self):
         """ A single ABNF section w/ an error, but skip checking """
         check_process(self, [sys.executable, "run.py", "--no-abnf", "--no-spell",
@@ -206,6 +212,12 @@ class Test_Abnf(unittest.TestCase):
                              "--abnf-add-rules=Tests/abnf-bad-extras.abnf",
                              "Tests/abnf-extras.xml"],
                       "Results/abnf-bad-extras.out", "Results/abnf-bad-extras.err", None, None)
+
+    def test_no_program(self):
+        """ No ABNF executable """
+        check_process(self, [sys.executable, "run.py", "--abnf-program=no-abnf",
+                             "--no-spell", "Tests/abnf-extras.xml"],
+                      "Results/abnf-no-program.out", "Results/abnf-no-program.err", None, None)
 
 
 class Test_Spell(unittest.TestCase):
@@ -243,14 +255,168 @@ class Test_Spell(unittest.TestCase):
                              "--dictionary=Tests/schaad.wl", "Tests/spell.xml"],
                       "Results/spell-add-dict.out", "Results/spell-add-dict.err", None, None)
 
+    def test_add_dict_not(self):
+        """ Add a simple dictionary which does not exit """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--dictionary=schaad.wl", "Tests/spell.xml"],
+                      "Results/spell-add-dict-not.out", "Results/spell-add-dict-not.err",
+                      None, None)
+
     def test_add_personal_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
                              "--personal=Tests/schaad.wl", "Tests/spell.xml"],
                       "Results/spell-add-per.out", "Results/spell-add-per.err", None, None)
 
+    def test_add_personal_dict_not(self):
+        """ Add a simple dictionary which does not exist """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--personal=schaad.wl", "Tests/spell.xml"],
+                      "Results/spell-add-per-not.out", "Results/spell-add-per-not.err", None, None)
 
-def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile):
+    def test_no_program(self):
+        """ No spell executable """
+        check_process(self, [sys.executable, "run.py", "--spell-program=no-spell",
+                             "Tests/spell.xml"],
+                      "Results/spell-no-program.out", "Results/spell-no-program.err", None, None)
+
+    # @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
+    def test_spell_utf8(self):
+        """ Need to do some testing of spelling w/ utf-8 characters """
+        if sys.platform.startswith('linux'):
+            errFile = "Results/spell-utf8-linux.err"
+        else:
+            errFile = "Results/spell-utf8.err"
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--no-rng", "Tests/spell-utf8.xml"],
+                      "Results/empty", errFile, None, None)
+
+    @unittest.skipIf(True, "Test is still in progress")
+    def test_spell_utf8_with_dict(self):
+        """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--no-rng", "--dictionary=Tests/utf8.wl", "Tests/spell-utf8.xml"],
+                      "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
+
+
+class Test_Spell_Hunspell(unittest.TestCase):
+    """ Set of tests dealing with the spell checker API """
+    """
+    Disable the following tests because different dictionaries currently cause different
+    sets of results to be suggested.  Until we figure out how to deal with this problem
+    the tests will always be failing someplace.
+
+    def test_error_one(self):
+        "" " Do basic quiet spell checking "" "
+        check_process(self, [sys.executable, "run.py", "--spell-window=0",
+                             "--color=none", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-01.out",
+                      "Results/spell-01.err" if os.name == 'nt'
+                      else "Results/spell-01-60.err", None, None)
+    """
+
+    def test_add_context(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py", "--no-suggest",
+                             "--color=none", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-context.out",
+                      ["Results/spell-context-hun.err", "Results/spell-context.err"],
+                      None, None)
+
+    def test_error_one_no_suggest(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-no-suggest.out",
+                      ["Results/spell-no-suggest-hun.err", "Results/spell-no-suggest.err"],
+                      None, None)
+
+    def test_add_dict(self):
+        """ Add a simple dictionary with my name """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--dictionary=Tests/schaad", "--spell-program=hunspell",
+                             "Tests/spell.xml"],
+                      "Results/spell-add-dict.out",
+                      ["Results/spell-add-dict-hun.err", "Results/spell-add-dict.err"],
+                      None, None)
+
+    def test_add_dict_not(self):
+        """ Add a simple dictionary which does not exit """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--dictionary=schaad", "--spell-program=hunspell",
+                             "Tests/spell.xml"],
+                      "Results/spell-add-dict-not.out",
+                      ["Results/spell-add-dict-not-hun.err", "Results/spell-add-dict-not.err"],
+                      None, None)
+
+    def test_add_personal_dict(self):
+        """ Add a simple dictionary with my name """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--personal=Tests/schaad.wl", "--spell-program=hunspell",
+                             "Tests/spell.xml"],
+                      "Results/spell-add-per.out",
+                      ["Results/spell-add-per-hun.err", "Results/spell-add-per.err"],
+                      None, None)
+
+    def test_add_personal_dict_not(self):
+        """ Add a simple dictionary which does not exist """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--personal=schaad", "--spell-program=hunspell", "Tests/spell.xml"],
+                      "Results/spell-add-per-not.out",
+                      ["Results/spell-add-per-not-hun.err", "Results/spell-add-per-not.err"],
+                      None, None)
+
+    def test_spell_utf8(self):
+        """ Need to do some testing of spelling w/ utf-8 characters """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--no-rng", "--spell-program=hunspell", "Tests/spell-utf8.xml"],
+                      "Results/empty",
+                      ["Results/spell-utf8.err", "Results/spell-utf8-linux-hun.err"], None, None)
+
+    @unittest.skipIf(True, "Test is still in progress")
+    def test_spell_utf8_with_dict(self):
+        """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
+        check_process(self, [sys.executable, "run.py", "--no-suggest", "--spell-window=0",
+                             "--no-rng", "--dictionary=Tests/utf8.wl", "--spell-program=hunspell",
+                             "Tests/spell-utf8.xml"],
+                      "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
+
+
+def compare_file(errFile, stderr, displayError):
+    if six.PY2:
+        with open(errFile, 'r') as f:
+            lines2 = f.readlines()
+        lines1 = stderr.splitlines(True)
+    else:
+        with open(errFile, 'r', encoding='utf8') as f:
+            lines2 = f.readlines()
+        lines1 = stderr.decode('utf-8').splitlines(True)
+
+    if os.name == 'nt':
+        lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
+        lines1 = [line.replace('\r', '') for line in lines1]
+
+    cwd = os.getcwd()
+    if os.name == 'nt':
+        cwd = cwd.replace('\\', '/')
+    lines2 = [line.replace('$$CWD$$', cwd) for line in lines2]
+
+    d = difflib.Differ()
+    result = list(d.compare(lines1, lines2))
+
+    hasError = False
+    for l in result:
+        if l[0:2] == '+ ' or l[0:2] == '- ':
+            hasError = True
+            break
+    if hasError and displayError:
+        print("stderr")
+        print("".join(result))
+        return False
+    return True
+
+
+def check_process(tester, args, stdoutFile, errFiles, generatedFile, compareFile):
     """
     Execute a subprocess using args as the command line.
     if stdoutFile is not None, compare it to the stdout of the process
@@ -259,7 +425,6 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
 
     p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdoutX, stderr) = p.communicate()
-    p.wait()
 
     returnValue = True
     if stdoutFile is not None:
@@ -288,36 +453,15 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             print("".join(result))
             returnValue = False
 
-    if errFile is not None:
-        with open(errFile, 'r') as f:
-            lines2 = f.readlines()
-
-        if six.PY2:
-            lines1 = stderr.splitlines(True)
+    if errFiles is not None:
+        if isinstance(errFiles, list):
+            isClean = True
+            for errFile in errFiles:
+                isClean &= compare_file(errFile, stderr, False)
+            if not isClean:
+                compare_file(errFiles[0], stderr, True)
         else:
-            lines1 = stderr.decode('utf-8').splitlines(True)
-
-        if os.name == 'nt':
-            lines2 = [line.replace('Tests/', 'Tests\\') for line in lines2]
-            lines1 = [line.replace('\r', '') for line in lines1]
-
-        cwd = os.getcwd()
-        if os.name == 'nt':
-            cwd = cwd.replace('\\', '/')
-        lines2 = [line.replace('$$CWD$$', cwd) for line in lines2]
-
-        d = difflib.Differ()
-        result = list(d.compare(lines1, lines2))
-
-        hasError = False
-        for l in result:
-            if l[0:2] == '+ ' or l[0:2] == '- ':
-                hasError = True
-                break
-        if hasError:
-            print("stderr")
-            print("".join(result))
-            returnValue = False
+            returnValue &= compare_file(errFiles, stderr, True)
 
     if generatedFile is not None:
         with open(generatedFile, 'r') as f:
