@@ -37,6 +37,7 @@ install:
 script:
   - $PIP install -r requirements.txt
   - pwd
+  - mkdir dist
   - python --version
   - cd rfctools_common && $PYTHON setup.py --quiet install
   - pwd
@@ -51,9 +52,22 @@ script:
   - $PYTHON test.py
   - cd ../../xmldiff
   - $PYTHON setup.py --quiet install
+  - $PYTHON setup.py --quiet bdist_wheel
+  - cp dist/* ../dist
   - cd Test
   - $PYTHON test.py
+  - cd ../..
+  - ls dist
+
+before_deploy:
+  openssl aes-256-cbc -K $encrypted_b97c0a903367_key -iv $encrypted_b97c0a903367_iv -in deploy_key.enc -out deploy_key -d
  
-  
-  
- 
+deploy:
+  provider: releases
+  api_key: "GITHUB AUTH TOKEN"
+  file_glob: true
+  file: dist/*
+  skip_cleanup: true
+  on:
+    tags: true
+    

@@ -65,7 +65,7 @@ Changelog
 """ + "\n".join([ changelog_entry_template % entry for entry in parse("changelog")[:3] ])
 
 long_description = long_description.replace('\r', '')
-print(long_description)
+
 import xmldiff
 
 setup(

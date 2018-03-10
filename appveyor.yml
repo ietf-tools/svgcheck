@@ -51,7 +51,12 @@ test_script:
   - cd Test
   - "%PYTHON%\\%EXECUTABLE% test.py"
   
+after_test:
+  - cd ..
+  - "%PYTHON%\\%EXECUTABLE% setup.py bdist_wheel"
 
+artifacts:
+  - path: xmldiff\dist\*
 
 #matrix:
 #  fast_finish: true
