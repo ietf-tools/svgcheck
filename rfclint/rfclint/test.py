@@ -220,6 +220,13 @@ class Test_Abnf(unittest.TestCase):
                       "Results/abnf-no-program.out", "Results/abnf-no-program.err", None, None)
 
 
+class Test_Xml(unittest.TestCase):
+    @unittest.skipIf(True, "Test is still in progress")
+    def test_valid_xml(self):
+        check_process(self, [sys.executable, "run.py", "--no-rng", "Tests/xml1.xml"],
+                      "Results/empty", "Results/empty", None, None)
+
+
 class Test_Spell(unittest.TestCase):
     """ Set of tests dealing with the spell checker API """
     """
@@ -380,6 +387,15 @@ class Test_Spell_Hunspell(unittest.TestCase):
                              "--no-rng", "--dictionary=Tests/utf8.wl", "--spell-program=hunspell",
                              "Tests/spell-utf8.xml"],
                       "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
+
+
+class Test_Regressions(unittest.TestCase):
+    def test_file_dtd(self):
+        """ Add a simple dictionary with my name """
+        check_process(self, [sys.executable, "run.py", "--no-rng", "--no-spell",
+                             "Tests/dtd.xml"],
+                      "Results/empty", "Results/empty",
+                      None, None)
 
 
 def compare_file(errFile, stderr, displayError):

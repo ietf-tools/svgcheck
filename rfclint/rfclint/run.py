@@ -46,18 +46,6 @@ def check_color(option, opt, value, parser):
     setattr(parser.values, option.dest, value)
 
 
-def print_pi_help(self, opt, value, parser):
-    pis = rfclint.parser.XmlRfc(None, None).pis.items()
-    pis.sort()
-    print("Available processing instructions (PIs), with defaults:\n")
-    for k, v in pis:
-        if isinstance(v, type('')):
-            print('    %-20s  "%s"' % (k, v))
-        else:
-            print('    %-20s  %s' % (k, v))
-    sys.exit()
-
-
 def main():
     # Populate options
     formatter = optparse.IndentedHelpFormatter(max_help_position=40)
