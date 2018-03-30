@@ -151,7 +151,8 @@ class CachingResolver(lxml.etree.Resolver):
                 #  request = Include.xml
                 #  output is ..\Include.xml - i.e. it thinks that request
                 #  lives in cwd since it is not absolute.
-                if os.path.normpath(os.path.dirname(request)) == self.source_dir:
+                if not os.path.exists(request) and \
+                        os.path.normpath(os.path.dirname(request)) == self.source_dir:
                     request = os.path.relpath(request, self.source_dir)
             except ValueError:
                 pass
