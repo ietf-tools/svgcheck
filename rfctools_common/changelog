@@ -1,3 +1,13 @@
+rfctools-common (0.5.2) distribution(s); urgency=low
+
+	* Distribute the old rfc 2629 dtd and ent files so that v2 files parse correctly
+	* Correct processing so that we can play games with where to search file files.
+	  If the file does not exist and the source directory is given then strip the
+	  path so that we will search in different directories for the file.
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 30 MAR 2018 12:00:00 -0700
+
+
 rfctools-common (0.5.1) distribution(s); urgency=low
 
 	* Setup to publish to PyPI

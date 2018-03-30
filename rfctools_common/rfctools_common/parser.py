@@ -151,8 +151,9 @@ class CachingResolver(lxml.etree.Resolver):
                 #  request = Include.xml
                 #  output is ..\Include.xml - i.e. it thinks that request
                 #  lives in cwd since it is not absolute.
-                # request = os.path.relpath(request, self.source_dir)
-                pass
+                if not os.path.exists(request) and \
+                        os.path.normpath(os.path.dirname(request)) == self.source_dir:
+                    request = os.path.relpath(request, self.source_dir)
             except ValueError:
                 pass
         path = self.getReferenceRequest(request)
@@ -464,11 +465,11 @@ class XmlRfcParser:
             log.write('Parsing file', os.path.normpath(self.source))
 
         if six.PY2:
-            self.text = open(self.source, "rU").read()
+            with open(self.source, "rU") as f:
+                self.text = f.read()
         else:
-            file = open(self.source, "rb")
-            self.text = six.binary_type(file.read())
-            file.close()
+            with open(self.source, "rb", newline=None) as f:
+                self.text = f.read()
 
         # Get an iterating parser object
         file = six.BytesIO(self.text)
@@ -737,12 +738,12 @@ class XmlRfc:
         else:
             dtd = self.tree.docinfo.externalDTD
 
-        if not dtd:
+        if not dtd and self.default_dtd_path:
             # No explicit DTD filename OR declaration in document!
             log.warn('No DTD given, defaulting to', self.default_dtd_path)
             return self.validate(dtd_path=self.default_dtd_path)
 
-        if dtd.validate(self.getroot()):
+        if not dtd or dtd.validate(self.getroot()):
             # The document was valid
             return True, []
         else:
