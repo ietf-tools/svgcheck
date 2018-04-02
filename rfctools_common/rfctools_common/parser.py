@@ -157,7 +157,10 @@ class CachingResolver(lxml.etree.Resolver):
             except ValueError:
                 pass
         path = self.getReferenceRequest(request)
-        return self.resolve_filename(path, context)
+        if path[1] is None:
+            return self.resolve_filename(path[0], context)
+        file = open(path[0], "rb")
+        return self.resolve_file(file, context, base_url=path[1])
 
     def getReferenceRequest(self, request, include=False, line_no=0):
         """ Returns the correct and most efficient path for an external request
@@ -208,10 +211,36 @@ class CachingResolver(lxml.etree.Resolver):
         original = request  # Used for the error message only
         result = None  # Our proper path
         if request.endswith('.dtd') or request.endswith('.ent'):
-            if os.path.isabs(request) or urlparse(request).netloc:
+            if os.path.isabs(request):
                 # Absolute request, return as-is
                 attempts.append(request)
                 result = request
+            elif urlparse(request).netloc:
+                paths = [request]
+                # URL requested, cache it
+                origloc = urlparse(paths[0]).netloc
+                if True in [urlparse(loc).netloc == urlparse(paths[0]).netloc
+                            for loc in self.network_locs]:
+                    for loc in self.network_locs:
+                        newloc = urlparse(loc).netloc
+                        for path in paths:
+                            path = path.replace(origloc, newloc)
+                            attempts.append(path)
+                            result = self.cache(path)
+                            if result:
+                                break
+                        if result:
+                            break
+                else:
+                    for path in paths:
+                        attempts.append(request)
+                        result = self.cache(request)
+                        if result:
+                            break
+                if not result and self.no_network:
+                    log.warn("Document not found in cache, and --no-network specified"
+                             " -- couldn't resolve %s" % request)
+                tried_cache = True
             else:
                 basename = os.path.basename(request)
                 # Look for dtd in templates directory
@@ -340,7 +369,9 @@ class CachingResolver(lxml.etree.Resolver):
                 # Haven't printed a verbose messsage yet
                 typename = self.include and 'include' or 'entity'
                 log.note('Resolving ' + typename + '...', result)
-            return result
+            if tried_cache:
+                return [result, original]
+            return [result, None]
 
     def cache(self, url):
         """ Return the path to a cached URL
@@ -567,7 +598,7 @@ class XmlRfcParser:
                 pis = xmlrfc.pis.copy()
                 if 'include' in pidict and pidict['include']:
                     request = pidict['include']
-                    path = self.cachingResolver.getReferenceRequest(request,
+                    path, originalPath = self.cachingResolver.getReferenceRequest(request,
                            # Pass the line number in XML for error bubbling
                            include=True, line_no=getattr(element, 'sourceline', 0))
                     try:

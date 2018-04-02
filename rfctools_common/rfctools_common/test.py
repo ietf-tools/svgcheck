@@ -123,6 +123,25 @@ class TestParserMethods(unittest.TestCase):
         parser = XmlRfcParser("Tests/doc_utf8.xml", quiet=False)
         tree = parser.parse()
 
+    def test_pi_include(self):
+        parser = XmlRfcParser("Tests/pi_include.xml", quiet=False)
+        tree = parser.parse()
+
+
+class TestRegressions(unittest.TestCase):
+    def test_local_dtd(self):
+        """ Find a dtd in the templates directory """
+        parser = XmlRfcParser("Tests/dtd.xml", quiet=False)
+        tree = parser.parse()
+
+    def test_network_dtd(self):
+        """ Find a dtd using the network """
+        CACHES = []
+        parser = XmlRfcParser("Tests/network-dtd.xml", quiet=False,
+                              cache_path='Tests/cache')
+        clear_cache(parser)
+        tree = parser.parse()
+
 
 def clear_cache(parser):
     parser.delete_cache()
