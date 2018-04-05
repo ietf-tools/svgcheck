@@ -58,6 +58,7 @@ class TestParserMethods(unittest.TestCase):
             print('Unable to parse the XML Document: ' + source)
             print(e)
             self.assertFalse()
+        parser.cachingResolver.close_all()
 
     def test_remote_xinclude(self):
         """ Test that a remote https entity can be loaded """
@@ -66,6 +67,7 @@ class TestParserMethods(unittest.TestCase):
         tree = parser.parse()
         self.assertEqual(len(tree.tree.xpath('reference')), 1,
                          "Must be exactly one reference node")
+        parser.cachingResolver.close_all()
 
     def test_remote_cache_entity(self):
         """ Test that a remote https entity can be cached """
@@ -74,6 +76,7 @@ class TestParserMethods(unittest.TestCase):
                               cache_path='Tests/cache', no_network=False)
         clear_cache(parser)
         tree = parser.parse()
+        parser.cachingResolver.close_all()
         self.assertEqual(len(tree.tree.xpath('reference')), 1,
                          "Must be exactly one reference node")
         self.assertTrue(os.path.exists('Tests/cache/reference.RFC.1847.xml'))
@@ -84,6 +87,7 @@ class TestParserMethods(unittest.TestCase):
                               cache_path='Tests/cache', no_network=False)
         clear_cache(parser)
         tree = parser.parse()
+        parser.cachingResolver.close_all()
         self.assertEqual(len(tree.tree.xpath('reference')), 1,
                          "Must be exactly one reference node")
         self.assertTrue(os.path.exists('Tests/cache/reference.RFC.1847.xml'))
@@ -101,6 +105,7 @@ class TestParserMethods(unittest.TestCase):
         tree = parser.parse()
         self.assertEqual(len(tree.tree.xpath('reference')), 1,
                          "Must be exactly one reference node")
+        parser.cachingResolver.close_all()
 
     def test_local_nocache_entity(self):
         """ See that we have a failure if we try to get an uncached item """
@@ -123,20 +128,17 @@ class TestParserMethods(unittest.TestCase):
         parser = XmlRfcParser("Tests/doc_utf8.xml", quiet=False)
         tree = parser.parse()
 
-    @unittest.skipIf(True, "Is this the crash?")
     def test_pi_include(self):
         parser = XmlRfcParser("Tests/pi_include.xml", quiet=False)
         tree = parser.parse()
 
 
 class TestRegressions(unittest.TestCase):
-    @unittest.skipIf(True, "Is this the crash?")
     def test_local_dtd(self):
         """ Find a dtd in the templates directory """
         parser = XmlRfcParser("Tests/dtd.xml", quiet=False)
         tree = parser.parse()
 
-    @unittest.skipIf(True, "Is this the crash?")
     def test_network_dtd(self):
         """ Find a dtd using the network """
         CACHES = []
@@ -144,6 +146,7 @@ class TestRegressions(unittest.TestCase):
                               cache_path='Tests/cache')
         clear_cache(parser)
         tree = parser.parse()
+        parser.cachingResolver.close_all()
 
 
 def clear_cache(parser):

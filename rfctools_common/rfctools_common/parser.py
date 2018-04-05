@@ -68,6 +68,8 @@ class CachingResolver(lxml.etree.Resolver):
         self.rfc_number = rfc_number
         self.cache_refresh_secs = (60*60*24*14) # 14 days
 
+        self.file_handles = []
+
         # Get directory of source
         if self.source:
             if isinstance(self.source, six.string_types):
@@ -157,10 +159,12 @@ class CachingResolver(lxml.etree.Resolver):
             except ValueError:
                 pass
         path = self.getReferenceRequest(request)
-        if path[1] is None:
-            return self.resolve_filename(path[0], context)
-        file = open(path[0], "rb")
-        return self.resolve_file(file, context, base_url=path[1])
+        if path[1] is not None:
+            file = open(path[0], "rb")
+            if file is not None:
+                self.file_handles.append(file)
+                return self.resolve_file(file, context, base_url=path[1], close=False)
+        return self.resolve_filename(path[0], context)
 
     def getReferenceRequest(self, request, include=False, line_no=0):
         """ Returns the correct and most efficient path for an external request
@@ -419,6 +423,13 @@ class CachingResolver(lxml.etree.Resolver):
             # Invalid URL -- Error will be displayed in getReferenceRequest
             log.note("URL retrieval failed with status code %s for '%s'" % (r.status_code, r.url))
             return ''
+
+    def close_all(self):
+        for key in self.sessions:
+            self.sessions[key].close()
+        self.sessions = {}
+        for f in self.file_handles:
+            f.close()
 
 
 class AnnotatedElement(lxml.etree.ElementBase):
