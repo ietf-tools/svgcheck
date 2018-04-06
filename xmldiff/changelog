@@ -1,3 +1,9 @@
+xmldiff (0.5.2) distribution(s); urgency=low
+
+	* Add missing items from the manifest to make the html work correctly.
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 06 Apr 2018 12:00:00 -0800
+
 xmldiff (0.5.1) distribution(s); urgency=low
 
 	* Tag artwork and sourcecode correctly so that they are formatted as space preserving.
@@ -6,7 +12,7 @@ xmldiff (0.5.1) distribution(s); urgency=low
 	* Implement a button to just open modified nodes
 	* Setup to have and be able to select from multiple HTML templates.
 
--- Jim Schaad <ietf@augustcellars.com>  Sun XX Feb 2018 19:00:00 -0800
+-- Jim Schaad <ietf@augustcellars.com>  Sun 28 Feb 2018 19:00:00 -0800
 
 xmldiff (0.5.0) distribution(s); urgency=low
 
