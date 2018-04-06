@@ -1,3 +1,12 @@
+rfctools-common (0.5.3) distribution(s); urgency=low
+
+	* Copy the cache code in for URLs on .dtd and .ent files, this allows for
+	  a DTD to be grabbed from the network
+	* Switch to using resolve_file in those cases where we have cached the file
+	  so that futher includes have the correct path when getting resolved.
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri XX APR 2018 12:00:00 -0700
+
 rfctools-common (0.5.2) distribution(s); urgency=low
 
 	* Distribute the old rfc 2629 dtd and ent files so that v2 files parse correctly
@@ -6,7 +15,6 @@ rfctools-common (0.5.2) distribution(s); urgency=low
 	  path so that we will search in different directories for the file.
 
 -- Jim Schaad <ietf@augustcellars.com>  Fri 30 MAR 2018 12:00:00 -0700
-
 
 rfctools-common (0.5.1) distribution(s); urgency=low
 

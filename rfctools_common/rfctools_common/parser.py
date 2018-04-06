@@ -4,6 +4,7 @@
 
 """ Public XML parser module """
 
+import io
 import re
 import os
 import codecs
@@ -67,6 +68,8 @@ class CachingResolver(lxml.etree.Resolver):
         self.include = False
         self.rfc_number = rfc_number
         self.cache_refresh_secs = (60*60*24*14) # 14 days
+
+        self.file_handles = []
 
         # Get directory of source
         if self.source:
@@ -141,23 +144,33 @@ class CachingResolver(lxml.etree.Resolver):
             if request.startswith("file:/"):
                 request = request[6:]
             try:
-                # M00HELP - I do not under stand what this line is supposed to be doing.
-                # It make sense only in the case that request is an absolute path name.
-                # This might be the case on Linux, but is not necessarily true for
-                # a windows system.
-                #  I have a problem in the following case:
-                #  cwd = d:\projects\v3\rfceditor\common
-                #  source_dir = d:\projects\v3\rfceditor\common\Tests
-                #  request = Include.xml
-                #  output is ..\Include.xml - i.e. it thinks that request
-                #  lives in cwd since it is not absolute.
+                # The following code plays with files which are in the Template
+                # directory.  a plain file name (dtd) will be returned with
+                # the path of the current source file.  If the file has the
+                # current source path and the file does not exist, strip the path
+                # so that we can do searches in other locations.
                 if not os.path.exists(request) and \
                         os.path.normpath(os.path.dirname(request)) == self.source_dir:
                     request = os.path.relpath(request, self.source_dir)
             except ValueError:
                 pass
         path = self.getReferenceRequest(request)
-        return self.resolve_filename(path, context)
+        if path[1] is not None:
+            #
+            # This code allows for nested includes to work correctly as we need
+            # to have the correct path name for the file to be passed in.
+            # This really should be done with the function rseolve_file, but this
+            # causing a crash on exit from the test.py in this directory.  The
+            # rest of the time it appears to work correctly.  However using the
+            # string version does the same thing, just maybe not as well.
+            # I think that this is a bug in lxml where the FILE * handle is
+            # being messed up in terms of reference counting.
+            #
+            with open(path[0], "rb") as f:
+                file = f.read()
+            if file is not None:
+                return self.resolve_string(file, context, base_url=path[1])
+        return self.resolve_filename(path[0], context)
 
     def getReferenceRequest(self, request, include=False, line_no=0):
         """ Returns the correct and most efficient path for an external request
@@ -208,10 +221,36 @@ class CachingResolver(lxml.etree.Resolver):
         original = request  # Used for the error message only
         result = None  # Our proper path
         if request.endswith('.dtd') or request.endswith('.ent'):
-            if os.path.isabs(request) or urlparse(request).netloc:
+            if os.path.isabs(request):
                 # Absolute request, return as-is
                 attempts.append(request)
                 result = request
+            elif urlparse(request).netloc:
+                paths = [request]
+                # URL requested, cache it
+                origloc = urlparse(paths[0]).netloc
+                if True in [urlparse(loc).netloc == urlparse(paths[0]).netloc
+                            for loc in self.network_locs]:
+                    for loc in self.network_locs:
+                        newloc = urlparse(loc).netloc
+                        for path in paths:
+                            path = path.replace(origloc, newloc)
+                            attempts.append(path)
+                            result = self.cache(path)
+                            if result:
+                                break
+                        if result:
+                            break
+                else:
+                    for path in paths:
+                        attempts.append(request)
+                        result = self.cache(request)
+                        if result:
+                            break
+                if not result and self.no_network:
+                    log.warn("Document not found in cache, and --no-network specified"
+                             " -- couldn't resolve %s" % request)
+                tried_cache = True
             else:
                 basename = os.path.basename(request)
                 # Look for dtd in templates directory
@@ -340,7 +379,9 @@ class CachingResolver(lxml.etree.Resolver):
                 # Haven't printed a verbose messsage yet
                 typename = self.include and 'include' or 'entity'
                 log.note('Resolving ' + typename + '...', result)
-            return result
+            if tried_cache:
+                return [result, original]
+            return [result, None]
 
     def cache(self, url):
         """ Return the path to a cached URL
@@ -388,6 +429,13 @@ class CachingResolver(lxml.etree.Resolver):
             # Invalid URL -- Error will be displayed in getReferenceRequest
             log.note("URL retrieval failed with status code %s for '%s'" % (r.status_code, r.url))
             return ''
+
+    def close_all(self):
+        for key in self.sessions:
+            self.sessions[key].close()
+        self.sessions = {}
+        for f in self.file_handles:
+            f.close()
 
 
 class AnnotatedElement(lxml.etree.ElementBase):
@@ -567,7 +615,7 @@ class XmlRfcParser:
                 pis = xmlrfc.pis.copy()
                 if 'include' in pidict and pidict['include']:
                     request = pidict['include']
-                    path = self.cachingResolver.getReferenceRequest(request,
+                    path, originalPath = self.cachingResolver.getReferenceRequest(request,
                            # Pass the line number in XML for error bubbling
                            include=True, line_no=getattr(element, 'sourceline', 0))
                     try:

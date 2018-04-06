@@ -1,0 +1,11 @@
+<!DOCTYPE rfc SYSTEM "http://xml.resource.org/authoring/rfc2629.dtd" [
+]>
+
+<section>
+  <name>
+    Fred &nbsp; XXXX
+  </name>
+  <t>
+    Text of pagaraph
+  </t>
+</section>

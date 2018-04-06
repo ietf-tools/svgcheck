@@ -60,7 +60,7 @@ script:
   - ls dist
 
 before_deploy:
-  openssl aes-256-cbc -K $encrypted_b97c0a903367_key -iv $encrypted_b97c0a903367_iv -in deploy_key.enc -out deploy_key -d
+  openssl aes-256-cbc -K $encrypted_b97c0a903367_key -iv $encrypted_b97c0a903367_iv -in deploy_key2.enc -out deploy_key -d
  
 deploy:
   provider: releases
