@@ -160,10 +160,10 @@ class CachingResolver(lxml.etree.Resolver):
                 pass
         path = self.getReferenceRequest(request)
         if path[1] is not None:
-            file = open(path[0], "rb")
+            with open(path[0], "rb") as f:
+                file = io.BytesIO(f.read())
             if file is not None:
-                self.file_handles.append(file)
-                return self.resolve_file(file, context, base_url=path[1], close=False)
+                return self.resolve_file(file, context, base_url=path[1], close=True)
         return self.resolve_filename(path[0], context)
 
     def getReferenceRequest(self, request, include=False, line_no=0):
