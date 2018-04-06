@@ -144,16 +144,11 @@ class CachingResolver(lxml.etree.Resolver):
             if request.startswith("file:/"):
                 request = request[6:]
             try:
-                # M00HELP - I do not under stand what this line is supposed to be doing.
-                # It make sense only in the case that request is an absolute path name.
-                # This might be the case on Linux, but is not necessarily true for
-                # a windows system.
-                #  I have a problem in the following case:
-                #  cwd = d:\projects\v3\rfceditor\common
-                #  source_dir = d:\projects\v3\rfceditor\common\Tests
-                #  request = Include.xml
-                #  output is ..\Include.xml - i.e. it thinks that request
-                #  lives in cwd since it is not absolute.
+                # The following code plays with files which are in the Template
+                # directory.  a plain file name (dtd) will be returned with
+                # the path of the current source file.  If the file has the
+                # current source path and the file does not exist, strip the path
+                # so that we can do searches in other locations.
                 if not os.path.exists(request) and \
                         os.path.normpath(os.path.dirname(request)) == self.source_dir:
                     request = os.path.relpath(request, self.source_dir)
@@ -161,6 +156,16 @@ class CachingResolver(lxml.etree.Resolver):
                 pass
         path = self.getReferenceRequest(request)
         if path[1] is not None:
+            #
+            # This code allows for nested includes to work correctly as we need
+            # to have the correct path name for the file to be passed in.
+            # This really should be done with the function rseolve_file, but this
+            # causing a crash on exit from the test.py in this directory.  The
+            # rest of the time it appears to work correctly.  However using the
+            # string version does the same thing, just maybe not as well.
+            # I think that this is a bug in lxml where the FILE * handle is
+            # being messed up in terms of reference counting.
+            #
             with open(path[0], "rb") as f:
                 file = f.read()
             if file is not None:
