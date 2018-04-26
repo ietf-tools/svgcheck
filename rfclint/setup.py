@@ -130,6 +130,7 @@ setup(
     #        ':platform_system == "win32"': [ "win32/*" ],
     # 'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
     # },
+    # Match with what is in abnf.py
     data_files=[('bin',
                  ["win32/bap.exe", "win32/cygwin1.dll"] if os.name == "nt" else
                  ["linux/bap"] if sys.platform.startswith("linux") else

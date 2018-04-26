@@ -609,9 +609,9 @@ class DiffDocument(DiffRoot):
             if len(editList) == len(newEdits):
                 break
 
-        print("Number of edits left = " + str(len(newEdits)))
+        log.note("Number of edits left = " + str(len(newEdits)))
         for edit in newEdits:
-            print(edit.toString())
+            log.note(edit.toString())
         return len(newEdits)
 
 

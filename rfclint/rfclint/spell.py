@@ -17,6 +17,29 @@ if six.PY2:
 else:
     import subprocess
 
+if os.name == 'nt':
+    import msvcrt
+
+    def get_character():
+        return msvcrt.getch()
+else:
+    import tty
+    import sys
+    import termios
+
+    def get_character():
+        fd = sys.stdin.fileno()
+        oldSettings = termios.tcgetattr(fd)
+
+        try:
+            tty.setcbreak(fd)
+            answer = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, oldSettings)
+            answer = None
+
+        return answer
+
 
 class RfcLintError(Exception):
     """ RFC Lint internal errors """
@@ -33,9 +56,9 @@ def ReplaceWithSpace(exc):
         return u' '
     elif isinstance(exc, UnicodeEncodeError):
         if six.PY2:
-            return ((exc.end-exc.start)*u' ', exc.end)
+            return ((exc.end - exc.start) * u' ', exc.end)
         else:
-            return (bytes((exc.end-exc.start)*[32]), exc.end)
+            return (bytes((exc.end - exc.start) * [32]), exc.end)
     else:
         raise TypeError("can't handle %s" % type(exc).__name__)
 
@@ -51,7 +74,7 @@ CheckAttributes = {
     'street': ['ascii'],
     'blockquote': ['quotedFrom'],
     'iref': ['item', 'subitem'],
-    }
+}
 
 CutNodes = {
     'annotation': 1,
@@ -92,6 +115,9 @@ SpellerColors = {
     'bright': colorama.Style.BRIGHT
 }
 # BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE,
+
+byte1 = b'\x31'
+byte9 = b'\x39'
 
 
 def which(program):
@@ -269,6 +295,11 @@ class Speller(object):
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
         self.aspell_re = re.compile(r".\s(\S+)\s(\d+)\s*((\d+): (.+))?", re.UNICODE)
 
+        self.interactive = False
+        if config.options.output_filename is not None:
+            self.interactive = True
+            self.ignoreWords = []
+
     def processLine(self, allWords):
         """
         Process each individual set of words and return the errors found
@@ -357,13 +388,12 @@ class Speller(object):
         # log.warn(results[i][results[i].rfind(':')+2:])
 
     def getWords(self, tree):
+        words = []
         if tree.text:
             for x in tree.text.splitlines():
                 ll = x.strip()
                 if ll:
-                    words = [(ll, tree)]
-        else:
-            words = []
+                    words += [(ll, tree)]
 
         for node in tree.iterchildren():
             if node.tag in CutNodes:
@@ -403,18 +433,23 @@ class Speller(object):
                           where=r[2])
             else:
                 log.error(u"Misspelled word was found '{0}'".format(r[3]), where=r[2])
-            if self.window > 0:
-                q = self.wordIndex(r[1], r[2], matchGroups)
-                if q >= 0:
-                    ctx = ""
-                    if q > 0:
-                        ctx = "".join(allWords[max(0, q-self.window):q])
-                    ctx += self.color_start + allWords[q] + self.color_end
-                    if q < len(allWords):
-                        ctx += "".join(allWords[q+1:min(q+self.window+1, len(allWords))])
-                    log.error(ctx, additional=2)
-            if self.suggest and r[4]:
-                log.error(r[4], additional=2)
+
+            if self.interactive:
+                self.Interact(r, matchGroups, allWords)
+            else:
+                if self.window > 0:
+                    q = self.wordIndex(r[1], r[2], matchGroups)
+                    if q >= 0:
+                        ctx = ""
+                        if q > 0:
+                            ctx = "".join(allWords[max(0, q - self.window):q])
+                        ctx += self.color_start + allWords[q] + self.color_end
+                        if q < len(allWords):
+                            ctx += "".join(allWords[q + 1:min(q + self.window + 1, len(allWords))])
+                        log.error(ctx, additional=2)
+                if self.suggest and r[4]:
+                    suggest = " ".join(r[4].split()[0:10])
+                    log.error(suggest, additional=2)
 
         # check for dups
         last = None
@@ -437,3 +472,73 @@ class Speller(object):
                (m[0].start(1) <= offset and offset <= m[0].end(1)):
                 return i
         return -1
+
+    def Interact(self, r, matchGroups, allWords):
+        #
+        #  At the request of the RFC editors we use the ispell keyboard mappings
+        #
+        #  R - replace the misspelled word completely
+        #  Space - Accept the word this time only.
+        #  A - Accept word for this session.
+        #  I - Accept the word, insert private dictionary as is
+        #  U - Accept the word, insert private dictionary as lower-case
+        #  0-n - Replace w/ one of the suggested words
+        #  L - Look up words in the system dictionary - NOT IMPLEMENTED
+        #  X - skip to end of the file
+        #  Q - quit and don't save the file
+        #  ? - Print help
+        #
+
+        q = self.wordIndex(r[1], r[2], matchGroups)
+
+        if allWords[q] in self.ignoreWords or allWords[q].lower() in self.ignoreWords:
+            return
+
+        ctx = ""
+        if q > 0:
+            ctx = "".join(allWords[0:q])
+        ctx += self.color_start + allWords[q] + self.color_end
+        ctx += "".join(allWords[q + 1:])
+        log.error("", additional=0)
+        log.error(ctx, additional=2)
+
+        log.error("", additional=0)
+        suggest = r[4].split(' ')
+
+        list = ""
+        for i in range(min(10, len(suggest))):
+            list += "{0}) {1} ".format(chr(i + 0x31), suggest[i])
+
+        log.error(list, additional=2)
+        log.write("> ")
+        replaceWord = None
+
+        while (True):
+            ch = get_character()
+            if ch == ' ':
+                return
+            if ch == '?':
+                self.PrintHelp()
+            elif ch == 'Q':
+                sys.exit(1)
+            elif ch == 'I':
+                self.IgnoreWord(allWords[q])
+                return
+            elif ch == 'U':
+                self.IgnoreWord(allWords[q].tolower())
+                return
+            elif ch == 'X':
+                return
+            elif ch == 'R':
+                return
+            elif byte1 <= ch and ch <= byte9:
+                ch = int(ch) - int(byte1)
+                replaceWord = suggest[ch]
+            elif ch == '0':
+                replaceWord = suggest[9]
+            else:
+                pass
+
+            if replaceWord is not None:
+                return
+            log.write("\n> ")

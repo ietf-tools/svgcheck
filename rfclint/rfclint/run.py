@@ -15,6 +15,7 @@ from rfctools_common import log
 from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker, RfcLintError
 from rfclint.spell import Speller, SpellerColors
+import rfclint
 
 try:
     from configparser import SafeConfigParser
@@ -34,8 +35,8 @@ def display_version(self, opt, value, parser):
     sys.exit()
 
 
-def clear_cache(self, opt, value, parser):
-    rfclint.parser.XmlRfcParser('').delete_cache()
+def clear_cache(cache_path):
+    XmlRfcParser('', cache_path=cache_path).delete_cache()
     sys.exit()
 
 
@@ -55,8 +56,8 @@ def main():
                                          formatter=formatter)
 
     parser_options = optparse.OptionGroup(optionparser, "Parser Options")
-    parser_options.add_option('-C', '--clear-cache', action='callback', callback=clear_cache,
-                              help='purge the cache and exit')
+    parser_options.add_option('-C', '--clear-cache', action='store_true', dest='clear_cache',
+                              default=False, help='purge the cache and exit')
     parser_options.add_option('-c', '--cache', dest='cache',
                               help='specify a primary cache directory to'
                               ' write to; default: try [ %s ]' % ', '.join(CACHES))
@@ -131,6 +132,26 @@ def main():
 
     (options, args) = optionparser.parse_args()
 
+    # --- Setup and parse the input file
+
+    if options.cache:
+        if not os.path.exists(options.cache):
+            try:
+                os.makedirs(options.cache)
+                if options.verbose:
+                    log.write('Created cache directory at', options.cache)
+            except OSError as e:
+                print('Unable to make cache directory: %s ' % options.cache)
+                print(e)
+                sys.exit(1)
+        else:
+            if not os.access(options.cache, os.W_OK):
+                print('Cache directory is not writable: %s' % options.cache)
+                sys.exit(1)
+
+    if options.clear_cache:
+        clear_cache(options.cache)
+
     # --- Locate the configuration file if it exists and import it ----
 
     config = ConfigFile(options)
@@ -152,23 +173,6 @@ def main():
     source = args[0]
     if not os.path.exists(source):
         sys.exit('No such file: ' + source)
-
-    # --- Setup and parse the input file
-
-    if options.cache:
-        if not os.path.exists(options.cache):
-            try:
-                os.makedirs(options.cache)
-                if options.verbose:
-                    log.write('Created cache directory at', options.cache)
-            except OSError as e:
-                print('Unable to make cache directory: %s ' % options.cache)
-                print(e)
-                sys.exit(1)
-        else:
-            if not os.access(options.cache, os.W_OK):
-                print('Cache directory is not writable: %s' % options.cache)
-                sys.exit(1)
 
     # Setup warnings module
     # rfclint.log.warn_error = options.warn_error and True or False

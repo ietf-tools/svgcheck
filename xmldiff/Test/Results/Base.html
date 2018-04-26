@@ -5,10 +5,10 @@
 <head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
   <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 
-  <title>$title</title>
+  <title>rfc-xmldiff Simple.xml SimpleTree.xml</title>
 
-    <script src="$resource_dir/mktree.js"></script>
-    <link rel="stylesheet" href="$resource_dir/mktree.css" type="text/css">
+    <script src="$TDIR/templates/mktree.js"></script>
+    <link rel="stylesheet" href="$TDIR/templates/mktree.css" type="text/css">
 
     <style>
       xml-block { margin-left:1em; display:block }
@@ -37,7 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
-    <script src="$resource_dir/colresize.js"></script>
+    <script src="$TDIR/templates/colresize.js"></script>
 
     <script type="text/javascript">
 function openLeftFile(evt, fileName) {
@@ -79,7 +79,10 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
 	    </div>
 	    <!-- Tab Content -->
 	    <div id="File1" class="tabcontent">
-	      $leftFile
+	      <div itemprop="text" class="blob-wrapper data type-c"><table class="highlight tab-size js-file-line-container" data-tab-size="8"><col width='4em'><tr><td class="blob-num js-line-number" data-line-number="1">1</td><td class="blob-code blob-code-inner js-file-line">&lt;root&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="2">2</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;node1/&gt;
+</td></tr><tr><td class="blob-num js-line-number" data-line-number="3">3</td><td class="blob-code blob-code-inner js-file-line">&lt;/root&gt;
+</td></tr></table></div>
 	    </div>
 	  </div>
 	</td>
@@ -90,12 +93,29 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
 	    <button type="button" onclick="expandDiffs('diffRoot')">Expand Diffs</button>
 	  </div>
 	  <div id="centerColumn">
-	    $body
+	    <div class="center"><ul class="mktree" id="diffRoot">
+<li><span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></li>
+<li>&lt;root<span>&gt;</span><ul>
+<li>&lt;node1<span>&gt;</span><ul>
+<li><span class="right">text </span></li>
+<li><span>&lt;/node1&gt;</span></li>
+</ul>
+</li>
+<li><span>&lt;/root&gt;</span></li>
+</ul>
+</li>
+</ul></div>
+
 	  </div>
 	</td>
 	<td width=25%>
 	  <div id="rightColumn">
-	    $rightFile
+	    &lt;root&gt;
+<br/>&nbsp;&nbsp;&lt;node1&gt;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;text
+<br/>&nbsp;&nbsp;&lt;/node1&gt;
+<br/>&lt;/root&gt;
+
 	  </div>
 	</td>
       </tr>
@@ -108,8 +128,8 @@ function sync2here(leftFile, leftLine, rightFile, rightLine)
       // Get the element with id="defaultOpen" and click on it
       document.getElementById("defaultOpen").click();
 
-      $$(function() {
-        $$("table").colResizable();
+      $(function() {
+        $("table").colResizable();
       });      
     </script>
 

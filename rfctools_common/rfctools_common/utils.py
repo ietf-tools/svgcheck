@@ -183,13 +183,13 @@ def formatXmlWhitespace(tree):
         # Preserve formatting on artwork
         if element.tag != 'artwork' and element.tag != 'sourcecode':
             if element.text is not None:
-                element.text = re.sub('\s*\n\s*', ' ',
-                                      re.sub('\.\s*\n\s*', '.  ',
+                element.text = re.sub(r'\s*\n\s*', ' ',
+                                      re.sub(r'\.\s*\n\s*', '.  ',
                                              element.text.lstrip()))
 
             if element.tail is not None:
-                element.tail = re.sub('\s*\n\s*', ' ',
-                                      re.sub('\.\s*\n\s*', '.  ',
+                element.tail = re.sub(r'\s*\n\s*', ' ',
+                                      re.sub(r'\.\s*\n\s*', '.  ',
                                              element.tail))
 
 
@@ -280,9 +280,9 @@ def urlkeep(text):
                              .replace(':', ':' + wj_char)
 
     if 'http://' in text:
-        return re.sub('(?<=http:)\S*', replacer, text)
+        return re.sub(r'(?<=http:)\S*', replacer, text)
     if 'https://' in text:
-        return re.sub('(?<=https:)\S*', replacer, text)
+        return re.sub(r'(?<=https:)\S*', replacer, text)
     return text
 
 

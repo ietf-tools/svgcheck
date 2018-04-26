@@ -1,0 +1,19 @@
+Usage: xmldiff LEFT RIGHT [OPTIONS] ...
+Example: rfc-xmldiff draft1.xml draft2.xml
+
+Options:
+  -h, --help                     show this help message and exit
+
+  Other Options:
+    -o FILE, --out=FILE          specify an explicit output filename
+    --debug                      Show debugging output
+    --raw                        Diff using the raw tree
+    -t FILE, --template=FILE     specify the HTML template filename
+    --resource-url=RESOURCE_URL  Path to resources in the template
+    -V, --version                display the version number and exit
+    -C, --clear-cache            purge the cache and exit
+    -c CACHE, --cache=CACHE      specify a primary cache directory to write
+                                 to; default: try [ /var/cache/xml2rfc,
+                                 ~/.cache/xml2rfc ]
+    -q, --quiet                  dont print anything
+    -v, --verbose                print extra information

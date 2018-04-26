@@ -6,13 +6,14 @@ import lxml.etree
 import datetime
 import six
 import sys
-from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError
+from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 from rfctools_common import log
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, AddParagraphs, tagMatching
 import string
 from xmldiff.EditItem import EditItem
 from xmldiff.zzs2 import distance
 # from xmldiff.zzs import distance, EditItem
+from xmldiff.__init__ import __version__
 
 try:
     import debug
@@ -24,6 +25,16 @@ try:
     from html import escape  # python 3.x
 except ImportError:
     from cgi import escape   # pthyon 2.x
+
+
+def display_version(self, opt, value, parser):
+    print(__version__)
+    sys.exit()
+
+
+def clear_cache(cache_path):
+    XmlRfcParser('', cache_path=cache_path).delete_cache()
+    sys.exit()
 
 
 def formatLines(lines):
@@ -47,7 +58,7 @@ def main():
 
     formatter = optparse.IndentedHelpFormatter(max_help_position=40)
     optionparser = optparse.OptionParser(usage='xmldiff LEFT RIGHT [OPTIONS] '
-                                         '...\nExample: rfclint '
+                                         '...\nExample: rfc-xmldiff '
                                          'draft1.xml draft2.xml',
                                          formatter=formatter)
 
@@ -64,22 +75,44 @@ def main():
                              default='single.html')
     value_options.add_option('--resource-url', dest='resource_url',
                              help='Path to resources in the template')
+    value_options.add_option('-V', '--version', action='callback', callback=display_version,
+                             help='display the version number and exit')
+    value_options.add_option('-C', '--clear-cache', action='store_true', dest='clear_cache',
+                             default=False, help='purge the cache and exit')
+    value_options.add_option('-c', '--cache', dest='cache',
+                             help='specify a primary cache directory to write to; '
+                             'default: try [ %s ]' % ', '.join(CACHES))
+    value_options.add_option('-q', '--quiet', action='store_true',
+                             help='dont print anything')
+    value_options.add_option('-v', '--verbose', action='store_true',
+                             help='print extra information')
+
+    optionparser.add_option_group(value_options)
 
     # --- Parse and validate arguments ----------------------------
 
     (options, args) = optionparser.parse_args()
 
-    if len(args) < 2:
+    if options.clear_cache:
+        clear_cache(options.cache)
+
+    if len(args) < 1:
         optionparser.print_help()
         sys.exit(2)
+
+    # Setup warnings module
+    # rfclint.log.warn_error = options.warn_error and True or False
+    log.quiet = options.quiet and True or False
+    log.verbose = options.verbose
 
     # Load the left file
     leftSource = args[0]
     if not os.path.exists(leftSource):
         sys.exit('No such file: ' + leftSource)
 
-    parser = XmlRfcParser(leftSource, verbose=True,
-                          quiet=False, no_network=False)
+    log.note("Parse input files")
+    parser = XmlRfcParser(leftSource, verbose=log.verbose,
+                          quiet=log.quiet, no_network=False)
     try:
         ll = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False).tree
         leftXml = BuildDiffTree(ll, options)
@@ -94,8 +127,8 @@ def main():
     if not os.path.exists(rightSource):
         sys.exit('No such file: ' + rightSource)
 
-    parser = XmlRfcParser(rightSource, verbose=True,
-                          quiet=False, no_network=False)
+    parser = XmlRfcParser(rightSource, verbose=log.verbose,
+                          quiet=log.quiet, no_network=False)
     try:
         rightXml = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False)
         rightXml = BuildDiffTree(rightXml.tree, options)
@@ -109,6 +142,7 @@ def main():
     if options.raw:
         tagMatching = None
 
+    log.note("Read files for source display")
     if six.PY2:
         with open(leftSource, "rU") as f:
             leftLines = f.readlines()
@@ -127,17 +161,7 @@ def main():
 
     rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
 
-    templates_dir = os.path.join(os.path.dirname(__file__), 'Templates')
-
-    template_file = options.template
-    if not os.path.exists(options.template):
-        template_file = os.path.join(templates_dir, options.template)
-        if not os.path.exists(template_file):
-            sys.exit('No template file: ' + options.template)
-
-    with open(template_file, 'rb') as file:
-        html_template = string.Template(file.read().decode('utf8'))
-
+    log.note("Start computing tree edit distance")
     editSet = distance(leftXml, rightXml, DiffRoot.get_children, DiffRoot.InsertCost,
                        DiffRoot.DeleteCost, DiffRoot.UpdateCost)
 
@@ -146,16 +170,31 @@ def main():
         for edit in editSet:
             print(edit.toString())
 
+    log.note("Apply copmuted tree edits")
+    leftXml.applyEdits(editSet)
+
+    log.note("Setup to write html file")
+    templates_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'Templates')
+    log.note("   template directory = " + templates_dir)
+
     if options.resource_url is None:
-        options.resource_url = os.path.join(os.path.dirname(__file__), 'Templates')
+        options.resource_url = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'Templates')
         if os.name == 'nt':
             options.resource_url = 'file:///' + options.resource_url.replace('\\', '/')
         else:
             options.resource_url = 'file://' + options.resource_url
 
-    leftXml.applyEdits(editSet)
+    log.note("   resource url: " + options.resource_url)
 
-    #  DecorateSourceFile(leftXml, leftLines)
+    template_file = options.template
+    if not os.path.exists(options.template):
+        template_file = os.path.join(templates_dir, options.template)
+        if not os.path.exists(template_file):
+            sys.exit('No template file: ' + template_file)
+
+    log.note('   template source file: ' + template_file)
+    with open(template_file, 'rb') as file:
+        html_template = string.Template(file.read().decode('utf8'))
 
     rightLines = [x.replace(' ', '&nbsp;') for x in rightLines]
 
@@ -175,6 +214,7 @@ def main():
         }
     output = html_template.substitute(subs)
 
+    log.note('Write out html file: ' + options.output_filename)
     file = open(options.output_filename, "wb")
     file.write(output.encode('utf8'))
     file.close()

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<reference  anchor='RFC1847' target='https://www.rfc-editor.org/info/rfc1847'>
+<front>
+<title>Security Multiparts for MIME: Multipart/Signed and Multipart/Encrypted</title>
+<author initials='J.' surname='Galvin' fullname='J. Galvin'><organization /></author>
+<author initials='S.' surname='Murphy' fullname='S. Murphy'><organization /></author>
+<author initials='S.' surname='Crocker' fullname='S. Crocker'><organization /></author>
+<author initials='N.' surname='Freed' fullname='N. Freed'><organization /></author>
+<date year='1995' month='October' />
+<abstract><t>This document defines a framework within which security services may be applied to MIME body parts.  [STANDARDS-TRACK] This memo defines a new Simple Mail Transfer Protocol (SMTP) [1] reply code, 521, which one may use to indicate that an Internet host does not accept incoming mail.  This memo defines an Experimental Protocol for the Internet community. This memo defines an extension to the SMTP service whereby an interrupted SMTP transaction can be restarted at a later time without having to repeat all of the commands and message content sent prior to the interruption.  This memo defines an Experimental Protocol for the Internet community.</t></abstract>
+</front>
+<seriesInfo name='RFC' value='1847'/>
+<seriesInfo name='DOI' value='10.17487/RFC1847'/>
+</reference>

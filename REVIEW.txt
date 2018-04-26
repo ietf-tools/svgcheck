@@ -1,0 +1,56 @@
+Version
+Clear cache
+cache ?
+change rng file
+suppress xinclude
+set the abnf program and use it.
+
+check color
+-out
+--extract
+--no-spell?
+--no-dup-detection? not done - 
+
+What are we looking for '_TEMPLATESPATH' for when setting up XmlRfcParse?
+Add check for version 3.4 and above
+switch to use source extracter for extract option?  -- see abnf validate code
+svg spell checking
+svg rng checking
+
+xmldiff - need to add the headers to the from the of the file -  <DONE>
+	xml declaration
+	DOC Type
+xmldiff - deal with name spaces
+xmldiff - missing some paths in DiffParagraph.ToHtml where fixPreserveSpace is called. <DONE>
+
+xinclude
+
+clean up the two pass parsing.
+
+
+
+Dones suppress xinclude automatically imply no-rng?
+Do we stop processing at each phase, or just if it is not well formed xml?
+   specifically if it does not pass rng
+ability to send output to stdout rather than file name?
+	- extract 
+does ABNF allow for non-ascii characters - what about other extractor needs?
+     does it need to not crash here?
+color set to support for speller highlighting?
+Do we want to distribute a version of hunspell for Windows as there is not one readily avaible in binary form that does a good job?
+Do we want to talk about dictionaries for hunspell?  Not sure if there are better dictionaries for aspell than the defaults.\
+We cannot tell from the version number if hunspell was built with iconv on a windows sytem.  It is always done so for Linux and MacOS.
+Order of the operations - does it need to change?
+
+Namespaces - I am currently planning to expect that a namespace is added to svg elements, but it is not clear if elements are/should ever be applied to the root rfc.  
+
+for xmldiff - two different documents might use different tags for a single name space.  These are going to compare as equal for the purposes of matching elements, but the question of how to do display is going to be interesting.  Additional question is should we be looking at for name spaces - see above question.
+
+xmldiff - sort tags when emitting elements?  -- issue inside of paragraphs not on tree elements.
+
+TODO ITEMS?
+
+What is the result for Popen / communicate if the program retuns a non-zero error code?
+Should be able to do utf8 for hunspell on NT now.
+Look at word_re in spelling to see if we need to switch to what is being done with aspell_re.
+
