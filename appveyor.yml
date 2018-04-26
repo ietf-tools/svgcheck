@@ -28,7 +28,7 @@ build: off
 
 test_script:
   - dir
-  - set PATH=%PATH%;%cd%\win32\aspell\bin;%cd%\win32\hunspell
+  - set PATH=%PYTHON%\Scripts;%PATH%;%cd%\win32\aspell\bin;%cd%\win32\hunspell
   - set DICTIONARY=en_US
   - set DICPATH=%cd%\win32\hunspell
   - cd rfctools_common
