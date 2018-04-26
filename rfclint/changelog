@@ -1,3 +1,10 @@
+rfclint (0.5.3) distribution(s); urgency=low
+
+	* Display platform name when bap is not installed.
+	* Correct cache clearing code
+
+-- Jim Schaad <ietf@augustcellars.com>  Thur 26 Apr 2018 12:00:00 -0700
+
 rfclint (0.5.2) distribution(s); urgency=low
 
 	* Add test case for v2 dtd path searching

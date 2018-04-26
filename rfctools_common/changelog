@@ -2,7 +2,7 @@ rfctools-common (0.5.3) distribution(s); urgency=low
 
 	* Copy the cache code in for URLs on .dtd and .ent files, this allows for
 	  a DTD to be grabbed from the network
-	* Switch to using resolve_file in those cases where we have cached the file
+	* Switch to using resolve_string in those cases where we have cached the file
 	  so that futher includes have the correct path when getting resolved.
 
 -- Jim Schaad <ietf@augustcellars.com>  Fri XX APR 2018 12:00:00 -0700

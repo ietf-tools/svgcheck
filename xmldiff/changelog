@@ -1,8 +1,11 @@
-xmldiff (0.5.2) distribution(s); urgency=low
+xmldiff (0.5.3) distribution(s); urgency=low
 
+	* Move resize javascript into a separate file
+	* Move debuging output to being a note so it is not always emitted
+	* Fix the fact that half of the command line options are missing
 	* Add missing items from the manifest to make the html work correctly.
 
--- Jim Schaad <ietf@augustcellars.com>  Fri 06 Apr 2018 12:00:00 -0800
+-- Jim Schaad <ietf@augustcellars.com>  Thur 25 Apr 2018 12:00:00 -0800
 
 xmldiff (0.5.1) distribution(s); urgency=low
 
