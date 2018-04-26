@@ -39,7 +39,7 @@ rfc-xmldiff accepts a pair of XML documents as input and outputs an HTML documen
     ``-o FILENAME`` | ``--out=FILENAME``      | specify an output filename
     ``-t FILENAME`` | ``--template=FILENAME`` | specify HTML template filename
                     | ``--resource-url=URL``  | specify the URL for resources in the template
-    ===============  =======================  | ==================================================
+    =============== | ======================= | ==================================================
 
 Templates
 =========
@@ -64,7 +64,7 @@ rfc-xmldiff depends on the following packages:
 
 * lxml_ *(>= 4.1.1)*
 * requests_ *(>= 2.5.0)*
-* `rfctools_common`_ *(>= 0.5.X)*
+* `rfctools_common`_ *(>= 0.5.3)*
 * cffi_ *(>= 1.0.0)*
 
 .. _lxml: http://lxml.de
