@@ -691,33 +691,29 @@ class DiffComment(DiffRoot):
         DiffRoot.__init__(self, xmlNode, parent)
 
     def ToHtml(self, parent):
-        root2 = E.LI()
+        node = E.LI()
         parent.append(root2)
-        root = E.SPAN()
-        root2.append(root)
-        if self.inserted:
-            root.attrib['class'] = 'right'
-        elif self.deleted:
-            root.attrib['class'] = 'left'
+        self.preserve = True
+        
+        if self.deleted:
+            n = E.SPAN()
+            n.attrib["class"] = 'left'
+            self.fixPreserveSpace(n, "<!--{0} -->".format(self.xml.text))
+            node.append(n)
+        elif self.inserted:
+            n = E.SPAN()
+            n.attrib['class'] = 'right'
+            self.fixPreserveSpace(n, "<!--{0} -->".format(self.xml.text))
+            node.append(n)
         elif self.matchNode is None:
-            root.attrib['class'] = 'error'
+            n = E.SPAN()
+            n.attrib['class'] = 'error'
+            self.fixPreserveSpace(n, "<!--{0} -->".format(self.xml.text))
+            node.append(n)
         else:
-            if self.xml.text == self.matchNode.xml.text:
-                pass
-            else:
-                root.text = "<!-- {0} ".format(self.xml.target)
-                s = E.SPAN()
-                s.attrib['class'] = 'left'
-                s.text = self.xml.text
-                root.append(s)
-                s = E.SPAN()
-                s.attrib['class'] = 'right'
-                s.text = self.matchNode.xml.text
-                root.append(s)
-                s.tail = "?>"
-                return
-
-        root.text = "<!--{0}>".format(self.xml.text)
+            left = "<!--{0} -->".format(self.xml.text)
+            right = "<!--{0} -->".format(self.matchNode.xml.text)
+            self.diffTextToHtml(left, right, node)
 
     def cloneTree(self, parent):
         clone = DiffComment(self.xml, parent)

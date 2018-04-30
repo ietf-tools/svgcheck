@@ -174,13 +174,15 @@ def justify_inline(left_str, center_str, right_str, width=72):
 
 
 def formatXmlWhitespace(tree):
-    """ Traverses an lxml.etree ElementTreeand properly formats whitespace
+    """ Traverses an lxml.etree ElementTree and properly formats whitespace
 
         We replace newlines with single spaces, unless it ends with a
         period then we replace the newline with two spaces.
     """
     for element in tree.iter():
         # Preserve formatting on artwork
+        if element.tag is lxml.etree.Comment:
+            continue
         if element.tag != 'artwork' and element.tag != 'sourcecode':
             if element.text is not None:
                 element.text = re.sub(r'\s*\n\s*', ' ',

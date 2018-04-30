@@ -1,0 +1,19 @@
+<section>
+  <!-- one line comment -->
+  <t>
+    First paragraph of
+    <!-- comment here is
+         over two lines -->
+    contains a comment in the middle.
+  </t>
+  <!-- This comment is only
+       ont the left side -->
+  <t>
+    Second paragraph has
+    <!-- This comment has
+         an extra line in the middle
+         and many too edits
+    -->
+    a diff commen tin the middle
+  </t>
+</section>
