@@ -148,7 +148,12 @@ def AddParagraphs(root):
             newChildren = []
             p = DiffParagraph(root.xml, root)
             for child in root.children:
-                if not isinstance(child, DiffElement):
+                if isinstance(child, DiffComment):
+                    if len(p.children) > 0:
+                        newChildren.append(p)
+                        p = DiffParagraph(root.xml, root)
+                    newChildren.append(child)
+                elif not isinstance(child, DiffElement):
                     p.children.append(child)
                 elif child.xml.tag in TextElements:
                     p.children.append(child)
@@ -164,7 +169,12 @@ def AddParagraphs(root):
             newChildren = []
             p = DiffParagraph(root.xml, root)
             for child in root.children:
-                if not isinstance(child, DiffElement):
+                if isinstance(child, DiffComment):
+                    if len(p.children) > 0:
+                        newChildren.append(p)
+                        p = DiffParagraph(root.xml, root)
+                    newChildren.append(child)
+                elif not isinstance(child, DiffElement):
                     p.children.append(child)
                 elif child.xml.tag not in V2NonTextElements:
                     p.children.append(child)
@@ -224,23 +234,30 @@ class DiffRoot(object):
     def InsertCost(left):
         item = EditItem()
         item.setOperation(EditItem.OP_INSERT, None, left)
-        item.cost = 1
+        if isinstance(left, DiffElement) or isinstance(left, DiffComment):
+            item.cost = 10
+        else:
+            item.cost = 1
         return item
 
     @staticmethod
     def DeleteCost(left):
+        item = EditItem()
+        item.setOperation(EditItem.OP_DELETE, left, None)
+        item.cost = left.deleteCost()
+        return item
+
+    def deleteCost(self):
         """ Compute the deletion cost of a node
             The deletion cost for an element needs to be higher
             that that for text so that doing a rename on texts
             is the preferred operation
         """
-        item = EditItem()
-        item.setOperation(EditItem.OP_DELETE, left, None)
-        if isinstance(left, DiffElement):
-            item.cost = 10
+        if isinstance(self, DiffElement) or isinstance(self, DiffComment):
+            cost = 10
         else:
-            item.cost = 1
-        return item
+            cost = 1
+        return cost
 
     @staticmethod
     def UpdateCost(left, right):
@@ -689,35 +706,33 @@ class DiffPI(DiffRoot):
 class DiffComment(DiffRoot):
     def __init__(self, xmlNode, parent):
         DiffRoot.__init__(self, xmlNode, parent)
+        self.preserve = True
 
     def ToHtml(self, parent):
         root2 = E.LI()
         parent.append(root2)
-        root = E.SPAN()
-        root2.append(root)
         if self.inserted:
-            root.attrib['class'] = 'right'
+            n = E.SPAN()
+            n.attrib['class'] = 'artwork right'
+            self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
+            root2.append(n)
         elif self.deleted:
-            root.attrib['class'] = 'left'
+            n = E.SPAN()
+            n.attrib['class'] = 'artwork left'
+            self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
+            root2.append(n)
         elif self.matchNode is None:
-            root.attrib['class'] = 'error'
+            n = E.SPAN()
+            root.attrib['class'] = 'artwork error'
+            self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
+            root2.append(n)
         else:
-            if self.xml.text == self.matchNode.xml.text:
-                pass
-            else:
-                root.text = "<!-- {0} ".format(self.xml.target)
-                s = E.SPAN()
-                s.attrib['class'] = 'left'
-                s.text = self.xml.text
-                root.append(s)
-                s = E.SPAN()
-                s.attrib['class'] = 'right'
-                s.text = self.matchNode.xml.text
-                root.append(s)
-                s.tail = "?>"
-                return
+            left = "<-- {0} -->".format(self.toText())
+            right = "<-- {0} -->".format(self.matchNode.toText(), root2)
+            self.diffTextToHtml(left, right, root2)
 
-        root.text = "<!--{0}>".format(self.xml.text)
+    def toText(self):
+        return self.xml.text
 
     def cloneTree(self, parent):
         clone = DiffComment(self.xml, parent)
@@ -729,8 +744,7 @@ class DiffComment(DiffRoot):
     def updateCost(self, right):
         if self.xml.text == right.xml.text:
             return 0
-        else:
-            return 50
+        return 3
 
 
 class DiffElement(DiffRoot):

@@ -3,8 +3,6 @@
           Within the SMI-numbers registry, add an "SMI Security for Cryptographic Algorithms" table with the three columns:
         </t>
 
-        <!-- FOR IANA - Please place on the SMI Numbers page under the SMI Security Codes section -->
-        
         <texttable>
           <ttcol>Decimal</ttcol><ttcol>Description</ttcol><ttcol>References</ttcol>
           <c>100</c><c>Reserved for child reg</c><c/>
@@ -12,7 +10,6 @@
           <c>111</c><c>id-X448</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
           <c>112</c><c>id-EdDSA25519</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
           <c>113</c><c>id-EdDSA448</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
-          <!-- rfc-editor The next two items are in -03 of the draft and not in the final version, please adjust the reference accordingly. -->
           <c>114</c><c>Reserved for id-EdDSA25519-ph</c><c><xref target="I-D.ietf-curdle-pkix"/>-03</c>
           <c>115</c><c>Reserved for id-EdDSA448-ph</c><c><xref target="I-D.ietf-curdle-pkix"/>-03</c>
 

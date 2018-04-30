@@ -6,6 +6,7 @@
 
 import re
 import textwrap
+import lxml.etree
 
 try:
     import debug
@@ -181,6 +182,8 @@ def formatXmlWhitespace(tree):
     """
     for element in tree.iter():
         # Preserve formatting on artwork
+        if element.tag == lxml.etree.Comment:
+            continue
         if element.tag != 'artwork' and element.tag != 'sourcecode':
             if element.text is not None:
                 element.text = re.sub(r'\s*\n\s*', ' ',
