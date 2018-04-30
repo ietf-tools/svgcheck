@@ -1,7 +1,6 @@
       <section numbered="true" toc="default">
         <name>"SMI Security for Cryptographic Algorithms" Registry</name>
         <t>Within the SMI-numbers registry, add an "SMI Security for Cryptographic Algorithms" table with the three columns: </t>
-        <!--FOR IANA - Please place on the SMI Numbers page under the SMI Security Codes section -->
         <table>
           <thead>
             <tr>

@@ -1,0 +1,13 @@
+OP=4 left=   3 right=   3
+OP=4 left=  13 right=  13
+OP=4 left=   6 right=   6
+OP=4 left=  14 right=  14
+OP=4 left=   4 right=   4
+OP=2 left=   8
+OP=4 left=  15 right=  15
+OP=3 left=  11 right=  10
+OP=4 left=  16 right=  16
+OP=4 left=   9 right=   8
+OP=1           right=  12
+OP=4 left=   2 right=   2
+OP=4 left=   1 right=   1

@@ -225,18 +225,23 @@ class TestDistanceMethods(unittest.TestCase):
         DistanceTest(self, "Tests/Cdata1.xml", "Tests/Cdata2.xml",
                      "Results/Cdata1.txt", "Results/Cdata1.html", True)
 
+    def test_Comment1(self):
+        """ Deal with space presevation """
+        DistanceTest(self, "Tests/Comment1.xml", "Tests/Comment2.xml",
+                     "Results/Comment1.txt", "Results/Comment1.html", True)
+
 
 def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile, markParagraphs):
     """ General distance test function """
     options = OOO()
     diffCount = 0
     left = XmlRfcParser(leftFile, quiet=True, cache_path=None, no_network=True). \
-        parse(strip_cdata=False)
+        parse(strip_cdata=False, remove_comments=False)
     left = BuildDiffTree(left.tree, options)
     if markParagraphs:
         left = AddParagraphs(left)
     right = XmlRfcParser(rightFile, quiet=True, cache_path=None, no_network=True). \
-        parse(strip_cdata=False)
+        parse(strip_cdata=False, remove_comments=False)
     right = BuildDiffTree(right.tree, options)
     if markParagraphs:
         right = AddParagraphs(right)
