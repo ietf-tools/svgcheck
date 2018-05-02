@@ -50,7 +50,6 @@ Tests/full-tiny.xml:1052: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:1052: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:1052: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:1052: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:1052: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:1052: The element 'path' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:1052: The element 'path' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:1052: The element 'path' does not allow the attribute 'nav-next', attribute to be removed.
@@ -86,7 +85,6 @@ http://example.org/label:1169: The attribute 'color' does not allow the value 's
 http://example.org/label:1169: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:1169: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:1169: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:1169: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:1169: The element 'rect' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:1169: The element 'rect' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:1169: The element 'rect' does not allow the attribute 'nav-next', attribute to be removed.
@@ -227,7 +225,6 @@ http://example.org/label:1637: The attribute 'color' does not allow the value 's
 http://example.org/label:1637: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:1637: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:1637: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:1637: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 http://example.org/label:1637: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:1637: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:1637: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -263,7 +260,6 @@ Tests/full-tiny.xml:1754: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:1754: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:1754: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:1754: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:1754: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:1754: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:1754: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:1754: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -299,7 +295,6 @@ http://example.org/label:1871: The attribute 'color' does not allow the value 's
 http://example.org/label:1871: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:1871: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:1871: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:1871: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:1872: The element 'desc' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:1872: The element 'desc' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:1873: The element 'title' does not allow the attribute 'pointer-events', attribute to be removed.
@@ -374,7 +369,6 @@ http://example.org/label:2173: The attribute 'color' does not allow the value 's
 http://example.org/label:2173: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:2173: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:2173: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:2173: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:2173: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:2173: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:2173: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -407,7 +401,6 @@ http://example.org/label:2186: The attribute 'color' does not allow the value 's
 http://example.org/label:2186: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:2186: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:2186: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:2186: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:2186: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:2186: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:2186: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -455,7 +448,6 @@ http://example.org/label:2302: The attribute 'color' does not allow the value 's
 http://example.org/label:2302: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:2302: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:2302: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:2302: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:2302: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:2302: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:2302: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -491,7 +483,6 @@ Tests/full-tiny.xml:2368: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:2368: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:2368: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:2368: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:2368: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:2368: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:2368: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:2368: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -525,7 +516,6 @@ Tests/full-tiny.xml:2381: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:2381: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:2381: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:2381: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:2381: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:2381: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:2381: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:2381: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -626,7 +616,6 @@ http://example.org/label:2657: The element 'radialGradient' is not allowed as a 
 http://example.org/label:2832: The element 'text' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:2832: The element 'text' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:2832: The attribute 'viewport-fill' does not allow the value '#abc', replaced with 'black'
-http://example.org/label:2832: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 http://example.org/label:2832: The element 'text' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:2832: The element 'text' does not allow the attribute 'editable', attribute to be removed.
 http://example.org/label:2832: The element 'text' does not allow the attribute 'focusable', attribute to be removed.
@@ -657,7 +646,6 @@ Tests/full-tiny.xml:2936: The element 'discard' is not allowed as a child of 'te
 Tests/full-tiny.xml:2948: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:2948: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:2948: The attribute 'viewport-fill' does not allow the value '#abc', replaced with 'black'
-Tests/full-tiny.xml:2948: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:2948: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:2948: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:2948: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -686,7 +674,6 @@ http://example.org/label:3006: The element 'handler' is not allowed as a child o
 http://example.org/label:3007: The element 'discard' is not allowed as a child of 'tspan'
 http://example.org/label:3014: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:3014: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:3014: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 http://example.org/label:3014: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:3014: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:3014: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -740,7 +727,6 @@ http://example.org/label:3027: The element 'switch' is not allowed as a child of
 http://example.org/label:3027: The element 'switch' is not allowed as a child of 'text'
 Tests/full-tiny.xml:3027: The element 'a' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:3027: The element 'a' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:3027: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 Tests/full-tiny.xml:3027: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:3027: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:3027: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -772,7 +758,6 @@ Tests/full-tiny.xml:3027: The element 'discard' is not allowed as a child of 'a'
 Tests/full-tiny.xml:3027: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:3027: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:3027: The attribute 'viewport-fill' does not allow the value 'rgb(0, 0, 0)', replaced with 'black'
-Tests/full-tiny.xml:3027: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:3027: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:3027: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:3027: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -800,7 +785,6 @@ http://example.org/label:3027: The element 'switch' is not allowed as a child of
 Tests/full-tiny.xml:3028: The element 'listener' is not allowed as a child of 'svg'
 Tests/full-tiny.xml:3029: The element 'g' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:3029: The element 'g' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:3029: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:3029: The element 'g' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:3029: The element 'g' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:3029: The element 'g' does not allow the attribute 'focusable', attribute to be removed.
@@ -866,7 +850,6 @@ http://example.org/label:3462: The element 'discard' is not allowed as a child o
 http://example.org/label:3469: The element 'discard' is not allowed as a child of 'path'
 http://example.org/label:3477: The element 'rect' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:3477: The element 'rect' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:3477: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 http://example.org/label:3477: The element 'rect' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:3477: The element 'rect' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:3477: The element 'rect' does not allow the attribute 'nav-next', attribute to be removed.
@@ -895,7 +878,6 @@ Tests/full-tiny.xml:3529: The element 'discard' is not allowed as a child of 're
 Tests/full-tiny.xml:3536: The element 'discard' is not allowed as a child of 'rect'
 Tests/full-tiny.xml:3544: The element 'circle' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:3544: The element 'circle' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:3544: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 Tests/full-tiny.xml:3544: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:3544: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:3544: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -925,7 +907,6 @@ http://example.org/label:3596: The element 'discard' is not allowed as a child o
 http://example.org/label:3603: The element 'discard' is not allowed as a child of 'circle'
 http://example.org/label:3611: The element 'line' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:3611: The element 'line' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:3611: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 http://example.org/label:3611: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:3611: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:3611: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -955,7 +936,6 @@ Tests/full-tiny.xml:3663: The element 'discard' is not allowed as a child of 'li
 Tests/full-tiny.xml:3670: The element 'discard' is not allowed as a child of 'line'
 Tests/full-tiny.xml:3678: The element 'ellipse' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:3678: The element 'ellipse' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:3678: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:3678: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:3678: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:3678: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -984,7 +964,6 @@ http://example.org/label:3730: The element 'discard' is not allowed as a child o
 http://example.org/label:3737: The element 'discard' is not allowed as a child of 'ellipse'
 http://example.org/label:3745: The element 'polyline' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:3745: The element 'polyline' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:3745: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 http://example.org/label:3745: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:3745: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:3745: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1066,7 +1045,6 @@ Tests/full-tiny.xml:4013: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:4013: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:4013: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:4013: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:4013: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 Tests/full-tiny.xml:4013: The element 'textArea' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4013: The element 'textArea' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:4013: The element 'textArea' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1082,7 +1060,6 @@ Tests/full-tiny.xml:4013: The element 'textArea' does not allow the attribute 'n
 Tests/full-tiny.xml:4013: The element 'textArea' does not allow the attribute 'editable', attribute to be removed.
 http://example.org/label:4014: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:4014: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:4014: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 http://example.org/label:4014: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:4014: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:4014: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1123,7 +1100,6 @@ Tests/full-tiny.xml:4086: The element 'handler' is not allowed as a child of 'te
 Tests/full-tiny.xml:4087: The element 'discard' is not allowed as a child of 'textArea'
 Tests/full-tiny.xml:4094: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:4094: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:4094: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:4094: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4094: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:4094: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1151,7 +1127,6 @@ http://example.org/label:4107: The element 'switch' is not allowed as a child of
 Tests/full-tiny.xml:4107: The element 'a' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:4107: The element 'a' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:4107: The attribute 'viewport-fill' does not allow the value '#abc', replaced with 'black'
-Tests/full-tiny.xml:4107: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:4107: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4107: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:4107: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -1189,7 +1164,6 @@ http://example.org/label:4318: The attribute 'color' does not allow the value 's
 http://example.org/label:4318: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4318: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4318: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:4318: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:4318: The element 'text' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:4318: The element 'text' does not allow the attribute 'editable', attribute to be removed.
 http://example.org/label:4318: The element 'text' does not allow the attribute 'focusable', attribute to be removed.
@@ -1225,7 +1199,6 @@ Tests/full-tiny.xml:4384: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:4384: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:4384: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:4384: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:4384: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:4384: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4384: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:4384: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1258,7 +1231,6 @@ Tests/full-tiny.xml:4397: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:4397: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:4397: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:4397: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:4397: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:4397: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4397: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:4397: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -1286,7 +1258,6 @@ Tests/full-tiny.xml:4397: The element 'switch' is not allowed as a child of 'a'
 Tests/full-tiny.xml:4398: The element 'listener' is not allowed as a child of 'g'
 Tests/full-tiny.xml:4399: The element 'g' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:4399: The element 'g' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:4399: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:4399: The element 'g' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4399: The element 'g' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:4399: The element 'g' does not allow the attribute 'focusable', attribute to be removed.
@@ -1462,7 +1433,6 @@ http://example.org/label:4588: The element 'discard' is not allowed as a child o
 http://example.org/label:4589: The element 'discard' is not allowed as a child of 'ellipse'
 Tests/full-tiny.xml:4591: The element 'polyline' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:4591: The element 'polyline' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:4591: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:4591: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4591: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:4591: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1493,7 +1463,6 @@ http://example.org/label:4605: The attribute 'color' does not allow the value 's
 http://example.org/label:4605: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4605: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4605: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:4605: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:4605: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:4605: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:4605: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1519,7 +1488,6 @@ http://example.org/label:4617: The element 'discard' is not allowed as a child o
 Tests/full-tiny.xml:4619: The element 'solidColor' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:4619: The element 'solidColor' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:4619: The attribute 'viewport-fill' does not allow the value '#abc', replaced with 'black'
-Tests/full-tiny.xml:4619: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 Tests/full-tiny.xml:4622: The element 'metadata' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:4623: The element 'switch' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:4624: The element 'animate' is not allowed as a child of 'solidColor'
@@ -1539,7 +1507,6 @@ http://example.org/label:4647: The attribute 'color' does not allow the value 's
 http://example.org/label:4647: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4647: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4647: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:4647: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:4647: The element 'textArea' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:4647: The element 'textArea' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:4647: The element 'textArea' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1570,7 +1537,6 @@ Tests/full-tiny.xml:4679: The element 'linearGradient' is not allowed as a child
 http://example.org/label:4693: The element 'radialGradient' is not allowed as a child of 'g'
 Tests/full-tiny.xml:4707: The element 'text' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:4707: The element 'text' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:4707: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:4707: The element 'text' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:4707: The element 'text' does not allow the attribute 'editable', attribute to be removed.
 Tests/full-tiny.xml:4707: The element 'text' does not allow the attribute 'focusable', attribute to be removed.
@@ -1605,7 +1571,6 @@ http://example.org/label:4722: The attribute 'color' does not allow the value 's
 http://example.org/label:4722: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4722: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:4722: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:4722: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 http://example.org/label:4722: The element 'g' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:4722: The element 'g' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:4722: The element 'g' does not allow the attribute 'focusable', attribute to be removed.
@@ -1644,7 +1609,6 @@ http://example.org/label:4756: The element 'listener' is not allowed as a child 
 http://example.org/label:4760: The element 'switch' is not allowed as a child of 'g'
 Tests/full-tiny.xml:4763: The element 'defs' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:4763: The element 'defs' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:4763: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:4766: The element 'metadata' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:4767: The element 'switch' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:4768: The element 'animate' is not allowed as a child of 'defs'
@@ -1773,7 +1737,6 @@ http://example.org/label:5021: The attribute 'color' does not allow the value 's
 http://example.org/label:5021: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5021: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5021: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:5021: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:5021: The element 'path' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:5021: The element 'path' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:5021: The element 'path' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1799,7 +1762,6 @@ http://example.org/label:5033: The element 'discard' is not allowed as a child o
 Tests/full-tiny.xml:5035: The element 'rect' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:5035: The element 'rect' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:5035: The attribute 'viewport-fill' does not allow the value 'rgb(0, 0, 0)', replaced with 'black'
-Tests/full-tiny.xml:5035: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 Tests/full-tiny.xml:5035: The element 'rect' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:5035: The element 'rect' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:5035: The element 'rect' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1830,7 +1792,6 @@ http://example.org/label:5049: The attribute 'color' does not allow the value 's
 http://example.org/label:5049: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5049: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5049: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:5049: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:5049: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:5049: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:5049: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1855,7 +1816,6 @@ http://example.org/label:5060: The element 'discard' is not allowed as a child o
 http://example.org/label:5061: The element 'discard' is not allowed as a child of 'circle'
 Tests/full-tiny.xml:5063: The element 'line' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:5063: The element 'line' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:5063: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:5063: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:5063: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:5063: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1887,7 +1847,6 @@ http://example.org/label:5077: The attribute 'color' does not allow the value 's
 http://example.org/label:5077: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5077: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5077: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:5077: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 http://example.org/label:5077: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:5077: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:5077: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1912,7 +1871,6 @@ http://example.org/label:5088: The element 'discard' is not allowed as a child o
 http://example.org/label:5089: The element 'discard' is not allowed as a child of 'ellipse'
 Tests/full-tiny.xml:5091: The element 'polyline' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:5091: The element 'polyline' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:5091: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:5091: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:5091: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:5091: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1943,7 +1901,6 @@ http://example.org/label:5105: The attribute 'color' does not allow the value 's
 http://example.org/label:5105: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5105: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5105: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:5105: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 http://example.org/label:5105: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:5105: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:5105: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -1968,7 +1925,6 @@ http://example.org/label:5116: The element 'discard' is not allowed as a child o
 http://example.org/label:5117: The element 'discard' is not allowed as a child of 'polygon'
 Tests/full-tiny.xml:5119: The element 'solidColor' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:5119: The element 'solidColor' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:5119: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:5122: The element 'metadata' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:5123: The element 'switch' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:5124: The element 'animate' is not allowed as a child of 'solidColor'
@@ -2090,7 +2046,6 @@ http://example.org/label:5256: The element 'listener' is not allowed as a child 
 http://example.org/label:5260: The element 'switch' is not allowed as a child of 'g'
 Tests/full-tiny.xml:5263: The element 'defs' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:5263: The element 'defs' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:5263: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:5266: The element 'metadata' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:5267: The element 'switch' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:5268: The element 'animate' is not allowed as a child of 'defs'
@@ -2122,7 +2077,6 @@ http://example.org/label:5304: The attribute 'color' does not allow the value 's
 http://example.org/label:5304: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5304: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:5304: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:5304: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:5304: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:5304: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:5304: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2154,7 +2108,6 @@ Tests/full-tiny.xml:5358: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:5358: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:5358: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:5358: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:5358: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:5358: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:5358: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:5358: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -2193,7 +2146,6 @@ Tests/full-tiny.xml:5392: The element 'listener' is not allowed as a child of 'a
 Tests/full-tiny.xml:5396: The element 'switch' is not allowed as a child of 'a'
 Tests/full-tiny.xml:5399: The element 'use' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:5399: The element 'use' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:5399: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:5399: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:5399: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:5399: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2265,7 +2217,6 @@ Tests/full-tiny.xml:6081: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:6081: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6081: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6081: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:6081: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 Tests/full-tiny.xml:6081: The element 'path' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:6081: The element 'path' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:6081: The element 'path' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2290,7 +2241,6 @@ Tests/full-tiny.xml:6092: The element 'discard' is not allowed as a child of 'pa
 Tests/full-tiny.xml:6093: The element 'discard' is not allowed as a child of 'path'
 http://example.org/label:6095: The element 'rect' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:6095: The element 'rect' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:6095: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 http://example.org/label:6095: The element 'rect' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:6095: The element 'rect' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:6095: The element 'rect' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2322,7 +2272,6 @@ Tests/full-tiny.xml:6109: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:6109: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6109: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6109: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:6109: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:6109: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:6109: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:6109: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2347,7 +2296,6 @@ Tests/full-tiny.xml:6120: The element 'discard' is not allowed as a child of 'ci
 Tests/full-tiny.xml:6121: The element 'discard' is not allowed as a child of 'circle'
 http://example.org/label:6123: The element 'line' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:6123: The element 'line' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:6123: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 http://example.org/label:6123: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:6123: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:6123: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2378,7 +2326,6 @@ Tests/full-tiny.xml:6137: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:6137: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6137: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6137: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:6137: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:6137: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:6137: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:6137: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2404,7 +2351,6 @@ Tests/full-tiny.xml:6149: The element 'discard' is not allowed as a child of 'el
 http://example.org/label:6151: The element 'polyline' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:6151: The element 'polyline' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:6151: The attribute 'viewport-fill' does not allow the value 'purple', replaced with 'black'
-http://example.org/label:6151: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 http://example.org/label:6151: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:6151: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:6151: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2435,7 +2381,6 @@ Tests/full-tiny.xml:6165: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:6165: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6165: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6165: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:6165: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 Tests/full-tiny.xml:6165: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:6165: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:6165: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2460,7 +2405,6 @@ Tests/full-tiny.xml:6176: The element 'discard' is not allowed as a child of 'po
 Tests/full-tiny.xml:6177: The element 'discard' is not allowed as a child of 'polygon'
 http://example.org/label:6179: The element 'solidColor' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:6179: The element 'solidColor' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:6179: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 http://example.org/label:6182: The element 'metadata' is not allowed as a child of 'solidColor'
 http://example.org/label:6183: The element 'switch' is not allowed as a child of 'solidColor'
 http://example.org/label:6184: The element 'animate' is not allowed as a child of 'solidColor'
@@ -2582,7 +2526,6 @@ Tests/full-tiny.xml:6320: The element 'switch' is not allowed as a child of 'g'
 http://example.org/label:6323: The element 'defs' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:6323: The element 'defs' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:6323: The attribute 'viewport-fill' does not allow the value '#aabbcc', replaced with 'black'
-http://example.org/label:6323: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 http://example.org/label:6326: The element 'metadata' is not allowed as a child of 'defs'
 http://example.org/label:6327: The element 'switch' is not allowed as a child of 'defs'
 http://example.org/label:6328: The element 'animate' is not allowed as a child of 'defs'
@@ -2614,7 +2557,6 @@ Tests/full-tiny.xml:6364: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:6364: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6364: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:6364: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:6364: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 Tests/full-tiny.xml:6364: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:6364: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:6364: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2647,7 +2589,6 @@ http://example.org/label:6419: The attribute 'color' does not allow the value 's
 http://example.org/label:6419: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:6419: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:6419: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:6419: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:6420: The element 'desc' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:6420: The element 'desc' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:6421: The element 'title' does not allow the attribute 'pointer-events', attribute to be removed.
@@ -2780,7 +2721,6 @@ Tests/full-tiny.xml:7001: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:7001: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:7001: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:7001: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:7001: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 Tests/full-tiny.xml:7001: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:7001: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:7001: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2816,7 +2756,6 @@ http://example.org/label:7068: The attribute 'color' does not allow the value 's
 http://example.org/label:7068: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7068: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7068: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:7068: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:7068: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7068: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:7068: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2852,7 +2791,6 @@ Tests/full-tiny.xml:7135: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:7135: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:7135: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:7135: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:7135: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:7135: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:7135: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:7135: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -2887,7 +2825,6 @@ http://example.org/label:7202: The attribute 'color' does not allow the value 's
 http://example.org/label:7202: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7202: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7202: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:7202: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 http://example.org/label:7202: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7202: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:7202: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3007,7 +2944,6 @@ http://example.org/label:7484: The attribute 'color' does not allow the value 's
 http://example.org/label:7484: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7484: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7484: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:7484: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:7484: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7484: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:7484: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3040,7 +2976,6 @@ http://example.org/label:7497: The attribute 'color' does not allow the value 's
 http://example.org/label:7497: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7497: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7497: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:7497: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:7497: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7497: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:7497: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -3102,7 +3037,6 @@ http://example.org/label:7767: The element 'discard' is not allowed as a child o
 http://example.org/label:7774: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:7774: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:7774: The attribute 'viewport-fill' does not allow the value 'purple', replaced with 'black'
-http://example.org/label:7774: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 http://example.org/label:7774: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7774: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:7774: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3129,7 +3063,6 @@ http://example.org/label:7787: The element 'switch' is not allowed as a child of
 Tests/full-tiny.xml:7787: The element 'switch' is not allowed as a child of 'text'
 http://example.org/label:7787: The element 'a' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:7787: The element 'a' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:7787: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 http://example.org/label:7787: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7787: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:7787: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -3163,7 +3096,6 @@ http://example.org/label:7789: The attribute 'color' does not allow the value 's
 http://example.org/label:7789: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7789: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7789: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:7789: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:7789: The element 'g' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7789: The element 'g' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:7789: The element 'g' does not allow the attribute 'focusable', attribute to be removed.
@@ -3200,7 +3132,6 @@ Tests/full-tiny.xml:7910: The element 'script' is not allowed as a child of 'g'
 Tests/full-tiny.xml:7911: The element 'path' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:7911: The element 'path' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:7911: The attribute 'viewport-fill' does not allow the value 'rgb(0, 0, 0)', replaced with 'black'
-Tests/full-tiny.xml:7911: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:7911: The element 'path' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:7911: The element 'path' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:7911: The element 'path' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3231,7 +3162,6 @@ http://example.org/label:7925: The attribute 'color' does not allow the value 's
 http://example.org/label:7925: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7925: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:7925: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:7925: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 http://example.org/label:7925: The element 'rect' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:7925: The element 'rect' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:7925: The element 'rect' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3256,7 +3186,6 @@ http://example.org/label:7936: The element 'discard' is not allowed as a child o
 http://example.org/label:7937: The element 'discard' is not allowed as a child of 'rect'
 Tests/full-tiny.xml:7939: The element 'circle' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:7939: The element 'circle' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:7939: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:7939: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:7939: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:7939: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3410,7 +3339,6 @@ Tests/full-tiny.xml:8023: The element 'video' is not allowed as a child of 'g'
 Tests/full-tiny.xml:8037: The element 'textArea' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:8037: The element 'textArea' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:8037: The attribute 'viewport-fill' does not allow the value '#abc', replaced with 'black'
-Tests/full-tiny.xml:8037: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:8037: The element 'textArea' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:8037: The element 'textArea' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:8037: The element 'textArea' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3448,7 +3376,6 @@ http://example.org/label:8097: The attribute 'color' does not allow the value 's
 http://example.org/label:8097: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8097: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8097: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:8097: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:8097: The element 'text' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:8097: The element 'text' does not allow the attribute 'editable', attribute to be removed.
 http://example.org/label:8097: The element 'text' does not allow the attribute 'focusable', attribute to be removed.
@@ -3476,7 +3403,6 @@ http://example.org/label:8110: The element 'switch' is not allowed as a child of
 Tests/full-tiny.xml:8111: The element 'listener' is not allowed as a child of 'g'
 Tests/full-tiny.xml:8112: The element 'g' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:8112: The element 'g' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:8112: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:8112: The element 'g' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:8112: The element 'g' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:8112: The element 'g' does not allow the attribute 'focusable', attribute to be removed.
@@ -3521,7 +3447,6 @@ http://example.org/label:8153: The attribute 'color' does not allow the value 's
 http://example.org/label:8153: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8153: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8153: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:8153: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 http://example.org/label:8156: The element 'metadata' is not allowed as a child of 'defs'
 http://example.org/label:8157: The element 'switch' is not allowed as a child of 'defs'
 http://example.org/label:8158: The element 'animate' is not allowed as a child of 'defs'
@@ -3548,7 +3473,6 @@ http://example.org/label:8191: The element 'switch' is not allowed as a child of
 Tests/full-tiny.xml:8194: The element 'use' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:8194: The element 'use' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:8194: The attribute 'viewport-fill' does not allow the value 'rgb(0, 0, 0)', replaced with 'black'
-Tests/full-tiny.xml:8194: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:8194: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:8194: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:8194: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3574,7 +3498,6 @@ Tests/full-tiny.xml:8205: The element 'handler' is not allowed as a child of 'us
 Tests/full-tiny.xml:8207: The element 'switch' is not allowed as a child of 'g'
 http://example.org/label:8248: The element 'a' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:8248: The element 'a' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:8248: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 http://example.org/label:8248: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:8248: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:8248: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -3697,7 +3620,6 @@ http://example.org/label:8436: The element 'discard' is not allowed as a child o
 http://example.org/label:8437: The element 'discard' is not allowed as a child of 'rect'
 Tests/full-tiny.xml:8439: The element 'circle' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:8439: The element 'circle' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:8439: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:8439: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:8439: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:8439: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3729,7 +3651,6 @@ http://example.org/label:8453: The attribute 'color' does not allow the value 's
 http://example.org/label:8453: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8453: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8453: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:8453: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:8453: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:8453: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:8453: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3754,7 +3675,6 @@ http://example.org/label:8464: The element 'discard' is not allowed as a child o
 http://example.org/label:8465: The element 'discard' is not allowed as a child of 'line'
 Tests/full-tiny.xml:8467: The element 'ellipse' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:8467: The element 'ellipse' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:8467: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 Tests/full-tiny.xml:8467: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:8467: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:8467: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3785,7 +3705,6 @@ http://example.org/label:8481: The attribute 'color' does not allow the value 's
 http://example.org/label:8481: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8481: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8481: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:8481: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:8481: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:8481: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:8481: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3811,7 +3730,6 @@ http://example.org/label:8493: The element 'discard' is not allowed as a child o
 Tests/full-tiny.xml:8495: The element 'polygon' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:8495: The element 'polygon' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:8495: The attribute 'viewport-fill' does not allow the value 'purple', replaced with 'black'
-Tests/full-tiny.xml:8495: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:8495: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:8495: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:8495: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -3842,7 +3760,6 @@ http://example.org/label:8509: The attribute 'color' does not allow the value 's
 http://example.org/label:8509: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8509: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8509: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:8509: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 http://example.org/label:8512: The element 'metadata' is not allowed as a child of 'solidColor'
 http://example.org/label:8513: The element 'switch' is not allowed as a child of 'solidColor'
 http://example.org/label:8514: The element 'animate' is not allowed as a child of 'solidColor'
@@ -3856,7 +3773,6 @@ http://example.org/label:8521: The element 'discard' is not allowed as a child o
 Tests/full-tiny.xml:8523: The element 'video' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:8537: The element 'textArea' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:8537: The element 'textArea' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:8537: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:8537: The element 'textArea' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:8537: The element 'textArea' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:8537: The element 'textArea' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4016,7 +3932,6 @@ Tests/full-tiny.xml:8705: The element 'handler' is not allowed as a child of 'us
 Tests/full-tiny.xml:8707: The element 'switch' is not allowed as a child of 'defs'
 http://example.org/label:8748: The element 'a' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:8748: The element 'a' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:8748: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 http://example.org/label:8748: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:8748: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:8748: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -4062,7 +3977,6 @@ http://example.org/label:8789: The attribute 'color' does not allow the value 's
 http://example.org/label:8789: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8789: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:8789: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:8789: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:8789: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:8789: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:8789: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4189,7 +4103,6 @@ Tests/full-tiny.xml:9496: The element 'discard' is not allowed as a child of 're
 Tests/full-tiny.xml:9497: The element 'discard' is not allowed as a child of 'rect'
 http://example.org/label:9499: The element 'circle' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:9499: The element 'circle' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:9499: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 http://example.org/label:9499: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:9499: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:9499: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4220,7 +4133,6 @@ Tests/full-tiny.xml:9513: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:9513: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:9513: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:9513: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:9513: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 Tests/full-tiny.xml:9513: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:9513: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:9513: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4246,7 +4158,6 @@ Tests/full-tiny.xml:9525: The element 'discard' is not allowed as a child of 'li
 http://example.org/label:9527: The element 'ellipse' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:9527: The element 'ellipse' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:9527: The attribute 'viewport-fill' does not allow the value 'rgb(0, 0, 0)', replaced with 'black'
-http://example.org/label:9527: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 http://example.org/label:9527: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:9527: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:9527: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4277,7 +4188,6 @@ Tests/full-tiny.xml:9541: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:9541: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:9541: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:9541: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:9541: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:9541: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:9541: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:9541: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4302,7 +4212,6 @@ Tests/full-tiny.xml:9552: The element 'discard' is not allowed as a child of 'po
 Tests/full-tiny.xml:9553: The element 'discard' is not allowed as a child of 'polyline'
 http://example.org/label:9555: The element 'polygon' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:9555: The element 'polygon' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:9555: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 http://example.org/label:9555: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:9555: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:9555: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4334,7 +4243,6 @@ Tests/full-tiny.xml:9569: The attribute 'color' does not allow the value 'string
 Tests/full-tiny.xml:9569: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:9569: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:9569: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:9569: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:9572: The element 'metadata' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:9573: The element 'switch' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:9574: The element 'animate' is not allowed as a child of 'solidColor'
@@ -4348,7 +4256,6 @@ Tests/full-tiny.xml:9581: The element 'discard' is not allowed as a child of 'so
 http://example.org/label:9583: The element 'video' is not allowed as a child of 'a'
 http://example.org/label:9597: The element 'textArea' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:9597: The element 'textArea' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:9597: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 http://example.org/label:9597: The element 'textArea' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:9597: The element 'textArea' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:9597: The element 'textArea' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4507,7 +4414,6 @@ http://example.org/label:9765: The element 'handler' is not allowed as a child o
 http://example.org/label:9767: The element 'switch' is not allowed as a child of 'a'
 Tests/full-tiny.xml:9809: The element 'use' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:9809: The element 'use' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:9809: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:9809: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:9809: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:9809: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4538,7 +4444,6 @@ Tests/full-tiny.xml:9912: The element 'handler' is not allowed as a child of 'us
 Tests/full-tiny.xml:9914: The element 'switch' is not allowed as a child of 'svg'
 http://example.org/label:13304: The element 'a' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:13304: The element 'a' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:13304: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 http://example.org/label:13304: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:13304: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:13304: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -4575,7 +4480,6 @@ Tests/full-tiny.xml:13673: The element 'prefetch' is not allowed as a child of '
 Tests/full-tiny.xml:13684: The element 'script' is not allowed as a child of 'a'
 Tests/full-tiny.xml:13685: The element 'path' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:13685: The element 'path' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:13685: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:13685: The element 'path' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:13685: The element 'path' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:13685: The element 'path' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4604,7 +4508,6 @@ http://example.org/label:13737: The element 'discard' is not allowed as a child 
 http://example.org/label:13744: The element 'discard' is not allowed as a child of 'path'
 http://example.org/label:13752: The element 'rect' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:13752: The element 'rect' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:13752: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 http://example.org/label:13752: The element 'rect' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:13752: The element 'rect' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:13752: The element 'rect' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4634,7 +4537,6 @@ Tests/full-tiny.xml:13804: The element 'discard' is not allowed as a child of 'r
 Tests/full-tiny.xml:13811: The element 'discard' is not allowed as a child of 'rect'
 Tests/full-tiny.xml:13819: The element 'circle' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:13819: The element 'circle' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:13819: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:13819: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:13819: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:13819: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4664,7 +4566,6 @@ http://example.org/label:13871: The element 'discard' is not allowed as a child 
 http://example.org/label:13878: The element 'discard' is not allowed as a child of 'circle'
 http://example.org/label:13886: The element 'line' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:13886: The element 'line' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:13886: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 http://example.org/label:13886: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:13886: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:13886: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4693,7 +4594,6 @@ Tests/full-tiny.xml:13938: The element 'discard' is not allowed as a child of 'l
 Tests/full-tiny.xml:13945: The element 'discard' is not allowed as a child of 'line'
 Tests/full-tiny.xml:13953: The element 'ellipse' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:13953: The element 'ellipse' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:13953: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:13953: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:13953: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:13953: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4780,7 +4680,6 @@ http://example.org/label:14139: The element 'discard' is not allowed as a child 
 http://example.org/label:14146: The element 'discard' is not allowed as a child of 'polygon'
 http://example.org/label:14154: The element 'solidColor' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:14154: The element 'solidColor' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:14154: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:14155: The element 'desc' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14155: The element 'desc' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:14155: The attribute 'viewport-fill' does not allow the value '#aabbcc', replaced with 'black'
@@ -4805,7 +4704,6 @@ Tests/full-tiny.xml:14288: The attribute 'color' does not allow the value 'strin
 Tests/full-tiny.xml:14288: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:14288: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:14288: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:14288: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/full-tiny.xml:14288: The element 'textArea' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14288: The element 'textArea' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:14288: The element 'textArea' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4821,7 +4719,6 @@ Tests/full-tiny.xml:14288: The element 'textArea' does not allow the attribute '
 Tests/full-tiny.xml:14288: The element 'textArea' does not allow the attribute 'editable', attribute to be removed.
 http://example.org/label:14289: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:14289: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
-http://example.org/label:14289: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 http://example.org/label:14289: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:14289: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:14289: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4863,7 +4760,6 @@ Tests/full-tiny.xml:14362: The element 'discard' is not allowed as a child of 't
 Tests/full-tiny.xml:14369: The element 'tspan' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14369: The element 'tspan' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:14369: The attribute 'viewport-fill' does not allow the value '#aabbcc', replaced with 'black'
-Tests/full-tiny.xml:14369: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:14369: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14369: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:14369: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4890,7 +4786,6 @@ Tests/full-tiny.xml:14382: The element 'switch' is not allowed as a child of 'ts
 http://example.org/label:14382: The element 'switch' is not allowed as a child of 'textArea'
 Tests/full-tiny.xml:14382: The element 'a' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14382: The element 'a' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:14382: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:14382: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14382: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:14382: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -4927,7 +4822,6 @@ http://example.org/label:14593: The attribute 'color' does not allow the value '
 http://example.org/label:14593: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14593: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14593: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:14593: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:14593: The element 'text' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:14593: The element 'text' does not allow the attribute 'editable', attribute to be removed.
 http://example.org/label:14593: The element 'text' does not allow the attribute 'focusable', attribute to be removed.
@@ -4963,7 +4857,6 @@ Tests/full-tiny.xml:14659: The attribute 'color' does not allow the value 'strin
 Tests/full-tiny.xml:14659: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:14659: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:14659: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:14659: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:14659: The element 'tspan' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14659: The element 'tspan' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:14659: The element 'tspan' does not allow the attribute 'nav-next', attribute to be removed.
@@ -4997,7 +4890,6 @@ Tests/full-tiny.xml:14672: The attribute 'color' does not allow the value 'strin
 Tests/full-tiny.xml:14672: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:14672: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:14672: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:14672: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 Tests/full-tiny.xml:14672: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14672: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:14672: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -5025,7 +4917,6 @@ Tests/full-tiny.xml:14672: The element 'switch' is not allowed as a child of 'a'
 Tests/full-tiny.xml:14673: The element 'listener' is not allowed as a child of 'a'
 Tests/full-tiny.xml:14674: The element 'g' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14674: The element 'g' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:14674: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:14674: The element 'g' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14674: The element 'g' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:14674: The element 'g' does not allow the attribute 'focusable', attribute to be removed.
@@ -5147,7 +5038,6 @@ http://example.org/label:14835: The element 'discard' is not allowed as a child 
 http://example.org/label:14836: The element 'discard' is not allowed as a child of 'circle'
 Tests/full-tiny.xml:14838: The element 'line' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14838: The element 'line' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:14838: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:14838: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14838: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:14838: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5178,7 +5068,6 @@ http://example.org/label:14852: The attribute 'color' does not allow the value '
 http://example.org/label:14852: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14852: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14852: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:14852: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:14852: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:14852: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:14852: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5204,7 +5093,6 @@ http://example.org/label:14864: The element 'discard' is not allowed as a child 
 Tests/full-tiny.xml:14866: The element 'polyline' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14866: The element 'polyline' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:14866: The attribute 'viewport-fill' does not allow the value '#aabbcc', replaced with 'black'
-Tests/full-tiny.xml:14866: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 Tests/full-tiny.xml:14866: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14866: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:14866: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5235,7 +5123,6 @@ http://example.org/label:14880: The attribute 'color' does not allow the value '
 http://example.org/label:14880: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14880: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14880: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:14880: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:14880: The element 'polygon' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:14880: The element 'polygon' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:14880: The element 'polygon' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5260,7 +5147,6 @@ http://example.org/label:14891: The element 'discard' is not allowed as a child 
 http://example.org/label:14892: The element 'discard' is not allowed as a child of 'polygon'
 Tests/full-tiny.xml:14894: The element 'solidColor' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14894: The element 'solidColor' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:14894: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:14897: The element 'metadata' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:14898: The element 'switch' is not allowed as a child of 'solidColor'
 Tests/full-tiny.xml:14899: The element 'animate' is not allowed as a child of 'solidColor'
@@ -5280,7 +5166,6 @@ http://example.org/label:14922: The attribute 'color' does not allow the value '
 http://example.org/label:14922: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14922: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:14922: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:14922: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 http://example.org/label:14922: The element 'textArea' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:14922: The element 'textArea' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:14922: The element 'textArea' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5311,7 +5196,6 @@ Tests/full-tiny.xml:14954: The element 'linearGradient' is not allowed as a chil
 http://example.org/label:14968: The element 'radialGradient' is not allowed as a child of 'g'
 Tests/full-tiny.xml:14982: The element 'text' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:14982: The element 'text' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:14982: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:14982: The element 'text' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:14982: The element 'text' does not allow the attribute 'editable', attribute to be removed.
 Tests/full-tiny.xml:14982: The element 'text' does not allow the attribute 'focusable', attribute to be removed.
@@ -5484,7 +5368,6 @@ Tests/full-tiny.xml:15167: The element 'listener' is not allowed as a child of '
 Tests/full-tiny.xml:15171: The element 'switch' is not allowed as a child of 'a'
 Tests/full-tiny.xml:15174: The element 'defs' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:15174: The element 'defs' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:15174: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 http://example.org/label:15175: The element 'desc' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:15175: The element 'desc' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:15176: The element 'title' does not allow the attribute 'pointer-events', attribute to be removed.
@@ -5514,7 +5397,6 @@ http://example.org/label:15296: The attribute 'color' does not allow the value '
 http://example.org/label:15296: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15296: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15296: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:15296: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:15296: The element 'path' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:15296: The element 'path' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:15296: The element 'path' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5539,7 +5421,6 @@ http://example.org/label:15307: The element 'discard' is not allowed as a child 
 http://example.org/label:15308: The element 'discard' is not allowed as a child of 'path'
 Tests/full-tiny.xml:15310: The element 'rect' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:15310: The element 'rect' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:15310: The attribute 'font-weight' does not allow the value '500', attribute to be removed
 Tests/full-tiny.xml:15310: The element 'rect' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:15310: The element 'rect' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:15310: The element 'rect' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5570,7 +5451,6 @@ http://example.org/label:15324: The attribute 'color' does not allow the value '
 http://example.org/label:15324: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15324: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15324: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:15324: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 http://example.org/label:15324: The element 'circle' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:15324: The element 'circle' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:15324: The element 'circle' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5595,7 +5475,6 @@ http://example.org/label:15335: The element 'discard' is not allowed as a child 
 http://example.org/label:15336: The element 'discard' is not allowed as a child of 'circle'
 Tests/full-tiny.xml:15338: The element 'line' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:15338: The element 'line' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:15338: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:15338: The element 'line' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:15338: The element 'line' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:15338: The element 'line' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5626,7 +5505,6 @@ http://example.org/label:15352: The attribute 'color' does not allow the value '
 http://example.org/label:15352: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15352: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15352: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:15352: The attribute 'font-weight' does not allow the value '800', attribute to be removed
 http://example.org/label:15352: The element 'ellipse' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:15352: The element 'ellipse' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:15352: The element 'ellipse' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5652,7 +5530,6 @@ http://example.org/label:15364: The element 'discard' is not allowed as a child 
 Tests/full-tiny.xml:15366: The element 'polyline' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:15366: The element 'polyline' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:15366: The attribute 'viewport-fill' does not allow the value '#abc', replaced with 'black'
-Tests/full-tiny.xml:15366: The attribute 'font-weight' does not allow the value '900', attribute to be removed
 Tests/full-tiny.xml:15366: The element 'polyline' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:15366: The element 'polyline' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:15366: The element 'polyline' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5756,7 +5633,6 @@ Tests/full-tiny.xml:15454: The element 'linearGradient' is not allowed as a chil
 http://example.org/label:15468: The element 'radialGradient' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:15482: The element 'text' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:15482: The element 'text' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:15482: The attribute 'font-weight' does not allow the value '100', attribute to be removed
 Tests/full-tiny.xml:15482: The element 'text' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:15482: The element 'text' does not allow the attribute 'editable', attribute to be removed.
 Tests/full-tiny.xml:15482: The element 'text' does not allow the attribute 'focusable', attribute to be removed.
@@ -5790,7 +5666,6 @@ http://example.org/label:15497: The attribute 'color' does not allow the value '
 http://example.org/label:15497: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15497: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15497: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:15497: The attribute 'font-weight' does not allow the value '200', attribute to be removed
 http://example.org/label:15497: The element 'g' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:15497: The element 'g' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 http://example.org/label:15497: The element 'g' does not allow the attribute 'focusable', attribute to be removed.
@@ -5830,7 +5705,6 @@ http://example.org/label:15535: The element 'switch' is not allowed as a child o
 Tests/full-tiny.xml:15538: The element 'defs' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:15538: The element 'defs' does not allow the attribute 'audio-level', attribute to be removed.
 Tests/full-tiny.xml:15538: The attribute 'viewport-fill' does not allow the value 'purple', replaced with 'black'
-Tests/full-tiny.xml:15538: The attribute 'font-weight' does not allow the value '300', attribute to be removed
 Tests/full-tiny.xml:15541: The element 'metadata' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:15542: The element 'switch' is not allowed as a child of 'defs'
 Tests/full-tiny.xml:15543: The element 'animate' is not allowed as a child of 'defs'
@@ -5862,7 +5736,6 @@ http://example.org/label:15579: The attribute 'color' does not allow the value '
 http://example.org/label:15579: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15579: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 http://example.org/label:15579: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-http://example.org/label:15579: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 http://example.org/label:15579: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 http://example.org/label:15579: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 http://example.org/label:15579: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.
@@ -5894,7 +5767,6 @@ Tests/full-tiny.xml:15633: The attribute 'color' does not allow the value 'strin
 Tests/full-tiny.xml:15633: The attribute 'solid-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:15633: The attribute 'stop-color' does not allow the value 'string value', replaced with 'black'
 Tests/full-tiny.xml:15633: The attribute 'font-family' does not allow the value 'string value', replaced with 'sans-serif'
-Tests/full-tiny.xml:15633: The attribute 'font-weight' does not allow the value '600', attribute to be removed
 Tests/full-tiny.xml:15633: The element 'a' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:15633: The element 'a' does not allow the attribute 'externalResourcesRequired', attribute to be removed.
 Tests/full-tiny.xml:15633: The element 'a' does not allow the attribute 'focusable', attribute to be removed.
@@ -5933,7 +5805,6 @@ Tests/full-tiny.xml:15667: The element 'listener' is not allowed as a child of '
 Tests/full-tiny.xml:15671: The element 'switch' is not allowed as a child of 'a'
 Tests/full-tiny.xml:15674: The element 'use' does not allow the attribute 'pointer-events', attribute to be removed.
 Tests/full-tiny.xml:15674: The element 'use' does not allow the attribute 'audio-level', attribute to be removed.
-Tests/full-tiny.xml:15674: The attribute 'font-weight' does not allow the value '700', attribute to be removed
 Tests/full-tiny.xml:15674: The element 'use' does not allow the attribute 'focusHighlight', attribute to be removed.
 Tests/full-tiny.xml:15674: The element 'use' does not allow the attribute 'focusable', attribute to be removed.
 Tests/full-tiny.xml:15674: The element 'use' does not allow the attribute 'nav-next', attribute to be removed.

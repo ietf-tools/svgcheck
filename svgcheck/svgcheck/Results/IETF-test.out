@@ -14,7 +14,6 @@ Tests/IETF-test.svg:17: Style property 'font-family' promoted to attribute
 Tests/IETF-test.svg:17: Style property 'font-size' promoted to attribute
 Tests/IETF-test.svg:17: Style property 'font-weight' promoted to attribute
 Tests/IETF-test.svg:17: The attribute 'font-family' does not allow the value 'Arial embedded', replaced with 'sans-serif'
-Tests/IETF-test.svg:17: The attribute 'font-weight' does not allow the value '400', attribute to be removed
 Tests/IETF-test.svg:18: Style property 'stroke' promoted to attribute
 Tests/IETF-test.svg:18: Style property 'fill' promoted to attribute
 Tests/IETF-test.svg:18: The attribute 'fill' does not allow the value 'rgb(0,0,0)', replaced with 'black'

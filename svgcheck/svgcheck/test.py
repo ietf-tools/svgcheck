@@ -126,6 +126,10 @@ class TestParserMethods(unittest.TestCase):
         check_process(self, [sys.executable, test_program, "--repair", "Tests/rfc-svg.xml"],
                       "Results/rfc-svg.out", "Results/rfc-svg.err", None, None)
 
+    def test_colors(self):
+        check_process(self, [sys.executable, test_program, "-r", "Tests/colors.svg"],
+                      "Results/colors.out", "Results/colors.err", None, None)
+
     def test_full_tiny(self):
         if not os.path.exists('Temp'):
             os.mkdir('Temp')

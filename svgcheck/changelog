@@ -1,8 +1,15 @@
+svgcheck (0.5.4) distribution(s); urgency=low
+
+	* Allow for #fff to be tagged as white.  Original discussions thought this was not going to be used.
+	* Add the numeric values for font-weight
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun XX MAY 2018 19:00:00 -0800
+
 svgcheck (0.5.1) distribution(s); urgency=low
 
 	* Setup things so it publishes to PyPI
 
--- Jim Schaad <ietf@augustcellars.com>  Sun XX MAR 2018 19:00:00 -0800
+-- Jim Schaad <ietf@augustcellars.com>  Sun 04 MAR 2018 19:00:00 -0800
 
 svgcheck (0.5.0) distribution(s); urgency=low
 
