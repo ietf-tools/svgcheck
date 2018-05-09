@@ -722,18 +722,18 @@ class DiffComment(DiffRoot):
             n.attrib['class'] = 'artwork right'
             node.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
             self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
-            root2.append(n)
+            node.append(n)
         elif self.deleted:
             n = E.SPAN()
             n.attrib['class'] = 'artwork left'
             node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
             self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
-            root2.append(n)
+            node.append(n)
         elif self.matchNode is None:
             n = E.SPAN()
             root.attrib['class'] = 'artwork error'
             self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
-            root2.append(n)
+            node.append(n)
         else:
             node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
             node.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
