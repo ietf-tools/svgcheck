@@ -716,7 +716,7 @@ class DiffComment(DiffRoot):
 
     def ToHtml(self, parent):
         node = E.LI()
-        parent.append(root2)
+        parent.append(node)
         if self.inserted:
             n = E.SPAN()
             n.attrib['class'] = 'artwork right'
