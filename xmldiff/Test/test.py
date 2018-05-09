@@ -217,6 +217,7 @@ class TestDistanceMethods(unittest.TestCase):
 
     def test_Table2(self):
         """ Add a layer to a tree """
+        """ If the first diff fails, make sure that table1 finished correctly """
         DistanceTest(self, "Tests/Table1.xml", "Tests/Table2.xml",
                      "Results/Table2.txt", "Results/Table2.html", False)
 

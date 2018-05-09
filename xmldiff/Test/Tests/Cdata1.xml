@@ -28,4 +28,10 @@ point in the text.]]>
     the spacing is not setup correctly
     as wen the space is setup as default
   </artwork>
+  <figure>
+    <artwork><![CDATA[
+    nonRepudiation; and
+    digitalSignature.
+]]></artwork>
+  </figure>
 </section>
