@@ -6,6 +6,7 @@
 
 import re
 import textwrap
+import lxml.etree
 
 try:
     import debug

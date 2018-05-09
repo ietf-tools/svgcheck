@@ -55,7 +55,7 @@ svgcheck depends on the following packages:
 
 * lxml_ *(>= 4.1.1)*
 * requests_ *(>= 2.5.0)*
-* `rfctools_common`_ *(>= 0.1.0)*
+* `rfctools_common`_ *(>= 0.5.3)*
 
 .. _lxml: http://lxml.de
 .. _requests: http://docs.python-requests.org

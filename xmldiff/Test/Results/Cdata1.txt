@@ -1,17 +1,20 @@
-OP=4 left=  17 right=  17
+OP=4 left=  20 right=  20
 OP=4 left=   3 right=   3
-OP=4 left=  18 right=  18
-OP=4 left=   5 right=   5
-OP=3 left=  19 right=  19
-OP=4 left=   7 right=   7
-OP=2 left=  20
-OP=1           right=  20
-OP=4 left=   9 right=   9
 OP=4 left=  21 right=  21
-OP=4 left=  11 right=  11
+OP=4 left=   5 right=   5
 OP=3 left=  22 right=  22
+OP=4 left=   7 right=   7
+OP=2 left=  23
+OP=1           right=  23
+OP=4 left=   9 right=   9
+OP=4 left=  24 right=  24
+OP=4 left=  11 right=  11
+OP=3 left=  25 right=  25
 OP=4 left=  13 right=  13
-OP=3 left=  23 right=  23
+OP=3 left=  26 right=  26
 OP=4 left=  15 right=  15
+OP=3 left=  27 right=  27
+OP=4 left=  18 right=  18
+OP=4 left=  17 right=  17
 OP=4 left=   2 right=   2
 OP=4 left=   1 right=   1

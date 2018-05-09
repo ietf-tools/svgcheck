@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+
+  <title>rfc-xmldiff Comment1.xml Comment2.xml</title>
+
+    <script src="file:///D:/Projects/v3/RfcEditor/xmldiff/xmldiff/Templates/mktree.js"></script>
+    <link rel="stylesheet" href="file:///D:/Projects/v3/RfcEditor/xmldiff/xmldiff/Templates/mktree.css" type="text/css">
+
+    <style>
+      xml-block { margin-left:1em; display:block }
+      .left { color:red; background-color:MistyRose}
+      .right { color:green; background-color:Lavender; }
+      .error { color:yellow; background-color:black; }
+      .artwork { font-family: monospace; }
+      ul {padding-left: 6px; }
+      li { list-style: none; padding-left: 6px; }
+      @media screen and (min-width: 1140px) {
+      #leftColumn { overflow: scroll; height: calc(100vh - 20px);}
+      #centerColumn { }
+      #rightColumn { overflow: scroll;height:  calc(100vh - 20px);}
+
+      .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
+      .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
+      .tab button:hover { background-color: #ddd; }
+      .tab button.active { background-color: #ccc; }
+      .tabcontent { display: none; padding: 6px 12px; border: 1px solid #ccc; border-top: none; }
+
+    </style>
+
+</head>
+
+<body>
+  <div id="root">
+    <div class="topnav">
+      <button type="button" onclick="expandTree('diffRoot')">Expand All</button>
+      <button type="button" onclick="collapseTree('diffRoot')">Collapse All</button>
+      <button type="button" onclick="expandDiffs('diffRoot')">Expand Diffs</button>
+    </div>
+    <div id="centerColumn">
+      <div class="center"><ul class="mktree" id="diffRoot">
+<li><span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></li>
+<li>&lt;section<span>&gt;</span><ul>
+<li><span class="artwork"><span>&lt;--&#160;&#160;one&#160;line&#160;comment&#160;&#160;--&gt;</span></span></li>
+<li>&lt;t<span>&gt;</span><ul>
+<li><span>First paragraph of </span></li>
+<li><span class="artwork"><span>&lt;--&#160;&#160;comment&#160;here&#160;is<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;over&#160;two&#160;lines&#160;&#160;--&gt;</span></span></li>
+<li><span>
+    contains a comment in the middle.
+  </span></li>
+<li><span>&lt;/t&gt;</span></li>
+</ul>
+</li>
+<li><span class="artwork left">&lt;--&#160;&#160;This&#160;comment&#160;is&#160;only<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;ont&#160;the&#160;left&#160;side&#160;&#160;--&gt;</span></li>
+<li>&lt;t<span>&gt;</span><ul>
+<li><span>Second paragraph has </span></li>
+<li><span class="artwork"><span>&lt;--&#160;&#160;This&#160;comment&#160;has<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;an</span><span class="right">d&#160;too</span><span>&#160;extra&#160;</span><span class="left">l</span><span class="right">ed</span><span>i</span><span class="left">ne&#160;in&#160;</span><span>t</span><span class="left">he&#160;middle</span><span class="right">s</span><span><br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;and&#160;</span><span class="left">m</span><span>a</span><span class="right">&#160;li</span><span>n</span><span class="left">y</span><span class="right">e&#160;on</span><span>&#160;t</span><span class="left">oo</span><span class="right">he</span><span>&#160;e</span><span class="right">n</span><span>d</span><span class="left">its</span><span><br>&#160;&#160;&#160;&#160;&#160;--&gt;</span></span></li>
+<li><span>
+    a diff commen tin the middle
+  </span></li>
+<li><span>&lt;/t&gt;</span></li>
+</ul>
+</li>
+<li><span class="artwork right">&lt;--&#160;&#160;This&#160;comment&#160;is&#160;only<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;ont&#160;the&#160;right&#160;side&#160;&#160;--&gt;</span></li>
+<li><span>&lt;/section&gt;</span></li>
+</ul>
+</li>
+</ul></div>
+
+    </div>
+
+    <script>
+      convertTrees()
+      expandTree("diffRoot")
+    </script>
+
+
+</body>
+</html>

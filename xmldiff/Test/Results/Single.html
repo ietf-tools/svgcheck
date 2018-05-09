@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="$TDIR/templates/mktree.css" type="text/css">
 
     <style>
-      xml-block { margin-left:1em; display:block }
-      .left { color:red; background-color:MistyRose}
-      .right { color:green; background-color:Lavender; }
-      .error { color:yellow; background-color:black; }
+      xml-block { margin-left:1em; display:block; font-family:monospace; }
+      .left { color:red; background-color:MistyRose; font-family:monospace; }
+      .right { color:green; background-color:Lavender; font-family:monospace; }
+      .error { color:yellow; background-color:black; font-family:monospace; }
       .artwork { font-family: monospace; }
       ul {padding-left: 6px; }
       li { list-style: none; padding-left: 6px; }
@@ -42,14 +42,14 @@
     </div>
     <div id="centerColumn">
       <div class="center"><ul class="mktree" id="diffRoot">
-<li><span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></li>
-<li>&lt;root<span>&gt;</span><ul>
-<li>&lt;node1<span>&gt;</span><ul>
-<li><span class="right">text </span></li>
-<li><span>&lt;/node1&gt;</span></li>
+<li whereLeft="L0_0" whereRight="R0_0"><span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></li>
+<li whereLeft="L1_0" whereRight="R1_0">&lt;root<span>&gt;</span><ul>
+<li whereLeft="L2_0" whereRight="R2_0">&lt;node1<span>&gt;</span><ul>
+<li whereRight="R2_0"><span class="right">text </span></li>
+<li whereLeft="L2_0" whereRight="R2_0"><span>&lt;/node1&gt;</span></li>
 </ul>
 </li>
-<li><span>&lt;/root&gt;</span></li>
+<li whereLeft="L1_0" whereRight="R1_0"><span>&lt;/root&gt;</span></li>
 </ul>
 </li>
 </ul></div>

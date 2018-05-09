@@ -37,16 +37,17 @@ def clear_cache(cache_path):
     sys.exit()
 
 
-def formatLines(lines):
+def formatLines(lines, side):
     output = '<div itemprop="text" class="blob-wrapper data type-c">'
     output += '<table class="highlight tab-size js-file-line-container" data-tab-size="8">'
     output += "<col width='4em'>"
 
     iLine = 1
     for line in lines:
-        output += '<tr><td class="blob-num js-line-number" data-line-number="{0}">{0}</td>' \
+        output += '<tr id="{2}{0}_{3}"><td class="blob-num js-line-number" ' \
+                  'data-line-number="{0}">{0}</td>' \
                   '<td class="blob-code blob-code-inner js-file-line">{1}</td></tr>'. \
-                  format(iLine, line)
+                  format(iLine, line, side, '0')
         iLine += 1
     output += "</table></div>"
 
@@ -199,8 +200,8 @@ def main():
     rightLines = [x.replace(' ', '&nbsp;') for x in rightLines]
 
     buffers = {}
-    buffers['leftFile'] = formatLines(leftLines)
-    buffers['rightFile'] = "<br/>".join(rightLines)
+    buffers['leftFile'] = formatLines(leftLines, 'L')
+    buffers['rightFile'] = formatLines(rightLines, 'R')
     buffers['body'] = leftXml.ToString()
 
     subs = {
@@ -209,7 +210,7 @@ def main():
         'title': 'rfc-xmldiff {0} {1}'.format(leftFile_base, rightFile_base),
         'body': ''.join(buffers['body']),
         'leftFile': buffers['leftFile'],
-        'rightFile': "<br/>".join(rightLines),
+        'rightFile': buffers['rightFile'],
         'resource_dir': options.resource_url
         }
     output = html_template.substitute(subs)

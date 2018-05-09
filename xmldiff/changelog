@@ -1,3 +1,11 @@
+xmldiff (0.5.4) distribution(s); urgency=low
+
+	* Respect whitespace in comments
+	* Make everything be a fixed pitch font based on RPC request
+	* Put in code to cause the right and left panels scroll based on the center scrolling
+
+-- Jim Schaad <ietf@augustcellars.com>  Wed 9 May 2018 12:00:00 -0800
+
 xmldiff (0.5.3) distribution(s); urgency=low
 
 	* Move resize javascript into a separate file

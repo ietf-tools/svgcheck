@@ -136,7 +136,7 @@ properties = {
     'viewport-fill':         ('none', 'currentColor', 'inherit', '<color>'),
 
     'display':               ('inline', 'block', 'list-item', 'run-in', 'compact',
-                              'marker', 'table', 'inline-table', 'table-row-group',
+                              'table', 'inline-table', 'table-row-group',
                               'table-header-group', 'table-footer-group',
                               'table-row', 'table-column-group',
                               'table-column', 'table-cell', 'table-caption',
@@ -164,7 +164,9 @@ properties = {
 
     'font-size':           (),  # 'inherit'
     'font-family':         ('serif', 'sans-serif', 'monospace', 'inherit'),
-    'font-weight':         ('normal', 'bold', 'bolder', 'lighter', 'inherit'),
+    'font-weight':         ('normal', 'bold', 'bolder', 'lighter', 'inherit',
+                            '100', '200', '300', '400', '500', '600', '700',
+                            '800', '900'),
     'font-style':          ('normal', 'italic', 'oblique', 'inherit'),
     'font-variant':        ('normal', 'small-caps', 'inherit'),
     'direction':           ('ltr', 'rtl', 'inherit'),
@@ -239,5 +241,6 @@ xmlns_urls = (  # Whitelist of allowed URLs
 
 color_map = {
     'rgb(0,0,0)': 'black',
-    'rgb(255,255,255)': 'white'
+    'rgb(255,255,255)': 'white',
+    '#fff': 'white'
 }

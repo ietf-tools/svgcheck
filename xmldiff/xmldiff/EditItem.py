@@ -1,4 +1,4 @@
-from xmldiff._zzs import ffi, lib
+from xmldiff._zzs import ffi
 
 class EditItem(object):
     __slots__ = ['operation', 'left', 'right', 'cost']

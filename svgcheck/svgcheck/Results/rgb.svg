@@ -4,7 +4,7 @@
   <circle cx="60" cy="50" r="40" stroke="#FFFFFF" fill="#ffffff"/>
   <circle cx="70" cy="50" r="40" stroke="black" fill="white"/>
   <circle cx="80" cy="50" r="40" stroke="black" fill="black"/>
-  <circle cx="90" cy="50" r="40" stroke="black" fill="black"/>
-  <circle cx="100" cy="50" r="40" stroke="black" fill="black"/>
+  <circle cx="90" cy="50" r="40" stroke="black" fill="white"/>
+  <circle cx="100" cy="50" r="40" stroke="black" fill="white"/>
   <circle cx="110" cy="50" r="40" stroke="black" fill="black"/>
 </svg>
