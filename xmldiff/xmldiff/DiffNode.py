@@ -720,13 +720,13 @@ class DiffComment(DiffRoot):
         if self.inserted:
             n = E.SPAN()
             n.attrib['class'] = 'artwork right'
-            root2.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
             self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
             root2.append(n)
         elif self.deleted:
             n = E.SPAN()
             n.attrib['class'] = 'artwork left'
-            root2.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
             self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
             root2.append(n)
         elif self.matchNode is None:
@@ -735,8 +735,8 @@ class DiffComment(DiffRoot):
             self.fixPreserveSpace(n, "<-- {0} -->".format(self.toText()))
             root2.append(n)
         else:
-            root2.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
-            root2.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
+            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
             left = "<-- {0} -->".format(self.toText())
             right = "<-- {0} -->".format(self.matchNode.toText(), root2)
             self.diffTextToHtml(left, right, root2)
