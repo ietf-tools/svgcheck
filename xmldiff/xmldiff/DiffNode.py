@@ -738,8 +738,8 @@ class DiffComment(DiffRoot):
             node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
             node.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
             left = "<-- {0} -->".format(self.toText())
-            right = "<-- {0} -->".format(self.matchNode.toText(), root2)
-            self.diffTextToHtml(left, right, root2)
+            right = "<-- {0} -->".format(self.matchNode.toText(), node)
+            self.diffTextToHtml(left, right, node)
 
     def toText(self):
         return self.xml.text
