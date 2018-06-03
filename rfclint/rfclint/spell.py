@@ -8,12 +8,18 @@ import six
 import platform
 import codecs
 import subprocess
+try:
+    import curses
+    haveCurses = True
+except ImportError:
+    haveCurses = False
 from rfctools_common import log
 
 
 if six.PY2:
     import subprocess32
     subprocess = subprocess32
+    input = raw_input
 else:
     import subprocess
 
@@ -295,10 +301,105 @@ class Speller(object):
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
         self.aspell_re = re.compile(r".\s(\S+)\s(\d+)\s*((\d+): (.+))?", re.UNICODE)
 
+        self.spell_re = re.compile(r'\w[\w\'\u00B4\u2019]*\w', re.UNICODE)
+
+        self.no_curses = False
         self.interactive = False
+        self.curses = None
         if config.options.output_filename is not None:
             self.interactive = True
             self.ignoreWords = []
+            self.lastElement = None
+            self.textLocation = True
+
+    def processTree(self, tree):
+        # log.warn("processTree - look at node {0}".format(tree.tag))
+        if tree.tag in CheckAttributes:
+            self.checkAttributes(tree)
+        if tree.tag in CutNodes:
+            self.checkTree(tree)
+        for node in tree.iterchildren():
+            self.processTree(node)
+
+    def checkAttributes(self, tree):
+        for attr in CheckAttributes[tree.tag]:
+            if attr not in tree.attrib:
+                continue
+            words = [(tree.attrib[attr], tree, attr, 0)]
+            results = self.processLine(words)
+            self.processResults(words, results, attr)
+
+    def checkTree(self, tree):
+        wordSet = self.getWords(tree)
+        results = self.processLine(wordSet)
+
+        self.processResults(wordSet, results, None)
+
+    def checkWord(self, wordToCheck):
+        #  Write word to check to the speller
+
+        newLine = u'^ ' + wordToCheck + u'\n'
+        if self.iso8859:
+            log.note(u"Pre Encode = " + newLine)
+            newLine = newLine.encode('iso-8859-1', 'replaceWithSpace')
+            newLine = newLine.decode('iso-8859-1')
+        else:
+            newLine = newLine  # .encode('utf-8')
+            log.note(newLine)
+        self.stdin.write(newLine)
+
+        result = []
+
+        #  Read all of the results
+        while True:
+            line = self.stdout.readline()
+            if six.PY2:
+                if self.iso8859:
+                    #  log.note(" ".join("{:02x}".format(c) for c in line))
+                    line = line.decode('iso-8859-1')
+                else:
+                    line = line.decode('utf-8')
+            line = line.strip()
+            log.note('spell out line = ' + line)
+
+            #  Empty lines mean that we are done
+            if len(line) == 0:
+                break
+
+            # '*' means ????
+            if line[0] == '*':
+                continue
+
+            m = self.aspell_re.match(line)
+            if not m:
+                log.error("Internal error trying to match the line '{0}'".format(line))
+                continue
+
+            if line[0] == '#':
+                offset = int(m.group(2))
+                options = None
+            elif line[0] == '&':
+                offset = int(m.group(4))
+                options = m.group(5)
+            else:
+                log.error("internal error - aspell says line is '{0}'".format(line))
+                continue
+
+            tuple = (line[0], offset, None, m.group(1), options, 0)
+            result.append(tuple)
+
+        return result
+
+    def sendCommand(self, cmd):
+        newLine = cmd + u'\n'
+        if self.iso8859:
+            log.note(u"Pre Encode = " + newLine)
+            newLine = newLine.encode('iso-8859-1', 'replaceWithSpace')
+            newLine = newLine.decode('iso-8859-1')
+        else:
+            newLine = newLine  # .encode('utf-8')
+            log.note(newLine)
+        self.stdin.write(newLine)
 
     def processLine(self, allWords):
         """
@@ -313,6 +414,7 @@ class Speller(object):
           The tree node
         )
         """
+        return []
         result = []
         setNo = 0
         for wordSet in allWords:
@@ -366,34 +468,10 @@ class Speller(object):
 
         return result
 
-    def processTree(self, tree):
-        # log.warn("processTree - look at node {0}".format(tree.tag))
-        if tree.tag in CheckAttributes:
-            self.checkAttributes(tree)
-        if tree.tag in CutNodes:
-            self.checkTree(tree)
-        for node in tree.iterchildren():
-            self.processTree(node)
-
-    def checkTree(self, tree):
-        wordSet = self.getWords(tree)
-        results = self.processLine(wordSet)
-
-        self.processResults(wordSet, results, None)
-
-        # s = " ".join(words[max(0, i-10):min(len(words), i+10)])
-        # s = s.replace(words[i], colorama.Fore.GREEN + ">>>" + words[i] + "<<<" +
-        #       colorama.Style.RESET_ALL)
-        # log.warn(s)
-        # log.warn(results[i][results[i].rfind(':')+2:])
-
     def getWords(self, tree):
         words = []
         if tree.text:
-            for x in tree.text.splitlines():
-                ll = x.strip()
-                if ll:
-                    words += [(ll, tree)]
+            words += [(tree.text, tree, True, -1)]
 
         for node in tree.iterchildren():
             if node.tag in CutNodes:
@@ -401,17 +479,9 @@ class Speller(object):
             words += self.getWords(node)
 
             if node.tail:
-                words += [(node.tail, tree)]
+                words += [(node.tail, node, False, -1)]
 
         return words
-
-    def checkAttributes(self, tree):
-        for attr in CheckAttributes[tree.tag]:
-            if attr not in tree.attrib:
-                continue
-            words = [(tree.attrib[attr], tree)]
-            results = self.processLine(words)
-            self.processResults(words, results, attr)
 
     def processResults(self, wordSet, results, attributeName):
         """  Process the results coming from a spell check operation """
@@ -422,44 +492,47 @@ class Speller(object):
             xx = self.word_re.finditer(words[0])
             for w in xx:
                 if w:
-                    matchGroups.append((w, words[1]))
+                    matchGroups.append((w, words[1], words[2], words[3]))
                     allWords.append(w.group(1))
                     if allWords[-1][-1] not in [' ', '-', "'"]:
                         allWords[-1] += ' '
+        if len(allWords) > 0:
+            allWords[0] = allWords[0].lstrip()
+            allWords[-1] = allWords[-1].rstrip()
 
-        for r in results:
-            if attributeName:
-                log.error("Misspelled word '{0}' in attribute '{1}'".format(r[3], attributeName),
-                          where=r[2])
-            else:
-                log.error(u"Misspelled word was found '{0}'".format(r[3]), where=r[2])
-
-            if self.interactive:
-                self.Interact(r, matchGroups, allWords)
-            else:
-                if self.window > 0:
-                    q = self.wordIndex(r[1], r[2], matchGroups)
-                    if q >= 0:
-                        ctx = ""
-                        if q > 0:
-                            ctx = "".join(allWords[max(0, q - self.window):q])
-                        ctx += self.color_start + allWords[q] + self.color_end
-                        if q < len(allWords):
-                            ctx += "".join(allWords[q + 1:min(q + self.window + 1, len(allWords))])
-                        log.error(ctx, additional=2)
-                if self.suggest and r[4]:
-                    suggest = " ".join(r[4].split()[0:10])
-                    log.error(suggest, additional=2)
-
-        # check for dups
-        last = None
-        for (m, el) in matchGroups:
-            for g in m.groups():
-                if last:
-                    # print("compare '{0}' and '{1}'".format(last, g))
-                    if last == g:
-                        log.error("Duplicate word found '{0}'".format(last), where=el)
-                last = g
+        # do the spelling checking
+        wordNo = -1
+        for words in wordSet:
+            xx = self.spell_re.finditer(words[0])
+            for w in xx:
+                wordNo += 1
+                sp = self.checkWord(w.group(0))
+                if len(sp) == 0:
+                    continue
+                if self.interactive:
+                    self.Interact(words[1], w, -1, allWords, wordSet, words, sp[0])
+                else:
+                    if attributeName:
+                        log.error("Misspelled word '{0}' in attribute '{1}'".format(w.group(0),
+                                                                                    attributeName),
+                                  where=words[1])
+                    else:
+                        log.error(u"Misspelled word was found '{0}'".format(w.group(0)),
+                                  where=words[1])
+                    if self.window > 0:
+                        if wordNo >= 0:
+                            ctx = ""
+                            if wordNo > 0:
+                                ctx = "".join(allWords[max(0, wordNo - self.window):wordNo])
+                            ctx += self.color_start + allWords[wordNo] + self.color_end
+                            if wordNo < len(allWords):
+                                ctx += "".join(
+                                    allWords[wordNo + 1:
+                                             min(wordNo + self.window + 1, len(allWords))])
+                            log.error(ctx, additional=2)
+                    if self.suggest and sp[0][4]:
+                        suggest = " ".join(sp[0][4].split()[0:10])
+                        log.error(suggest, additional=2)
 
     def wordIndex(self, offset, el, matchArray):
         """
@@ -469,11 +542,11 @@ class Speller(object):
         for i in range(len(matchArray)):
             m = matchArray[i]
             if m[1] == el and \
-               (m[0].start(1) <= offset and offset <= m[0].end(1)):
+               (m[0].start(1) <= offset and offset < m[0].end(1)):
                 return i
         return -1
 
-    def Interact(self, r, matchGroups, allWords):
+    def Interact(self, element, match, srcLine, allWords, wordSet, words, spellInfo):
         #
         #  At the request of the RFC editors we use the ispell keyboard mappings
         #
@@ -489,50 +562,146 @@ class Speller(object):
         #  ? - Print help
         #
 
-        q = self.wordIndex(r[1], r[2], matchGroups)
+        if self.curses:
+            self.curses.erase()
+            self.curses.move(0, 0)
 
-        if allWords[q] in self.ignoreWords or allWords[q].lower() in self.ignoreWords:
-            return
+        fileName = element.base
+        if fileName.startswith("file:///"):
+            fileName = os.path.relpath(fileName[8:])
+        elif fileName[0:6] == 'file:/':
+            fileName = os.path.relpath(fileName[6:])
+        elif fileName[0:7] == 'http://' or fileName[0:8] == 'https://':
+            pass
+        else:
+            fileName = os.path.relpath(fileName)
 
-        ctx = ""
-        if q > 0:
-            ctx = "".join(allWords[0:q])
-        ctx += self.color_start + allWords[q] + self.color_end
-        ctx += "".join(allWords[q + 1:])
-        log.error("", additional=0)
-        log.error(ctx, additional=2)
+        y = 0
+        self.x = 0
+        self.y = 0
 
-        log.error("", additional=0)
-        suggest = r[4].split(' ')
+        if isinstance(words[2], str):
+            str1 = u"{1}:{2} Misspelled word '{0}' found in attribute '{3}'". \
+                        format(match.group(0), fileName, element.sourceline, words[2])
+        else:
+            str1 = u"{1}:{2} Misspelled word found '{0}'". \
+                        format(match.group(0), fileName, element.sourceline)
 
-        list = ""
+        if self.curses:
+            self.curses.addstr(curses.LINES-15, 0, self.spaceline, curses.A_REVERSE)
+            self.curses.addstr(curses.LINES-14, 0, str1)
+            self.curses.addstr(curses.LINES-13, 0, self.spaceline, curses.A_REVERSE)
+        else:
+            log.write("")
+            log.error(str1)
+
+        for line in wordSet:
+            if isinstance(line[2], str):
+                text = line[1].attrib[line[2]]
+            elif line[2]:
+                text = line[1].text
+            else:
+                text = line[1].tail
+            if words == line:
+                if self.lastElement != line[1] or self.textLocation != line[2]:
+                    self.offset = 0
+                    self.lastElement = line[1]
+                    self.textLocation = line[2]
+                self.writeString(text[:match.start()+self.offset], partialString=True)
+                self.writeString(text[match.start()+self.offset:match.end()+self.offset],
+                                 self.A_REVERSE, True)
+                self.writeString(text[match.end()+self.offset:])
+            else:
+                self.writeString(text)
+            y += 1
+
+        suggest = spellInfo[4].split(',')
+
+        # list = ""
+        # for i in range(min(10, len(suggest))):
+        #     list += "{0}) {1} ".format(chr(i + 0x31), suggest[i])
+
+        if not self.curses:
+            log.write("")
+
         for i in range(min(10, len(suggest))):
-            list += "{0}) {1} ".format(chr(i + 0x31), suggest[i])
+            str1 = "{0}) {1}".format((i+1) % 10, suggest[i].strip())
+            if self.curses:
+                self.curses.addstr(int(i/2) + curses.LINES-12, int(i % 2)*40, str1)
 
-        log.error(list, additional=2)
-        log.write("> ")
+            else:
+                log.write_on_line(str1 + ", ")
+
+        if self.curses:
+            self.curses.addstr(curses.LINES-6, 0, " ) Ignore")
+            self.curses.addstr(curses.LINES-6, 40, "A) Accept Word")
+            self.curses.addstr(curses.LINES-5, 0, "I) Add to dictionary")
+            self.curses.addstr(curses.LINES-5, 40, "U) Add to dictionary lowercase")
+            self.curses.addstr(curses.LINES-4, 0, "D) Delete Word")
+            self.curses.addstr(curses.LINES-4, 40, "R) Replace Word")
+            self.curses.addstr(curses.LINES-3, 0, "Q) Quit")
+            self.curses.addstr(curses.LINES-3, 40, "X) Exit")
+            self.curses.addstr(curses.LINES-2, 0, self.spaceline, curses.A_REVERSE)
+            self.curses.addstr(curses.LINES-1, 0, "?")
+            self.curses.refresh()
+        else:
+            log.write("")
+
         replaceWord = None
 
         while (True):
-            ch = get_character()
+            # ch = get_character()
+            if self.curses:
+                ch = chr(self.curses.getch())
+            else:
+                ch = input("? ")
+                ch = (ch+'b')[0]
+
             if ch == ' ':
                 return
             if ch == '?':
-                self.PrintHelp()
-            elif ch == 'Q':
-                sys.exit(1)
-            elif ch == 'I':
-                self.IgnoreWord(allWords[q])
+                if not self.curses:
+                    log.error("HELP:  ) Ignore, D) Delete Word, R) Replace Word, Q) Quit, X) Exit.",
+                              additional=0)
+            elif ch == 'Q' or ch == 'q':
+                if self.curses:
+                    self.curses.addstr(curses.LINES-1, 0, "Are you sure you want to abort?")
+                    self.curses.refresh()
+                    ch = self.curses.getch()
+                else:
+                    ch = input("Are you sure you want to abort? ")
+                    ch = (ch + 'x')[0]
+                if ch == 'Y' or ch == 'y':
+                    sys.exit(1)
+                if self.curses:
+                    self.curses.addstr(curses.LINES-1, 0, "?" + ' '*30)
+                    self.curses.refresh()
+            elif ch == 'A' or ch == 'a':
+                self.sendCommand("@"+match.group(0))
                 return
-            elif ch == 'U':
-                self.IgnoreWord(allWords[q].tolower())
+            elif ch == 'I' or ch == 'i':
+                self.sendCommand("*"+match.group(0))
                 return
-            elif ch == 'X':
+            elif ch == 'U' or ch == 'u':
+                self.sendCommand("&"+match.group(0))
                 return
-            elif ch == 'R':
+            elif ch == 'X' or ch == 'x':
                 return
-            elif byte1 <= ch and ch <= byte9:
-                ch = int(ch) - int(byte1)
+            elif ch == 'R' or ch == 'r':
+                if self.curses:
+                    self.curses.addstr(curses.LINES-1, 0, "Replace with: ")
+                    curses.nocbreak()
+                    curses.echo()
+                    self.curses.refresh()
+                    replaceWord = self.curses.getstr()
+                    curses.cbreak()
+                    curses.noecho()
+
+                    replaceWord = replaceWord.decode('utf-8')
+                else:
+                    replaceWord = input("Replace with: ")
+            elif 0x31 <= ord(ch) and ord(ch) <= 0x39:
+                ch = ord(ch) - 0x31
                 replaceWord = suggest[ch]
             elif ch == '0':
                 replaceWord = suggest[9]
@@ -540,5 +709,81 @@ class Speller(object):
                 pass
 
             if replaceWord is not None:
+                if isinstance(line[2], str):
+                    element.attrib[line[2]] = self.replaceText(element.attrib[line[2]],
+                                                               replaceWord, match, element)
+                elif words[2]:
+                    element.text = self.replaceText(element.text, replaceWord, match, element)
+                else:
+                    element.tail = self.replaceText(element.tail, replaceWord, match, element)
                 return
-            log.write("\n> ")
+
+    def replaceText(self, textIn, replaceWord, match, el):
+        startChar = match.start() + self.offset
+        while textIn[startChar] == ' ':
+            startChar += 1
+
+        textOut = textIn[:startChar] + replaceWord + \
+            textIn[match.end()+self.offset:]
+        self.offset += len(replaceWord) - (match.end() - match.start())
+        return textOut
+
+    def writeString(self, text, color=0, partialString=False):
+        newLine = False
+        cols = 80
+        if self.curses:
+            cols = curses.COLS
+            if color == 0:
+                color = curses.A_NORMAL
+        for line in text.splitlines(1):
+            if line[:-1] == '\n':
+                newLine = True
+                line = line[:-1]
+            while self.x + len(line) >= cols:
+                if self.curses:
+                    self.curses.addstr(self.y, self.x, line[:cols-self.x - 2], color)
+                    self.curses.addstr("/", color)
+                else:
+                    log.write_on_line(line[:cols-self.x - 2])
+                    log.write_on_line("/")
+                line = line[cols-self.x-2:]
+                self.x = 0
+                self.y += 1
+                if not self.curses:
+                    log.write("")
+            if self.curses:
+                self.curses.addstr(self.y, self.x, line, color)
+            else:
+                log.write_on_line(line)
+            self.x += len(line)
+            if newLine:
+                if self.x != 0:
+                    self.x = 0
+                    self.y += 1
+                    if not self.curses:
+                        log.write("")
+                newLine = False
+            if self.x != 0 and line[-1] != ' ' and not partialString:
+                self.x += 1
+
+    def initscr(self):
+        try:
+            self.A_REVERSE = 0
+            self.A_NORMAL = 0
+            if haveCurses and not self.no_curses:
+                self.curses = curses.initscr()
+                curses.start_color()
+                curses.noecho()
+                curses.cbreak()
+                self.spaceline = " "*curses.COLS
+                self.A_REVERSE = curses.A_REVERSE
+                self.A_NORMAL = curses.A_NORMAL
+
+        except curses.error as e:
+            self.curses = None
+
+    def endwin(self):
+        if self.curses:
+            curses.nocbreak()
+            curses.echo()
+            curses.endwin()

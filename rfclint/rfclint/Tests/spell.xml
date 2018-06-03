@@ -5,32 +5,32 @@
     <seriesInfo name="THis is the series Info TItle" asciiName="This is also the name" asciiValue="Should not be here" stream="IETF" value="XXX"/>
     <author asciiFullname="Jim Schaad" asciiInitials="X.X" asciiSurname="YYY" fullname="Its my name" initials="XX" surname="Schaad">
       <organization>
-	Orgg is an affilliation of text
+        Orgg is an affilliation of text
       </organization>
       <address>
-	<postal>
-	  <city ascii="Xtxt equal">text field
-	  </city>
-	  <code ascii="text equal">
-	    Some test words - ASN.1 A2C go4broke Fred.Baker
-	    need to get some unicode here as well. groook
-	  </code>
-	  <country ascii="text equal">
-	    ddtext field
-	  </country>
-	  <region ascii="text equall">
-	    reggional name
-	  </region>
-	  <street ascii="street value equal">
-	    street values
-	  </street>
-	</postal>
-	<phone>textt field
-	</phone>
-	<email>text fiiedl
-	</email>
-	<uri>text field w/ url
-	</uri>
+        <postal>
+          <city ascii="Xtxt equal">text field
+          </city>
+          <code ascii="text equal">
+            Some test words - ASN.1 A2C go4broke Fred.Baker
+            need to get some unicode here as well. groook
+          </code>
+          <country ascii="text equal">
+            ddtext field
+          </country>
+          <region ascii="text equall">
+            reggional name
+          </region>
+          <street ascii="street value equal">
+            street values
+          </street>
+        </postal>
+        <phone>textt field
+        </phone>
+        <email>text fiiedl
+        </email>
+        <uri>text field w/ url
+        </uri>
       </address>
     </author>
     <date/>
@@ -39,115 +39,115 @@
     <keyword/>
     <abstract>
       <t>
-	Abstract goes here
+        Abstract goes here
       </t>
     </abstract>
     <note>
       <name>THis is the note name</name>
       <ul>
-	<li>This is some text here</li>
+        <li>This is some text here</li>
       </ul>
     </note>
       <boilerplate>
-	<section>
-	  <name>Boilerplate section 1</name>
-	  <t>THis is the section 1 boilerplate.</t>
-	</section>
+        <section>
+          <name>Boilerplate section 1</name>
+          <t>THis is the section 1 boilerplate.</t>
+        </section>
       </boilerplate>
   </front>
   <middle>
     <section>
       <name>THis is the sectn name.</name>
       <artwork>
-	Artwork can contain a txt element or an svg element
+         Artwork can contain a txt element or an svg element
       </artwork>
       <aside>
-	<t>Assides do not allow for text content directly in them.</t>
+        <t>Assides do not allow for text content directly in them.</t>
       </aside>
       <blockquote quotedFrom="Myself">This allwos for either a text item</blockquote>
       <dl>
-	<dt>This is text <em>with</em> other</dt>
-	<dd>This element can be simpley text blob</dd>
-	<dt>Funny <sub>items here</sub> are a mess</dt>
-	<dd>
-	  <t>This can also be a multiple text tiem</t>
-	  <t>Whch allows for two items</t>
-	</dd>
+        <dt>This is text <em>with</em> other</dt>
+        <dd>This element can be simpley text blob</dd>
+        <dt>Funny <sub>items here</sub> are a mess</dt>
+        <dd>
+          <t>This can also be a multiple text tiem</t>
+          <t>Whch allows for two items</t>
+        </dd>
       </dl>
       <figure>
-	<name>Title of the figre</name>
-	<iref item="figure" subitem="indexed"/>
-	<preamble>Preabmles are just text elements</preamble>
-	<artwork>Cn be text item </artwork>
-	<sourcecode>Src Is additonlly text = could pt to something</sourcecode>
-	<postamble>Pstabmles are also just text elementts</postamble>
+        <name>Title of the figre</name>
+        <iref item="figure" subitem="indexed"/>
+        <preamble>Preabmles are just text elements</preamble>
+        <artwork>Cn be text item </artwork>
+        <sourcecode>Src Is additonlly text = could pt to something</sourcecode>
+        <postamble>Pstabmles are also just text elementts</postamble>
       </figure>
       <iref item="index" subitem="other"/>
       <ol>
-	<li>THis can bee a text item
-	</li>
-	<li><t>Or this can be a structured text tiem</t>
-	</li>
+        <li>THis can bee a text item
+        </li>
+        <li><t>Or this can be a structured text tiem</t>
+        </li>
       </ol>
       <sourcecode>Only permmts text</sourcecode>
       <t/>
       <table>
-	<name>This is aa table</name>
-	<thead>
-	  <tr>
-	  <th>
-	    THis can be text
-	  </th>
-	  <th>text can be this</th>
-	  <th><t>this is also textlegal</t></th>
-	  </tr>
-	</thead>
-	<tbody>
-	  <tr>
-	    <td>Cell value 1</td>
-	    <td>Cell value two</td>
-	    <td>two was last cell</td>
-	  </tr>
-	  <tr>
-	    <td><t>Cell value one</t></td>
-	    <td>one value Cell</td>
-	  </tr>
-	</tbody>
-	<tfoot>
-	  <tr>
-	    <td>Same as the previous ones</td>
-	  </tr>
-	</tfoot>
+        <name>This is aa table</name>
+        <thead>
+          <tr>
+          <th>
+            THis can be text
+          </th>
+          <th>text can be this</th>
+          <th><t>this is also textlegal</t></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cell value 1</td>
+            <td>Cell value two</td>
+            <td>two was last cell</td>
+          </tr>
+          <tr>
+            <td><t>Cell value one</t></td>
+            <td>one value Cell</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Same as the previous ones</td>
+          </tr>
+        </tfoot>
       </table>
       <ul>
-	<li>Text item sdrawkcab
-	</li>
-	<li>text item
-	</li>
+        <li>Text item sdrawkcab
+        </li>
+        <li>text item
+        </li>
       </ul>
       <section>
-	<artwork>
-	  <svg height="100" width="100" datatype="foobar" xmlns="http://www.w3.org/2000/svg">
-	    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="black"/>
-	    <desc>Text goes here -- finish expanding</desc>
-	  </svg>
-	</artwork>
-	<blockquote quotedFrom="Mispelled Srce of txtr">
-	  <t>This allwos for a text item to be a child</t>
-	</blockquote>
-	<t>
-	  this is compliated by <bcp14>MUST</bcp14> MUST be dropped or <bcp14>MUST</bcp14> must not be dropped
-	  <cref display="true">CRefs have tet content inside of them - I don't know about dups here</cref> here was a cref
-	  dup checks <cref display="true"> this is not part of it</cref> checks gets a dup.
-	  <em> Text here <tt>can be nstted</tt> for fun</em>
-	  <eref target="targetURL">can have content</eref>
-	  <iref item="index 2"/>
-	  <relref section="2.3" target="MSG"> the protocol overrreview</relref>
-	  <strong>THis is a normal text item.</strong> <sub>THis is a normal textt item</sub>
-	  <sup>Need to text de-duplicatte</sup>
-	  <tt>Tex is now mono-spaced</tt>
-	  <xref target="MSG">references can contain text</xref>
-	</t>
+        <artwork>
+          <svg height="100" width="100" datatype="foobar" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="black"/>
+            <desc>Text goes here -- finish expanding</desc>
+          </svg>
+        </artwork>
+        <blockquote quotedFrom="Mispelled Srce of txtr">
+          <t>This allwos for a text item to be a child</t>
+        </blockquote>
+        <t>
+          this is compliated by <bcp14>MUST</bcp14> MUST be dropped or <bcp14>MUST</bcp14> must not be dropped
+          <cref display="true">CRefs have tet content inside of them - I don't know about dups here</cref> here was a cref
+          dup checks <cref display="true"> this is not part of it</cref> checks gets a dup.
+          <em> Text here <tt>can be nstted</tt> for fun</em>
+          <eref target="targetURL">can have content</eref>
+          <iref item="index 2"/>
+          <relref section="2.3" target="MSG"> the protocol overrreview</relref>
+          <strong>THis is a normal text item.</strong> <sub>THis is a normal textt item</sub>
+          <sup>Need to text de-duplicatte</sup>
+          <tt>Tex is now mono-spaced</tt>
+          <xref target="MSG">references can contain text</xref>
+        </t>
       </section>
     </section>
   </middle>
@@ -156,40 +156,40 @@
     <references>
       <name>Rference group name</name>
       <referencegroup anchor="SMIMEv3">
-	<reference anchor="MSG">
-	  <front>
-	    <title>Name of work</title>
-	    <seriesInfo name="RFC" value="888"/>
-	    <author initials="j." surname="other"/>
-	  </front>
-	  <annotation>
-	    Anntoations are a text element
-	  </annotation>
-	  <refcontent>THis elementt contains a text</refcontent>
-	</reference>
+        <reference anchor="MSG">
+          <front>
+            <title>Name of work</title>
+            <seriesInfo name="RFC" value="888"/>
+            <author initials="j." surname="other"/>
+          </front>
+          <annotation>
+            Anntoations are a text element
+          </annotation>
+          <refcontent>THis elementt contains a text</refcontent>
+        </reference>
       </referencegroup>
-	<reference anchor="CERTS">
-	  <front>
-	    <title>Name of work</title>
-	    <seriesInfo name="RFC" value="889"/>
-	    <author initials="j." surname="other">
-	      <address>
-		<postal>
-		<postalLine>
-		  Postal liness are text
-		</postalLine>
-		<postalLine>
-		  Postal liness are text
-		</postalLine>
-		</postal>
-	      </address>
-	    </author>
-	  </front>
-	  <annotation>
-	    Anntoations are a text element
-	  </annotation>
-	  <refcontent>THis elementt contains a text</refcontent>
-	</reference>
+        <reference anchor="CERTS">
+          <front>
+            <title>Name of work</title>
+            <seriesInfo name="RFC" value="889"/>
+            <author initials="j." surname="other">
+              <address>
+                <postal>
+                <postalLine>
+                  Postal liness are text
+                </postalLine>
+                <postalLine>
+                  Postal liness are text
+                </postalLine>
+                </postal>
+              </address>
+            </author>
+          </front>
+          <annotation>
+            Anntoations are a text element
+          </annotation>
+          <refcontent>THis elementt contains a text</refcontent>
+        </reference>
     </references>
   </back>
 </rfc>

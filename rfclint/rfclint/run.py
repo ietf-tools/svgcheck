@@ -15,6 +15,7 @@ from rfctools_common import log
 from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker, RfcLintError
 from rfclint.spell import Speller, SpellerColors
+from rfclint.dups import Dups
 import rfclint
 
 try:
@@ -112,6 +113,8 @@ def main():
     spell_options.add_option('--color', dest='spell_color', action='callback',
                              callback=check_color, type='string',
                              help='color incorrect words in supplied context')
+    spell_options.add_option('--no-curses', dest='no_curses', action='store_true',
+                             help='disable curses when doing spell checking and dup detection')
     optionparser.add_option_group(spell_options)
 
     abnf_options = optparse.OptionGroup(optionparser, 'ABNF Options')
@@ -262,14 +265,47 @@ def main():
             log.error("Skipping ABNF checking because")
             log.error(e.message, additional=2)
 
-    # do the Spelling and Duplicate checking
+    # do the Spelling checking
     if not options.no_spell:
         try:
             speller = Speller(config)
+            if options.no_curses:
+                speller.no_curses = True
+            speller.initscr()
             speller.processTree(xmlrfc.tree.getroot())
+            speller.sendCommand("#")  # save personal dictionary
+            speller.endwin()
         except RfcLintError as e:
             log.error("Skipping spell checking because")
             log.error(e.message, additional=2)
+        except Exception as e:
+            speller.endwin()
+            raise
+
+    # do the Duplicate checking
+    if not options.no_dups:
+        try:
+            dups = Dups(config)
+            if options.no_curses:
+                dups.no_curses = True
+            dups.initscr()
+            dups.processTree(xmlrfc.tree.getroot())
+            dups.endwin()
+        except RfcLintError as e:
+            dups.endwin()
+            log.error("Skipping duplicate checking because")
+            log.error(e.message, additional=2)
+        except Exception as e:
+            dups.endwin()
+            raise
+
+    if options.output_filename is not None:
+        file = open(options.output_filename, 'w')
+        file.write(lxml.etree.tostring(xmlrfc.tree.getroot(),
+                                       xml_declaration=True,
+                                       encoding='utf-8',
+                                       doctype=xmlrfc.tree.docinfo.doctype,
+                                       pretty_print=True).decode('utf-8'))
 
 
 if __name__ == '__main__':

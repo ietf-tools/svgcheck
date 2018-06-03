@@ -52,7 +52,7 @@ def write_to(file, unicodeString):
 
 def write_on_line(*args):
     """ Writes a message without ending the line, i.e. in a loading bar """
-    write_err.write(' '.join(args).encode('utf8'))
+    write_err.write(u' '.join(args))
     write_err.flush()
 
 

@@ -1,0 +1,12 @@
+<section>
+  <title ascii="foo foo" abbrev="bar bar"/>
+  <t>
+    Make this a very long sentence that is going to be longer than what the scrien is so it it will either wrap or go to the far end of the scrren.
+    This <em>MUST</em>be a problem for somebody.
+    Look <xref target="RFCxxx">S/MIME spec</xref> spec is a problem problem.
+  </t>
+  <title>Test test</title>
+  <t>
+    First one one test to see see if things work. work
+  </t>
+</section>
