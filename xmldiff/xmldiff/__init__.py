@@ -1,7 +1,7 @@
 
 
 # Static values
-__version__  = '0.5.4.1'
+__version__  = '0.5.5'
 NAME         = 'xmldiff'
 VERSION      = [ int(i) if i.isdigit() else i for i in __version__.split('.') ]
 

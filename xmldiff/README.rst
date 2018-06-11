@@ -24,21 +24,21 @@ rfc-xmldiff accepts a pair of XML documents as input and outputs an HTML documen
 
    The following parameters affect how rfc-xmldiff behaves, however none are required.
    
-   +=================+=========================+===================================================+
-   | Short           | Long                    | Description                                       |
-   +=================+=========================+===================================================+
-   | ``-C``          | ``--clear-cache``       | purge the cache and exit                          |
-   | ``-h``          | ``--help``              | show the help message and exit                    |
-   | ``-N``          | ``--no-network``        | don't use the network to resolve references       |
-   | ``-q``          | ``--quiet``             | don't print anything                              |
-   | ``-r``          | ``--raw``               | don't use the xml2rfc vocabulary when matching    |
-   | ``-v``          | ``--verbose``           | print extra information                           |
-   | ``-V``          | ``--version``           | display the version number and exit               |
-   | ``-X``          | ``--no-xinclude``       | don't resolve xi:include elements                 |
-   | ``-o FILENAME`` | ``--out=FILENAME``      | specify an output filename                        |
-   |  ``-t FILENAME`` | ``--template=FILENAME`` | specify HTML template filename                   |
-   |                 | ``--resource-url=URL``  | specify the URL for resources in the template     |
-   +=================+=========================+===================================================+
+    ================= ========================= =================================================== 
+     Short             Long                      Description                                        
+    ================= ========================= =================================================== 
+     ``-C``            ``--clear-cache``         purge the cache and exit                           
+     ``-h``            ``--help``                show the help message and exit                     
+     ``-N``            ``--no-network``          don't use the network to resolve references        
+     ``-q``            ``--quiet``               don't print anything                               
+     ``-r``            ``--raw``                 don't use the xml2rfc vocabulary when matching     
+     ``-v``            ``--verbose``             print extra information                            
+     ``-V``            ``--version``             display the version number and exit                
+     ``-X``            ``--no-xinclude``         don't resolve xi:include elements                  
+     ``-o FILENAME``   ``--out=FILENAME``        specify an output filename                         
+     ``-t FILENAME``   ``--template=FILENAME``   specify HTML template filename                    
+     .                 ``--resource-url=URL``    specify the URL for resources in the template      
+    ================= ========================= =================================================== 
 
 Templates
 =========
@@ -63,7 +63,7 @@ rfc-xmldiff depends on the following packages:
 
 * lxml_ *(>= 4.1.1)*
 * requests_ *(>= 2.5.0)*
-* `rfctools_common`_ *(>= 0.5.3)*
+* `rfctools_common`_ *(>= 0.5.5)*
 * cffi_ *(>= 1.0.0)*
 
 .. _lxml: http://lxml.de

@@ -1,7 +1,7 @@
 
 
 # Static values
-__version__  = '0.5.3'
+__version__  = '0.5.5'
 NAME         = 'rfclint'
 VERSION      = [ int(i) if i.isdigit() else i for i in __version__.split('.') ]
 
