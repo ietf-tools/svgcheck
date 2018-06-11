@@ -32,24 +32,24 @@ of the document.
 
     General options for the program
     
-   +==================+===========================+===================================================+
-   | Short            | Long                      | Description                                       |
-   +==================+===========================+===================================================+
-   | ``-C``           | ``--clear-cache``         | purge the cache and exit                          |
-   | ``-N``           | ``--no-network``          | don't use the network to resolve references       |
-   | ``-n``           | ``--no-rng``              | don't check against the RNG schema                |
-   | ``-q``           | ``--quiet``               | don't print anything                              |
-   |                  | ``--save-config``         | save configuration back to config file            |
-   | ``-v``           | ``--verbose``             | print extra information                           |
-   | ``-V``           | ``--version``             | display the version number and exit               |
-   | ``-X``           | ``--no-xinclude``         | don't resolve xi:include elements                 |
-    
-   | ``-c DIRECTORY`` | ``--cache=DIRECTORY``     | specify the primary cache directory to write to   |
-   |                  | ``--configfile=FILENAME`` | specify the configuration file to use             |
-   | ``-o FILENAME``  | ``--out=FILENAME``        | specify an output filename                        |
-   | ``-r RNG``       | ``--rng=RNG``             | specify an alternate RNG file                     |
-   |                  | ``--extract=TYPE``        | extract all source code for the given type        |
-   +==================+===========================+===================================================+
++==================+===========================+===================================================+
+| Short            | Long                      | Description                                       |
++==================+===========================+===================================================+
+| ``-C``           | ``--clear-cache``         | purge the cache and exit                          |
+| ``-N``           | ``--no-network``          | don't use the network to resolve references       |
+| ``-n``           | ``--no-rng``              | don't check against the RNG schema                |
+| ``-q``           | ``--quiet``               | don't print anything                              |
+|                  | ``--save-config``         | save configuration back to config file            |
+| ``-v``           | ``--verbose``             | print extra information                           |
+| ``-V``           | ``--version``             | display the version number and exit               |
+| ``-X``           | ``--no-xinclude``         | don't resolve xi:include elements                 |
+ 
+| ``-c DIRECTORY`` | ``--cache=DIRECTORY``     | specify the primary cache directory to write to   |
+|                  | ``--configfile=FILENAME`` | specify the configuration file to use             |
+| ``-o FILENAME``  | ``--out=FILENAME``        | specify an output filename                        |
+| ``-r RNG``       | ``--rng=RNG``             | specify an alternate RNG file                     |
+|                  | ``--extract=TYPE``        | extract all source code for the given type        |
++==================+===========================+===================================================+
 
     
 **Spelling Options**

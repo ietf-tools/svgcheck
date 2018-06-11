@@ -336,9 +336,9 @@ class Test_Spell(unittest.TestCase):
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
         if sys.platform.startswith('linux'):
-            errFile = "Results/spell-utf8-linux.err"
+            errFile = ["Results/spell-utf8-linux.err", "Results/spell-utf8-2.err"]
         else:
-            errFile = "Results/spell-utf8.err"
+            errFile = ["Results/spell-utf8.err", "Results/spell-utf8-2.err"]
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
                              "--no-dup-detection", "--no-rng", "Tests/spell-utf8.xml"],
                       "Results/empty", errFile, None, None)
@@ -363,7 +363,7 @@ class Test_Spell(unittest.TestCase):
                              "--personal=Temp/en.pws", "-o", "Temp/Spell2.xml", "Tests/spell2.xml"],
                       "Results/Spell1.out", "Results/Spell1.err", "Temp/Spell2.xml",
                       "Results/Spell1.xml", input="Tests/Spell1.in")
-        self.assertTrue(compare_file("Temp/en.pws", "Results/en-1.pws", True),
+        self.assertTrue(compare_file2("Temp/en.pws", "Results/en-1.pws", True),
                         "Result word lists differ")
 
 
@@ -481,6 +481,16 @@ class Test_DupChecks(unittest.TestCase):
                              "--out=Temp/dups.xml", "Tests/dups.xml"],
                       "Results/Dups2.out", "Results/Dups2.err",
                       "Results/Dups2.xml", "Temp/dups.xml", input="Tests/Dups2.in")
+
+
+def compare_file2(errFile, stderr, displayError):
+    with open(stderr, 'rb') as f:
+        stderr = f.read()
+    if six.PY2:
+        lines1 = stderr.decode('utf-8')
+    else:
+        lines1 = stderr
+    return compare_file(errFile, lines1, displayError)
 
 
 def compare_file(errFile, stderr, displayError):
