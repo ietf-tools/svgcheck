@@ -8,6 +8,7 @@ import sys
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+from setuptools.command.install import install
 import os
 
 here = path.abspath(path.dirname(__file__))
@@ -30,6 +31,34 @@ with open(path.join(here, 'MANIFEST.in'), encoding='utf-8') as file:
 
 import rfclint
 
+
+
+class PostInstallCommand(install):
+    def run(self):
+        # install.run(self)
+        install.do_egg_install(self)
+        if os.name == "nt":
+            return
+        xx = self.which('bap')
+        if xx:
+            st = os.stat(xx)
+            os.chmod(xx, st.st_mode | 0o111)
+
+    def is_exists(self, fpath):
+        return os.path.isfile(fpath)
+    
+    def which(self, program):
+
+        fpath, fname = os.path.split(program)
+        if fpath:
+            if self.is_exists(program):
+                return program
+        else:
+            for path in os.environ["PATH"].split(os.pathsep):
+                exe_file = os.path.join(path, program)
+                if self.is_exists(exe_file):
+                    return exe_file
+        return None
 
 def parse(changelog):
     ver_line = "^([a-z0-9+-]+) \(([^)]+)\)(.*?) *$"
@@ -137,7 +166,9 @@ setup(
                  ["macos/bap"] if sys.platform == "darwin" else []
                  )
                 ],
-            
+    cmdclass= {
+        'install': PostInstallCommand
+    },
 
     entry_points={
         'console_scripts': [
@@ -147,3 +178,6 @@ setup(
     include_package_data = True,
     zip_safe=False
 )
+
+
+        
