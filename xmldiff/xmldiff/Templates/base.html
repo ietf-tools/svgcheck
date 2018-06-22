@@ -18,10 +18,10 @@
       .artwork { font-family: monospace; }
       ul {padding-left: 6px; }
       li { list-style: none; padding-left: 6px; }
-      @media screen and (min-width: 1140px) {
-      #leftColumn { overflow: scroll; height: calc(100vh - 20px);}
-      #centerColumn { overflow:scroll; height: calc(100vh - 20px);}
-      #rightColumn { overflow: scroll;height:  calc(100vh - 20px);}
+      
+      #leftColumn { overflow: scroll; height: calc(100vh - 32px); font-family:monospace; }
+      #centerColumn { overflow:scroll; height: calc(100vh - 55px); font-family:monospace; }
+      #rightColumn { overflow: scroll;height:  calc(100vh - 32px); font-family:monospace; }
 
       .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
       .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
@@ -49,7 +49,7 @@ function openLeftFile(evt, fileName) {
         tabcontent[i].style.display="none";
     }
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
+    tablinks = document.getElementById("leftColumn").getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -68,7 +68,7 @@ function openRightFile(evt, fileName) {
         tabcontent[i].style.display="none";
     }
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
+    tablinks = document.getElementById("rightColumn").getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -117,7 +117,7 @@ function XXX()
 
 <body>
   <div id="root">
-    <table width=100%>
+    <table width=100% id="topTable">
       <tr>
 	<td width=25%>
 	  <div id="leftColumn">
@@ -159,7 +159,7 @@ function XXX()
       expandTree("diffRoot")
       
       $$(function() {
-        $$("table").colResizable();
+        $$("#topTable").colResizable();
       });
 
       // Get the element with id="defaultOpen" and click on it

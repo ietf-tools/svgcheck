@@ -44,10 +44,10 @@ def formatLines(lines, side):
 
     iLine = 1
     for line in lines:
-        output += '<tr id="{2}{0}_{3}"><td class="blob-num js-line-number" ' \
+        output += '<tr id="{2}{4}_{3}"><td class="blob-num js-line-number" ' \
                   'data-line-number="{0}">{0}</td>' \
                   '<td class="blob-code blob-code-inner js-file-line">{1}</td></tr>'. \
-                  format(iLine, line, side, '0')
+                  format(iLine, line, side, '0', iLine-1)
         iLine += 1
     output += "</table></div>"
 
