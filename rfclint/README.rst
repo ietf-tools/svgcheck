@@ -62,7 +62,6 @@ of the document.
     .                  ``--no-dup-detection``         don't perform duplicate detection                  
     .                  ``--no-spell``                 don't perform spell checking on the source         
     .                  ``--no-suggest``               don't provide suggestions for misspelled words     
-    .                  ``--no-spell``                 provide suggestions for misspelled words (default) 
     		     
     .                  ``--color=TEXT``               specify the color to use for word highlighting     
     .                  ``--dictionary=FILENAME``      specify an additional dictionary to use            

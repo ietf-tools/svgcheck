@@ -1,0 +1,26 @@
+<section>
+  <name>
+    Fred
+  </name>
+  <t>
+    Text of pagaraph
+  </t>
+        <figure>
+          <sourcecode type="xml"><![CDATA[<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+  entityID="https://service.example.com/entity">
+  <md:Extensions>
+    <mdattr:EntityAttributes
+      xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute">
+      <Attribute xmlns="urn:oasis:names:tc:SAML:2.0:assertion"
+        NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+        Name="http://macedir.org/entity-category">
+        <AttributeValue
+          >http://example.org/category/dog</AttributeValue>
+        <AttributeValue>urn:oid:1.3.6.1.4.1.21829</AttributeValue>
+      </Attribute>
+    </mdattr:EntityAttributes>
+  </md:Extensions>
+  ...
+</md:EntityDescriptor>]]></sourcecode>
+        </figure>
+  </section>

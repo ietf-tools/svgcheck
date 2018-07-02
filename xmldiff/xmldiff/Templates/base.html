@@ -8,6 +8,10 @@
   <title>$title</title>
 
     <script src="$resource_dir/mktree.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	    crossorigin="anonymous"></script>            
+    <script src="$resource_dir/jquery.inlineStyler.min.js"></script>
     <link rel="stylesheet" href="$resource_dir/mktree.css" type="text/css">
 
     <style>
@@ -165,6 +169,18 @@ function XXX()
       // Get the element with id="defaultOpen" and click on it
       document.getElementById("defaultOpen").click();
       document.getElementById("defaultOpenR").click();
+
+      $$(window).load(function() {
+      var cssRules = {
+        'propertyGroups' : {
+          'inline' : ['color']
+        },
+        'elementGroups' : {
+          'inline' : ['SPAN']
+        }
+      }
+      $$('#centerColumn').inlineStyler(cssRules);
+      });
 
     </script>
 

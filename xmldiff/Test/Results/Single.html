@@ -8,6 +8,10 @@
   <title>rfc-xmldiff Simple.xml SimpleTree.xml</title>
 
     <script src="$TDIR/templates/mktree.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	    crossorigin="anonymous"></script>            
+    <script src="$TDIR/templates/jquery.inlinestyler.min.js"></script>
     <link rel="stylesheet" href="$TDIR/templates/mktree.css" type="text/css">
 
     <style>
@@ -59,6 +63,17 @@
     <script>
       convertTrees()
       expandTree("diffRoot")
+      $(window).load(function() {
+      var cssRules = {
+        'propertyGroups' : {
+          'inline' : ['color']
+        },
+        'elementGroups' : {
+          'inline' : ['SPAN']
+        }
+      }
+      $('#centerColumn').inlineStyler(cssRules);
+      });
     </script>
 
 

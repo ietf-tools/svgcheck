@@ -1,0 +1,3 @@
+Tests/xmlfrag4.xml:8: XML in sourcecode not well formed:  Unescaped '<' not allowed in attributes values, line 2, column 33
+Tests/xmlfrag4.xml:13: XML in sourcecode not well formed:  expected '>', line 2, column 41
+Tests/xmlfrag4.xml:18: XML in sourcecode not well formed:  expected '>', line 2, column 41

@@ -17,3 +17,5 @@ Options:
                                  ~/.cache/xml2rfc ]
     -q, --quiet                  dont print anything
     -v, --verbose                print extra information
+    --no-resolve-entities        Don't resolve entities in the XML
+    -N, --no-network             don't use the network to resolve references

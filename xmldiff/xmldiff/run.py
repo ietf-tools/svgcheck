@@ -87,6 +87,11 @@ def main():
                              help='dont print anything')
     value_options.add_option('-v', '--verbose', action='store_true',
                              help='print extra information')
+    value_options.add_option('--no-resolve-entities', dest='noEntity',
+                             action="store_true",
+                             help="Don't resolve entities in the XML")
+    value_options.add_option('-N', '--no-network', action='store_true', default=False,
+                             help='don\'t use the network to resolve references')
 
     optionparser.add_option_group(value_options)
 
@@ -113,7 +118,8 @@ def main():
 
     log.note("Parse input files")
     parser = XmlRfcParser(leftSource, verbose=log.verbose,
-                          quiet=log.quiet, no_network=False)
+                          quiet=log.quiet, no_network=options.no_network,
+                          resolve_entities=not options.noEntity)
     try:
         ll = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False).tree
         leftXml = BuildDiffTree(ll, options)
@@ -129,7 +135,8 @@ def main():
         sys.exit('No such file: ' + rightSource)
 
     parser = XmlRfcParser(rightSource, verbose=log.verbose,
-                          quiet=log.quiet, no_network=False)
+                          quiet=log.quiet, no_network=options.no_network,
+                          resolve_entities=not options.noEntity)
     try:
         rightXml = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False)
         rightXml = BuildDiffTree(rightXml.tree, options)

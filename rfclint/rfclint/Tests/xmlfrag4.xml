@@ -1,0 +1,33 @@
+<section>
+  <name>
+    Fred
+  </name>
+  <t>
+    Text of pagaraph
+  </t>
+  <sourcecode type='xml'>
+    <![CDATA[
+<open Message="missing endquote></open>
+    ]]>
+  </sourcecode>
+  <sourcecode type='xml'>
+    <![CDATA[
+<open Message="missing endquote"></open Message="here?">
+    ]]>
+  </sourcecode>
+  <sourcecode type='xml'>
+    <![CDATA[
+<open Message="missing endquote"></open Message="here?">
+    ]]>
+  </sourcecode>
+  <sourcecode type='xml'>
+    <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!DOCTYPE rfc PUBLIC "" "rfc2629.dtd">
+
+<rfc number="817">
+</rfc>
+    ]]>
+  </sourcecode>
+  </section>

@@ -1,3 +1,9 @@
+rfclint (0.5.6) distribution(s); urgency=low
+
+	* Correct code to do checking of XML code fragments
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 2 July 2018 12:00:00 -0700
+
 rfclint (0.5.5) distribution(s); urgency=low
 
 	* Separate duplicate detection from spell checking

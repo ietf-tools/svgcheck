@@ -1,0 +1,13 @@
+<section>
+  <name>
+    Fred
+  </name>
+  <t>
+    Text of pagaraph
+  </t>
+  <sourcecode type='xml'>
+    <![CDATA[
+<open>&nbsp;</open>
+    ]]>
+  </sourcecode>
+  </section>

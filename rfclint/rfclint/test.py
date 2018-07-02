@@ -200,6 +200,36 @@ class Test_Extract(unittest.TestCase):
                       "Results/extract.txt", "Temp/extract.txt")
 
 
+class Test_Xml(unittest.TestCase):
+    """ Set of tests dealing with extracting code from the source """
+    def test_xml_frag1(self):
+        """ Validate first xml syntax test case """
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-dup-detection", "Tests/xmlfrag1.xml"],
+                      "Results/empty", "Results/xmlfrag1.err", None, None)
+
+    """ Set of tests dealing with extracting code from the source """
+    def test_xml_frag2(self):
+        """ Validate #2 xml syntax test case """
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-dup-detection", "Tests/xmlfrag2.xml"],
+                      "Results/empty", "Results/xmlfrag2.xml", None, None)
+
+    """ Set of tests dealing with extracting code from the source """
+    def test_xml_frag3(self):
+        """ Validate #3 xml syntax test case """
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-dup-detection", "Tests/xmlfrag3.xml"],
+                      "Results/empty", "Results/empty", None, None)
+
+    """ Set of tests dealing with extracting code from the source """
+    def test_xml_frag4(self):
+        """ Validate #4 xml syntax test case """
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-dup-detection", "Tests/xmlfrag4.xml"],
+                      "Results/empty", "Results/xmlfrag4.err", None, None)
+
+
 class Test_Abnf(unittest.TestCase):
     """ Set of tests dealing with the abnf checker """
     def test_no_abnf(self):
@@ -262,13 +292,6 @@ class Test_Abnf(unittest.TestCase):
         check_process(self, [sys.executable, test_program, "--abnf-program=no-abnf",
                              "--no-spell", "--no-dup-detection", "Tests/abnf-extras.xml"],
                       "Results/abnf-no-program.out", "Results/abnf-no-program.err", None, None)
-
-
-class Test_Xml(unittest.TestCase):
-    @unittest.skipIf(True, "Test is still in progress")
-    def test_valid_xml(self):
-        check_process(self, [sys.executable, test_program, "--no-rng", "Tests/xml1.xml"],
-                      "Results/empty", "Results/empty", None, None)
 
 
 class Test_Spell(unittest.TestCase):
