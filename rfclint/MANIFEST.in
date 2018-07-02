@@ -7,7 +7,3 @@ include rfclint/abnf.py
 include rfclint/config.py
 include rfclint/spell.py
 include rfclint/__init__.py
-include win32/bap.exe
-include win32/cygwin1.dll
-include linux/bap
-include macos/bap

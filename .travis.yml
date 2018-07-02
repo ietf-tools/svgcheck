@@ -4,25 +4,25 @@ matrix:
     include:
         - os: linux
           python: 2.7
-          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3
+          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3 BAP=rfclint/linux
         - os: linux
           python: 3.6
-          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3
+          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3 BAP=rfclint/linux
         - os: linux
           python: 3.4
-          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3
+          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3 BAP=rfclint/linux
         - os: linux
           python: 3.5
-          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3
+          env: PYTHON=python PIP=pip  MALLOC_CHECK_=3 BAP=rfclint/linux
         - os: linux
           python: pypy3
-          env: PYTHON=python PIP=pip
+          env: PYTHON=python PIP=pip BAP=rfclint/linux
         - os: osx
           language: generic
-          env: TOXENV=py27 PYTHON=python2 PIP=pip2
+          env: TOXENV=py27 PYTHON=python2 PIP=pip2 BAP=rfclint/macos
         - os: osx
           language: generic
-          env: TOXENV=py36 PYTHON=python3 PIP=pip3
+          env: TOXENV=py36 PYTHON=python3 PIP=pip3 BAP=rfclint/macos
 
 addons:
   apt:
@@ -36,6 +36,7 @@ install:
 
 script:
   - $PIP install -r requirements.txt
+  - export PATH=$PATH:${HOME}/build/Com-AugustCellars/RfcEditor/$BAP
   - pwd
   - mkdir dist
   - python --version
