@@ -13,6 +13,7 @@ try:
 except ImportError:
     haveCurses = False
 
+from rfclint.CursesCommon import CursesCommon
 from rfctools_common import log
 from rfclint.spell import RfcLintError, CheckAttributes, CutNodes
 
@@ -20,24 +21,21 @@ if six.PY2:
     input = raw_input
 
 
-class Dups(object):
+class Dups(CursesCommon):
     """ Object to deal with processing duplicates """
     def __init__(self, config):
+        CursesCommon.__init__(self, config)
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
         self.aspell_re = re.compile(r".\s(\S+)\s(\d+)\s*((\d+): (.+))?", re.UNICODE)
 
         self.dupword_re = re.compile(r'\W*([\w\']+)\W*', re.UNICODE)
 
-        self.interactive = False
-        self.no_curses = False
-        self.curses = None
+        self.dup_re = re.compile(r' *\w[\w\']*\w|\w', re.UNICODE)
+
         if config.options.output_filename is not None:
-            self.interactive = True
             self.lastElement = None
             self.textLocation = True
-
-        self.dup_re = re.compile(r' *\w[\w\']*\w|\w', re.UNICODE)
 
     def processTree(self, tree):
         # log.warn("processTree - look at node {0}".format(tree.tag))
@@ -162,6 +160,7 @@ class Dups(object):
                 log.error(u"{1}:{2} Duplicate word found '{0}'".
                           format(match.group(0), fileName, element.sourceline))
 
+        self.writeStringInit()
         for line in wordSet:
             if isinstance(line[2], str):
                 text = line[1].attrib[line[2]]
@@ -181,6 +180,7 @@ class Dups(object):
             else:
                 self.writeString(text)
             y += 1
+        self.writeStringEnd()
 
         if self.curses:
             self.curses.addstr(curses.LINES-15, 0, self.spaceline, self.A_REVERSE)
@@ -197,8 +197,6 @@ class Dups(object):
 
             self.curses.addstr(curses.LINES-1, 0, "?")
             self.curses.refresh()
-        else:
-            log.write("")
 
         while (True):
             # ch = get_character()
@@ -219,10 +217,12 @@ class Dups(object):
                     self.curses.addstr(curses.LINES-1, 0, "Are you sure you want to abort?")
                     self.curses.refresh()
                     ch = self.curses.getch()
+                    ch = chr(ch)
                 else:
                     ch = input("Are you sure you want to abort? ")
                     ch = (ch + 'x')[0]
                 if ch == 'Y' or ch == 'y':
+                    self.endwin()
                     sys.exit(1)
 
                 if self.curses:
@@ -237,8 +237,22 @@ class Dups(object):
                 else:
                     element.tail = self.removeText(element.tail, match, element)
                 return
-            elif ch == 'X':
-                return
+            elif ch == 'X' or ch == 'x':
+                if self.curses:
+                    self.curses.addstr(curses.LINES-1, 0,
+                                       "Are you sure you want to exit spell checking?")
+                    self.curses.refresh()
+                    ch = self.curses.getch()
+                    ch = chr(ch)
+                else:
+                    ch = input("Are you sure you want to exit spell checking? ")
+                    ch = (ch + 'x')[0]
+
+                if ch == 'Y' or ch == 'y':
+                    raise RfcLintError("Exit Requested")
+                if self.curses:
+                    self.curses.addstr(curses.LINES-1, 0, "?" + ' '*30)
+                    self.curses.refresh()
             elif ch == 'R':
                 if self.curses:
                     self.curses.addstr(curses.LINES-1, 0, "Replace with: ")
@@ -277,63 +291,3 @@ class Dups(object):
             textIn[match.end()+self.offset:]
         self.offset += len(replaceWord) - (match.end() - match.start())
         return textOut
-
-    def writeString(self, text, color=0, partialString=False):
-        newLine = False
-        cols = 80
-        if self.curses:
-            cols = curses.COLS
-            if color == 0:
-                color = curses.A_NORMAL
-        for line in text.splitlines(1):
-            if line[:-1] == '\n':
-                newLine = True
-                line = line[:-1]
-            while self.x + len(line) >= cols:
-                if self.curses:
-                    self.curses.addstr(self.y, self.x, line[:cols-self.x - 2], color)
-                    self.curses.addstr("/", color)
-                else:
-                    log.write_on_line(line[:cols-self.x - 2])
-                    log.write_on_line("/")
-                line = line[cols-self.x-2:]
-                self.x = 0
-                self.y += 1
-                if not self.curses:
-                    log.write("")
-            if self.curses:
-                self.curses.addstr(self.y, self.x, line, color)
-            else:
-                log.write_on_line(line)
-            self.x += len(line)
-            if newLine:
-                if self.x != 0:
-                    self.x = 0
-                    self.y += 1
-                    if not self.curses:
-                        log.write("")
-                newLine = False
-            if self.x != 0 and line[-1] != ' ' and not partialString:
-                self.x += 1
-
-    def initscr(self):
-        try:
-            self.A_REVERSE = 0
-            self.A_NORMAL = 0
-            if haveCurses and not self.no_curses:
-                self.curses = curses.initscr()
-                curses.start_color()
-                curses.noecho()
-                curses.cbreak()
-                self.spaceline = " "*curses.COLS
-                self.A_REVERSE = curses.A_REVERSE
-                self.A_NORMAL = curses.A_NORMAL
-
-        except curses.error as e:
-            self.curses = None
-
-    def endwin(self):
-        if self.curses:
-            curses.nocbreak()
-            curses.echo()
-            curses.endwin()

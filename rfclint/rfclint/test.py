@@ -202,6 +202,8 @@ class Test_Extract(unittest.TestCase):
 
 class Test_Xml(unittest.TestCase):
     """ Set of tests dealing with extracting code from the source """
+    @unittest.skipIf(platform.python_implementation() == "PyPy",
+                     "Error in exception handling by python xml")
     def test_xml_frag1(self):
         """ Validate first xml syntax test case """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
@@ -209,6 +211,8 @@ class Test_Xml(unittest.TestCase):
                       "Results/empty", "Results/xmlfrag1.err", None, None)
 
     """ Set of tests dealing with extracting code from the source """
+    @unittest.skipIf(platform.python_implementation() == "PyPy",
+                     "Error in exception handling by python xml")
     def test_xml_frag2(self):
         """ Validate #2 xml syntax test case """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
@@ -223,6 +227,8 @@ class Test_Xml(unittest.TestCase):
                       "Results/empty", "Results/empty", None, None)
 
     """ Set of tests dealing with extracting code from the source """
+    @unittest.skipIf(platform.python_implementation() == "PyPy",
+                     "Error in exception handling by python xml")
     def test_xml_frag4(self):
         """ Validate #4 xml syntax test case """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",

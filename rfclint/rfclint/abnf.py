@@ -78,7 +78,7 @@ class AbnfChecker(object):
                 else:
                     log.error(m.group(4), file=filename, line=line)
             else:
-                log.error(err)
+                log.warn(err)
         return True
 
 

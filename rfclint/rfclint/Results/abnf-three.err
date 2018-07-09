@@ -1,7 +1,7 @@
 Tests/abnf-three.xml:22: Got definitions, expecting '=' or '=/'
 Tests/abnf-three.xml:65: Got definitions, expecting '=' or '=/'
 Tests/abnf-three.xml:73: Got definitions, expecting '=' or '=/'
-ERROR: ; is UNDEFINED
-ERROR: ; errro UNDEFINED
-ERROR: ; error UNDEFINED
-ERROR: parsing failed: 3 errors encountered
+WARNING: ; is UNDEFINED
+WARNING: ; errro UNDEFINED
+WARNING: ; error UNDEFINED
+WARNING: parsing failed: 3 errors encountered

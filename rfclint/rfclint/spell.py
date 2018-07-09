@@ -14,6 +14,7 @@ try:
 except ImportError:
     haveCurses = False
 from rfctools_common import log
+from rfclint.CursesCommon import CursesCommon
 
 
 if six.PY2:
@@ -142,9 +143,10 @@ def which(program):
     return None
 
 
-class Speller(object):
+class Speller(CursesCommon):
     """ Object to deal with processing spelling and duplicates """
     def __init__(self, config):
+        CursesCommon.__init__(self, config)
         program = config.get('spell', 'program')
         self.suggest = config.getBoolean('spell', 'suggest', True)
         self.window = config.getInt('spell', 'window', 15)
@@ -303,11 +305,7 @@ class Speller(object):
 
         self.spell_re = re.compile(r'\w[\w\'\u00B4\u2019]*\w', re.UNICODE)
 
-        self.no_curses = False
-        self.interactive = False
-        self.curses = None
         if config.options.output_filename is not None:
-            self.interactive = True
             self.ignoreWords = []
             self.lastElement = None
             self.textLocation = True
@@ -595,6 +593,7 @@ class Speller(object):
             log.write("")
             log.error(str1)
 
+        self.writeStringInit()
         for line in wordSet:
             if isinstance(line[2], str):
                 text = line[1].attrib[line[2]]
@@ -614,15 +613,16 @@ class Speller(object):
             else:
                 self.writeString(text)
             y += 1
+        self.writeStringEnd()
 
-        suggest = spellInfo[4].split(',')
+        if spellInfo[4] is None:
+            suggest = []
+        else:
+            suggest = spellInfo[4].split(',')
 
         # list = ""
         # for i in range(min(10, len(suggest))):
         #     list += "{0}) {1} ".format(chr(i + 0x31), suggest[i])
-
-        if not self.curses:
-            log.write("")
 
         for i in range(min(10, len(suggest))):
             str1 = "{0}) {1}".format((i+1) % 10, suggest[i].strip())
@@ -630,7 +630,7 @@ class Speller(object):
                 self.curses.addstr(int(i/2) + curses.LINES-12, int(i % 2)*40, str1)
 
             else:
-                log.write_on_line(str1 + ", ")
+                log.write_on_line(str1 + " ")
 
         if self.curses:
             self.curses.addstr(curses.LINES-6, 0, " ) Ignore")
@@ -668,9 +668,11 @@ class Speller(object):
                     self.curses.addstr(curses.LINES-1, 0, "Are you sure you want to abort?")
                     self.curses.refresh()
                     ch = self.curses.getch()
+                    ch = chr(ch)
                 else:
                     ch = input("Are you sure you want to abort? ")
                     ch = (ch + 'x')[0]
+
                 if ch == 'Y' or ch == 'y':
                     sys.exit(1)
                 if self.curses:
@@ -686,7 +688,21 @@ class Speller(object):
                 self.sendCommand("&"+match.group(0))
                 return
             elif ch == 'X' or ch == 'x':
-                return
+                if self.curses:
+                    self.curses.addstr(curses.LINES-1, 0,
+                                       "Are you sure you want to exit spell checking?")
+                    self.curses.refresh()
+                    ch = self.curses.getch()
+                    ch = chr(ch)
+                else:
+                    ch = input("Are you sure you want to exit spell checking? ")
+                    ch = (ch + 'x')[0]
+
+                if ch == 'Y' or ch == 'y':
+                    raise RfcLintError("Exit Requested")
+                if self.curses:
+                    self.curses.addstr(curses.LINES-1, 0, "?" + ' '*30)
+                    self.curses.refresh()
             elif ch == 'R' or ch == 'r':
                 if self.curses:
                     self.curses.addstr(curses.LINES-1, 0, "Replace with: ")
@@ -727,63 +743,3 @@ class Speller(object):
             textIn[match.end()+self.offset:]
         self.offset += len(replaceWord) - (match.end() - match.start())
         return textOut
-
-    def writeString(self, text, color=0, partialString=False):
-        newLine = False
-        cols = 80
-        if self.curses:
-            cols = curses.COLS
-            if color == 0:
-                color = curses.A_NORMAL
-        for line in text.splitlines(1):
-            if line[:-1] == '\n':
-                newLine = True
-                line = line[:-1]
-            while self.x + len(line) >= cols:
-                if self.curses:
-                    self.curses.addstr(self.y, self.x, line[:cols-self.x - 2], color)
-                    self.curses.addstr("/", color)
-                else:
-                    log.write_on_line(line[:cols-self.x - 2])
-                    log.write_on_line("/")
-                line = line[cols-self.x-2:]
-                self.x = 0
-                self.y += 1
-                if not self.curses:
-                    log.write("")
-            if self.curses:
-                self.curses.addstr(self.y, self.x, line, color)
-            else:
-                log.write_on_line(line)
-            self.x += len(line)
-            if newLine:
-                if self.x != 0:
-                    self.x = 0
-                    self.y += 1
-                    if not self.curses:
-                        log.write("")
-                newLine = False
-            if self.x != 0 and line[-1] != ' ' and not partialString:
-                self.x += 1
-
-    def initscr(self):
-        try:
-            self.A_REVERSE = 0
-            self.A_NORMAL = 0
-            if haveCurses and not self.no_curses:
-                self.curses = curses.initscr()
-                curses.start_color()
-                curses.noecho()
-                curses.cbreak()
-                self.spaceline = " "*curses.COLS
-                self.A_REVERSE = curses.A_REVERSE
-                self.A_NORMAL = curses.A_NORMAL
-
-        except curses.error as e:
-            self.curses = None
-
-    def endwin(self):
-        if self.curses:
-            curses.nocbreak()
-            curses.echo()
-            curses.endwin()

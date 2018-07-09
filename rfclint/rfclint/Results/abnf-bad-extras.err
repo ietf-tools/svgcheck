@@ -1,4 +1,4 @@
 Tests/abnf-bad-extras.abnf:15: Encountered definition while parsing rule (Indented rule?)
-ERROR: ; fred UNDEFINED
-ERROR: ; int UNDEFINED
-ERROR: parsing failed: 1 errors encountered
+WARNING: ; fred UNDEFINED
+WARNING: ; int UNDEFINED
+WARNING: parsing failed: 1 errors encountered

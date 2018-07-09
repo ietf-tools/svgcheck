@@ -1,49 +1,49 @@
 
 ERROR: Tests/spell2.xml:10 Misspelled word found 'spce'
-This paragraph is a check for spce as an ignore one.  This paragraph is a chec/
+This paragraph is a check for spce as an ignore one.  This paragraph is a chec\
 k for spce as an ignore one.  
-1) space, 2) spice, 3) spec, 4) SPCA, 
+1) space 2) spice 3) spec 4) SPCA 
 
 ERROR: Tests/spell2.xml:10 Misspelled word found 'spce'
-This paragraph is a check for spce as an ignore one.  This paragraph is a chec/
+This paragraph is a check for spce as an ignore one.  This paragraph is a chec\
 k for spce as an ignore one.  
-1) space, 2) spice, 3) spec, 4) SPCA, 
+1) space 2) spice 3) spec 4) SPCA 
 
 ERROR: Tests/spell2.xml:19 Misspelled word found 'Ofr'
-Ofr is going to be an insert in mixed case (A) This paragraph is a check ofr i/
+Ofr is going to be an insert in mixed case (A) This paragraph is a check ofr i\
 gnore always at the same case.  Ofr but is fixed at in the same case 
-1) Oft, 2) For, 3) Fr, 4) Of, 5) Afr, 6) OR, 7) Or, 8) Orr, 9) Off, 0) OCR, 
+1) Oft 2) For 3) Fr 4) Of 5) Afr 6) OR 7) Or 8) Orr 9) Off 0) OCR 
 
 ERROR: Tests/spell2.xml:19 Misspelled word found 'ofr'
-Ofr is going to be an insert in mixed case (A) This paragraph is a check ofr i/
+Ofr is going to be an insert in mixed case (A) This paragraph is a check ofr i\
 gnore always at the same case.  Ofr but is fixed at in the same case 
-1) Ofr, 2) oft, 3) for, 4) Fr, 5) fr, 6) of, 7) Afr, 8) OR, 9) or, 0) Orr, 
+1) Ofr 2) oft 3) for 4) Fr 5) fr 6) of 7) Afr 8) OR 9) or 0) Orr 
 
 ERROR: Tests/spell2.xml:24 Misspelled word found 'Aftr'
-Aftr is going to be added as lower case (U).  This paragraph is a check aftr i/
+Aftr is going to be added as lower case (U).  This paragraph is a check aftr i\
 gnore lower case.  
-1) After, 2) AFT, 3) Afr, 4) Aft, 5) Afar, 6) Fart, 7) Afters, 
+1) After 2) AFT 3) Afr 4) Aft 5) Afar 6) Fart 7) Afters 
 
 ERROR: Tests/spell2.xml:28 Misspelled word found 'sme'
 Choose sme words tht ar going to be consistant abbout the oorder.  
-1) same, 2) some, 3) Sm, 4) Ame, 5) ME, 6) Me, 7) SE, 8) Se, 9) me, 0) Esme, 
+1) same 2) some 3) Sm 4) Ame 5) ME 6) Me 7) SE 8) Se 9) me 0) Esme 
 
 ERROR: Tests/spell2.xml:28 Misspelled word found 'tht'
 Choose same words tht ar going to be consistant abbout the oorder.  
-1) that, 2) thy, 3) Th, 4) th, 5) HT, 6) ht, 7) Thu, 8) the, 9) tho, 0) THC, 
+1) that 2) thy 3) Th 4) th 5) HT 6) ht 7) Thu 8) the 9) tho 0) THC 
 
 ERROR: Tests/spell2.xml:28 Misspelled word found 'ar'
 Choose same words that ar going to be consistant abbout the oorder.  
-1) AR, 2) Ar, 3) air, 4) Ra, 5) A, 6) a, 7) ARC, 8) Ara, 9) Ari, 0) Ark, 
+1) AR 2) Ar 3) air 4) Ra 5) A 6) a 7) ARC 8) Ara 9) Ari 0) Ark 
 
 ERROR: Tests/spell2.xml:28 Misspelled word found 'consistant'
 Choose same words that ar going to be consistant abbout the oorder.  
-1) consistent, 2) consist ant, 3) consist-ant, 4) constant, 5) consultant, 6) consisting, 7) contestant, 8) Constanta, 9) consistency, 0) insistent, 
+1) consistent 2) consist ant 3) consist-ant 4) constant 5) consultant 6) consisting 7) contestant 8) Constanta 9) consistency 0) insistent 
 
 ERROR: Tests/spell2.xml:28 Misspelled word found 'abbout'
 Choose same words that ar going to be consistent abbout the oorder.  
-1) Abbot, 2) abbot, 3) about, 4) Abbott, 5) ab bout, 6) ab-bout, 7) abut, 8) abort, 
+1) Abbot 2) abbot 3) about 4) Abbott 5) ab bout 6) ab-bout 7) abut 8) abort 
 
 ERROR: Tests/spell2.xml:28 Misspelled word found 'oorder'
 Choose same words that ar going to be consistent  about the oorder.  
-1) order, 2) Oder, 3) oder, 4) odder, 5) border, 6) corder, 7) Oort, 8) orders, 9) Ode, 0) ode, 
+1) order 2) Oder 3) oder 4) odder 5) border 6) corder 7) Oort 8) orders 9) Ode 0) ode 

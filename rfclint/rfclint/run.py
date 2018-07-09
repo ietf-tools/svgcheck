@@ -310,12 +310,18 @@ def main():
             raise
 
     if options.output_filename is not None:
-        file = open(options.output_filename, 'w')
-        file.write(lxml.etree.tostring(xmlrfc.tree.getroot(),
-                                       xml_declaration=True,
-                                       encoding='utf-8',
-                                       doctype=xmlrfc.tree.docinfo.doctype,
-                                       pretty_print=True).decode('utf-8'))
+        if six.PY2:
+            file = open(options.output_filename, 'w')
+        else:
+            file = open(options.output_filename, 'w', encoding='utf8')
+        text = lxml.etree.tostring(xmlrfc.tree.getroot(),
+                                   xml_declaration=True,
+                                   encoding='utf-8',
+                                   doctype=xmlrfc.tree.docinfo.doctype,
+                                   pretty_print=True)
+        if six.PY3:
+            text = text.decode('utf8')
+        file.write(text)
 
 
 if __name__ == '__main__':
