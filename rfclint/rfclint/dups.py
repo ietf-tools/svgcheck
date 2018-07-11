@@ -143,22 +143,18 @@ class Dups(CursesCommon):
         self.x = 0
         self.y = 0
 
+        if isinstance(words[2], str):
+            str1 = u"{1}:{2} Duplicate word '{0}' found in attribute '{3}'". \
+                   format(match.group(0), fileName, element.sourceline, words[2])
+        else:
+            str1 = u"{1}:{2} Duplicate word found '{0}'". \
+                   format(match.group(0), fileName, element.sourceline)
+
         if self.curses:
-            if isinstance(words[2], str):
-                self.curses.addstr(curses.LINES-14, 0,
-                                   u"{1}:{2} Duplicate word '{0}' found in attribute '{3}'".
-                                   format(match.group(0), fileName, element.sourceline, words[2]))
-            else:
-                self.curses.addstr(curses.LINES-14, 0, u"{1}:{2} Duplicate word found '{0}'".
-                                   format(match.group(0), fileName, element.sourceline))
+            self.curses.addstr(curses.LINES-14, 0, str1.encode('ascii', 'replaceWithONE'))
         else:
             log.write("")
-            if isinstance(words[2], str):
-                log.error(u"{1}:{2} Duplicate word '{0}' found in attribute '{3}'".
-                          format(match.group(0), fileName, element.sourceline, words[2]))
-            else:
-                log.error(u"{1}:{2} Duplicate word found '{0}'".
-                          format(match.group(0), fileName, element.sourceline))
+            log.error(str1)
 
         self.writeStringInit()
         for line in wordSet:
@@ -193,7 +189,7 @@ class Dups(CursesCommon):
             self.curses.addstr(curses.LINES-10, 0, "D) Delete Word")
             self.curses.addstr(curses.LINES-9, 0, "R) Replace Word")
             self.curses.addstr(curses.LINES-8, 0, "Q) Quit")
-            self.curses.addstr(curses.LINES-7, 0, "X) Exit")
+            self.curses.addstr(curses.LINES-7, 0, "X) Exit Dup Check")
 
             self.curses.addstr(curses.LINES-1, 0, "?")
             self.curses.refresh()

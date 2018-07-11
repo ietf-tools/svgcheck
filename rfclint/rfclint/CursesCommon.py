@@ -4,8 +4,20 @@ try:
 except ImportError:
     haveCurses = False
 
+import codecs
+import six
 from rfctools_common import log
 
+def ReplaceWithONE(exc):
+    if isinstance(exc, UnicodeDecodeError):
+        return u'\u0001'
+    elif isinstance(exc, UnicodeEncodeError):
+        if six.PY2:
+            return ((exc.end - exc.start) * u'\u0001', exc.end)
+        else:
+            return (bytes((exc.end - exc.start) * [1]), exc.end)
+    else:
+        raise TypeError("can't handle %s" % type(exc).__name__)
 
 
 class CursesCommon(object):
@@ -17,6 +29,7 @@ class CursesCommon(object):
 
         if config.options.output_filename is not None:
             self.interactive = True
+        codecs.register_error('replaceWithONE', ReplaceWithONE)
 
     def initscr(self):
         self.A_REVERSE = 1
@@ -46,6 +59,7 @@ class CursesCommon(object):
                 curses.nocbreak()
                 curses.echo()
                 curses.endwin()
+                self.curses = None
             except curses.error as e:
                 pass
             
@@ -62,6 +76,8 @@ class CursesCommon(object):
                 color = curses.A_NORMAL
         saveX = self.x
         saveY = self.y
+        if six.PY2:
+            text = text.encode('ascii', 'replaceWithONE')
         for line in text.splitlines(1):
             if line[-1:] == '\n':
                 newLine = True

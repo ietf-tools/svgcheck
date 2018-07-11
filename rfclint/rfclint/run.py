@@ -277,6 +277,7 @@ def main():
 
     # do the Spelling checking
     if not options.no_spell:
+        speller = None
         try:
             speller = Speller(config)
             if options.no_curses:
@@ -288,8 +289,11 @@ def main():
         except RfcLintError as e:
             log.error("Skipping spell checking because")
             log.error(e.message, additional=2)
+            if speller:
+                speller.endwin()
         except Exception as e:
-            speller.endwin()
+            if speller:
+                speller.endwin()
             raise
 
     # do the Duplicate checking

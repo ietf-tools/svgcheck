@@ -587,7 +587,7 @@ class Speller(CursesCommon):
 
         if self.curses:
             self.curses.addstr(curses.LINES-15, 0, self.spaceline, curses.A_REVERSE)
-            self.curses.addstr(curses.LINES-14, 0, str1)
+            self.curses.addstr(curses.LINES-14, 0, str1.encode('ascii', 'replaceWithONE'))
             self.curses.addstr(curses.LINES-13, 0, self.spaceline, curses.A_REVERSE)
         else:
             log.write("")
@@ -634,13 +634,13 @@ class Speller(CursesCommon):
 
         if self.curses:
             self.curses.addstr(curses.LINES-6, 0, " ) Ignore")
-            self.curses.addstr(curses.LINES-6, 40, "A) Accept Word")
+            self.curses.addstr(curses.LINES-6, 40, "A) Accept Word Always")
             self.curses.addstr(curses.LINES-5, 0, "I) Add to dictionary")
             self.curses.addstr(curses.LINES-5, 40, "U) Add to dictionary lowercase")
             self.curses.addstr(curses.LINES-4, 0, "D) Delete Word")
             self.curses.addstr(curses.LINES-4, 40, "R) Replace Word")
             self.curses.addstr(curses.LINES-3, 0, "Q) Quit")
-            self.curses.addstr(curses.LINES-3, 40, "X) Exit")
+            self.curses.addstr(curses.LINES-3, 40, "X) Exit Spell Check")
             self.curses.addstr(curses.LINES-2, 0, self.spaceline, curses.A_REVERSE)
             self.curses.addstr(curses.LINES-1, 0, "?")
             self.curses.refresh()
