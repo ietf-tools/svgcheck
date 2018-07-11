@@ -5,6 +5,7 @@ import math
 import sys
 import difflib
 import six
+import re
 from lxml.html import builder as E
 from xmldiff.EditItem import EditItem
 # from xmldiff.zzs import EditItem
@@ -367,16 +368,28 @@ class DiffRoot(object):
         if self.preserve:
             text = text.splitlines(1)
             n = None
+            children = list(node)
+            if len(children) > 0:
+                n = children[-1]
             for line in text:
-                if node.text is None:
-                    node.text = line.replace(' ', nbsp)
+                if n is None:
+                    if node.text is None:
+                        node.text = line.replace(' ', nbsp)
+                    else:
+                        node.text += line.replace(' ', nbsp)
                 else:
-                    n.tail = line.replace(' ', nbsp)
+                    if n.tail is None:
+                        n.tail = line.replace(' ', nbsp)
+                    else:
+                        n.tail += line.replace(' ', nbsp)
                 if line[-1:] == '\n':
                     n = E.BR()
                     node.append(n)
         else:
-            node.text = text
+            if node.text is None:
+                node.text = text
+            else:
+                node.text += text
 
     def diffTextToHtml(self, leftText, rightText, node):
         if self.preserve:
@@ -397,31 +410,76 @@ class DiffRoot(object):
             self.fixPreserveSpace(n, rightText)
             node.append(n)
         else:
-            differ = difflib.SequenceMatcher(None, leftText, rightText)
-            for tag, i1, i2, j1, j2 in differ.get_opcodes():
-                if tag == 'equal':
-                    n = E.SPAN()
-                    self.fixPreserveSpace(n, leftText[i1:i2])
-                    node.append(n)
-                elif tag == 'delete':
-                    n = E.SPAN()
-                    n.attrib['class'] = 'left'
-                    self.fixPreserveSpace(n, leftText[i1:i2])
-                    node.append(n)
-                elif tag == 'insert':
-                    n = E.SPAN()
-                    n.attrib['class'] = 'right'
-                    self.fixPreserveSpace(n, rightText[j1:j2])
-                    node.append(n)
+            leftArray = self.doWhiteArray(leftText)
+            rightArray = self.doWhiteArray(rightText)
+            d = difflib.Differ()
+            result = list(d.compare(leftArray, rightArray))
+
+            leftNode = None
+            rightNode = None
+            bothNode = None
+
+            for d in result:
+                tag = d[0:2]
+                if tag == '  ':
+                    if leftNode is not None:
+                        node.append(leftNode)
+                        leftNode = None
+                    if rightNode is not None:
+                        node.append(rightNode)
+                        rightNode = None
+                    if bothNode is None:
+                        bothNode = E.SPAN()
+                    self.fixPreserveSpace(bothNode, d[2:])
+                elif tag == '- ':
+                    if bothNode is not None:
+                        node.append(bothNode)
+                        bothNode = None
+                    if leftNode is None:
+                        leftNode = E.SPAN()
+                        leftNode.attrib['class'] = 'left'
+                        leftNode.text = ''
+                    self.fixPreserveSpace(leftNode, d[2:])
+                elif tag == '+ ':
+                    if bothNode is not None:
+                        node.append(bothNode)
+                        bothNode = None
+                    if rightNode is None:
+                        rightNode = E.SPAN()
+                        rightNode.attrib['class'] = 'right'
+                        rightNode.text = ''
+                    self.fixPreserveSpace(rightNode, d[2:])
+                elif tag == '? ':
+                    pass
                 else:
+                    if leftNode is not None:
+                        node.append(leftNode)
+                        leftNode = None
+                    if rightNode is not None:
+                        node.append(rightNode)
+                        rightNode = None
+                    if bothNode is not None:
+                        node.append(bothNode)
+                        bothNode = None
                     n = E.SPAN()
-                    n.attrib['class'] = 'left'
-                    self.fixPreserveSpace(n, leftText[i1:i2])
+                    n.attrib['class'] = 'error'
+                    self.fixPreserveSpace(n, d[2:])
                     node.append(n)
-                    n = E.SPAN()
-                    n.attrib['class'] = 'right'
-                    self.fixPreserveSpace(n, rightText[j1:j2])
-                    node.append(n)
+
+            if leftNode is not None:
+                node.append(leftNode)
+            if rightNode is not None:
+                node.append(rightNode)
+            if bothNode is not None:
+                node.append(bothNode)
+
+    def doWhiteArray(self, text):
+        result = []
+        #  At some point I want to split whitespace with
+        #  CR in them to multiple lines
+        for right in re.split(r'(\s+)', text):
+            result.append(right)
+        return result
 
 
 class DiffDocument(DiffRoot):
@@ -769,6 +827,7 @@ class DiffElement(DiffRoot):
                 self.children.append(self.createNode(c, self))
                 if c.tail is not None and c.tail.rstrip() != '':
                     self.children.append(DiffText(c.tail, xmlNode, self))
+                    c.tail = None
         else:
             DiffRoot.__init__(self, xmlNode.xml, parent)
 

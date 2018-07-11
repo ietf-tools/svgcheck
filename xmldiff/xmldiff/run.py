@@ -191,6 +191,7 @@ def main():
             options.resource_url = 'file:///' + options.resource_url.replace('\\', '/')
         else:
             options.resource_url = 'file://' + options.resource_url
+        options.resource_url = 'https://www.augustcellars.com/RfcEditor'
 
     log.note("   resource url: " + options.resource_url)
 
