@@ -1,3 +1,10 @@
+xmldiff (0.5.8) distribution(s); urgency=low
+
+	* Change the underlying difference algorithm used to word based
+	* Point to network server for all resources
+
+-- Jim Schaad <ietf@augustcellars.com>  Wed 11 July 2018 12:00:00 -0800
+
 xmldiff (0.5.7) distribution(s); urgency=low
 
 	* Add options dealing w/ no network and no entity resolution

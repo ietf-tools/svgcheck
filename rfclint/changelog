@@ -1,11 +1,18 @@
 rfclint (0.5.8) distribution(s); urgency=low
 
+	* Curses and Python 2.7 does not allow for any character above 128.  Remove all characters above that point
+	* Expand help on some options
+
+-- Jim Schaad <ietf@augustcellars.com>  Wed 11 July 2018 12:00:00 -0700
+
+rfclint (0.5.8) distribution(s); urgency=low
+
 	* Deal with curses and sections that are too big
 	* Center context text when doing spell and duplicate checking
 	* Fix bug when no spelling suggestions are present
 	* Change undefined symbol errors for ABNF from error to warnings.
 
--- Jim Schaad <ietf@augustcellars.com>  Mon 2 July 2018 12:00:00 -0700
+-- Jim Schaad <ietf@augustcellars.com>  Mon 9 July 2018 12:00:00 -0700
 
 rfclint (0.5.6) distribution(s); urgency=low
 
