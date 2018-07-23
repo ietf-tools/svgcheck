@@ -63,7 +63,7 @@
     <script>
       convertTrees()
       expandTree("diffRoot")
-      $(window).load(function() {
+      window.onload = function() {
       var cssRules = {
         'propertyGroups' : {
           'inline' : ['color']
@@ -73,7 +73,7 @@
         }
       }
       $('#centerColumn').inlineStyler(cssRules);
-      });
+      };
     </script>
 
 

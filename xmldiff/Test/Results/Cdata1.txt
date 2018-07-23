@@ -4,8 +4,7 @@ OP=4 left=  21 right=  21
 OP=4 left=   5 right=   5
 OP=3 left=  22 right=  22
 OP=4 left=   7 right=   7
-OP=2 left=  23
-OP=1           right=  23
+OP=3 left=  23 right=  23
 OP=4 left=   9 right=   9
 OP=4 left=  24 right=  24
 OP=4 left=  11 right=  11
