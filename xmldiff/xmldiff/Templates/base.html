@@ -12,7 +12,6 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
 	    crossorigin="anonymous"></script>          
     <script src="$resource_dir/jquery.inlineStyler.min.js"></script>
-    <link rel="stylesheet" href="$resource_dir/mktree.css" type="text/css">
 
     <style>
       xml-block { margin-left:1em; display:block; font-family:monospace; }
@@ -34,8 +33,29 @@
       .tab button.active { background-color: #ccc; }
       .tabcontent { display: none; padding: 6px 12px; border-top: none; }
       
-      }
+      /* Put this inside a @media qualifier so Netscape 4 ignores it */
+      @media screen, print { 
+          /* Turn off list bullets */
+          ul.mktree  li { list-style: none; } 
+          /* Control how "spaced out" the tree is */
+          ul.mktree, ul.mktree ul , ul.mktree li { margin-left:10px; padding:0px; }
+          ul.mktree  li.liBullet { margin-left:5px; }
+          /* Provide space for our own "bullet" inside the LI */
+          ul.mktree  li           .bullet { padding-left: 15px; }
+          /* Show "bullets" in the links, depending on the class of the LI that the link's in */
+          ul.mktree  li.liOpen    .bullet { cursor: pointer; background: url(data:image/gif;base64,R0lGODlhEwATAJEDAP///4CAgAAAAO7u7iH5BAEAAAMALAAAAAATABMAAAIonI+py+0PYwu0VheA3iBgvnkTqIlMJqRp95Hmkrkt+CrWLeX6zvdDAQA7)  center left no-repeat; }
+          ul.mktree  li.liClosed  .bullet { cursor: pointer; background: url(data:image/gif;base64,R0lGODlhEwATAJEDAP///4CAgAAAAO7u7iH5BAEAAAMALAAAAAATABMAAAIqnI+py+0PYwu0VheA3iDgLWzeBIqfgKLdp4XayGStSXIvZlnSzvf+PygAADs=)   center left no-repeat; }
+          ul.mktree  li.liBullet  .bullet { cursor: default; background: white; margin-left:5px; list-style-type: none; width: 0px; padding-left: 0px;}
+          /* Sublists are visible or not based on class of parent LI */
+          ul.mktree  li.liOpen    ul { display: block; }
+          ul.mktree  li.liClosed  ul { display: none; }
 
+          /* Format menu items differently depending on what level of the tree they are in */
+          /* Uncomment this if you want your fonts to decrease in size the deeper they are in the tree */
+          /*
+          ul.mktree  li ul li { font-size: 90% }
+          */
+      }
     </style>
 
 <!--   <script src="https://www.w3schools.com/lib/w3.js"></script> -->
@@ -137,102 +157,7 @@ function isElementVisible(el) {
     );
 }                    
                     </script>
-        <script>
-window.onload = function() {
-    convertTrees()
-    expandTree("diffRoot")
-
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
-    document.getElementById("defaultOpenR").click();
-
-    resizeWindows()
-}
-
-/*
-  window.onload = function() {
-  var cssRules = {
-  'propertyGroups' : {
-  'inline' : ['color']
-  },
-  'elementGroups' : {
-  'inline' : ['SPAN']
-  }
-  }
-  $$('#centerColumn').inlineStyler(cssRules);
-  };
-*/
-
-var leftHandle = document.getElementById("leftHandle");
-leftHandle = addEventListener('mousedown', initLeft, false);
-
-function initLeft(e) {
-    window.addEventListener('mousemove', startResizing, false);
-    window.addEventListener('mouseup', stopResizing, false);
-}
-
-function startResizing(e) {
-    var leftHandle = document.getElementById("leftHandle");
-    console.log('mouse move event ' + e.clientX + '  -- ' + leftHandle.offsetLeft);
-}
-
-function stopResizing(e) {
-    window.removeEventListener('mousemove', startResizing, false);
-    window.removeEventListener('mouseup', stopResizing, false);
-}
-
-window.onresize = resizeEvent;
-
-function resizeEvent(e)
-{
-    resizeWindows()
-}
-
-var mySizeInfo = {
-    "ratioLeft": 25,
-    "ratioRight": 25,
-    "hiddenSource": false
-};
-
-
-function resizeWindows()
-{
-    var x = window.innerWidth;
-    var lx = 0;
-    var rx = 0;
-    var left = document.getElementById("leftColumn");
-    var right = document.getElementById("rightColumn");
-    if (mySizeInfo.hiddenSource) {
-        left.style.width = "0px";
-        right.style.width = "0px";
-    }
-    else {
-        lx = Math.floor(x * 25 / 100);
-        left.style.width = lx + "px";
-
-        rx = Math.floor(x * 25 / 100);
-        right.style.width = rx + "px";
-    }
-
-    var center = document.getElementById("centerContent");
-    center.style.width = (x - lx - rx - 60) + "px";
-}
-
-function hideSidebars()
-{
-    var btn = document.getElementById("hideSource");
-    var visible = true;
-    if (btn.textContent == "Hide Source Files") {
-        btn.textContent = "Show Source Files";
-        mySizeInfo.hiddenSource = true;
-    }
-    else {
-        btn.textContent = "Hide Source Files";
-        mySizeInfo.hiddenSource = false;
-    }
-
-    resizeWindows()
-}
+    <script src="$resource_dir/resize.js">
     </script>
 
 </head>
@@ -258,7 +183,7 @@ function hideSidebars()
           <div id="leftHandle" class="handle" style="height: calc(100vh - 32px);">
             </div>
         </td>
-        <td>
+        <td id="rightSource">
           <div style="width:500px;" id="centerContent">
             <div class="topnav">
 	      <button type="button" onclick="expandTree('diffRoot')">Expand All</button>
