@@ -1080,7 +1080,7 @@ class DiffParagraph(DiffRoot):
             text += x
 
         if self.preserve:
-            text = text.replace(' ', '\xa0')
+            text = text.replace(' ', u'\xa0')
         return text
 
     def ToHtml(self, parent):

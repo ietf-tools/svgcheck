@@ -165,7 +165,7 @@ def CompressEdits(ops, leftArray, rightArray):
             else:
                 right = ops[i]
         else:
-            if ops[i][2] - ops[i][1] == 1 and (leftArray[ops[i][1]] == ' ' or leftArray[ops[i][1]] == '\xa0') and \
+            if ops[i][2] - ops[i][1] == 1 and (leftArray[ops[i][1]] == u' ' or leftArray[ops[i][1]] == u'\xa0') and \
                 i+1 < len(ops) and ops[i+1][0] != 'equal' and not (left == None and right == None):
                 if left != None:
                     left[2] = ops[i][2]
