@@ -395,7 +395,7 @@ class DiffRoot(object):
                 node.text += text
 
     def fixPreserveNL(self, node, text):
-        if self.preserve:
+        if self.preserve or True:
             text = text.splitlines(1)
             n = None
             children = list(node)
@@ -446,6 +446,8 @@ class DiffRoot(object):
 
             for op, i1, i2, j1, j2 in result:
                 if op == 'equal':
+                    if i1 == i2 and j1 == j2:
+                        continue
                     bothNode = E.SPAN()
                     self.fixPreserveNL(bothNode, ''.join(leftArray[i1:i2]))
                     node.append(bothNode)
@@ -465,6 +467,9 @@ class DiffRoot(object):
                     n.attrib['class'] = 'error'
                     self.fixPreserveNL(n, ''.join(leftArray[i1:i2])+"*"+''.join(rightArray[j1:j2]))
                     node.append(n)
+                # t = E.SPAN()
+                # t.text = ' '
+                # node.append(t)
 
     def doWhiteArray(self, text):
         return DoWhiteArray(text)
@@ -763,7 +768,7 @@ class DiffComment(DiffRoot):
     def ToHtml(self, parent):
         node = E.LI()
         parent.append(node)
-        myLine = "<-- " + self.xml.text.replace(' ', nbsp) + "-->"
+        myLine = "<--" + self.xml.text.replace(' ', nbsp) + "-->"
         while myLine[0] == '\n':
             myLine = myLine[1:]
         while myLine[-1] == '\n':
@@ -789,11 +794,11 @@ class DiffComment(DiffRoot):
             node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
             node.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
             left = myLine
-            right = "<-- " + self.matchNode.xml.text.replace(' ', nbsp) + "-->"
+            right = "<--" + self.matchNode.xml.text.replace(' ', nbsp) + "-->"
             self.diffTextToHtml(left, right, node)
 
     def toText(self):
-        return "\n<-- " + self.xml.text.replace(' ', nbsp) + "-->\n"
+        return "\n<--" + self.xml.text.replace(' ', nbsp) + "-->\n"
 
     def cloneTree(self, parent):
         clone = DiffComment(self.xml, parent)
@@ -1074,13 +1079,14 @@ class DiffParagraph(DiffRoot):
                 x = "\n" + text + "\n"
             text += x
 
+        if self.preserve:
+            text = text.replace(' ', '\xa0')
         return text
 
     def ToHtml(self, parent):
 
         node = E.LI()
         parent.append(node)
-        self.preserve = True
         if self.deleted:
             n = E.SPAN()
             n.attrib["class"] = 'left'

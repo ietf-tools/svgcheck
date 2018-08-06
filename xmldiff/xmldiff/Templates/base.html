@@ -7,12 +7,6 @@
 
   <title>$title</title>
 
-    <script src="$resource_dir/mktree.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
-	    crossorigin="anonymous"></script>          
-    <script src="$resource_dir/jquery.inlineStyler.min.js"></script>
-
     <style>
       xml-block { margin-left:1em; display:block; font-family:monospace; }
       .left { color:red; background-color:MistyRose; font-family:monospace; }
@@ -58,107 +52,9 @@
       }
     </style>
 
-<!--   <script src="https://www.w3schools.com/lib/w3.js"></script> -->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/> -->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script> -->
-
-<!--    <script src="$resource_dir/colresize.js"></script> -->
-
-    <script type="text/javascript">
-function openLeftFile(evt, fileName) {
-    // Declare variables
-    var i, tabcontent, tablinks;
-    //  Get all elements w/ class='tabcontent' and hide them
-    tabcontent = document.getElementById("leftColumn").getElementsByClassName("tabcontent");
-    for (i=0; i<tabcontent.length; i++) {
-        tabcontent[i].style.display="none";
-    }
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementById("leftColumn").getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(fileName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
-function openRightFile(evt, fileName) {
-    // Declare variables
-    var i, tabcontent, tablinks;
-    //  Get all elements w/ class='tabcontent' and hide them
-    tabcontent = document.getElementById("rightColumn").getElementsByClassName("tabcontent");
-    for (i=0; i<tabcontent.length; i++) {
-        tabcontent[i].style.display="none";
-    }
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementById("rightColumn").getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(fileName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-                    
-function sync2here(leftFile, leftLine, rightFile, rightLine)
-{
-    if (leftFile != -1) {
-        leftDiv = document.getElementById("leftColumn")
-    }
-}
-
-function OnScrollCenter()
-{
-    var el2 = XXX()
-                    
-    if (el2.hasAttribute('whereLeft')) {
-        document.getElementById(el2.attributes['whereLeft'].value).scrollIntoView()
-    }                
-    if (el2.hasAttribute('whereRight')) {
-        document.getElementById(el2.attributes['whereRight'].value).scrollIntoView()
-    }                
-}
-
-function XXX()
-{
-    var xxx = document.getElementById("centerColumn");
-    var scroll = xxx.scrollTop;
-    var elements = xxx.getElementsByTagName("li");
-    var el;
-    for (var i=0; i<elements.length; i++) {
-        el = elements[i];
-        if (el.offsetTop > 0 && isElementVisible(el)) {
-            return el;
-        }
-    }
-    return null;
-                    }
-
-function isElementVisible(el) {
-    var rect     = el.getBoundingClientRect(),
-        vWidth   = window.innerWidth || doc.documentElement.clientWidth,
-        vHeight  = window.innerHeight || doc.documentElement.clientHeight,
-        efp      = function (x, y) { return document.elementFromPoint(x, y) };     
-
-    // Return false if it's not in the viewport
-    if (rect.right < 0 || rect.bottom < 0 
-            || rect.left > vWidth || rect.top > vHeight)
-        return false;
-
-    // Return true if any of its four corners are visible
-    return (
-          el.contains(efp(rect.left,  rect.top))
-      ||  el.contains(efp(rect.right, rect.top))
-      ||  el.contains(efp(rect.right, rect.bottom))
-      ||  el.contains(efp(rect.left,  rect.bottom))
-    );
-}                    
-                    </script>
-    <script src="$resource_dir/resize.js">
-    </script>
+<script>
+  $allScript
+</script>
 
 </head>
 
@@ -183,7 +79,7 @@ function isElementVisible(el) {
           <div id="leftHandle" class="handle" style="height: calc(100vh - 32px);">
             </div>
         </td>
-        <td id="rightSource">
+        <td id="centerSource">
           <div style="width:500px;" id="centerContent">
             <div class="topnav">
 	      <button type="button" onclick="expandTree('diffRoot')">Expand All</button>

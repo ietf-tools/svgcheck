@@ -185,6 +185,13 @@ def main():
     templates_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'Templates')
     log.note("   template directory = " + templates_dir)
 
+    if six.PY2:
+        with open(os.path.join(templates_dir, "resize.js"), "rU") as f:
+            allScript = f.read()
+    else:
+        with open(os.path.join(templates_dir, "resize.js"), "rU", encoding="utf8") as f:
+            allScript = f.read()
+
     if options.resource_url is None:
         options.resource_url = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'Templates')
         if os.name == 'nt':
@@ -219,7 +226,8 @@ def main():
         'body': ''.join(buffers['body']),
         'leftFile': buffers['leftFile'],
         'rightFile': buffers['rightFile'],
-        'resource_dir': options.resource_url
+        'resource_dir': options.resource_url,
+        'allScript': allScript
         }
     output = html_template.substitute(subs)
 

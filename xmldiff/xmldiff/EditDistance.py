@@ -126,7 +126,7 @@ def DoWhiteArray(text):
     result = []
     #  At some point I want to split whitespace with
     #  CR in them to multiple lines
-    for right in re.split(r'([\s\xa0]+)', text):
+    for right in re.split(r'([\s\xa0=]+)', text):
         if len(right) == 0:
             continue
         if right.isspace():
@@ -140,11 +140,6 @@ def DoWhiteArray(text):
                 lastCh = ch
         else:
             result.append(right)
-
-    while result[0].isspace():
-        result = result[1:]
-    while result[-1].isspace():
-        result = result[:-1]
     return result
 
 def CompressEdits(ops, leftArray, rightArray):
@@ -171,7 +166,7 @@ def CompressEdits(ops, leftArray, rightArray):
                 right = ops[i]
         else:
             if ops[i][2] - ops[i][1] == 1 and (leftArray[ops[i][1]] == ' ' or leftArray[ops[i][1]] == '\xa0') and \
-                not (left == None and right == None):
+                i+1 < len(ops) and ops[i+1][0] != 'equal' and not (left == None and right == None):
                 if left != None:
                     left[2] = ops[i][2]
                 else:
@@ -198,6 +193,19 @@ def CompressEdits(ops, leftArray, rightArray):
     return opsNew
 
 if __name__ == '__main__':
+    old = " attr1=\"value2\""
+    new = " attr1=\"value1\""
+
+    leftArray = DoWhiteArray(old)
+    rightArray = DoWhiteArray(new)
+
+    ops = ComputeEdits(leftArray, rightArray)
+
+    for op in ops:
+        Console.write("%s %2d %2d %2d %2d '%s' '%s'\n" % (op[0], op[1], op[2], op[3], op[4], ''.join(leftArray[op[1]:op[2]]), ''.join(rightArray[op[3]:op[4]])))
+
+    Console.write("**********************************************\n")
+    
     old = "This is\xa0a\xa0message\nwith one change"
     new = "This is\xa0a message with\ntwo change"
     leftArray = DoWhiteArray(old)
