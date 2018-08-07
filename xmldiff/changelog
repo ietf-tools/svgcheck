@@ -1,3 +1,13 @@
+xmldiff (0.5.9) distribution(s); urgency=low
+
+	* Complete work to remove JQuery from the html file
+	* Make the HTML file be self contained
+	* Add space after differences for readability
+	* Change the pane re-size algorithm.
+	* 
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 6 Aug 2018 12:00:00 -0800
+
 xmldiff (0.5.8.1) distribution(s); urgency=low
 
 	* Switch to a word by word diff computation for display
