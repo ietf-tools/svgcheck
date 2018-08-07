@@ -449,27 +449,25 @@ class DiffRoot(object):
                     if i1 == i2 and j1 == j2:
                         continue
                     bothNode = E.SPAN()
-                    self.fixPreserveNL(bothNode, ''.join(leftArray[i1:i2]))
+                    self.fixPreserveNL(bothNode, (''.join(leftArray[i1:i2])))
                     node.append(bothNode)
                 elif op == 'remove':
                     leftNode = E.SPAN()
                     leftNode.attrib['class'] = 'left'
-                    self.fixPreserveNL(leftNode, ''.join(leftArray[i1:i2]))
+                    self.fixPreserveNL(leftNode, (''.join(leftArray[i1:i2])+u' '))
                     node.append(leftNode)
                 elif op == 'insert':
                     rightNode = E.SPAN()
                     rightNode.attrib['class'] = 'right'
                     rightNode.text = ''
-                    self.fixPreserveNL(rightNode, ''.join(rightArray[j1:j2]))
+                    self.fixPreserveNL(rightNode, (''.join(rightArray[j1:j2])+u' '))
                     node.append(rightNode)
                 else:
                     n = E.SPAN()
                     n.attrib['class'] = 'error'
-                    self.fixPreserveNL(n, ''.join(leftArray[i1:i2])+"*"+''.join(rightArray[j1:j2]))
+                    self.fixPreserveNL(n, ''.join(leftArray[i1:i2])+u"*" +
+                                       (''.join(rightArray[j1:j2])+u' '))
                     node.append(n)
-                # t = E.SPAN()
-                # t.text = ' '
-                # node.append(t)
 
     def doWhiteArray(self, text):
         return DoWhiteArray(text)
