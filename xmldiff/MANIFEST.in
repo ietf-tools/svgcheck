@@ -17,4 +17,5 @@ include xmldiff/Templates/mktree.css
 include xmldiff/Templates/bullet.gif
 include xmldiff/Templates/plus.gif
 include xmldiff/Templates/minus.gif
+include xmldiff/Templates/resize.js
 
