@@ -12,7 +12,7 @@ from rfctools_common.parser import XmlRfcError
 from xmldiff.EditItem import EditItem
 from xmldiff.zzs2 import distance
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
-from xmldiff.DiffNode import ChangeTagMatching, tagMatching, AddParagraphs
+from xmldiff.DiffNode import ChangeTagMatching, tagMatching, AddParagraphs, SourceFiles
 
 xmldiff_program = "rfc-xmldiff"
 
@@ -62,13 +62,13 @@ class TestCommandLineOptions(unittest.TestCase):
         check_process(self, [sys.executable, xmldiff_program, "--help"],
                       "Results/Help.out", "Results/Empty.txt", None, None)
 
-    def test_single_default(self):
+    def test_base_default(self):
         if not os.path.exists('Temp'):
             os.mkdir('Temp')
         check_process(self, [sys.executable, xmldiff_program, "--quiet",
                              "-o", "Temp/Single.html", "Tests/Simple.xml", "Tests/SimpleTree.xml"],
                       "Results/Empty.txt", "Results/Empty.txt",
-                      "Temp/Single.html", "Results/Single.html")
+                      "Temp/Base.html", "Results/Base.html")
 
     def test_single(self):
         if not os.path.exists('Temp'):
@@ -236,11 +236,13 @@ def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile, markParagraphs
     """ General distance test function """
     options = OOO()
     diffCount = 0
+    SourceFiles.Clear()
     left = XmlRfcParser(leftFile, quiet=True, cache_path=None, no_network=True). \
         parse(strip_cdata=False, remove_comments=False)
     left = BuildDiffTree(left.tree, options)
     if markParagraphs:
         left = AddParagraphs(left)
+    SourceFiles.LeftDone()
     right = XmlRfcParser(rightFile, quiet=True, cache_path=None, no_network=True). \
         parse(strip_cdata=False, remove_comments=False)
     right = BuildDiffTree(right.tree, options)
@@ -373,6 +375,11 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
         with open(compareFile, 'r') as f:
             lines1 = f.readlines()
         lines1 = [line.replace('$TDIR', template_dir) for line in lines1]
+
+        cwd = os.getcwd()
+        if os.name == 'nt':
+            cwd = cwd.replace('\\', '/')
+        lines1 = [line.replace('$$CWD$$', cwd) for line in lines1]
 
         d = difflib.Differ()
         result = list(d.compare(lines1, lines2))

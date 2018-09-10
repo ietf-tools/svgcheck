@@ -615,7 +615,7 @@ class XmlRfcParser:
             if element.tag is lxml.etree.PI:
                 pidict = xmlrfc.parse_pi(element)
                 pis = xmlrfc.pis.copy()
-                if 'include' in pidict and pidict['include']:
+                if 'include' in pidict and pidict['include'] and not self.no_xinclude:
                     request = pidict['include']
                     path, originalPath = self.cachingResolver.getReferenceRequest(request,
                            # Pass the line number in XML for error bubbling
@@ -633,9 +633,11 @@ class XmlRfcParser:
                         # parser.resolvers.add(self.cachingResolver) --- should this be done?
                         ref_root = lxml.etree.parse(path, parser).getroot()
                         ref_root.pis = pis
+                        ref_root.base = path
                         xmlrfc._elements_cache.append(ref_root)
                         for e in ref_root.iterdescendants():
                             e.pis = pis
+                            e.base = path
                             xmlrfc._elements_cache.append(e)
                         parent = element.getparent()
                         parent.replace(element, ref_root)

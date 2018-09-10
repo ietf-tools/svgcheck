@@ -58,10 +58,47 @@ def ChangeTagMatching(newMatching):
     tagMatching = newMatching
 
 
+class SourceFileSet(object):
+    def __init__(self):
+        self.leftFiles = []
+        self.rightFiles = []
+        self.side = True  # Left
+
+    def AddSourceFile(self, fileName):
+        if self.side:
+            if fileName not in self.leftFiles:
+                self.leftFiles.append(fileName)
+        else:
+            if fileName not in self.rightFiles:
+                self.rightFiles.append(fileName)
+
+    def LeftDone(self):
+        self.side = False
+
+    def LineFormat(self, xmlNode, fRight):
+        if hasattr(xmlNode, "base"):
+            if fRight:
+                fileNo = self.rightFiles.index(xmlNode.base)
+                return "R{0}_{1}".format(xmlNode.sourceline, fileNo)
+            else:
+                fileNo = self.leftFiles.index(xmlNode.base)
+                return "L{0}_{1}".format(xmlNode.sourceline, fileNo)
+        else:
+            return ("R{0}_0" if fRight else "L{0}_0").format(xmlNode.sourceline)
+
+    def Clear(self):
+        self.leftFiles = []
+        self.rightFiles = []
+        self.side = True  # Left
+
+
+SourceFiles = SourceFileSet()
+
+
 def BuildDiffTree(xmlNode, options):
     """ Build the Diff tree from the xml tree """
 
-    global diffCount
+    global diffCount, SourceFiles
 
     if not isinstance(xmlNode, lxml.etree._ElementTree):
         sys.exit(2, "bad parameter")
@@ -214,6 +251,10 @@ class DiffRoot(object):
         self.index = diffCount
         self.deleteTree = False
         self.preserve = False
+
+        if hasattr(xmlNode, "base"):
+            baseFile = xmlNode.base
+            SourceFiles.AddSourceFile(baseFile)
 
     def ToString(self):
         node = E.DIV()
@@ -694,15 +735,15 @@ class DiffPI(DiffRoot):
         root2.append(root)
         if self.inserted:
             root.attrib['class'] = 'right'
-            root.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
+            root.attrib["whereRight"] = SourceFiles.LineFormat(self.xml, True)
         elif self.deleted:
             root.attrib['class'] = 'left'
-            root.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+            root.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
         elif self.matchNode is None:
             root.attrib['class'] = 'error'
         else:
-            root.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
-            root.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
+            root.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
+            root.attrib["whereRight"] = SourceFiles.LineFormat(self.matchNode.xml, True)
             if self.xml.target == self.matchNode.xml.target:
                 if self.xml.text == self.matchNode.xml.text:
                     pass
@@ -774,13 +815,13 @@ class DiffComment(DiffRoot):
         if self.inserted:
             n = E.SPAN()
             n.attrib['class'] = 'artwork right'
-            node.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereRight"] = SourceFiles.LineFormat(self.xml, True)
             self.fixPreserveSpace(n, myLine)
             node.append(n)
         elif self.deleted:
             n = E.SPAN()
             n.attrib['class'] = 'artwork left'
-            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
             self.fixPreserveSpace(n, myLine)
             node.append(n)
         elif self.matchNode is None:
@@ -789,8 +830,8 @@ class DiffComment(DiffRoot):
             self.fixPreserveSpace(n, myLine)
             node.append(n)
         else:
-            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
-            node.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
+            node.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
+            node.attrib["whereRight"] = SourceFiles.LineFormat(self.matchNode.xml, True)
             left = myLine
             right = "<--" + self.matchNode.xml.text.replace(' ', nbsp) + "-->"
             self.diffTextToHtml(left, right, node)
@@ -857,7 +898,7 @@ class DiffElement(DiffRoot):
             # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib["class"] = 'left'
-            root.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+            root.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
             node.text = "<" + self.xml.tag
             anchor.append(node)
             if len(self.xml.attrib):
@@ -868,7 +909,7 @@ class DiffElement(DiffRoot):
             # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib['class'] = 'right'
-            root.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
+            root.attrib["whereRight"] = SourceFiles.LineFormat(self.xml, True)
             node.text = "<" + self.xml.tag
             anchor.append(node)
             if len(self.xml.attrib):
@@ -885,8 +926,8 @@ class DiffElement(DiffRoot):
                 for key in self.xml.attrib.iterkeys():
                     node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
         else:
-            root.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
-            root.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
+            root.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
+            root.attrib["whereRight"] = SourceFiles.LineFormat(self.matchNode.xml, True)
             # anchor.attrib['onclick'] = 'return sync2here(1, {0},  1, {1})' \
             #      .format(self.xml.sourceline, self.matchNode.xml.sourceline)
             if self.xml.tag == self.matchNode.xml.tag:
@@ -943,13 +984,13 @@ class DiffElement(DiffRoot):
             s.text = "</" + self.xml.tag + ">"
             if self.deleted:
                 s.attrib['class'] = 'left'
-                li.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+                li.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
             elif self.inserted:
                 s.attrib['class'] = 'right'
-                li.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
+                li.attrib["whereRight"] = SourceFiles.LineFormat(self.xml, True)
             else:
-                li.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
-                li.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
+                li.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
+                li.attrib["whereRight"] = SourceFiles.LineFormat(self.matchNode.xml, True)
                 # li.attrib["src"] = "DiffElement-End"
 
             ul.append(li)
@@ -1009,13 +1050,13 @@ class DiffText(DiffRoot):
         if self.deleted:
             n = E.SPAN()
             n.attrib["class"] = 'left'
-            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
             n.text = self.text
             node.append(n)
         elif self.inserted:
             n = E.SPAN()
             n.attrib["class"] = 'right'
-            node.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereRight"] = SourceFiles.LineFormat(self.xml, True)
             n.text = self.text
             node.append(n)
         elif self.matchNode is None:
@@ -1024,8 +1065,8 @@ class DiffText(DiffRoot):
             n.text = self.text
             node.append(n)
         else:
-            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
-            node.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
+            node.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
+            node.attrib["whereRight"] = SourceFiles.LineFormat(self.matchNode.xml, True)
             if self.text == self.matchNode.text:
                 node.text = self.text
             else:
@@ -1088,13 +1129,13 @@ class DiffParagraph(DiffRoot):
         if self.deleted:
             n = E.SPAN()
             n.attrib["class"] = 'left'
-            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
             self.fixPreserveSpace(n, self.toText())
             node.append(n)
         elif self.inserted:
             n = E.SPAN()
             n.attrib['class'] = 'right'
-            node.attrib["whereRight"] = "R{0}_{1}".format(self.xml.sourceline, 0)
+            node.attrib["whereRight"] = SourceFiles.LineFormat(self.xml, True)
             self.fixPreserveSpace(n, self.toText())
             node.append(n)
         elif self.matchNode is None:
@@ -1104,8 +1145,8 @@ class DiffParagraph(DiffRoot):
             node.append(n)
         else:
             self.diffTextToHtml(self.toText(), self.matchNode.toText(), node)
-            node.attrib["whereLeft"] = "L{0}_{1}".format(self.xml.sourceline, 0)
-            node.attrib["whereRight"] = "R{0}_{1}".format(self.matchNode.xml.sourceline, 0)
+            node.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
+            node.attrib["whereRight"] = SourceFiles.LineFormat(self.matchNode.xml, True)
 
     def updateCost(self, right):
         leftText = self.toText()

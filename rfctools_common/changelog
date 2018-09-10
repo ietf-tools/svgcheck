@@ -1,3 +1,9 @@
+rfctools-common (0.5.10) distribution(s); urgency=low
+
+	* The no xinclude option is expanded to include processing <?rfc include=""?> PI
+
+-- Jim Schaad <ietf@augustcellars.com>  XXX 2 Sept 2018 12:00:00 -0700
+
 rfctools-common (0.5.6) distribution(s); urgency=low
 
 	* Add option to not resolve entities for XML Linting

@@ -45,16 +45,20 @@ Templates
 
 Two template files are installed with the package:
 
-    * single.html - provides just the XML difference between the two files.  This is the default template
-    * base.html - provides three columns containing the left source files, the XML difference and the right source files.
+    * single.html - provides just the XML difference between the two files.
+    * base.html - provides three columns containing the left source files, the XML difference and the right source files.   Uses color to highlight changes. This is the default template.
+    * wdiff.html - provides three columns containing the left source files, the XML difference and the right source files.  Uses color and strike throughs to highlight changes.
 
 For new template files, the following variables are define:
 
    * title - provides a default window title
    * body - contains the XML difference HTML
+   * leftSourceNames - the list of all input files for the left sources
    * leftFile - contains the left source files
+   * rigthSourceNames - the list of all input files for the right sources
    * rightFile - contains the right source files
    * resource_dir - contains the URL to find the resources.  This defaults to the Template directory of the package.
+   * allScript - contains the contents of resize.js so the resulting html file is self contained.
     
 Dependencies
 ============
@@ -63,7 +67,7 @@ rfc-xmldiff depends on the following packages:
 
 * lxml_ *(>= 4.1.1)*
 * requests_ *(>= 2.5.0)*
-* `rfctools_common`_ *(>= 0.5.5)*
+* `rfctools_common`_ *(>= 0.5.10)*
 * cffi_ *(>= 1.0.0)*
 
 .. _lxml: http://lxml.de

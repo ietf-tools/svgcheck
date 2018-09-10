@@ -9,11 +9,17 @@ import sys
 from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
 from rfctools_common import log
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, AddParagraphs, tagMatching
+from xmldiff.DiffNode import SourceFiles
 import string
 from xmldiff.EditItem import EditItem
 from xmldiff.zzs2 import distance
 # from xmldiff.zzs import distance, EditItem
 from xmldiff.__init__ import __version__
+
+if six.PY2:
+    from urlparse import urlparse
+else:
+    from urllib.parse import urlparse
 
 try:
     import debug
@@ -37,19 +43,19 @@ def clear_cache(cache_path):
     sys.exit()
 
 
-def formatLines(lines, side):
-    output = '<div itemprop="text" class="blob-wrapper data type-c">'
-    output += '<table class="highlight tab-size js-file-line-container" data-tab-size="8">'
-    output += "<col width='4em'>"
+def formatLines(lines, side, fileNumber):
+    output = '<div itemprop="text" class="blob-wrapper data type-c">\n'
+    output += '<table class="highlight tab-size js-file-line-container" data-tab-size="8">\n'
+    output += "<col width='4em'/>\n"
 
     iLine = 1
     for line in lines:
-        output += '<tr id="{2}{4}_{3}"><td class="blob-num js-line-number" ' \
+        output += u'<tr id="{2}{4}_{3}"><td class="blob-num js-line-number" ' \
                   'data-line-number="{0}">{0}</td>' \
-                  '<td class="blob-code blob-code-inner js-file-line">{1}</td></tr>'. \
-                  format(iLine, line, side, '0', iLine-1)
+                  '<td class="blob-code blob-code-inner js-file-line">{1}</td></tr>\n'. \
+                  format(iLine, line, side, fileNumber, iLine-1)
         iLine += 1
-    output += "</table></div>"
+    output += "</table>\n</div>\n"
 
     return output
 
@@ -73,7 +79,7 @@ def main():
                              help='Diff using the raw tree')
     value_options.add_option('-t', '--template', dest='template', metavar='FILE',
                              help='specify the HTML template filename',
-                             default='single.html')
+                             default='base.html')
     value_options.add_option('--resource-url', dest='resource_url',
                              help='Path to resources in the template')
     value_options.add_option('-V', '--version', action='callback', callback=display_version,
@@ -92,6 +98,8 @@ def main():
                              help="Don't resolve entities in the XML")
     value_options.add_option('-N', '--no-network', action='store_true', default=False,
                              help='don\'t use the network to resolve references')
+    value_options.add_option('-X', '--no-xinclude', action='store_true', dest='no_xinclude',
+                             help='don\'t resolve any xi:include elements')
 
     optionparser.add_option_group(value_options)
 
@@ -119,6 +127,7 @@ def main():
     log.note("Parse input files")
     parser = XmlRfcParser(leftSource, verbose=log.verbose,
                           quiet=log.quiet, no_network=options.no_network,
+                          no_xinclude=options.no_xinclude,
                           resolve_entities=not options.noEntity)
     try:
         ll = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False).tree
@@ -126,6 +135,7 @@ def main():
         if not options.raw:
             leftXml = AddParagraphs(leftXml)
         leftFile_base = os.path.basename(leftSource)
+        SourceFiles.LeftDone()
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + leftSource, e)
         sys.exit(1)
@@ -136,6 +146,7 @@ def main():
 
     parser = XmlRfcParser(rightSource, verbose=log.verbose,
                           quiet=log.quiet, no_network=options.no_network,
+                          no_xinclude=options.no_xinclude,
                           resolve_entities=not options.noEntity)
     try:
         rightXml = parser.parse(remove_pis=False, strip_cdata=False, remove_comments=False)
@@ -151,23 +162,55 @@ def main():
         tagMatching = None
 
     log.note("Read files for source display")
-    if six.PY2:
-        with open(leftSource, "rU") as f:
-            leftLines = f.readlines()
-    else:
-        with open(leftSource, "rU", encoding="utf8") as f:
-            leftLines = f.readlines()
+    leftSources = ""
+    leftSourceNames = ""
+    for i in range(len(SourceFiles.leftFiles)):
+        file = SourceFiles.leftFiles[i]
+        if file[:5] == 'file:':
+            file = urlparse(file)
+            file = file[2]
+            if file[2] == ':':
+                file = file[1:]
+        if six.PY2:
+            with open(file, "rb") as f:
+                leftLines = f.read()
+                leftLines = leftLines.decode('utf8').splitlines(1)
+        else:
+            with open(file, "rU", encoding="utf8") as f:
+                leftLines = f.readlines()
 
-    leftLines = [escape(x).replace(' ', '&nbsp;') for x in leftLines]
+        leftSources += u'<div id="L_File{0}" class="tabcontent">\n'.format(i)
+        leftLines = [escape(x).replace(' ', '&nbsp;') for x in leftLines]
+        leftSources += formatLines(leftLines, 'L', i)
+        leftSources += u'</div>\n'
 
-    if six.PY2:
-        with open(rightSource, "rU") as f:
-            rightLines = f.readlines()
-    else:
-        with open(rightSource, "rU", encoding="utf8") as f:
-            rightLines = f.readlines()
+        leftSourceNames += u'<option label="{0}" value="L_File{1}">{2}</option>\n'. \
+                           format(file, i, file)
 
-    rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
+    rightSources = ""
+    rightSourceNames = ""
+    for i in range(len(SourceFiles.rightFiles)):
+        file = SourceFiles.rightFiles[i]
+        if file[:5] == 'file:':
+            file = urlparse(file)
+            file = file[2]
+            if file[2] == ':':
+                file = file[1:]
+
+        if six.PY2:
+            with open(file, "rb") as f:
+                rightLines = f.read().decode('utf8').splitlines(1)
+        else:
+            with open(file, "rU", encoding="utf8") as f:
+                rightLines = f.readlines()
+
+        rightSources += u'<div id="R_File{0}" class="tabcontent">\n'.format(i)
+        rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
+        rightSources += formatLines(rightLines, 'R', i)
+        rightSources += u'</div>\n'
+
+        rightSourceNames += '<option label="{0}" value="R_File{1}">{2}</option>\n'. \
+                            format(file, i, file)
 
     log.note("Start computing tree edit distance")
     editSet = distance(leftXml, rightXml, DiffRoot.get_children, DiffRoot.InsertCost,
@@ -186,7 +229,7 @@ def main():
     log.note("   template directory = " + templates_dir)
 
     if six.PY2:
-        with open(os.path.join(templates_dir, "resize.js"), "rU") as f:
+        with open(os.path.join(templates_dir, "resize.js"), "rb") as f:
             allScript = f.read()
     else:
         with open(os.path.join(templates_dir, "resize.js"), "rU", encoding="utf8") as f:
@@ -215,8 +258,8 @@ def main():
     rightLines = [x.replace(' ', '&nbsp;') for x in rightLines]
 
     buffers = {}
-    buffers['leftFile'] = formatLines(leftLines, 'L')
-    buffers['rightFile'] = formatLines(rightLines, 'R')
+    buffers['leftFile'] = leftSources
+    buffers['rightFile'] = rightSources
     buffers['body'] = leftXml.ToString()
 
     subs = {
@@ -225,7 +268,9 @@ def main():
         'title': 'rfc-xmldiff {0} {1}'.format(leftFile_base, rightFile_base),
         'body': ''.join(buffers['body']),
         'leftFile': buffers['leftFile'],
+        'leftSourceNames': leftSourceNames,
         'rightFile': buffers['rightFile'],
+        'rightSourceNames': rightSourceNames,
         'resource_dir': options.resource_url,
         'allScript': allScript
         }

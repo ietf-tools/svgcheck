@@ -9,13 +9,8 @@ include xmldiff/EditItem.py
 include xmldiff/__init__.py
 include xmldiff/zzs_build.py
 include xmldiff/zzs.c
-include xmldiff/Templates/base.html
-include xmldiff/Templates/colresize.js
-include xmldiff/Templates/single.html
-include xmldiff/Templates/mktree.js
-include xmldiff/Templates/mktree.css
-include xmldiff/Templates/bullet.gif
-include xmldiff/Templates/plus.gif
-include xmldiff/Templates/minus.gif
 include xmldiff/Templates/resize.js
+include xmldiff/Templates/base.html
+include xmldiff/Templates/wdiff.html
+include xmldiff/Templates/single.html
 

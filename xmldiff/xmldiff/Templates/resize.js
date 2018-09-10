@@ -6,8 +6,8 @@ window.onload = function() {
     expandTree("diffRoot");
 
     // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
-    document.getElementById("defaultOpenR").click();
+    // document.getElementById("defaultOpen").click();
+    // document.getElementById("defaultOpenR").click();
 
     resizeWindows();
     
@@ -55,6 +55,8 @@ window.onload = function() {
             }
         }
     }
+
+    OnScrollCenter()
 }
 
 
@@ -165,6 +167,30 @@ function hideSidebars()
     resizeWindows()
 }
 
+function selectChange( id ) {
+    var selectId = id + "FileNames"
+    var node = document.getElementById( selectId );
+
+    if (node && node.tagName == "SELECT") {
+        var value = node.options[node.selectedIndex].value;
+
+        console.log("--> select Change => " + value)
+        
+        // Declare variables
+        var i, tabcontent, tablinks;
+        var tabsId = id + "Column"
+        
+        //  Get all elements w/ class='tabcontent' and hide them
+        tabcontent = document.getElementById(tabsId).getElementsByClassName("tabcontent");
+        for (i=0; i<tabcontent.length; i++) {
+            tabcontent[i].style.display="none";
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(value).style.display = "block";
+    }
+}
+        
 function openLeftFile(evt, fileName) {
     // Declare variables
     var i, tabcontent, tablinks;
@@ -215,10 +241,24 @@ function OnScrollCenter()
     var el2 = XXX()
                     
     if (el2.hasAttribute('whereLeft')) {
-        document.getElementById(el2.attributes['whereLeft'].value).scrollIntoView()
+        var tag = el2.attributes['whereLeft'].value;
+        var fileNum = "L_File" + tag.substring(tag.indexOf('_')+1);
+        console.log('** whereLeft -> ' + fileNum + ' ** ' + tag)
+        
+        document.getElementById('leftFileNames').value = fileNum;
+        selectChange('left')
+        
+        document.getElementById(tag).scrollIntoView();
     }                
     if (el2.hasAttribute('whereRight')) {
-        document.getElementById(el2.attributes['whereRight'].value).scrollIntoView()
+        var tag = el2.attributes['whereRight'].value;
+        var fileNum = "R_File" + tag.substring(tag.indexOf('_')+1);
+        console.log('** whereRight -> ' + fileNum + ' ** ' + tag)
+        
+        document.getElementById('rightFileNames').value = fileNum;
+        selectChange('right')
+        
+        document.getElementById(tag).scrollIntoView();
     }                
 }
 
@@ -235,7 +275,7 @@ function XXX()
         }
     }
     return null;
-                    }
+}
 
 function isElementVisible(el) {
     var rect     = el.getBoundingClientRect(),
@@ -457,5 +497,6 @@ function expandCollapseDiffs(node) {
     }
     return doExpand;
 }
+
 
 //  End mktree.js

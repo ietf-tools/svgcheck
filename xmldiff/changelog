@@ -1,3 +1,13 @@
+xmldiff (0.5.10) distribution(s); urgency=low
+
+	* Make base.html be the default template
+	* Add a wdiff.html template which mimics the wdiff marking
+	* Deal with getting UTF8 characters in source files - python 2 doesn't like it
+	* Clean out some unused items in the manifest file
+	* Add the --no-xinclude option.  This option will additionally not process <?rfc include=""?> as well.
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon XX Sept 2018 12:00:00 -0800
+
 xmldiff (0.5.9.1) distribution(s); urgency=low
 
 	* Add missing file to distribution
