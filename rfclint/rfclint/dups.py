@@ -42,7 +42,9 @@ class Dups(CursesCommon):
         if tree.tag in CheckAttributes:
             self.checkAttributes(tree)
         if tree.tag in CutNodes:
-            self.checkTree(tree)
+            if not ((tree.tag == 'sourcecode' and self.skipCode) or
+                    (tree.tag == 'artwork' and self.skipArtwork)):
+                self.checkTree(tree)
         for node in tree.iterchildren():
             self.processTree(node)
 
@@ -92,15 +94,11 @@ class Dups(CursesCommon):
         """  Process the results coming from a spell check operation """
 
         matchGroups = []
-        allWords = []
         for words in wordSet:
             xx = self.word_re.finditer(words[0])
             for w in xx:
                 if w:
                     matchGroups.append((w, words[1]))
-                    allWords.append(w.group(1))
-                    if allWords[-1][-1] not in [' ', '-', "'"]:
-                        allWords[-1] += ' '
 
         # check for dups
         last = None
@@ -112,7 +110,7 @@ class Dups(CursesCommon):
                     # print("compare '{0}' and '{1}'".format(last, g))
                     if last == g:
                         if self.interactive:
-                            self.Interact(words[1], w, -1, allWords, wordSet, words)
+                            self.Interact(words[1], w, -1, wordSet, words)
                         else:
                             if attributeName:
                                 log.error("Duplicate word found '{0}' in attribute '{1}'".
@@ -123,7 +121,7 @@ class Dups(CursesCommon):
 
                 last = g
 
-    def Interact(self, element, match, srcLine, allWords, wordSet, words):
+    def Interact(self, element, match, srcLine, wordSet, words):
         if self.curses:
             self.curses.erase()
 
@@ -285,5 +283,5 @@ class Dups(CursesCommon):
 
         textOut = textIn[:startChar] + replaceWord + \
             textIn[match.end()+self.offset:]
-        self.offset += len(replaceWord) - (match.end() - match.start())
+        self.offset += len(replaceWord) - (match.end() - startChar)
         return textOut

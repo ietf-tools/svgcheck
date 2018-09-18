@@ -2,7 +2,13 @@
 
 <section>
   <title ascii="foo foo" abbrev="bar"/>
-  <t>Make this a very long sentence that is going to be longer than what the scrien is so it will either wrap or go to the far end of the scrren.  This <em>MUST</em>be a problem for somebody.  Look <xref target="RFCxxx">S/MIME spec</xref> NewWord is a problem.  </t>
+  <t>
+    Make this a very long sentence that is going to be longer than what the scrien is so it will either wrap or go to the far end of the scrren.
+    This <em>MUST</em>be a problem for somebody.
+    Look <xref target="RFCxxx">S/MIME spec</xref> NewWord is a problem.
+  </t>
   <title>Test</title>
-  <t>First one test to see if things work. </t>
+  <t>
+    First one test to see if things work.
+  </t>
 </section>

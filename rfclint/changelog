@@ -1,3 +1,12 @@
+rfclint (0.5.10) distribution(s); urgency=low
+
+	* Add --skip-code and --skip-artwork options to not do spell and duplicate checking on these elements.
+	* Preserve all of the whitespace in the source file when emitting the output file
+	* Fix an issue where some text was not spell and dup checked (tail of a cref)
+	* Add output comment for ABFN and XML checking not occuring because it was not needed
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 3 Sept 2018 12:00:00 -0700
+
 rfclint (0.5.8) distribution(s); urgency=low
 
 	* Curses and Python 2.7 does not allow for any character above 128.  Remove all characters above that point

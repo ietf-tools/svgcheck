@@ -6,7 +6,9 @@ except ImportError:
 
 import codecs
 import six
+import re
 from rfctools_common import log
+
 
 def ReplaceWithONE(exc):
     if isinstance(exc, UnicodeDecodeError):
@@ -24,12 +26,15 @@ class CursesCommon(object):
     def __init__(self, config):
         self.no_curses = False
         self.curses = None
-        
+
         self.interactive = False
 
         if config.options.output_filename is not None:
             self.interactive = True
         codecs.register_error('replaceWithONE', ReplaceWithONE)
+
+        self.skipArtwork = config.options.skip_artwork
+        self.skipCode = config.options.skip_code
 
     def initscr(self):
         self.A_REVERSE = 1
@@ -52,7 +57,6 @@ class CursesCommon(object):
             else:
                 log.warn("Unable to load CURSES for python")
 
-
     def endwin(self):
         if self.curses:
             try:
@@ -62,7 +66,7 @@ class CursesCommon(object):
                 self.curses = None
             except curses.error as e:
                 pass
-            
+
     def writeStringInit(self):
         self.lines = []
         self.hilight = []
@@ -76,6 +80,15 @@ class CursesCommon(object):
                 color = curses.A_NORMAL
         saveX = self.x
         saveY = self.y
+
+        if self.y == 0 and self.x == 0:
+            text = text.lstrip()
+        text = re.sub(r'\s*\n\s*', ' ',
+                      re.sub(r'\.\s*\n\s*', '.  ',
+                             text))
+        # if len(text) > 0 and text[-1] != ' ':
+        #     text += ' '
+
         if six.PY2:
             text = text.encode('ascii', 'replaceWithONE')
         for line in text.splitlines(1):
@@ -117,7 +130,7 @@ class CursesCommon(object):
                     i += 1
                     continue
                 if i + offset >= lineCount:
-                    break;
+                    break
                 if i == self.reverse[1]:
                     self.curses.addstr(i + offset, 0, line[:self.reverse[0]], curses.A_NORMAL)
                     if self.reverse[1] == self.reverse[3]:

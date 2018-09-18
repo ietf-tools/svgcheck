@@ -46,7 +46,7 @@ class AbnfChecker(object):
         stdin = io.StringIO()
         xtract = SourceExtracter(tree, "abnf")
         if not xtract.ExtractToFile(stdin):
-            log.note("No ABNF to check")
+            log.warn("No ABNF to check")
             return False
         cmds = [self.abnfProgram, "-q"]
 
@@ -63,22 +63,31 @@ class AbnfChecker(object):
         (stdout, stderr) = p.communicate(stdin.getvalue().encode('utf-8'))
 
         errs = stderr.decode('utf-8').splitlines()
+        noError = True
         for err in errs:
+            if err.strip() == "":
+                continue
+
             m = re.match(r"(.+)\((\d+):(\d+)\): error: (.*)", err)
             if m:
                 line = int(m.group(2))
                 filename = m.group(1)
                 if filename == 'stdin':
-                    runningLine = -1
+                    runningLine = 0
                     for xxx in xtract.lineOffsets:
                         if line < runningLine + xxx[2]:
                             log.error(m.group(4), file=xxx[0], line=xxx[1] + line - runningLine)
+                            noError = False
                             break
                         runningLine += xxx[2] - 1
                 else:
                     log.error(m.group(4), file=filename, line=line)
+                    noError = False
             else:
                 log.warn(err)
+                noError = False
+        if noError:
+            log.warn("ABNF check with no warnings or errors")
         return True
 
 
@@ -103,7 +112,11 @@ class SourceExtracter(object):
                 file.write(unicode(item.text))
             else:
                 file.write(item.text)
-            lineOffsets.append((item.base, item.sourceline, item.text.count('\n') + 1))
+            lineCount = item.text.count('\n') + 1
+            if len(item.text) > 0 and item.text[-1] != '\n':
+                file.write(u'\n')
+                lineCount += 1
+            lineOffsets.append((item.base, item.sourceline, lineCount))
 
         self.lineOffsets = lineOffsets
         return True

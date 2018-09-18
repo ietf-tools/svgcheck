@@ -41,7 +41,7 @@ class Test_Coding(unittest.TestCase):
         """Test that we conform to PEP8."""
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
         result = pep8style.check_files(['run.py', 'abnf.py', 'config.py', 'spell.py',
-                                        'test.py', 'dups.py'])
+                                        'test.py', 'dups.py', 'CursesCommon.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -156,6 +156,7 @@ class Test_Schema(unittest.TestCase):
     def test_invalid_rng_skip(self):
         """ Load and run w/ an invalid RNG file, skip RNG check """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "Tests/bad_rfc.xml"],
                       "Results/bad_rfc_skip.out", "Results/bad_rfc_skip.err", None, None)
 
@@ -167,6 +168,7 @@ class Test_Schema(unittest.TestCase):
     def test_clean_rng(self):
         """ Load and run w/ a valid RFC """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-abnf", "--no-xml",
                              "Tests/rfc.xml"],
                       "Results/clean_rfc.out", "Results/clean_rfc.err", None, None)
 
@@ -177,26 +179,26 @@ class Test_Extract(unittest.TestCase):
         """ Try and extract an item which does not exist """
         check_process(self, [sys.executable, test_program, "--extract=zero", "--no-spell",
                              "--no-dup-detection", "--no-rng", "Tests/abnf.xml"],
-                      "Results/extract_none.out", "Results/extract_none.err", None, None)
+                      "Results/empty", "Results/extract_none.err", None, None)
 
     def test_extract_one(self):
         """ Try and extract an item which does not exist """
         check_process(self, [sys.executable, test_program, "--extract=ASN.1", "--no-spell",
                              "--no-dup-detection", "--no-rng", "Tests/abnf.xml"],
-                      "Results/extract_one.out", "Results/extract_one.err", None, None)
+                      "Results/extract_one.out", "Results/empty", None, None)
 
     def test_extract_two(self):
         """ Try and extract an item which does not exist """
         check_process(self, [sys.executable, test_program, "--extract=abnf", "--no-spell",
                              "--no-dup-detection", "--no-rng", "Tests/abnf.xml"],
-                      "Results/extract_two.out", "Results/extract_two.err", None, None)
+                      "Results/extract_two.out", "Results/empty", None, None)
 
     def test_extract_to_file(self):
         """ Try and extract an item which does not exist """
         check_process(self, [sys.executable, test_program, "--extract=abnf",
                              "--out=Temp/extract.txt", "--no-spell", "--no-dup-detection",
                              "--no-rng", "Tests/abnf.xml"],
-                      "Results/extract_file.out", "Results/extract_file.err",
+                      "Results/empty", "Results/empty",
                       "Results/extract.txt", "Temp/extract.txt")
 
 
@@ -207,6 +209,7 @@ class Test_Xml(unittest.TestCase):
     def test_xml_frag1(self):
         """ Validate first xml syntax test case """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf",
                              "--no-dup-detection", "Tests/xmlfrag1.xml"],
                       "Results/empty", "Results/xmlfrag1.err", None, None)
 
@@ -216,6 +219,7 @@ class Test_Xml(unittest.TestCase):
     def test_xml_frag2(self):
         """ Validate #2 xml syntax test case """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf",
                              "--no-dup-detection", "Tests/xmlfrag2.xml"],
                       "Results/empty", "Results/xmlfrag2.xml", None, None)
 
@@ -223,8 +227,9 @@ class Test_Xml(unittest.TestCase):
     def test_xml_frag3(self):
         """ Validate #3 xml syntax test case """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf",
                              "--no-dup-detection", "Tests/xmlfrag3.xml"],
-                      "Results/empty", "Results/empty", None, None)
+                      "Results/empty", "Results/xmlfrag3.err", None, None)
 
     """ Set of tests dealing with extracting code from the source """
     @unittest.skipIf(platform.python_implementation() == "PyPy",
@@ -232,6 +237,7 @@ class Test_Xml(unittest.TestCase):
     def test_xml_frag4(self):
         """ Validate #4 xml syntax test case """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf",
                              "--no-dup-detection", "Tests/xmlfrag4.xml"],
                       "Results/empty", "Results/xmlfrag4.err", None, None)
 
@@ -241,63 +247,73 @@ class Test_Abnf(unittest.TestCase):
     def test_no_abnf(self):
         """ No ABFN in the source file """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "Tests/rfc.xml"],
                       "Results/no-abnf.out", "Results/no-abnf.err", None, None)
 
     def test_clean_abnf(self):
         """ Clean ABNF in the source file """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "Tests/abnf-clean.xml"],
-                      "Results/abnf-clean.out", "Results/abnf-clean.err", None, None)
+                      "Results/empty", "Results/abnf-clean.err", None, None)
 
     def test_error_one(self):
         """ A single ABNF section w/ an error """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "Tests/abnf-one.xml"],
-                      "Results/abnf-one.out", "Results/abnf-one.err", None, None)
+                      "Results/empty", "Results/abnf-one.err", None, None)
 
     def test_error_three(self):
         """ Three ABNF sections each w/ an error """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "Tests/abnf-three.xml"],
-                      "Results/abnf-three.out", "Results/abnf-three.err", None, None)
+                      "Results/empty", "Results/abnf-three.err", None, None)
 
     def test_add_extras(self):
         """ An ABNF object needing additional file """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "--abnf-add-rules=Tests/abnf-extras.abnf", "Tests/abnf-extras.xml"],
                       "Results/abnf-extras.out", "Results/abnf-extras.err", None, None)
 
     def test_dont_add_extras(self):
         """ An ABNF object needing additional file, but don't provide it """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "Tests/abnf-extras.xml"],
-                      "Results/abnf-extras-no.out", "Results/abnf-extras-no.err", None, None)
+                      "Results/empty", "Results/abnf-extras-no.err", None, None)
 
     def test_extras_doesnt_exist(self):
         """ An ABNF object needing additional file, but the one given is not real """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "--abnf-add-rules=abnf-extras.abnf", "Tests/abnf-extras.xml"],
-                      "Results/abnf-extras-not.out", "Results/abnf-extras-not.err", None, None)
+                      "Results/empty", "Results/abnf-extras-not.err", None, None)
 
     def test_error_one_skip(self):
         """ A single ABNF section w/ an error, but skip checking """
         check_process(self, [sys.executable, test_program, "--no-abnf", "--no-spell",
+                             "--no-xml",
                              "--no-dup-detection", "Tests/abnf-one.xml"],
-                      "Results/abnf-skip.out", "Results/abnf-skip.err", None, None)
+                      "Results/empty", "Results/empty", None, None)
 
     def test_error_in_extras(self):
         """ An ABNF object needing an addition file, but that has errors """
         check_process(self, [sys.executable, test_program, "--no-spell", "--no-dup-detection",
+                             "--no-xml",
                              "--abnf-add-rules=Tests/abnf-bad-extras.abnf",
                              "Tests/abnf-extras.xml"],
-                      "Results/abnf-bad-extras.out", "Results/abnf-bad-extras.err", None, None)
+                      "Results/empty", "Results/abnf-bad-extras.err", None, None)
 
     def test_no_program(self):
         """ No ABNF executable """
         check_process(self, [sys.executable, test_program, "--abnf-program=no-abnf",
+                             "--no-xml",
                              "--no-spell", "--no-dup-detection", "Tests/abnf-extras.xml"],
-                      "Results/abnf-no-program.out", "Results/abnf-no-program.err", None, None)
+                      "Results/empty", "Results/abnf-no-program.err", None, None)
 
 
 class Test_Spell(unittest.TestCase):
@@ -319,6 +335,7 @@ class Test_Spell(unittest.TestCase):
     def test_add_context(self):
         """ Do basic quiet spell checking """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--no-dup-detection",
+                             "--no-abnf", "--no-xml",
                              "--color=none", "Tests/spell.xml"],
                       "Results/spell-context.out",
                       "Results/spell-context.err", None, None)
@@ -326,12 +343,14 @@ class Test_Spell(unittest.TestCase):
     def test_error_one_no_suggest(self):
         """ Do basic quiet spell checking """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "Tests/spell.xml"],
                       "Results/spell-no-suggest.out", "Results/spell-no-suggest.err", None, None)
 
     def test_add_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--dictionary=Tests/schaad.wl",
                              "Tests/spell.xml"],
                       "Results/spell-add-dict.out", "Results/spell-add-dict.err", None, None)
@@ -339,6 +358,7 @@ class Test_Spell(unittest.TestCase):
     def test_add_dict_not(self):
         """ Add a simple dictionary which does not exit """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--dictionary=schaad.wl", "Tests/spell.xml"],
                       "Results/spell-add-dict-not.out", "Results/spell-add-dict-not.err",
                       None, None)
@@ -346,20 +366,30 @@ class Test_Spell(unittest.TestCase):
     def test_add_personal_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--personal=Tests/schaad.wl", "Tests/spell.xml"],
                       "Results/spell-add-per.out", "Results/spell-add-per.err", None, None)
 
     def test_add_personal_dict_not(self):
         """ Add a simple dictionary which does not exist """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--personal=schaad.wl", "Tests/spell.xml"],
                       "Results/spell-add-per-not.out", "Results/spell-add-per-not.err", None, None)
 
     def test_no_program(self):
         """ No spell executable """
         check_process(self, [sys.executable, test_program, "--spell-program=no-spell",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "Tests/spell.xml"],
                       "Results/spell-no-program.out", "Results/spell-no-program.err", None, None)
+
+    def test_skip_artwork(self):
+        """ Do basic quiet spell checking """
+        check_process(self, [sys.executable, test_program, "--no-suggest", "--no-dup-detection",
+                             "--no-abnf", "--no-xml", "--color=none",
+                             "--skip-artwork", "--skip-code", "Tests/spell.xml"],
+                      "Results/empty", "Results/spell-skip-artwork.err", None, None)
 
     # @unittest.skipIf(six.PY3 and os.name == 'nt', "Need to fix the pipe problems first")
     def test_spell_utf8(self):
@@ -369,6 +399,7 @@ class Test_Spell(unittest.TestCase):
         else:
             errFile = ["Results/spell-utf8.err", "Results/spell-utf8-2.err"]
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--no-rng", "Tests/spell-utf8.xml"],
                       "Results/empty", errFile, None, None)
 
@@ -376,6 +407,7 @@ class Test_Spell(unittest.TestCase):
     def test_spell_utf8_with_dict(self):
         """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--no-rng", "--dictionary=Tests/utf8.wl",
                              "Tests/spell-utf8.xml"],
                       "Results/spell-utf8-dict.out", "Results/spell-utf8-dict.err", None, None)
@@ -389,6 +421,7 @@ class Test_Spell(unittest.TestCase):
             pass
         shutil.copyfile("Tests/en.pws", "Temp/en.pws")
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-dup-detection",
+                             "--no-abnf", "--no-xml",
                              "--personal=Temp/en.pws", "-o", "Temp/Spell2.xml", "Tests/spell2.xml"],
                       "Results/Spell1.out", "Results/Spell1.err", "Temp/Spell2.xml",
                       "Results/Spell1.xml", input="Tests/Spell1.in")
@@ -415,6 +448,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_add_context(self):
         """ Do basic quiet spell checking """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--no-dup-detection",
+                             "--no-abnf", "--no-xml",
                              "--color=none", "--spell-program=hunspell", "Tests/spell.xml"],
                       "Results/spell-context.out",
                       ["Results/spell-context-hun.err", "Results/spell-context.err"],
@@ -423,6 +457,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_error_one_no_suggest(self):
         """ Do basic quiet spell checking """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--spell-program=hunspell", "Tests/spell.xml"],
                       "Results/spell-no-suggest.out",
                       ["Results/spell-no-suggest-hun.err", "Results/spell-no-suggest.err"],
@@ -431,6 +466,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_add_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--dictionary=Tests/schaad",
                              "--spell-program=hunspell", "Tests/spell.xml"],
                       "Results/spell-add-dict.out",
@@ -440,6 +476,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_add_dict_not(self):
         """ Add a simple dictionary which does not exit """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--dictionary=schaad",
                              "--spell-program=hunspell", "Tests/spell.xml"],
                       "Results/spell-add-dict-not.out",
@@ -449,6 +486,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_add_personal_dict(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--personal=Tests/schaad.wl",
                              "--spell-program=hunspell", "Tests/spell.xml"],
                       "Results/spell-add-per.out",
@@ -458,6 +496,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_add_personal_dict_not(self):
         """ Add a simple dictionary which does not exist """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection", "--personal=schaad", "--spell-program=hunspell",
                              "Tests/spell.xml"],
                       "Results/spell-add-per-not.out",
@@ -467,6 +506,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_spell_utf8(self):
         """ Need to do some testing of spelling w/ utf-8 characters """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection",
                              "--no-rng", "--spell-program=hunspell", "Tests/spell-utf8.xml"],
                       "Results/empty",
@@ -476,6 +516,7 @@ class Test_Spell_Hunspell(unittest.TestCase):
     def test_spell_utf8_with_dict(self):
         """ Need to do some testing of spelling w/ utf-8 characters with utf-8 dictionary """
         check_process(self, [sys.executable, test_program, "--no-suggest", "--spell-window=0",
+                             "--no-abnf", "--no-xml",
                              "--no-dup-detection",
                              "--no-rng", "--dictionary=Tests/utf8.wl", "--spell-program=hunspell",
                              "Tests/spell-utf8.xml"],
@@ -486,7 +527,7 @@ class Test_Regressions(unittest.TestCase):
     def test_file_dtd(self):
         """ Add a simple dictionary with my name """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
-                             "--no-dup-detection",
+                             "--no-abnf", "--no-xml", "--no-dup-detection",
                              "Tests/dtd.xml"],
                       "Results/empty", "Results/empty",
                       None, None)
@@ -496,17 +537,20 @@ class Test_DupChecks(unittest.TestCase):
     def test_batch(self):
         """ Check batch mode duplicate detection """
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml",
                              "Tests/dups.xml"],
                       "Results/empty", "Results/DupsB.err", None, None)
 
     def test_interactive1(self):
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml",
                              "--out=Temp/dups.xml", "Tests/dups.xml"],
                       "Results/Dups1.out", "Results/Dups1.err",
                       "Results/Dups1.xml", "Temp/dups.xml", input="Tests/Dups1.in")
 
     def test_interactive2(self):
         check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml",
                              "--out=Temp/dups.xml", "Tests/dups.xml"],
                       "Results/Dups2.out", "Results/Dups2.err",
                       "Results/Dups2.xml", "Temp/dups.xml", input="Tests/Dups2.in")

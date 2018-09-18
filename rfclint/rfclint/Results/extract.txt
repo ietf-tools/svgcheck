@@ -1,4 +1,5 @@
 
+    
 cddl = S 1*rule
 rule = typename [genericparm] S assign S type S
        / groupname [genericparm] S assign S grpent S
@@ -11,6 +12,8 @@ assign = "=" / "/=" / "//="
 genericparm = "<" S id S *("," S id S ) ">"
 genericarg = "<" S type1 S *("," S type1 S ) ">"
 
+  
+    
 type = type1 S *("/" S type1 S)
 
 type1 = type2 [S (rangeop / ctlop) S type2]
@@ -93,3 +96,5 @@ NL = COMMENT / CRLF
 COMMENT = ";" *PCHAR CRLF
 PCHAR = %x20-10FFFD
 CRLF = %x0A / %x0D.0A
+
+  

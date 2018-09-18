@@ -315,7 +315,9 @@ class Speller(CursesCommon):
         if tree.tag in CheckAttributes:
             self.checkAttributes(tree)
         if tree.tag in CutNodes:
-            self.checkTree(tree)
+            if not ((tree.tag == 'sourcecode' and self.skipCode) or
+                    (tree.tag == 'artwork' and self.skipArtwork)):
+                self.checkTree(tree)
         for node in tree.iterchildren():
             self.processTree(node)
 
@@ -472,9 +474,8 @@ class Speller(CursesCommon):
             words += [(tree.text, tree, True, -1)]
 
         for node in tree.iterchildren():
-            if node.tag in CutNodes:
-                continue
-            words += self.getWords(node)
+            if node.tag not in CutNodes:
+                words += self.getWords(node)
 
             if node.tail:
                 words += [(node.tail, node, False, -1)]
@@ -486,17 +487,20 @@ class Speller(CursesCommon):
 
         matchGroups = []
         allWords = []
-        for words in wordSet:
-            xx = self.word_re.finditer(words[0])
-            for w in xx:
-                if w:
-                    matchGroups.append((w, words[1], words[2], words[3]))
-                    allWords.append(w.group(1))
-                    if allWords[-1][-1] not in [' ', '-', "'"]:
-                        allWords[-1] += ' '
-        if len(allWords) > 0:
-            allWords[0] = allWords[0].lstrip()
-            allWords[-1] = allWords[-1].rstrip()
+        if not self.interactive:
+            for words in wordSet:
+                newline = re.sub(r'\s*\n\s*', ' ',
+                                 re.sub(r'\.\s*\n\s*', '.  ', words[0]))
+                xx = self.word_re.finditer(newline)
+                for w in xx:
+                    if w:
+                        matchGroups.append((w, words[1], words[2], words[3]))
+                        allWords.append(w.group(1))
+                        if allWords[-1][-1] not in [' ', '-', "'"]:
+                            allWords[-1] += ' '
+            if len(allWords) > 0:
+                allWords[0] = allWords[0].lstrip()
+                allWords[-1] = allWords[-1].rstrip()
 
         # do the spelling checking
         wordNo = -1
@@ -508,7 +512,7 @@ class Speller(CursesCommon):
                 if len(sp) == 0:
                     continue
                 if self.interactive:
-                    self.Interact(words[1], w, -1, allWords, wordSet, words, sp[0])
+                    self.Interact(words[1], w, -1, wordSet, words, sp[0])
                 else:
                     if attributeName:
                         log.error("Misspelled word '{0}' in attribute '{1}'".format(w.group(0),
@@ -532,19 +536,7 @@ class Speller(CursesCommon):
                         suggest = " ".join(sp[0][4].split()[0:10])
                         log.error(suggest, additional=2)
 
-    def wordIndex(self, offset, el, matchArray):
-        """
-        Given an offset and element, find the index in the matchArray that matches
-        """
-
-        for i in range(len(matchArray)):
-            m = matchArray[i]
-            if m[1] == el and \
-               (m[0].start(1) <= offset and offset < m[0].end(1)):
-                return i
-        return -1
-
-    def Interact(self, element, match, srcLine, allWords, wordSet, words, spellInfo):
+    def Interact(self, element, match, srcLine, wordSet, words, spellInfo):
         #
         #  At the request of the RFC editors we use the ispell keyboard mappings
         #

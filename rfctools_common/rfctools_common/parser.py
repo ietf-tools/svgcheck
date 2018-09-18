@@ -458,7 +458,8 @@ class XmlRfcParser:
                      'http://xml2rfc.ietf.org/public/rfc/',
                      'http://xml2rfc.tools.ietf.org/public/rfc/',
                  ],
-                 resolve_entities=True
+                 resolve_entities=True,
+                 preserve_all_white=False
                  ):
         self.verbose = verbose
         self.quiet = quiet
@@ -468,6 +469,7 @@ class XmlRfcParser:
         self.network_locs = network_locs
         self.no_xinclude = no_xinclude
         self.resolve_entities = resolve_entities
+        self.preserve_all_white = preserve_all_white
 
         # Initialize templates directory
         self.templates_path = templates_path or \
@@ -571,7 +573,8 @@ class XmlRfcParser:
                                       no_network=self.no_network,
                                       remove_comments=remove_comments,
                                       remove_pis=remove_pis,
-                                      remove_blank_text=True,
+                                      remove_blank_text=not self.preserve_all_white,
+                                      # remove_blank_text=True,
                                       resolve_entities=self.resolve_entities,
                                       strip_cdata=strip_cdata)
 
@@ -660,7 +663,8 @@ class XmlRfcParser:
             xmlrfc.tree.xinclude()
 
         # Finally, do any extra formatting on the RFC before returning
-        xmlrfc._format_whitespace()
+        if not self.preserve_all_white:
+            xmlrfc._format_whitespace()
 
         return xmlrfc
 

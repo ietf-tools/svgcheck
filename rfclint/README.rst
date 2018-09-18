@@ -67,7 +67,9 @@ of the document.
     .                  ``--dictionary=FILENAME``      specify an additional dictionary to use            
     .                  ``--personal=FILENAME``        specify the personal dictionary to use             
     .                  ``--spell-program=FILENAME``   program to use for spell checking                  
-    .                  ``--spell-window=NUM``         how many words to display as part of the context   
+    .                  ``--spell-window=NUM``         how many words to display as part of the context
+    .                  ``--skip-code``                skip code elements when checking
+    .                  ``--skip-artwork``             skip artwork elements check checking
     ================= ============================== =================================================== 
 
     It is assumed that the spell checking program is aspell and that aspell is on the path.
