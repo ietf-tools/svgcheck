@@ -1,7 +1,8 @@
+INFO: Schema validation passes
 Tests/abnf-three.xml:22: Got definitions, expecting '=' or '=/'
 Tests/abnf-three.xml:65: Got definitions, expecting '=' or '=/'
 Tests/abnf-three.xml:73: Got definitions, expecting '=' or '=/'
-WARNING: ; is UNDEFINED
-WARNING: ; errro UNDEFINED
-WARNING: ; error UNDEFINED
-WARNING: parsing failed: 3 errors encountered
+INFO: ; is UNDEFINED
+INFO: ; errro UNDEFINED
+INFO: ; error UNDEFINED
+INFO: parsing failed: 3 errors encountered

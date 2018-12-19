@@ -46,7 +46,7 @@ class AbnfChecker(object):
         stdin = io.StringIO()
         xtract = SourceExtracter(tree, "abnf")
         if not xtract.ExtractToFile(stdin):
-            log.warn("No ABNF to check")
+            log.info("No ABNF to check")
             return False
         cmds = [self.abnfProgram, "-q"]
 
@@ -64,6 +64,7 @@ class AbnfChecker(object):
 
         errs = stderr.decode('utf-8').splitlines()
         noError = True
+        noWarn = True
         for err in errs:
             if err.strip() == "":
                 continue
@@ -84,10 +85,12 @@ class AbnfChecker(object):
                     log.error(m.group(4), file=filename, line=line)
                     noError = False
             else:
-                log.warn(err)
-                noError = False
-        if noError:
-            log.warn("ABNF check with no warnings or errors")
+                log.info(err)
+                noWarn = False
+        if noError and noWarn:
+            log.info("ABNF checked with no warnings or errors")
+        elif noError:
+            log.info("ABNF checked with no errors")
         return True
 
 

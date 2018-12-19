@@ -1,3 +1,4 @@
+INFO: Schema validation passes
 Tests/abnf-one.xml:22: Got definitions, expecting '=' or '=/'
-WARNING: ; is UNDEFINED
-WARNING: parsing failed: 1 errors encountered
+INFO: ; is UNDEFINED
+INFO: parsing failed: 1 errors encountered

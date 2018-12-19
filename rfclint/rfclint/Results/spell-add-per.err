@@ -1,3 +1,4 @@
+INFO: Schema validation passes
 Tests/spell.xml:4: Misspelled word 'THis' in attribute 'ascii'
 Tests/spell.xml:4: Misspelled word 'TITLe' in attribute 'abbrev'
 Tests/spell.xml:4: Misspelled word was found 'dcument'

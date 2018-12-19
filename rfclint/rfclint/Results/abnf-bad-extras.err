@@ -1,4 +1,5 @@
+INFO: Schema validation passes
 Tests/abnf-bad-extras.abnf:15: Encountered definition while parsing rule (Indented rule?)
-WARNING: ; fred UNDEFINED
-WARNING: ; int UNDEFINED
-WARNING: parsing failed: 1 errors encountered
+INFO: ; fred UNDEFINED
+INFO: ; int UNDEFINED
+INFO: parsing failed: 1 errors encountered

@@ -1,1 +1,2 @@
-WARNING: ABNF check with no warnings or errors
+INFO: Schema validation passes
+INFO: ABNF checked with no warnings or errors

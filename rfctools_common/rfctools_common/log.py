@@ -63,6 +63,26 @@ def write(*args):
     write_to(write_err, '\n')
 
 
+def info(*args, **kwargs):
+    """ Prints a warning message unless quiet """
+    prefix = "INFO: "
+    if 'where' in kwargs:
+        where = kwargs['where']
+        fileName = where.base
+        if fileName.startswith("file:///"):
+            fileName = os.path.relpath(fileName[8:])
+        elif fileName[0:6] == 'file:/':
+            fileName = os.path.relpath(fileName[6:])
+        elif fileName[0:7] == 'http://' or fileName[0:8] == 'https://':
+            pass
+        else:
+            fileName = os.path.relpath(fileName)
+        prefix = "{0}:{1}: ".format(fileName, where.sourceline)
+    write_err.write(prefix + u' '.join(args))
+    write_err.write(u'\n')
+    write_err.flush()
+
+
 def note(*args):
     """ Call for being verbose only """
     if verbose and not quiet:
@@ -88,6 +108,7 @@ def warn(*args, **kwargs):
             prefix = "{0}:{1}: ".format(fileName, where.sourceline)
         write_err.write(prefix + u' '.join(args))
         write_err.write(u'\n')
+        write_err.flush()
 
 
 def error(*args, **kwargs):

@@ -1,3 +1,4 @@
+INFO: Schema validation passes
 ERROR: Personal Dictionary 'schaad.wl' ignored because it was not found
 Tests/spell.xml:4: Misspelled word 'THis' in attribute 'ascii'
 Tests/spell.xml:4: Misspelled word 'TITLe' in attribute 'abbrev'

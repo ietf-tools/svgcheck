@@ -1,3 +1,10 @@
+rfclint (0.5.11) distribution(s); urgency=low
+
+	* Aspell does not permit numbers to be part of words while Python does.  Change the matching patterns so that numbers are not part of words.
+	* Change some messages from warnings to info
+
+-- Jim Schaad <ietf@augustcellars.com>  Wed 19 Dec 2018 12:00:00 -0700
+
 rfclint (0.5.10) distribution(s); urgency=low
 
 	* Add --skip-code and --skip-artwork options to not do spell and duplicate checking on these elements.

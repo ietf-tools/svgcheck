@@ -223,7 +223,7 @@ def main():
             log.error('Unable to validate the XML document: ' + os.path.normpath(source))
             log.exception_lines("dummy", errors)
             sys.exit(1)
-        log.note("Schema validation passes")
+        log.info("Schema validation passes")
     else:
         log.note("Skipping schema validation")
 
@@ -275,13 +275,13 @@ def main():
 
                     bbb = lxml.etree.parse(file, parser)
                     aaa = bbb
-                    log.warn("XML fragment in source code found and is well defined.", where=item)
+                    log.info("XML fragment in source code found and is well defined.", where=item)
                 except (lxml.etree.XMLSyntaxError) as e:
                     log.warn(u'XML in sourcecode not well formed: ', e.msg, where=item)
                 except Exception as e:
                     log.exception(u'Error occured processing XML: ', e)
         else:
-            log.warn("No XML fragments in sourcecode elements found.")
+            log.info("No XML fragments in sourcecode elements found.")
 
     #  Validate any embedded ABNF
     if not options.no_abnf:

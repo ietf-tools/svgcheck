@@ -298,7 +298,7 @@ class Test_Abnf(unittest.TestCase):
         check_process(self, [sys.executable, test_program, "--no-abnf", "--no-spell",
                              "--no-xml",
                              "--no-dup-detection", "Tests/abnf-one.xml"],
-                      "Results/empty", "Results/empty", None, None)
+                      "Results/empty", "Results/abnf_error_one_skip.err", None, None)
 
     def test_error_in_extras(self):
         """ An ABNF object needing an addition file, but that has errors """

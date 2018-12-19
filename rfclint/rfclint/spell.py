@@ -298,12 +298,19 @@ class Speller(CursesCommon):
         #  Check that we got a good return
         line = self.stdout.readline()
         log.note(line)
+        if line.lower().find('aspell') < 0:
+            raise RfcLintError("The program '{0}' did not start successfully".format(program))
 
+        # [^\W\d_]
         self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
+        self.word_re = re.compile(r'([\W\d_]*[^\W\d_]+[\W\d_]*)', re.UNICODE | re.MULTILINE)
         # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
+
+        # pattern to match output of aspell
         self.aspell_re = re.compile(r".\s(\S+)\s(\d+)\s*((\d+): (.+))?", re.UNICODE)
 
         self.spell_re = re.compile(r'\w[\w\'\u00B4\u2019]*\w', re.UNICODE)
+        self.spell_re = re.compile(r'[^\W\d_]([^\W\d_]|[\'\u00B4\u2019])*[^\W\d_]', re.UNICODE)
 
         if config.options.output_filename is not None:
             self.ignoreWords = []
@@ -496,8 +503,8 @@ class Speller(CursesCommon):
                     if w:
                         matchGroups.append((w, words[1], words[2], words[3]))
                         allWords.append(w.group(1))
-                        if allWords[-1][-1] not in [' ', '-', "'"]:
-                            allWords[-1] += ' '
+                        # if allWords[-1][-1] not in [' ', '-', "'"]:
+                        #    allWords[-1] += ' '
             if len(allWords) > 0:
                 allWords[0] = allWords[0].lstrip()
                 allWords[-1] = allWords[-1].rstrip()

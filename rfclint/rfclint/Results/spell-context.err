@@ -1,3 +1,4 @@
+INFO: Schema validation passes
 Tests/spell.xml:4: Misspelled word 'THis' in attribute 'ascii'
   THis is also the title
 Tests/spell.xml:4: Misspelled word 'TITLe' in attribute 'abbrev'
@@ -21,11 +22,11 @@ Tests/spell.xml:7: Misspelled word was found 'affilliation'
 Tests/spell.xml:12: Misspelled word 'Xtxt' in attribute 'ascii'
   Xtxt equal
 Tests/spell.xml:14: Misspelled word was found 'ASN'
-  Some test words - ASN. 1 A2C go4broke Fred. Baker need to get some unicode here as well. groook
+  Some test words - ASN.1 A2C go4broke Fred.Baker need to get some unicode here as well. groook
 Tests/spell.xml:14: Misspelled word was found 'unicode'
-  Some test words - ASN. 1 A2C go4broke Fred. Baker need to get some unicode here as well. groook
+  Some test words - ASN.1 A2C go4broke Fred.Baker need to get some unicode here as well. groook
 Tests/spell.xml:14: Misspelled word was found 'groook'
-  test words - ASN. 1 A2C go4broke Fred. Baker need to get some unicode here as well. groook
+  test words - ASN.1 A2C go4broke Fred.Baker need to get some unicode here as well. groook
 Tests/spell.xml:18: Misspelled word was found 'ddtext'
   ddtext field
 Tests/spell.xml:21: Misspelled word 'equall' in attribute 'ascii'
@@ -93,27 +94,27 @@ Tests/spell.xml:135: Misspelled word 'txtr' in attribute 'quotedFrom'
 Tests/spell.xml:136: Misspelled word was found 'allwos'
   This allwos for a text item to be a child
 Tests/spell.xml:138: Misspelled word was found 'compliated'
-  this is compliated by MUST  MUST be dropped or MUST  must not be dropped  here was a cref 
+  this is compliated by MUST MUST be dropped or MUST must not be dropped  here was a cref 
 Tests/spell.xml:140: Misspelled word was found 'cref'
-  is compliated by MUST  MUST be dropped or MUST  must not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted  for fun can 
+  is compliated by MUST MUST be dropped or MUST must not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted for funcan 
 Tests/spell.xml:140: Misspelled word was found 'dup'
-  compliated by MUST  MUST be dropped or MUST  must not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted  for fun can have 
+  compliated by MUST MUST be dropped or MUST must not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted for funcan have 
 Tests/spell.xml:141: Misspelled word was found 'dup'
-  be dropped or MUST  must not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted  for fun can have content  the protocol overrreview 
+  be dropped or MUST must not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted for funcan have content the protocol overrreview
 Tests/spell.xml:142: Misspelled word was found 'nstted'
-  not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted  for fun can have content  the protocol overrreview THis is a normal text 
+  not be dropped  here was a cref dup checks  checks gets a dup.   Text here can be nstted for funcan have content the protocol overrreviewTHis is a normal text 
 Tests/spell.xml:145: Misspelled word was found 'overrreview'
-  checks  checks gets a dup.   Text here can be nstted  for fun can have content  the protocol overrreview THis is a normal text item. THis is a normal textt item Need 
+  checks  checks gets a dup.   Text here can be nstted for funcan have content the protocol overrreviewTHis is a normal text item.THis is a normal textt itemNeed 
 Tests/spell.xml:146: Misspelled word was found 'THis'
-   checks gets a dup.   Text here can be nstted  for fun can have content  the protocol overrreview THis is a normal text item. THis is a normal textt item Need to 
+   checks gets a dup.   Text here can be nstted for funcan have content the protocol overrreviewTHis is a normal text item.THis is a normal textt itemNeed to 
 Tests/spell.xml:146: Misspelled word was found 'THis'
-  here can be nstted  for fun can have content  the protocol overrreview THis is a normal text item. THis is a normal textt item Need to text de-duplicatte Tex is 
+  here can be nstted for funcan have content the protocol overrreviewTHis is a normal text item.THis is a normal textt itemNeed to text de-duplicatteTex is 
 Tests/spell.xml:146: Misspelled word was found 'textt'
-  nstted  for fun can have content  the protocol overrreview THis is a normal text item. THis is a normal textt item Need to text de-duplicatte Tex is now mono-spaced 
+  nstted for funcan have content the protocol overrreviewTHis is a normal text item.THis is a normal textt itemNeed to text de-duplicatteTex is now mono-spaced
 Tests/spell.xml:147: Misspelled word was found 'de'
-  content  the protocol overrreview THis is a normal text item. THis is a normal textt item Need to text de-duplicatte Tex is now mono-spaced references can contain text
+  content the protocol overrreviewTHis is a normal text item.THis is a normal textt itemNeed to text de-duplicatteTex is now mono-spacedreferences can contain text
 Tests/spell.xml:147: Misspelled word was found 'duplicatte'
-   the protocol overrreview THis is a normal text item. THis is a normal textt item Need to text de-duplicatte Tex is now mono-spaced references can contain text
+   the protocol overrreviewTHis is a normal text item.THis is a normal textt itemNeed to text de-duplicatteTex is now mono-spacedreferences can contain text
 Tests/spell.xml:140: Misspelled word was found 'CRefs'
   CRefs have tet content inside of them - I don't know about dups here
 Tests/spell.xml:140: Misspelled word was found 'tet'
