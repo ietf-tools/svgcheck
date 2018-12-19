@@ -1,0 +1,358 @@
+OP=4 left=   9 right=   9
+OP=4 left=   8 right=   8
+OP=4 left=   7 right=   7
+OP=4 left=   6 right=   6
+OP=4 left=   5 right=   5
+OP=4 left=   4 right=   4
+OP=4 left=   3 right=   3
+OP=4 left=   2 right=   2
+OP=3 left=  13 right=  13
+OP=4 left=  12 right=  12
+OP=2 left=  16
+OP=4 left=  15 right=  15
+OP=4 left=  19 right=  18
+OP=4 left=  18 right=  17
+OP=4 left=  17 right=  16
+OP=4 left=  14 right=  14
+OP=4 left=  20 right=  19
+OP=4 left=  11 right=  11
+OP=4 left=  26 right=  25
+OP=4 left=  25 right=  24
+OP=4 left=  28 right=  27
+OP=4 left=  27 right=  26
+OP=4 left=  30 right=  29
+OP=4 left=  29 right=  28
+OP=4 left=  31 right=  30
+OP=4 left= 283 right= 321
+OP=4 left=  33 right=  32
+OP=4 left=  32 right=  31
+OP=4 left=  24 right=  23
+OP=4 left=  35 right=  34
+OP=4 left=  36 right=  35
+OP=4 left=  23 right=  22
+OP=4 left=  40 right=  39
+OP=4 left=  39 right=  38
+OP=4 left=  42 right=  41
+OP=4 left=  41 right=  40
+OP=4 left=  43 right=  42
+OP=4 left=  38 right=  37
+OP=4 left=  37 right=  36
+OP=3 left=  47 right=  46
+OP=4 left=  46 right=  45
+OP=1           right=  48
+OP=1           right=  47
+OP=1           right=  50
+OP=1           right=  49
+OP=4 left=  49 right=  52
+OP=4 left=  48 right=  51
+OP=4 left=  50 right=  53
+OP=4 left=  45 right=  44
+OP=4 left=  51 right=  54
+OP=4 left=  44 right=  43
+OP=4 left=  55 right=  58
+OP=4 left=  54 right=  57
+OP=4 left=  57 right=  60
+OP=4 left=  56 right=  59
+OP=4 left=  58 right=  61
+OP=4 left=  53 right=  56
+OP=4 left=  52 right=  55
+OP=1           right=  65
+OP=1           right=  64
+OP=1           right=  67
+OP=1           right=  66
+OP=1           right=  68
+OP=1           right=  63
+OP=1           right=  69
+OP=1           right=  62
+OP=4 left=  22 right=  21
+OP=2 left=  21
+OP=2 left= 284
+OP=2 left=  61
+OP=2 left= 285
+OP=2 left=  63
+OP=2 left= 286
+OP=2 left=  65
+OP=2 left= 287
+OP=2 left=  67
+OP=2 left= 288
+OP=2 left=  69
+OP=2 left= 290
+OP=2 left=  76
+OP=2 left= 291
+OP=2 left=  78
+OP=2 left= 292
+OP=2 left=  80
+OP=2 left= 293
+OP=2 left=  82
+OP=2 left= 294
+OP=2 left=  84
+OP=2 left= 295
+OP=2 left=  86
+OP=2 left= 296
+OP=2 left=  88
+OP=2 left= 297
+OP=2 left=  90
+OP=2 left= 298
+OP=2 left=  92
+OP=2 left=  75
+OP=2 left=  74
+OP=2 left=  60
+OP=2 left= 299
+OP=2 left=  95
+OP=2 left= 300
+OP=2 left=  99
+OP=2 left= 301
+OP=2 left= 101
+OP=2 left= 302
+OP=2 left= 105
+OP=2 left=  94
+OP=2 left= 303
+OP=2 left= 108
+OP=2 left= 107
+OP=3 left= 304 right= 322
+OP=4 left= 111 right=  71
+OP=4 left= 110 right=  70
+OP=1           right=  74
+OP=3 left= 306 right= 324
+OP=4 left= 116 right=  77
+OP=3 left= 307 right= 325
+OP=4 left= 118 right=  79
+OP=3 left= 308 right= 326
+OP=4 left= 120 right=  81
+OP=3 left= 309 right= 327
+OP=4 left= 122 right=  83
+OP=3 left= 310 right= 328
+OP=4 left= 124 right=  85
+OP=3 left= 311 right= 329
+OP=4 left= 126 right=  87
+OP=3 left= 312 right= 330
+OP=4 left= 128 right=  89
+OP=3 left= 313 right= 331
+OP=4 left= 130 right=  91
+OP=3 left= 314 right= 332
+OP=4 left= 132 right=  93
+OP=3 left= 315 right= 333
+OP=4 left= 134 right=  95
+OP=3 left= 316 right= 334
+OP=4 left= 136 right=  97
+OP=3 left= 317 right= 335
+OP=4 left= 138 right=  99
+OP=3 left= 318 right= 336
+OP=4 left= 140 right= 101
+OP=3 left= 319 right= 337
+OP=4 left= 142 right= 103
+OP=3 left= 320 right= 338
+OP=4 left= 144 right= 105
+OP=3 left= 321 right= 339
+OP=4 left= 146 right= 107
+OP=3 left= 322 right= 340
+OP=4 left= 148 right= 109
+OP=3 left= 323 right= 341
+OP=4 left= 150 right= 111
+OP=3 left= 324 right= 342
+OP=4 left= 152 right= 113
+OP=3 left= 325 right= 343
+OP=4 left= 154 right= 115
+OP=3 left= 326 right= 344
+OP=4 left= 156 right= 117
+OP=3 left= 327 right= 345
+OP=4 left= 158 right= 119
+OP=3 left= 328 right= 346
+OP=4 left= 160 right= 121
+OP=3 left= 329 right= 347
+OP=4 left= 162 right= 123
+OP=3 left= 330 right= 348
+OP=4 left= 164 right= 125
+OP=3 left= 331 right= 349
+OP=4 left= 166 right= 127
+OP=3 left= 332 right= 350
+OP=4 left= 168 right= 129
+OP=3 left= 333 right= 351
+OP=4 left= 170 right= 131
+OP=3 left= 334 right= 352
+OP=4 left= 172 right= 133
+OP=3 left= 335 right= 353
+OP=4 left= 174 right= 135
+OP=3 left= 336 right= 354
+OP=4 left= 176 right= 137
+OP=3 left= 337 right= 355
+OP=4 left= 178 right= 139
+OP=3 left= 338 right= 356
+OP=4 left= 180 right= 141
+OP=3 left= 339 right= 357
+OP=4 left= 182 right= 143
+OP=3 left= 340 right= 358
+OP=4 left= 184 right= 145
+OP=3 left= 341 right= 359
+OP=4 left= 186 right= 147
+OP=3 left= 342 right= 360
+OP=4 left= 188 right= 149
+OP=3 left= 343 right= 361
+OP=4 left= 190 right= 151
+OP=3 left= 344 right= 362
+OP=4 left= 192 right= 153
+OP=3 left= 345 right= 363
+OP=4 left= 194 right= 155
+OP=3 left= 346 right= 364
+OP=4 left= 196 right= 157
+OP=3 left= 347 right= 365
+OP=4 left= 198 right= 159
+OP=3 left= 348 right= 366
+OP=4 left= 200 right= 161
+OP=4 left= 115 right=  76
+OP=4 left= 114 right=  75
+OP=4 left= 113 right=  73
+OP=1           right= 164
+OP=4 left= 350 right= 368
+OP=4 left= 205 right= 167
+OP=4 left= 351 right= 369
+OP=4 left= 207 right= 169
+OP=4 left= 352 right= 370
+OP=4 left= 209 right= 171
+OP=4 left= 353 right= 371
+OP=4 left= 211 right= 173
+OP=4 left= 354 right= 372
+OP=4 left= 213 right= 175
+OP=4 left= 355 right= 373
+OP=4 left= 215 right= 177
+OP=4 left= 356 right= 374
+OP=4 left= 217 right= 179
+OP=4 left= 357 right= 375
+OP=4 left= 219 right= 181
+OP=4 left= 358 right= 376
+OP=4 left= 221 right= 183
+OP=4 left= 359 right= 377
+OP=4 left= 223 right= 185
+OP=4 left= 360 right= 378
+OP=4 left= 225 right= 187
+OP=4 left= 361 right= 379
+OP=4 left= 227 right= 189
+OP=4 left= 362 right= 380
+OP=4 left= 229 right= 191
+OP=4 left= 363 right= 381
+OP=4 left= 231 right= 193
+OP=4 left= 364 right= 382
+OP=4 left= 233 right= 195
+OP=4 left= 365 right= 383
+OP=4 left= 235 right= 197
+OP=4 left= 366 right= 384
+OP=4 left= 237 right= 199
+OP=4 left= 367 right= 385
+OP=4 left= 239 right= 201
+OP=4 left= 368 right= 386
+OP=4 left= 241 right= 203
+OP=4 left= 369 right= 387
+OP=4 left= 243 right= 205
+OP=4 left= 370 right= 388
+OP=4 left= 245 right= 207
+OP=4 left= 371 right= 389
+OP=4 left= 247 right= 209
+OP=4 left= 372 right= 390
+OP=4 left= 249 right= 211
+OP=4 left= 373 right= 391
+OP=4 left= 251 right= 213
+OP=4 left= 374 right= 392
+OP=4 left= 253 right= 215
+OP=4 left= 375 right= 393
+OP=4 left= 255 right= 217
+OP=4 left= 376 right= 394
+OP=4 left= 257 right= 219
+OP=4 left= 377 right= 395
+OP=4 left= 259 right= 221
+OP=4 left= 378 right= 396
+OP=4 left= 261 right= 223
+OP=4 left= 379 right= 397
+OP=4 left= 263 right= 225
+OP=4 left= 380 right= 398
+OP=4 left= 265 right= 227
+OP=4 left= 381 right= 399
+OP=4 left= 267 right= 229
+OP=4 left= 382 right= 400
+OP=4 left= 269 right= 231
+OP=4 left= 383 right= 401
+OP=4 left= 271 right= 233
+OP=4 left= 384 right= 402
+OP=4 left= 273 right= 235
+OP=4 left= 385 right= 403
+OP=4 left= 275 right= 237
+OP=4 left= 386 right= 404
+OP=4 left= 277 right= 239
+OP=4 left= 387 right= 405
+OP=4 left= 279 right= 241
+OP=4 left= 388 right= 406
+OP=4 left= 281 right= 243
+OP=4 left= 204 right= 166
+OP=4 left= 203 right= 165
+OP=1           right= 245
+OP=4 left= 202 right= 163
+OP=2 left=  59
+OP=1           right= 247
+OP=1           right= 408
+OP=1           right= 250
+OP=1           right= 409
+OP=1           right= 252
+OP=1           right= 410
+OP=1           right= 254
+OP=1           right= 411
+OP=1           right= 256
+OP=1           right= 412
+OP=1           right= 258
+OP=1           right= 413
+OP=1           right= 260
+OP=1           right= 414
+OP=1           right= 262
+OP=1           right= 415
+OP=1           right= 264
+OP=1           right= 416
+OP=1           right= 266
+OP=1           right= 417
+OP=1           right= 268
+OP=1           right= 418
+OP=1           right= 270
+OP=1           right= 419
+OP=1           right= 272
+OP=1           right= 420
+OP=1           right= 274
+OP=1           right= 249
+OP=1           right= 248
+OP=1           right= 276
+OP=1           right= 246
+OP=1           right= 421
+OP=1           right= 278
+OP=1           right= 277
+OP=1           right=  20
+OP=1           right= 282
+OP=1           right= 422
+OP=1           right= 283
+OP=1           right= 423
+OP=1           right= 290
+OP=1           right= 424
+OP=1           right= 292
+OP=1           right= 425
+OP=1           right= 294
+OP=1           right= 426
+OP=1           right= 296
+OP=1           right= 428
+OP=1           right= 303
+OP=1           right= 429
+OP=1           right= 305
+OP=1           right= 430
+OP=1           right= 307
+OP=1           right= 431
+OP=1           right= 309
+OP=1           right= 432
+OP=1           right= 311
+OP=1           right= 433
+OP=1           right= 313
+OP=1           right= 434
+OP=1           right= 315
+OP=1           right= 435
+OP=1           right= 317
+OP=1           right= 436
+OP=1           right= 319
+OP=1           right= 302
+OP=1           right= 301
+OP=1           right= 281
+OP=1           right= 280
+OP=4 left=  10 right=  10
+OP=4 left=   1 right=   1

@@ -349,6 +349,53 @@ class DiffRoot(object):
         textTest = "foo bar" + xml.tag
         return DiffElement(xml, parent)
 
+    def getParents(self, includeSelf=False):
+        retValue = []
+        if includeSelf:
+            retValue.append(self)
+        c = self.parent
+        while c is not None:
+            retValue.append(c)
+            c = c.parent
+        return retValue
+
+    #  Does this node preceed the otherNode in
+    #  the tree?
+    def preceeds(self, otherNode):
+        myParents = self.getParents(True)[::-1]
+        otherParents = otherNode.getParents(True)[::-1]
+        count = min(len(myParents), len(otherParents))
+        left = None
+        parent = None
+        right = None
+
+        for i in range(count):
+            if myParents[i] != otherParents[i]:
+                left = myParents[i]
+                right = otherParents[i]
+                parent = myParents[i-1]
+                break
+
+        if left is None:
+            if len(myParents) > len(otherParents):
+                return False
+            elif len(myParents) == len(otherParents):
+                return False
+            else:
+                right = otherParents[count-1]
+                parent = myParents[-1]
+                # should this return True?
+            return false
+        else:
+            iLeft = -1
+            iRight = -1
+            for i in range(len(parent.children)):
+                if right == parent.children[i]:
+                    iRight = i
+                if left == parent.children[i]:
+                    iLeft = i
+            return iLeft <= iRight
+
     def getPredecessor(self, searchNode):
         prevSib = None
         for child in self.children:
@@ -370,6 +417,9 @@ class DiffRoot(object):
     def isMatchNode(self, other):
         if self == other:
             return True
+        if other.inserted:
+            ancestorList = other.getParents()
+            return self in ancestorList
         if self.deleted:
             if len(self.children) != 1:
                 return False
@@ -513,6 +563,34 @@ class DiffRoot(object):
     def doWhiteArray(self, text):
         return DoWhiteArray(text)
 
+    def untangleLeft(self):
+        for child in self.children:
+            child.parent = self
+            child.untangleLeft()
+        self.matchNode = None
+        self.deleted = True
+        if self.inserted:
+            newChildren = []
+            for child in self.parent.children:
+                if child == self:
+                    newChildren = newChildren + self.children
+                else:
+                    newChildren.append(child)
+            self.parent.children = newChildren
+            self.parent = None
+            self.children = None
+
+    def untangleRight(self):
+        for child in self.children:
+            child.untangleRight()
+        self.matchNode = None
+        self.insertTree = True
+
+    def untangle(self):
+        if self.matchNode:
+            self.matchNode.untangleRight()
+        self.untangleLeft()
+
 
 class DiffDocument(DiffRoot):
     """ Represent the XML document.  We want to have a common
@@ -590,6 +668,10 @@ class DiffDocument(DiffRoot):
                 if edit.right.matchNode is not None:
                     continue
 
+                if isinstance(edit.right, DiffElement) and \
+                   (edit.right.xml.tag == 'back' or edit.right.xml.tag == 'middle'):
+                    thisIsABreak = 9
+
                 if edit.right.insertTree:
                     matchingParent = edit.right.parent.matchNode
                     if matchingParent is None:
@@ -614,7 +696,7 @@ class DiffDocument(DiffRoot):
                             matchingParent.insertAfter(sibling.matchNode, newNode2)
                             continue
 
-                    # If we have a matching successor node, put it after that one
+                    # If we have a matching successor node, put it before that one
                     sibling = edit.right.parent.getSuccessor(edit.right)
                     if sibling is not None:
                         if sibling.matchNode is not None:
@@ -658,21 +740,63 @@ class DiffDocument(DiffRoot):
 
                 # Build the list of all common ancestors of these nodes
                 commonParents = None
+
                 for child in matchList:
-                    c = child.parent
-                    ancestorList = []
-                    while c is not None:
-                        ancestorList.append(c)
-                        c = c.parent
-                    ancestorList = ancestorList[::-1]
+                    ancestorList = child.getParents()[::-1]
                     if commonParents is None:
                         commonParents = ancestorList
                     else:
-                        for i in range(min(len(ancestorList), len(commonParents))):
+                        if len(ancestorList) < len(commonParents):
+                            commonParents = commonParents[:len(ancestorList)]
+                        for i in range(0, min(len(ancestorList), len(commonParents))):
                             if ancestorList[i] != commonParents[i]:
-                                commonParents = commonParents[:i]
+                                if i == 0:
+                                    pass
+                                else:
+                                    commonParents = commonParents[:i]
                                 break
+                if len(commonParents) == 0:
+                    # we have no common parents so this is a mess.
+                    newEdits.append(edit)
+                    continue
+
                 matchParent = commonParents[-1]
+
+                # If we have a preceeding sibling, we need to make sure that we are
+                # going to try and insert this after that node.
+
+                sibling = edit.right.parent.getPredecessor(edit.right)
+
+                if sibling and sibling.matchNode:
+                    ancestorList = sibling.matchNode.parent.getParents()
+                    if matchParent in ancestorList:
+                        aList = []
+                        bList = []
+                        for child in matchList:
+                            ancestorList = child.getParents()
+                            if sibling.matchNode.parent in ancestorList:
+                                aList.append(child)
+                            else:
+                                bList.append(child)
+
+                        if len(aList) >= len(bList):
+                            for child in bList:
+                                child.untangle()
+                        else:
+                            for child in aList:
+                                child.untangle()
+                        newEdits.append(edit)
+                        continue
+
+                    ancestorList = matchParent.getParents(True)
+                    if sibling.matchNode in ancestorList:
+                        for child in edit.right.children:
+                            if child.matchNode:
+                                child.matchNode.untangle()
+                        parentChildren = edit.right.parent.matchNode.children
+                        edit.right.insertTree = True
+                        newEdits.append(edit)
+                        continue
 
                 # create the new node
                 newNode = edit.right.clone()
@@ -885,6 +1009,8 @@ class DiffElement(DiffRoot):
 
     def clone(self):
         clone = DiffElement(self, None)
+        for child in clone.children:
+            child.parent = clone
         return clone
 
     def ToHtml(self, parent):

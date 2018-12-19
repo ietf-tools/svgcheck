@@ -6,7 +6,7 @@ import lxml.etree
 import datetime
 import six
 import sys
-from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
+from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES
 from rfctools_common import log
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, AddParagraphs, tagMatching
 from xmldiff.DiffNode import SourceFiles

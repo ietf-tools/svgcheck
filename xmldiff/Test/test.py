@@ -7,6 +7,7 @@ import sys
 import subprocess
 import six
 import inspect
+import struct
 from rfctools_common.parser import XmlRfcParser
 from rfctools_common.parser import XmlRfcError
 from xmldiff.EditItem import EditItem
@@ -230,6 +231,29 @@ class TestDistanceMethods(unittest.TestCase):
         """ Deal with space presevation """
         DistanceTest(self, "Tests/Comment1.xml", "Tests/Comment2.xml",
                      "Results/Comment1.txt", "Results/Comment1.html", True)
+
+
+class TestOverlappedTrees(unittest.TestCase):
+    """ Deal with tests for cases where sub-trees will overlap while merging """
+    @unittest.skipIf(os.name == 'nt' and struct.calcsize("P") == 4, "Don't run on Python 32-bit")
+    def test_Case1_Forward(self):
+        DistanceTest(self, "Tests/LOverlap1.xml", "Tests/ROverlap1.xml",
+                     "Results/Case1_Forward.txt", "Results/Case1_Forward.xml", True)
+
+    @unittest.skipIf(os.name == 'nt' and struct.calcsize("P") == 4, "Don't run on Python 32-bit")
+    def test_Case1_Backward(self):
+        DistanceTest(self, "Tests/ROverlap1.xml", "Tests/LOverlap1.xml",
+                     "Results/Case1_Backward.txt", "Results/Case1_Backward.xml", True)
+
+    @unittest.skipIf(os.name == 'nt' and struct.calcsize("P") == 4, "Don't run on Python 32-bit")
+    def test_Case2_Forward(self):
+        DistanceTest(self, "Tests/LOverlap2.xml", "Tests/ROverlap2.xml",
+                     "Results/Case2_Forward.txt", "Results/Case2_Forward.xml", True)
+
+    @unittest.skipIf(os.name == 'nt' and struct.calcsize("P") == 4, "Don't run on Python 32-bit")
+    def test_Case2_Backward(self):
+        DistanceTest(self, "Tests/ROverlap2.xml", "Tests/LOverlap2.xml",
+                     "Results/Case2_Backward.txt", "Results/Case2_Backward.xml", True)
 
 
 def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile, markParagraphs):

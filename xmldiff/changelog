@@ -1,3 +1,9 @@
+xmldiff (0.5.11) distribution(s); urgency=low
+
+	* Add code to deal with trees which are going to merge but they	subtrees are going to overlap
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 17 Dec 2018 12:00:00 -0800
+
 xmldiff (0.5.10) distribution(s); urgency=low
 
 	* Make base.html be the default template
