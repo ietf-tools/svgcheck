@@ -131,8 +131,8 @@ function resizeWindows()
     var x = window.innerWidth;
     var lx = 0;
     var rx = 0;
-    var left = document.getElementById("leftColumn");
-    var right = document.getElementById("rightColumn");
+    var left = document.getElementById("leftContent");
+    var right = document.getElementById("rightContent");
     if (mySizeInfo.hiddenSource) {
         left.style.width = "0px";
         right.style.width = "0px";
@@ -178,7 +178,7 @@ function selectChange( id ) {
         
         // Declare variables
         var i, tabcontent, tablinks;
-        var tabsId = id + "Column"
+        var tabsId = id + "Source"
         
         //  Get all elements w/ class='tabcontent' and hide them
         tabcontent = document.getElementById(tabsId).getElementsByClassName("tabcontent");
@@ -195,12 +195,12 @@ function openLeftFile(evt, fileName) {
     // Declare variables
     var i, tabcontent, tablinks;
     //  Get all elements w/ class='tabcontent' and hide them
-    tabcontent = document.getElementById("leftColumn").getElementsByClassName("tabcontent");
+    tabcontent = document.getElementById("leftContent").getElementsByClassName("tabcontent");
     for (i=0; i<tabcontent.length; i++) {
         tabcontent[i].style.display="none";
     }
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementById("leftColumn").getElementsByClassName("tablinks");
+    tablinks = document.getElementById("leftContent").getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -214,12 +214,12 @@ function openRightFile(evt, fileName) {
     // Declare variables
     var i, tabcontent, tablinks;
     //  Get all elements w/ class='tabcontent' and hide them
-    tabcontent = document.getElementById("rightColumn").getElementsByClassName("tabcontent");
+    tabcontent = document.getElementById("rightSource").getElementsByClassName("tabcontent");
     for (i=0; i<tabcontent.length; i++) {
         tabcontent[i].style.display="none";
     }
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementById("rightColumn").getElementsByClassName("tablinks");
+    tablinks = document.getElementById("rightContent").getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -232,7 +232,7 @@ function openRightFile(evt, fileName) {
 function sync2here(leftFile, leftLine, rightFile, rightLine)
 {
     if (leftFile != -1) {
-        leftDiv = document.getElementById("leftColumn")
+        leftDiv = document.getElementById("leftContent")
     }
 }
 

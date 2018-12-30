@@ -9,17 +9,18 @@
 
     <style>
       xml-block { margin-left:1em; display:block; font-family:monospace; }
+      .body { overflow: hidden; }
       .left { color:red; background-color:MistyRose; font-family:monospace; }
       .right { color:green; background-color:Lavender; font-family:monospace; }
       .error { color:yellow; background-color:black; font-family:monospace; }
-      .handle { background-color: #727272; width: 10px; cursor: ew-resize; }
+      .handle { background-color: #727272; width: 5px; cursor: ew-resize; }
       .artwork { font-family: monospace; }
       ul {padding-left: 6px; }
       li { list-style: none; padding-left: 6px; }
       
-      #leftColumn { overflow: scroll; height: calc(100vh - 32px); font-family:monospace; }
+      #leftColumn { overflow:scroll; height: calc(100vh - 55px); font-family:monospace; }
       #centerColumn { overflow:scroll; height: calc(100vh - 55px); font-family:monospace; }
-      #rightColumn { overflow: scroll; height:  calc(100vh - 32px); font-family:monospace; }
+      #rightColumn { overflow:scroll; height:  calc(100vh - 55px); font-family:monospace; }
 
       .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
       .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
@@ -186,8 +187,8 @@ function resizeWindows()
     var x = window.innerWidth;
     var lx = 0;
     var rx = 0;
-    var left = document.getElementById("leftColumn");
-    var right = document.getElementById("rightColumn");
+    var left = document.getElementById("leftContent");
+    var right = document.getElementById("rightContent");
     if (mySizeInfo.hiddenSource) {
         left.style.width = "0px";
         right.style.width = "0px";
@@ -233,7 +234,7 @@ function selectChange( id ) {
         
         // Declare variables
         var i, tabcontent, tablinks;
-        var tabsId = id + "Column"
+        var tabsId = id + "Source"
         
         //  Get all elements w/ class='tabcontent' and hide them
         tabcontent = document.getElementById(tabsId).getElementsByClassName("tabcontent");
@@ -250,12 +251,12 @@ function openLeftFile(evt, fileName) {
     // Declare variables
     var i, tabcontent, tablinks;
     //  Get all elements w/ class='tabcontent' and hide them
-    tabcontent = document.getElementById("leftColumn").getElementsByClassName("tabcontent");
+    tabcontent = document.getElementById("leftContent").getElementsByClassName("tabcontent");
     for (i=0; i<tabcontent.length; i++) {
         tabcontent[i].style.display="none";
     }
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementById("leftColumn").getElementsByClassName("tablinks");
+    tablinks = document.getElementById("leftContent").getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -269,12 +270,12 @@ function openRightFile(evt, fileName) {
     // Declare variables
     var i, tabcontent, tablinks;
     //  Get all elements w/ class='tabcontent' and hide them
-    tabcontent = document.getElementById("rightColumn").getElementsByClassName("tabcontent");
+    tabcontent = document.getElementById("rightSource").getElementsByClassName("tabcontent");
     for (i=0; i<tabcontent.length; i++) {
         tabcontent[i].style.display="none";
     }
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementById("rightColumn").getElementsByClassName("tablinks");
+    tablinks = document.getElementById("rightContent").getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -287,7 +288,7 @@ function openRightFile(evt, fileName) {
 function sync2here(leftFile, leftLine, rightFile, rightLine)
 {
     if (leftFile != -1) {
-        leftDiv = document.getElementById("leftColumn")
+        leftDiv = document.getElementById("leftContent")
     }
 }
 
@@ -565,14 +566,14 @@ function expandCollapseDiffs(node) {
     <table>
       <tr>
         <td id="leftSource">
-          <div id="leftColumn" style="width:300px;">
+          <div style="width:300px;" id="leftContent">
             <div>
-              <select id="leftFileNames" onchange="selectChange('left')">
+              <select id="leftFileNames" onchange="selectChange('left')" style="width: 100%">
                 <option label="$$CWD$$/Tests/Simple.xml" value="L_File0">$$CWD$$/Tests/Simple.xml</option>
 
               </select>
             </div>
-            <div>
+            <div id="leftColumn">
               <!-- Tab Content -->
 	      <div id="L_File0" class="tabcontent">
 <div itemprop="text" class="blob-wrapper data type-c">
@@ -592,7 +593,7 @@ function expandCollapseDiffs(node) {
           </div>
         </td>
         <td>
-          <div id="leftHandle" class="handle" style="height: calc(100vh - 32px);">
+          <div id="leftHandle" class="handle" style="height: calc(100vh - 55px);">
             </div>
         </td>
         <td id="centerSource">
@@ -621,17 +622,17 @@ function expandCollapseDiffs(node) {
           </div>
         </td>
         <td>
-          <div id="rightHandle" class="handle" style="height: calc(100vh - 32px);"/>
+          <div id="rightHandle" class="handle" style="height: calc(100vh - 55px);"/>
         </td>
         <td id="rightSource">
-          <div id="rightColumn" style="width:300px;">
+          <div id="rightContent" style="width:300px;">
             <div class="topnav">
-              <select id="rightFileNames" onchange="selectChange('right')">
+              <select id="rightFileNames" onchange="selectChange('right')" style="width: 100%;">
                 <option label="$$CWD$$/Tests/SimpleTree.xml" value="R_File0">$$CWD$$/Tests/SimpleTree.xml</option>
 
               </select>
             </div>
-            <div>
+            <div id="rightColumn">
 	      <!-- Tab Content -->
 	      <div id="R_File0" class="tabcontent">
 <div itemprop="text" class="blob-wrapper data type-c">
