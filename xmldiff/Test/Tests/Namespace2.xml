@@ -1,0 +1,12 @@
+<doc xmlns:global="http://example.org/testing">
+  <field xml:space="preserve"/>
+  <field xmlns:svgX="http://www.w3.org/2000/svg">
+    <svgX:inner/>
+  </field>
+  <field xmlns:jls1="http://example.org/testing1" global:xx="Hi">
+    <jls1:field global:xx="Hi"/>
+  </field>
+  <field xmlns:jls1="http://example.org/testing" jls1:yy="No"  global:xx="Hi">
+    <jls1:field global:xx="Hi"/>
+  </field>
+</doc>

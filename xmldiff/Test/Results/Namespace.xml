@@ -1,0 +1,31 @@
+<div class="center"><ul class="mktree" id="diffRoot">
+<li whereLeft="L0_0" whereRight="R0_0"><span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></li>
+<li whereLeft="L1_0" whereRight="R1_0">&lt;doc<span>&gt;</span><ul>
+<li whereLeft="L2_0" whereRight="R2_0">&lt;field<span> xml:space="preserve"</span><span>/&gt;</span>
+</li>
+<li whereLeft="L3_0" whereRight="R3_0">&lt;field<span>&gt;</span><ul>
+<li whereLeft="L4_0" whereRight="R4_0">&lt;svg:inner<span>/&gt;</span>
+</li>
+<li whereLeft="L3_0" whereRight="R3_0"><span>&lt;/field&gt;</span></li>
+</ul>
+</li>
+<li whereLeft="L6_0" whereRight="R6_0">&lt;field<span> ns0:xx="Hi"</span><span>&gt;</span><ul>
+<li whereLeft="L7_0">
+<span class="left">&lt;ns0:field ns0:excess="9" ns0:yy="Hi"</span><span class="left">/&gt;</span>
+</li>
+<li whereRight="R7_0">
+<span class="right">&lt;ns1:field ns0:xx="Hi"</span><span class="right">/&gt;</span>
+</li>
+<li whereLeft="L6_0" whereRight="R6_0"><span>&lt;/field&gt;</span></li>
+</ul>
+</li>
+<li whereLeft="L9_0" whereRight="R9_0">&lt;field<span> ns0:xx="Hi"</span><span class="right"> ns0:yy="No"</span><span>&gt;</span><ul>
+<li whereLeft="L10_0" whereRight="R10_0">&lt;ns0:field<span class="left"> ns0:excess="5"</span><span> ns0:xx="Hi"</span><span>/&gt;</span>
+</li>
+<li whereLeft="L9_0" whereRight="R9_0"><span>&lt;/field&gt;</span></li>
+</ul>
+</li>
+<li whereLeft="L1_0" whereRight="R1_0"><span>&lt;/doc&gt;</span></li>
+</ul>
+</li>
+</ul></div>

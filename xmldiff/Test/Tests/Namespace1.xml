@@ -1,0 +1,12 @@
+<doc xmlns:local="http://example.org/testing">
+  <field xml:space="preserve"/>
+  <field xmlns:svgX="http://www.w3.org/2000/svg">
+    <svgX:inner/>
+  </field>
+  <field xmlns:jls1="http://example.org/testing" local:xx="Hi">
+    <jls1:field jls1:excess="9" local:yy="Hi"/>
+  </field>
+  <field xmlns:jls2="http://example.org/testing" local:xx="Hi">
+    <jls2:field jls2:excess="5" local:xx="Hi"/>
+  </field>
+</doc>

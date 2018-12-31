@@ -45,6 +45,13 @@ tagMatching = {
 
 PreserveSpace = ['artwork', 'sourcecode']
 
+nsKeys = {
+    "http://www.w3.org/XML/1998/namespace": "xml",
+    "http://www.w3.org/2001/XInclude": "xi",
+    "http://www.w3.org/2000/svg": "svg"
+}
+nsKeysIndex = 0
+
 diffCount = 0
 if six.PY2:
     nbsp = unichr(0xa0)
@@ -994,6 +1001,10 @@ class DiffElement(DiffRoot):
                     n.preserve = preserve
                     self.children.append(n)
                     c.tail = None
+            self.FixNamespace(xmlNode.tag)
+            if len(self.xml.attrib):
+                for key in self.xml.attrib.iterkeys():
+                    self.FixNamespace(key)
         else:
             DiffRoot.__init__(self, xmlNode.xml, parent)
 
@@ -1013,6 +1024,23 @@ class DiffElement(DiffRoot):
             child.parent = clone
         return clone
 
+    def FixNamespace(self, key):
+        global nsKeysIndex
+        if key[0] != '{':
+            return key
+        rbp = key.find('}')
+        if rbp >= 0:
+            ns = key[1:rbp]
+            element = key[rbp+1:]
+            if ns not in nsKeys:
+                nsNew = 'ns{0}'.format(nsKeysIndex)
+                nsKeys[ns] = nsNew
+                nsKeysIndex += 1
+            return nsKeys[ns] + ':' + element
+            # to do this requires returning HTML objects do add in the div elements
+            # return '<div class="tooltip"/>' + nsKeys[ns] + '<div class="tooltiptext">' + \
+            #     ns + '</div></div>' + ':' + element
+
     def ToHtml(self, parent):
         # If we have the right doc info - then emit the <?xml?> line
 
@@ -1025,71 +1053,79 @@ class DiffElement(DiffRoot):
             node = E.SPAN()
             node.attrib["class"] = 'left'
             root.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
-            node.text = "<" + self.xml.tag
+            node.text = "<" + self.FixNamespace(self.xml.tag)
             anchor.append(node)
             if len(self.xml.attrib):
                 for key in self.xml.attrib.iterkeys():
-                    node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
+                    node.text = node.text + " " + self.FixNamespace(key) + \
+                                '="' + self.xml.attrib[key] + '"'
         elif self.inserted:
             # anchor.attrib['onclick'] = 'return sync2here(-1, 0, 1, {0})'.
             # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib['class'] = 'right'
             root.attrib["whereRight"] = SourceFiles.LineFormat(self.xml, True)
-            node.text = "<" + self.xml.tag
+            node.text = "<" + self.FixNamespace(self.xml.tag)
             anchor.append(node)
             if len(self.xml.attrib):
                 for key in self.xml.attrib.iterkeys():
-                    node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
+                    node.text = node.text + " " + self.FixNamespace(key) + \
+                                '="' + self.xml.attrib[key] + '"'
         elif self.matchNode is None:
             # anchor.attrib['onclick'] = 'return sync2here(1, {0}, -1, 1)'.
             # format(self.xml.sourceline)
             node = E.SPAN()
             node.attrib['class'] = 'error'
-            node.text = "<" + self.xml.tag
+            node.text = "<" + self.FixNamespace(self.xml.tag)
             anchor.append(node)
             if len(self.xml.attrib):
                 for key in self.xml.attrib.iterkeys():
-                    node.text = node.text + " " + key + '="' + self.xml.attrib[key] + '"'
+                    node.text = node.text + " " + self.FixNamespace(key) + \
+                                '="' + self.xml.attrib[key] + '"'
         else:
             root.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)
             root.attrib["whereRight"] = SourceFiles.LineFormat(self.matchNode.xml, True)
             # anchor.attrib['onclick'] = 'return sync2here(1, {0},  1, {1})' \
             #      .format(self.xml.sourceline, self.matchNode.xml.sourceline)
             if self.xml.tag == self.matchNode.xml.tag:
-                anchor.text = "<" + self.xml.tag
+                anchor.text = "<" + self.FixNamespace(self.xml.tag)
             else:
                 anchor.text = "<"
                 node = E.SPAN()
                 node.attrib['class'] = 'left'
-                node.text = self.xml.tag
+                node.text = self.FixNamespace(self.xml.tag)
                 anchor.append(node)
                 node = E.SPAN()
                 node.attrib['class'] = 'right'
-                node.text = self.matchNode.xml.tag
+                node.text = self.FixNamespace(self.matchNode.xml.tag)
                 anchor.append(node)
             if len(self.xml.attrib):
                 for key in self.xml.attrib.iterkeys():
                     if key in self.matchNode.xml.attrib:
                         if self.xml.attrib[key] == self.matchNode.xml.attrib[key]:
                             node = E.SPAN()
-                            node.text = " " + key + '="' + self.xml.attrib[key] + '"'
+                            node.text = " " + self.FixNamespace(key) + '="' + \
+                                        self.xml.attrib[key] + '"'
                             anchor.append(node)
                         else:
-                            leftText = " " + key + '="' + self.xml.attrib[key] + '"'
-                            rightText = " " + key + '="' + self.matchNode.xml.attrib[key] + '"'
+                            leftText = " " + self.FixNamespace(key) + '="' + \
+                                       self.xml.attrib[key] + '"'
+                            rightText = " " + self.FixNamespace(key) + '="' + \
+                                        self.matchNode.xml.attrib[key] + '"'
                             self.diffTextToHtml(leftText, rightText, anchor)
                     else:
                         node = E.SPAN()
                         node.attrib['class'] = 'left'
-                        node.text = " " + key + '="' + self.xml.attrib[key] + '"'
+                        node.text = " " + self.FixNamespace(key) + '="' + \
+                                    self.xml.attrib[key] + '"'
                         anchor.append(node)
 
             for key in self.matchNode.xml.attrib.iterkeys():
                 if key not in self.xml.attrib:
                     node = E.SPAN()
                     node.attrib['class'] = 'right'
-                    node.text = " " + key + '="' + self.matchNode.xml.attrib[key] + '"'
+                    node.text = " " + self.FixNamespace(key) + '="' + \
+                                self.matchNode.xml.attrib[key] + '"'
                     anchor.append(node)
 
         if len(self.children):
@@ -1107,7 +1143,7 @@ class DiffElement(DiffRoot):
             li = E.LI()
             s = E.SPAN()
             li.append(s)
-            s.text = "</" + self.xml.tag + ">"
+            s.text = "</" + self.FixNamespace(self.xml.tag) + ">"
             if self.deleted:
                 s.attrib['class'] = 'left'
                 li.attrib["whereLeft"] = SourceFiles.LineFormat(self.xml, False)

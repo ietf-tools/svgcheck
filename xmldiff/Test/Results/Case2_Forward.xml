@@ -11,7 +11,7 @@
 <li><span whereLeft="L11_0" whereRight="R12_0">&lt;?rfc symrefs="yes"?&gt;</span></li>
 <li><span whereLeft="L12_0" whereRight="R13_0">&lt;?rfc strict="yes"?&gt;</span></li>
 <li><span whereLeft="L13_0" whereRight="R14_0">&lt;?rfc toc="yes"?&gt;</span></li>
-<li whereLeft="L15_0" whereRight="R16_0">&lt;rfc<span> category="info"</span><span> submissionType=</span><span class="left">"IAB" </span><span class="right">"IETF" </span><span class="left"> number="8477"</span><span class="left"> consensus="yes"</span><span class="left"> ipr="trust200902"</span><span> obsoletes=""</span><span> updates=""</span><span> {http://www.w3.org/XML/1998/namespace}lang="en"</span><span class="right"> docName="draft-iab-iotsi-workshop-02"</span><span>&gt;</span><ul>
+<li whereLeft="L15_0" whereRight="R16_0">&lt;rfc<span> category="info"</span><span> submissionType=</span><span class="left">"IAB" </span><span class="right">"IETF" </span><span class="left"> number="8477"</span><span class="left"> consensus="yes"</span><span class="left"> ipr="trust200902"</span><span> obsoletes=""</span><span> updates=""</span><span> xml:lang="en"</span><span class="right"> docName="draft-iab-iotsi-workshop-02"</span><span>&gt;</span><ul>
 <li whereLeft="L17_0" whereRight="R18_0">&lt;front<span>&gt;</span><ul>
 <li whereLeft="L18_0" whereRight="R19_0">&lt;title<span> abbrev=</span><span class="left">"IOTSI Workshop 2016" </span><span class="right">"draft-iab-iotsi-workshop" </span><span>&gt;</span><ul>
 <li whereLeft="L18_0" whereRight="R19_0">
