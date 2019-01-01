@@ -1,8 +1,11 @@
 xmldiff (0.5.11) distribution(s); urgency=low
 
 	* Add code to deal with trees which are going to merge but they	subtrees are going to overlap
+	* Add -D option to surpress filling in default attributes from DTD
+	* Name spaces are now using a nsX namespace rather than using the {ns}field format.
+	* Change the html template to make sure that it is all within the screen.
 
--- Jim Schaad <ietf@augustcellars.com>  Mon 17 Dec 2018 12:00:00 -0800
+-- Jim Schaad <ietf@augustcellars.com>  Tue 1 Janc 2019 12:00:00 -0800
 
 xmldiff (0.5.10) distribution(s); urgency=low
 

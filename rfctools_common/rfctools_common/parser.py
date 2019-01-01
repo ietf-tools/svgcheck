@@ -459,7 +459,8 @@ class XmlRfcParser:
                      'http://xml2rfc.tools.ietf.org/public/rfc/',
                  ],
                  resolve_entities=True,
-                 preserve_all_white=False
+                 preserve_all_white=False,
+                 attribute_defaults = True
                  ):
         self.verbose = verbose
         self.quiet = quiet
@@ -470,6 +471,7 @@ class XmlRfcParser:
         self.no_xinclude = no_xinclude
         self.resolve_entities = resolve_entities
         self.preserve_all_white = preserve_all_white
+        self.attribute_defaults = attribute_defaults
 
         # Initialize templates directory
         self.templates_path = templates_path or \
@@ -529,7 +531,7 @@ class XmlRfcParser:
         context = lxml.etree.iterparse(file,
                                       dtd_validation=False,
                                       load_dtd=True,
-                                      attribute_defaults=True,
+                                      attribute_defaults=self.attribute_defaults,
                                       no_network=self.no_network,
                                       remove_comments=remove_comments,
                                       remove_pis=remove_pis,
@@ -569,7 +571,7 @@ class XmlRfcParser:
         # now get a regular parser, and parse again, this time resolving entities
         parser = lxml.etree.XMLParser(dtd_validation=False,
                                       load_dtd=True,
-                                      attribute_defaults=True,
+                                      attribute_defaults=self.attribute_defaults,
                                       no_network=self.no_network,
                                       remove_comments=remove_comments,
                                       remove_pis=remove_pis,

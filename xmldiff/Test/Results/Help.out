@@ -20,3 +20,4 @@ Options:
     --no-resolve-entities        Don't resolve entities in the XML
     -N, --no-network             don't use the network to resolve references
     -X, --no-xinclude            don't resolve any xi:include elements
+    -D, --no-defaults            don't add default attributes

@@ -36,7 +36,8 @@ rfc-xmldiff accepts a pair of XML documents as input and outputs an HTML documen
      ``-V``            ``--version``             display the version number and exit                
      ``-X``            ``--no-xinclude``         don't resolve xi:include elements                  
      ``-o FILENAME``   ``--out=FILENAME``        specify an output filename                         
-     ``-t FILENAME``   ``--template=FILENAME``   specify HTML template filename                    
+     ``-t FILENAME``   ``--template=FILENAME``   specify HTML template filename
+     ``-D``            ``--no-defaults``         don't load attribute defaults from the dtd
      .                 ``--resource-url=URL``    specify the URL for resources in the template      
     ================= ========================= =================================================== 
 

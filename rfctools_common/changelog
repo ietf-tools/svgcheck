@@ -1,8 +1,9 @@
 rfctools-common (0.5.11) distribution(s); urgency=low
 
 	* Add the info logging function for another output type
+	* Add option to surpress populating default attributes from the DTD
 
--- Jim Schaad <ietf@augustcellars.com>  Wed 19 Dec 2018 12:00:00 -0700
+-- Jim Schaad <ietf@augustcellars.com>  Tue 1 Jan 2019 12:00:00 -0700
 
 rfctools-common (0.5.10) distribution(s); urgency=low
 
