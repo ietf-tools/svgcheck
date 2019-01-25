@@ -184,7 +184,7 @@ def main():
                 leftLines = f.readlines()
 
         leftSources += u'<div id="L_File{0}" class="tabcontent">\n'.format(i)
-        leftLines = [escape(x).replace(' ', '&nbsp;') for x in leftLines]
+        leftLines = [escape(x).replace(' ', '&nbsp;').replace('"', '&quot;') for x in leftLines]
         leftSources += formatLines(leftLines, 'L', i)
         leftSources += u'</div>\n'
 
@@ -209,7 +209,7 @@ def main():
                 rightLines = f.readlines()
 
         rightSources += u'<div id="R_File{0}" class="tabcontent">\n'.format(i)
-        rightLines = [escape(x).replace(' ', '&nbsp;') for x in rightLines]
+        rightLines = [escape(x).replace(' ', '&nbsp;').replace('"', '&quot;') for x in rightLines]
         rightSources += formatLines(rightLines, 'R', i)
         rightSources += u'</div>\n'
 

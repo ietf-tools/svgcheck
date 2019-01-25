@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE html [
+<!ENTITY rfc1847 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC1847.xml">
+<!ENTITY mdash "&#2014;">
+<!ENTITY ndash  "&#8211;"><!-- U+2013 EN DASH                                    ("-")                -->
+<!ENTITY other "<foo>some text</foo>">
+]>
+
+<root>
+  <t>
+    There is some text with &mdash; a jump to the &ndash; lengtho f a dash
+  </t>
+  &other;
+  &rfc1847;
+  <t>
+    Play with a different issue of &#x2014; for going hard.
+  </t>
+</root>

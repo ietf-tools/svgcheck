@@ -1,0 +1,732 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+
+  <title>rfc-xmldiff Entity1.xml Entity2.xml</title>
+
+    <style>
+      xml-block { margin-left:1em; display:block; font-family:monospace; }
+      .body { overflow: hidden; }
+      .left { color:red; background-color:MistyRose; font-family:monospace; }
+      .right { color:green; background-color:Lavender; font-family:monospace; }
+      .error { color:yellow; background-color:black; font-family:monospace; }
+      .handle { background-color: #727272; width: 5px; cursor: ew-resize; }
+      .artwork { font-family: monospace; }
+      ul {padding-left: 6px; }
+      li { list-style: none; padding-left: 6px; }
+      
+      #leftColumn { overflow:scroll; height: calc(100vh - 55px); font-family:monospace; }
+      #centerColumn { overflow:scroll; height: calc(100vh - 55px); font-family:monospace; }
+      #rightColumn { overflow:scroll; height:  calc(100vh - 55px); font-family:monospace; }
+
+      .tab { overflow:hidden; border; 1px solid #ccc; background-color: #f1f1f1; }
+      .tab button { background-color: inherit; float:left; border:none; outline:none; cursoer: pointer; padding: 14px 16px; }
+      .tab button:hover { background-color: #ddd; }
+      .tab button.active { background-color: #ccc; }
+      .tabcontent { display: none; padding: 6px 12px; border-top: none; }
+      
+      /* Put this inside a @media qualifier so Netscape 4 ignores it */
+      @media screen, print { 
+          /* Turn off list bullets */
+          ul.mktree  li { list-style: none; } 
+          /* Control how "spaced out" the tree is */
+          ul.mktree, ul.mktree ul , ul.mktree li { margin-left:10px; padding:0px; }
+          ul.mktree  li.liBullet { margin-left:5px; }
+          /* Provide space for our own "bullet" inside the LI */
+          ul.mktree  li           .bullet { padding-left: 15px; }
+          /* Show "bullets" in the links, depending on the class of the LI that the link's in */
+          ul.mktree  li.liOpen    .bullet { cursor: pointer; background: url(data:image/gif;base64,R0lGODlhEwATAJEDAP///4CAgAAAAO7u7iH5BAEAAAMALAAAAAATABMAAAIonI+py+0PYwu0VheA3iBgvnkTqIlMJqRp95Hmkrkt+CrWLeX6zvdDAQA7)  center left no-repeat; }
+          ul.mktree  li.liClosed  .bullet { cursor: pointer; background: url(data:image/gif;base64,R0lGODlhEwATAJEDAP///4CAgAAAAO7u7iH5BAEAAAMALAAAAAATABMAAAIqnI+py+0PYwu0VheA3iDgLWzeBIqfgKLdp4XayGStSXIvZlnSzvf+PygAADs=)   center left no-repeat; }
+          ul.mktree  li.liBullet  .bullet { cursor: default; background: white; margin-left:5px; list-style-type: none; width: 0px; padding-left: 0px;}
+          /* Sublists are visible or not based on class of parent LI */
+          ul.mktree  li.liOpen    ul { display: block; }
+          ul.mktree  li.liClosed  ul { display: none; }
+
+          /* Format menu items differently depending on what level of the tree they are in */
+          /* Uncomment this if you want your fonts to decrease in size the deeper they are in the tree */
+          /*
+          ul.mktree  li ul li { font-size: 90% }
+          */
+      }
+    </style>
+
+<script>
+  window.onload = function() {
+    var x;
+    var y;
+    
+    convertTrees();
+    expandTree("diffRoot");
+
+    // Get the element with id="defaultOpen" and click on it
+    // document.getElementById("defaultOpen").click();
+    // document.getElementById("defaultOpenR").click();
+
+    resizeWindows();
+    
+    var leftHandle = document.getElementById("leftHandle");
+    leftHandle.addEventListener('mousedown', initLeft, false);
+    
+    var rightHandle = document.getElementById("rightHandle");
+    rightHandle.addEventListener('mousedown', initRight, false);
+
+    //  Walk the style sheet
+
+    var cssRules;
+    var styles = {};
+    
+    for (var S = 0; S<document.styleSheets.length; S++) {
+        if (document.styleSheets[S]['rules']) {
+            cssRules = 'rules';
+        }
+        else if (document.styleSheets[S]['cssRules']) {
+            cssRules = 'cssRules';
+        }
+
+        for (var R=0; R<document.styleSheets[S][cssRules].length; R++) {
+            if (document.styleSheets[S][cssRules][R].selectorText &&
+                document.styleSheets[S][cssRules][R].selectorText[0] == '.') {
+                styles[document.styleSheets[S][cssRules][R].selectorText] = document.styleSheets[S][cssRules][R].style;
+            }
+        }
+    }
+    
+    //  Copy down colors
+
+    x = document.getElementsByTagName("SPAN")
+    for (var i=0; i< x.length; i++) {
+        if (x[i].className) {
+            n = styles["." + x[i].className]
+            if (!n) {
+                continue;
+            }
+            if (n.color) {
+                x[i].style.color = n.color;
+            }
+            if (n.backgroundColor) {
+                x[i].style.backgroundColor = n.backgroundColor;
+            }
+        }
+    }
+
+    OnScrollCenter()
+}
+
+
+function initLeft(e) {
+    window.addEventListener('mousemove', startResizingLeft, false);
+    window.addEventListener('mouseup', stopResizingLeft, false);
+    e.preventDefault();
+}
+
+function initRight(e) {
+    window.addEventListener('mousemove', startResizingRight, false);
+    window.addEventListener('mouseup', stopResizingRight, false);
+    e.preventDefault();
+}
+
+function startResizingLeft(e) {
+    var leftHandle = document.getElementById("leftHandle");
+    var leftSource = document.getElementById("leftSource");
+
+    //  Window width = 536 - mouse @ 555 = 20
+    var ratio = (e.clientX - 20) / window.innerWidth;
+    mySizeInfo.ratioLeft = Math.floor(ratio * 1000) / 10;
+    console.log('mouse move event left' + leftSource.offsetWidth + ' --- ' + e.clientX + '  -- ' + ratio);
+    resizeWindows();
+
+    e.preventDefault();
+    e.cancelBubble=true;
+    return false;
+}
+
+function stopResizingLeft(e) {
+    window.removeEventListener('mousemove', startResizingLeft, false);
+    window.removeEventListener('mouseup', stopResizingLeft, false);
+}
+
+function startResizingRight(e) {
+    var rightHandle = document.getElementById("rightHandle");
+    var rightSource = document.getElementById("rightSource");
+
+    //  Window width = 536 - mouse @ 555 = 20
+    var ratio = 1 - ((e.clientX + 20) / window.innerWidth);
+    mySizeInfo.ratioRight = Math.floor(ratio * 1000) / 10;
+    console.log('mouse move event right' + leftSource.offsetWidth + ' --- ' + e.clientX + '  -- ' + ratio);
+    resizeWindows();
+
+    e.preventDefault();
+    e.cancelBubble=true;
+    return false;
+}
+
+function stopResizingRight(e) {
+    window.removeEventListener('mousemove', startResizingRight, false);
+    window.removeEventListener('mouseup', stopResizingRight, false);
+}
+
+window.onresize = resizeEvent;
+
+function resizeEvent(e)
+{
+    resizeWindows()
+}
+
+var mySizeInfo = {
+    "ratioLeft": 25,
+    "ratioRight": 25,
+    "hiddenSource": false
+};
+
+
+function resizeWindows()
+{
+    var x = window.innerWidth;
+    var lx = 0;
+    var rx = 0;
+    var left = document.getElementById("leftContent");
+    var right = document.getElementById("rightContent");
+    if (mySizeInfo.hiddenSource) {
+        left.style.width = "0px";
+        right.style.width = "0px";
+    }
+    else {
+        lx = Math.floor(x * mySizeInfo.ratioLeft / 100);
+        left.style.width = lx + "px";
+
+        rx = Math.floor(x * mySizeInfo.ratioRight / 100);
+        right.style.width = rx + "px";
+    }
+
+    var center = document.getElementById("centerContent");
+    center.style.width = (x - lx - rx - 60) + "px";
+
+    console.log("resize - " + lx + " -- " + center.style.width + " -- " + rx)
+}
+
+function hideSidebars()
+{
+    var btn = document.getElementById("hideSource");
+    var visible = true;
+    if (btn.textContent == "Hide Source Files") {
+        btn.textContent = "Show Source Files";
+        mySizeInfo.hiddenSource = true;
+    }
+    else {
+        btn.textContent = "Hide Source Files";
+        mySizeInfo.hiddenSource = false;
+    }
+
+    resizeWindows()
+}
+
+function selectChange( id ) {
+    var selectId = id + "FileNames"
+    var node = document.getElementById( selectId );
+
+    if (node && node.tagName == "SELECT") {
+        var value = node.options[node.selectedIndex].value;
+
+        console.log("--> select Change => " + value)
+        
+        // Declare variables
+        var i, tabcontent, tablinks;
+        var tabsId = id + "Source"
+        
+        //  Get all elements w/ class='tabcontent' and hide them
+        tabcontent = document.getElementById(tabsId).getElementsByClassName("tabcontent");
+        for (i=0; i<tabcontent.length; i++) {
+            tabcontent[i].style.display="none";
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(value).style.display = "block";
+    }
+}
+        
+function openLeftFile(evt, fileName) {
+    // Declare variables
+    var i, tabcontent, tablinks;
+    //  Get all elements w/ class='tabcontent' and hide them
+    tabcontent = document.getElementById("leftContent").getElementsByClassName("tabcontent");
+    for (i=0; i<tabcontent.length; i++) {
+        tabcontent[i].style.display="none";
+    }
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementById("leftContent").getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(fileName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+function openRightFile(evt, fileName) {
+    // Declare variables
+    var i, tabcontent, tablinks;
+    //  Get all elements w/ class='tabcontent' and hide them
+    tabcontent = document.getElementById("rightSource").getElementsByClassName("tabcontent");
+    for (i=0; i<tabcontent.length; i++) {
+        tabcontent[i].style.display="none";
+    }
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementById("rightContent").getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(fileName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+                    
+function sync2here(leftFile, leftLine, rightFile, rightLine)
+{
+    if (leftFile != -1) {
+        leftDiv = document.getElementById("leftContent")
+    }
+}
+
+function OnScrollCenter()
+{
+    var el2 = XXX()
+                    
+    if (el2.hasAttribute('whereLeft')) {
+        var tag = el2.attributes['whereLeft'].value;
+        var fileNum = "L_File" + tag.substring(tag.indexOf('_')+1);
+        console.log('** whereLeft -> ' + fileNum + ' ** ' + tag)
+        
+        document.getElementById('leftFileNames').value = fileNum;
+        selectChange('left')
+        
+        document.getElementById(tag).scrollIntoView();
+    }                
+    if (el2.hasAttribute('whereRight')) {
+        var tag = el2.attributes['whereRight'].value;
+        var fileNum = "R_File" + tag.substring(tag.indexOf('_')+1);
+        console.log('** whereRight -> ' + fileNum + ' ** ' + tag)
+        
+        document.getElementById('rightFileNames').value = fileNum;
+        selectChange('right')
+        
+        document.getElementById(tag).scrollIntoView();
+    }                
+}
+
+function XXX()
+{
+    var xxx = document.getElementById("centerColumn");
+    var scroll = xxx.scrollTop;
+    var elements = xxx.getElementsByTagName("li");
+    var el;
+    for (var i=0; i<elements.length; i++) {
+        el = elements[i];
+        if (el.offsetTop > 0 && isElementVisible(el)) {
+            return el;
+        }
+    }
+    return null;
+}
+
+function isElementVisible(el) {
+    var rect     = el.getBoundingClientRect(),
+        vWidth   = window.innerWidth || doc.documentElement.clientWidth,
+        vHeight  = window.innerHeight || doc.documentElement.clientHeight,
+        efp      = function (x, y) { return document.elementFromPoint(x, y) };     
+
+    // Return false if it's not in the viewport
+    if (rect.right < 0 || rect.bottom < 0 
+            || rect.left > vWidth || rect.top > vHeight)
+        return false;
+
+    // Return true if any of its four corners are visible
+    return (
+          el.contains(efp(rect.left,  rect.top))
+      ||  el.contains(efp(rect.right, rect.top))
+      ||  el.contains(efp(rect.right, rect.bottom))
+      ||  el.contains(efp(rect.left,  rect.bottom))
+    );
+}                    
+
+//  Begin mktree.js
+
+/**
+ * Copyright (c)2005-2009 Matt Kruse (javascripttoolbox.com)
+ * 
+ * Dual licensed under the MIT and GPL licenses. 
+ * This basically means you can use this code however you want for
+ * free, but don't claim to have written it yourself!
+ * Donations always accepted: http://www.JavascriptToolbox.com/donate/
+ * 
+ * Please do not link to the .js files on javascripttoolbox.com from
+ * your site. Copy the files locally to your server instead.
+ * 
+ */
+/*
+This code is inspired by and extended from Stuart Langridge's aqlist code:
+    http://www.kryogenix.org/code/browser/aqlists/
+    Stuart Langridge, November 2002
+    sil@kryogenix.org
+    Inspired by Aaron's labels.js (http://youngpup.net/demos/labels/) 
+    and Dave Lindquist's menuDropDown.js (http://www.gazingus.org/dhtml/?id=109)
+*/
+
+// Automatically attach a listener to the window onload, to convert the trees
+// addEvent(window,"load",convertTrees);
+
+// Utility function to add an event listener
+function addEvent(o,e,f){
+  if (o.addEventListener){ o.addEventListener(e,f,false); return true; }
+  else if (o.attachEvent){ return o.attachEvent("on"+e,f); }
+  else { return false; }
+}
+
+// utility function to set a global variable if it is not already set
+function setDefault(name,val) {
+  if (typeof(window[name])=="undefined" || window[name]==null) {
+    window[name]=val;
+  }
+}
+
+// Full expands a tree with a given ID
+function expandTree(treeId) {
+  var ul = document.getElementById(treeId);
+  if (ul == null) { return false; }
+  expandCollapseList(ul,nodeOpenClass);
+}
+
+// Fully collapses a tree with a given ID
+function collapseTree(treeId) {
+  var ul = document.getElementById(treeId);
+  if (ul == null) { return false; }
+  expandCollapseList(ul,nodeClosedClass);
+}
+
+// Expands enough nodes to expose an LI with a given ID
+function expandToItem(treeId,itemId) {
+  var ul = document.getElementById(treeId);
+  if (ul == null) { return false; }
+  var ret = expandCollapseList(ul,nodeOpenClass,itemId);
+  if (ret) {
+    var o = document.getElementById(itemId);
+    if (o.scrollIntoView) {
+      o.scrollIntoView(false);
+    }
+  }
+}
+
+// Performs 3 functions:
+// a) Expand all nodes
+// b) Collapse all nodes
+// c) Expand all nodes to reach a certain ID
+function expandCollapseList(ul,cName,itemId) {
+  if (!ul.childNodes || ul.childNodes.length==0) { return false; }
+  // Iterate LIs
+  for (var itemi=0;itemi<ul.childNodes.length;itemi++) {
+    var item = ul.childNodes[itemi];
+    if (itemId!=null && item.id==itemId) { return true; }
+    if (item.nodeName == "LI") {
+      // Iterate things in this LI
+      var subLists = false;
+      for (var sitemi=0;sitemi<item.childNodes.length;sitemi++) {
+        var sitem = item.childNodes[sitemi];
+        if (sitem.nodeName=="UL") {
+          subLists = true;
+          var ret = expandCollapseList(sitem,cName,itemId);
+          if (itemId!=null && ret) {
+            item.className=cName;
+            return true;
+          }
+        }
+      }
+      if (subLists && itemId==null) {
+        item.className = cName;
+      }
+    }
+  }
+}
+
+// Search the document for UL elements with the correct CLASS name, then process them
+function convertTrees() {
+  setDefault("treeClass","mktree");
+  setDefault("nodeClosedClass","liClosed");
+  setDefault("nodeOpenClass","liOpen");
+  setDefault("nodeBulletClass","liBullet");
+  setDefault("nodeLinkClass","bullet");
+  setDefault("preProcessTrees",true);
+  if (preProcessTrees) {
+    if (!document.createElement) { return; } // Without createElement, we can't do anything
+    var uls = document.getElementsByTagName("ul");
+    if (uls==null) { return; }
+    var uls_length = uls.length;
+    for (var uli=0;uli<uls_length;uli++) {
+      var ul=uls[uli];
+      if (ul.nodeName=="UL" && ul.className==treeClass) {
+        processList(ul);
+      }
+    }
+  }
+}
+
+function treeNodeOnclick() {
+  this.parentNode.className = (this.parentNode.className==nodeOpenClass) ? nodeClosedClass : nodeOpenClass;
+  return false;
+}
+function retFalse() {
+  return false;
+}
+// Process a UL tag and all its children, to convert to a tree
+function processList(ul) {
+  if (!ul.childNodes || ul.childNodes.length==0) { return; }
+  // Iterate LIs
+  var childNodesLength = ul.childNodes.length;
+  for (var itemi=0;itemi<childNodesLength;itemi++) {
+    var item = ul.childNodes[itemi];
+    if (item.nodeName == "LI") {
+      // Iterate things in this LI
+      var subLists = false;
+      var itemChildNodesLength = item.childNodes.length;
+      for (var sitemi=0;sitemi<itemChildNodesLength;sitemi++) {
+        var sitem = item.childNodes[sitemi];
+        if (sitem.nodeName=="UL") {
+          subLists = true;
+          processList(sitem);
+        }
+      }
+      var s= document.createElement("SPAN");
+      var t= '\u00A0'; // &nbsp;
+      s.className = nodeLinkClass;
+      if (subLists) {
+        // This LI has UL's in it, so it's a +/- node
+        if (item.className==null || item.className=="") {
+          item.className = nodeClosedClass;
+        }
+        // If it's just text, make the text work as the link also
+        if (item.firstChild.nodeName=="#text") {
+          t = t+item.firstChild.nodeValue;
+          item.removeChild(item.firstChild);
+        }
+        s.onclick = treeNodeOnclick;
+      }
+      else {
+        // No sublists, so it's just a bullet node
+        item.className = nodeBulletClass;
+        s.onclick = retFalse;
+      }
+      s.appendChild(document.createTextNode(t));
+      item.insertBefore(s,item.firstChild);
+    }
+  }
+}
+
+
+function expandDiffs(itemId) {
+    var ul = document.getElementById(itemId)
+    if (ul == null) { return false; }
+    expandCollapseDiffs(ul)
+}
+
+function expandCollapseDiffs(node) {
+    if (!node.childNodes || node.childNodes.length == 0) {
+	if (node.classList && (node.classList.contains("right") || node.classList.contains("left"))) {
+	    return true;
+	}
+	return false;
+    }
+
+    var doExpand = (node.classList && (node.classList.contains("right") || node.classList.contains("left")));
+
+    for (var itemi=0; itemi<node.childNodes.length; itemi++) {
+	var item = node.childNodes[itemi];
+
+	doExpand |= expandCollapseDiffs(item);
+	
+    }
+
+    if (node.nodeName == "LI" && !node.classList.contains("liBullet")) {
+	node.className = doExpand ? nodeOpenClass : nodeClosedClass;
+    }
+    return doExpand;
+}
+
+
+//  End mktree.js
+
+</script>
+
+</head>
+
+<body>
+  <div id="root">
+    <table>
+      <tr>
+        <td id="leftSource">
+          <div style="width:300px;" id="leftContent">
+            <div>
+              <select id="leftFileNames" onchange="selectChange('left')" style="width: 100%">
+                <option label="$$CWD$$/Tests/Entity1.xml" value="L_File0">$$CWD$$/Tests/Entity1.xml</option>
+
+              </select>
+            </div>
+            <div id="leftColumn">
+              <!-- Tab Content -->
+	      <div id="L_File0" class="tabcontent">
+<div itemprop="text" class="blob-wrapper data type-c">
+<table class="highlight tab-size js-file-line-container" data-tab-size="8">
+<col width='4em'/>
+<tr id="L0_0"><td class="blob-num js-line-number" data-line-number="1">1</td><td class="blob-code blob-code-inner js-file-line">&lt;?xml&nbsp;version=&quot;1.0&quot;&nbsp;encoding=&quot;US-ASCII&quot;?&gt;
+</td></tr>
+<tr id="L1_0"><td class="blob-num js-line-number" data-line-number="2">2</td><td class="blob-code blob-code-inner js-file-line">&lt;!DOCTYPE&nbsp;html&nbsp;[
+</td></tr>
+<tr id="L2_0"><td class="blob-num js-line-number" data-line-number="3">3</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;rfc1847&nbsp;SYSTEM&nbsp;&quot;http://xml.resource.org/public/rfc/bibxml/reference.RFC1847.xml&quot;&gt;
+</td></tr>
+<tr id="L3_0"><td class="blob-num js-line-number" data-line-number="4">4</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;mdash&nbsp;&quot;&amp;#2014;&quot;&gt;
+</td></tr>
+<tr id="L4_0"><td class="blob-num js-line-number" data-line-number="5">5</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;ndash&nbsp;&nbsp;&quot;&amp;#8211;&quot;&gt;&lt;!--&nbsp;U+2013&nbsp;EN&nbsp;DASH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&quot;-&quot;)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;
+</td></tr>
+<tr id="L5_0"><td class="blob-num js-line-number" data-line-number="6">6</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;other&nbsp;&quot;&lt;foo&gt;some&nbsp;text&lt;/foo&gt;&quot;&gt;
+</td></tr>
+<tr id="L6_0"><td class="blob-num js-line-number" data-line-number="7">7</td><td class="blob-code blob-code-inner js-file-line">]&gt;
+</td></tr>
+<tr id="L7_0"><td class="blob-num js-line-number" data-line-number="8">8</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr>
+<tr id="L8_0"><td class="blob-num js-line-number" data-line-number="9">9</td><td class="blob-code blob-code-inner js-file-line">&lt;root&gt;
+</td></tr>
+<tr id="L9_0"><td class="blob-num js-line-number" data-line-number="10">10</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;t&gt;
+</td></tr>
+<tr id="L10_0"><td class="blob-num js-line-number" data-line-number="11">11</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;There&nbsp;is&nbsp;some&nbsp;text&nbsp;with&nbsp;&amp;mdash;&nbsp;a&nbsp;jump&nbsp;to&nbsp;the&nbsp;&amp;ndash;&nbsp;length&nbsp;of&nbsp;a&nbsp;dash
+</td></tr>
+<tr id="L11_0"><td class="blob-num js-line-number" data-line-number="12">12</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;/t&gt;
+</td></tr>
+<tr id="L12_0"><td class="blob-num js-line-number" data-line-number="13">13</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&amp;rfc1847;
+</td></tr>
+<tr id="L13_0"><td class="blob-num js-line-number" data-line-number="14">14</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&amp;other;
+</td></tr>
+<tr id="L14_0"><td class="blob-num js-line-number" data-line-number="15">15</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;t&gt;
+</td></tr>
+<tr id="L15_0"><td class="blob-num js-line-number" data-line-number="16">16</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;Play&nbsp;with&nbsp;a&nbsp;different&nbsp;issue&nbsp;of&nbsp;&amp;mdash;&nbsp;for&nbsp;going&nbsp;hard.
+</td></tr>
+<tr id="L16_0"><td class="blob-num js-line-number" data-line-number="17">17</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;/t&gt;
+</td></tr>
+<tr id="L17_0"><td class="blob-num js-line-number" data-line-number="18">18</td><td class="blob-code blob-code-inner js-file-line">&lt;/root&gt;
+</td></tr>
+</table>
+</div>
+</div>
+
+            </div>
+          </div>
+        </td>
+        <td>
+          <div id="leftHandle" class="handle" style="height: calc(100vh - 55px);">
+            </div>
+        </td>
+        <td id="centerSource">
+          <div style="width:500px;" id="centerContent">
+            <div class="topnav">
+	      <button type="button" onclick="expandTree('diffRoot')">Expand All</button>
+	      <button type="button" onclick="collapseTree('diffRoot')">Collapse All</button>
+	      <button type="button" onclick="expandDiffs('diffRoot')">Diffs Only</button>
+              <button type="button" id="hideSource" onclick="hideSidebars()">Hide Source Files</button>
+            </div>
+            <div id="centerColumn" onscroll="OnScrollCenter()">
+	      <div class="center"><ul class="mktree" id="diffRoot">
+<li whereLeft="L0_0" whereRight="R0_0"><span>&lt;?xml version="1.0" encoding="US-ASCII"?&gt;</span></li>
+<li><span>&lt;!DOCTYPE root&gt;</span></li>
+<li whereLeft="L9_0" whereRight="R9_0">&lt;root<span>&gt;</span><ul>
+<li whereLeft="L10_0" whereRight="R10_0">&lt;t<span>&gt;</span><ul>
+<li whereLeft="L10_0" whereRight="R10_0">
+<span>There is some text with &amp;mdash; a jump to the &amp;ndash; </span><span class="left">length of </span><span class="right">lengtho f </span><span> a dash </span>
+</li>
+<li whereLeft="L10_0" whereRight="R10_0"><span>&lt;/t&gt;</span></li>
+</ul>
+</li>
+<li whereLeft="LNone_0"><span class="left">&amp;rfc1847;</span></li>
+<li whereLeft="L14_0" whereRight="RNone_0">&amp;other;</li>
+<li whereRight="R14_0"><span class="right">&amp;rfc1847;</span></li>
+<li whereLeft="L15_0" whereRight="R15_0">&lt;t<span>&gt;</span><ul>
+<li whereLeft="L15_0" whereRight="R15_0">
+<span>Play with a different issue of </span><span class="left">&amp;mdash; </span><span class="right">&#8212; </span><span> for going hard. </span>
+</li>
+<li whereLeft="L15_0" whereRight="R15_0"><span>&lt;/t&gt;</span></li>
+</ul>
+</li>
+<li whereLeft="L9_0" whereRight="R9_0"><span>&lt;/root&gt;</span></li>
+</ul>
+</li>
+</ul></div>
+
+            </div>
+          </div>
+        </td>
+        <td>
+          <div id="rightHandle" class="handle" style="height: calc(100vh - 55px);"/>
+        </td>
+        <td id="rightSource">
+          <div id="rightContent" style="width:300px;">
+            <div class="topnav">
+              <select id="rightFileNames" onchange="selectChange('right')" style="width: 100%;">
+                <option label="$$CWD$$/Tests/Entity2.xml" value="R_File0">$$CWD$$/Tests/Entity2.xml</option>
+
+              </select>
+            </div>
+            <div id="rightColumn">
+	      <!-- Tab Content -->
+	      <div id="R_File0" class="tabcontent">
+<div itemprop="text" class="blob-wrapper data type-c">
+<table class="highlight tab-size js-file-line-container" data-tab-size="8">
+<col width='4em'/>
+<tr id="R0_0"><td class="blob-num js-line-number" data-line-number="1">1</td><td class="blob-code blob-code-inner js-file-line">&lt;?xml&nbsp;version=&quot;1.0&quot;&nbsp;encoding=&quot;US-ASCII&quot;?&gt;
+</td></tr>
+<tr id="R1_0"><td class="blob-num js-line-number" data-line-number="2">2</td><td class="blob-code blob-code-inner js-file-line">&lt;!DOCTYPE&nbsp;html&nbsp;[
+</td></tr>
+<tr id="R2_0"><td class="blob-num js-line-number" data-line-number="3">3</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;rfc1847&nbsp;SYSTEM&nbsp;&quot;http://xml.resource.org/public/rfc/bibxml/reference.RFC1847.xml&quot;&gt;
+</td></tr>
+<tr id="R3_0"><td class="blob-num js-line-number" data-line-number="4">4</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;mdash&nbsp;&quot;&amp;#2014;&quot;&gt;
+</td></tr>
+<tr id="R4_0"><td class="blob-num js-line-number" data-line-number="5">5</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;ndash&nbsp;&nbsp;&quot;&amp;#8211;&quot;&gt;&lt;!--&nbsp;U+2013&nbsp;EN&nbsp;DASH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&quot;-&quot;)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;
+</td></tr>
+<tr id="R5_0"><td class="blob-num js-line-number" data-line-number="6">6</td><td class="blob-code blob-code-inner js-file-line">&lt;!ENTITY&nbsp;other&nbsp;&quot;&lt;foo&gt;some&nbsp;text&lt;/foo&gt;&quot;&gt;
+</td></tr>
+<tr id="R6_0"><td class="blob-num js-line-number" data-line-number="7">7</td><td class="blob-code blob-code-inner js-file-line">]&gt;
+</td></tr>
+<tr id="R7_0"><td class="blob-num js-line-number" data-line-number="8">8</td><td class="blob-code blob-code-inner js-file-line">
+</td></tr>
+<tr id="R8_0"><td class="blob-num js-line-number" data-line-number="9">9</td><td class="blob-code blob-code-inner js-file-line">&lt;root&gt;
+</td></tr>
+<tr id="R9_0"><td class="blob-num js-line-number" data-line-number="10">10</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;t&gt;
+</td></tr>
+<tr id="R10_0"><td class="blob-num js-line-number" data-line-number="11">11</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;There&nbsp;is&nbsp;some&nbsp;text&nbsp;with&nbsp;&amp;mdash;&nbsp;a&nbsp;jump&nbsp;to&nbsp;the&nbsp;&amp;ndash;&nbsp;lengtho&nbsp;f&nbsp;a&nbsp;dash
+</td></tr>
+<tr id="R11_0"><td class="blob-num js-line-number" data-line-number="12">12</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;/t&gt;
+</td></tr>
+<tr id="R12_0"><td class="blob-num js-line-number" data-line-number="13">13</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&amp;other;
+</td></tr>
+<tr id="R13_0"><td class="blob-num js-line-number" data-line-number="14">14</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&amp;rfc1847;
+</td></tr>
+<tr id="R14_0"><td class="blob-num js-line-number" data-line-number="15">15</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;t&gt;
+</td></tr>
+<tr id="R15_0"><td class="blob-num js-line-number" data-line-number="16">16</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&nbsp;&nbsp;Play&nbsp;with&nbsp;a&nbsp;different&nbsp;issue&nbsp;of&nbsp;&amp;#x2014;&nbsp;for&nbsp;going&nbsp;hard.
+</td></tr>
+<tr id="R16_0"><td class="blob-num js-line-number" data-line-number="17">17</td><td class="blob-code blob-code-inner js-file-line">&nbsp;&nbsp;&lt;/t&gt;
+</td></tr>
+<tr id="R17_0"><td class="blob-num js-line-number" data-line-number="18">18</td><td class="blob-code blob-code-inner js-file-line">&lt;/root&gt;
+</td></tr>
+</table>
+</div>
+</div>
+
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+
+</body>
+</html>

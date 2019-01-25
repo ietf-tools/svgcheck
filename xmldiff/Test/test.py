@@ -237,6 +237,13 @@ class TestDistanceMethods(unittest.TestCase):
         DistanceTest(self, "Tests/Comment1.xml", "Tests/Comment2.xml",
                      "Results/Comment1.txt", "Results/Comment1.html", True)
 
+    def test_Entity1(self):
+        """ Deal with entities not being expanded """
+        check_process(self, [sys.executable, xmldiff_program, "--no-resolve-entities",
+                             "Tests/Entity1.xml", "Tests/Entity2.xml", "-o", "Temp/Entity.html"],
+                      "Results/Empty.txt", "Results/Entity.err",
+                      "Temp/Entity.html", "Results/Entity.html")
+
 
 class TestOverlappedTrees(unittest.TestCase):
     """ Deal with tests for cases where sub-trees will overlap while merging """

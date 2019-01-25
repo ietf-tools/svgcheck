@@ -52,9 +52,7 @@ class CachingResolver(lxml.etree.Resolver):
     def __init__(self, cache_path=None, library_dirs=None, source=None,
                  templates_path='templates', verbose=False, quiet=False,
                  no_network=False, network_locs=[
-                     'https://xml2rfc.ietf.org/public/rfc/',
                      'https://xml2rfc.tools.ietf.org/public/rfc/',
-                     'http://xml2rfc.ietf.org/public/rfc/',
                      'http://xml2rfc.tools.ietf.org/public/rfc/',
                  ],
                  rfc_number=None):
@@ -363,7 +361,7 @@ class CachingResolver(lxml.etree.Resolver):
         # Verify the result -- either raise exception or return it
         if not result or (not os.path.exists(result) and not urlparse(original).netloc):
             if os.path.isabs(original):
-                log.warn('A reference was requested with an absolute path, but not found '
+                log.warn('The reference "' + original + '" was requested with an absolute path, but not found '
                     'in that location.  Removing the path component will cause xml2rfc to look for '
                     'the file automatically in standard locations.')
             # Couldn't resolve.  Throw an exception
@@ -453,9 +451,7 @@ class XmlRfcParser:
                  cache_path=None, templates_path=None, library_dirs=None,
                  no_xinclude=False,
                  no_network=False, network_locs=[
-                     'https://xml2rfc.ietf.org/public/rfc/',
                      'https://xml2rfc.tools.ietf.org/public/rfc/',
-                     'http://xml2rfc.ietf.org/public/rfc/',
                      'http://xml2rfc.tools.ietf.org/public/rfc/',
                  ],
                  resolve_entities=True,

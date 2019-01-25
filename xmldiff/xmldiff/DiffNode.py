@@ -353,7 +353,8 @@ class DiffRoot(object):
             return DiffPI(xml, parent)
         if xml.tag is lxml.etree.Comment:
             return DiffComment(xml, parent)
-        textTest = "foo bar" + xml.tag
+        if xml.tag is lxml.etree.Entity:
+            return DiffEntity(xml, parent)
         return DiffElement(xml, parent)
 
     def getParents(self, includeSelf=False):
@@ -1241,6 +1242,54 @@ class DiffText(DiffRoot):
 
     def decorateSource(self, sourceLines):
         pass
+
+
+class DiffEntity(DiffRoot):
+    def __init__(self, node, parent):
+        DiffRoot.__init__(self, node, parent)
+
+    def toText(self):
+        return self.xml.text
+
+    def ToHtml(self, parent):
+        node = E.LI()
+        parent.append(node)
+        if self.deleted:
+            n = E.SPAN()
+            n.attrib["class"] = 'left'
+            node.attrib['whereLeft'] = SourceFiles.LineFormat(self.xml, False)
+            n.text = self.xml.text
+            node.append(n)
+        elif self.inserted:
+            n = E.SPAN()
+            n.attrib["class"] = 'right'
+            node.attrib['whereRight'] = SourceFiles.LineFormat(self.xml, True)
+            n.text = self.xml.text
+            node.append(n)
+        elif self.matchNode is None:
+            n = E.SPAN()
+            n.attrib["class"] = 'error'
+            n.text = self.xml.text
+            node.append(n)
+        else:
+            node.attrib['whereLeft'] = SourceFiles.LineFormat(self.xml, False)
+            node.attrib['whereRight'] = SourceFiles.LineFormat(self.matchNode.xml, True)
+            if self.xml.text == self.matchNode.xml.text:
+                node.text = self.xml.text
+            else:
+                self.diffTextToHtml(self.xml.text, self.matchNode.xml.text, node)
+
+    def cloneTree(self, parent):
+        clone = DiffEntity(self.xml, parent)
+        clone.matchNode = self
+        clone.inserted = True
+        self.matchNode = clone
+        return clone
+
+    def updateCost(self, right):
+        if self.xml.text == right.xml.text:
+            return 0
+        return 100
 
 
 class DiffParagraph(DiffRoot):

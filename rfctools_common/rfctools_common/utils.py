@@ -182,7 +182,8 @@ def formatXmlWhitespace(tree):
     """
     for element in tree.iter():
         # Preserve formatting on artwork
-        if element.tag is lxml.etree.Comment:
+        if element.tag is lxml.etree.Comment or \
+           element.tag is lxml.etree.Entity:
             continue
         if element.tag != 'artwork' and element.tag != 'sourcecode':
             if element.text is not None:
