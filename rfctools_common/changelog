@@ -1,3 +1,9 @@
+rfctools-common (0.5.12) distribution(s); urgency=low
+
+	* Don't try and compress whitespace in entity nodes
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 25 Jan 2019 12:00:00 -0700
+
 rfctools-common (0.5.11) distribution(s); urgency=low
 
 	* Add the info logging function for another output type
