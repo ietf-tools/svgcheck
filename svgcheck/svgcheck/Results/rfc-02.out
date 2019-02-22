@@ -5,26 +5,32 @@
     <title>Example w/ SVG files</title>
     <author fullname="Jim Schaad" initials="J." surname="Schaad">
       <address>
-        <email>ietf@augustcellars.com</email>
+	<email>ietf@augustcellars.com</email>
       </address>
     </author>
     <date/>
     <abstract>
-      <t>abstract </t>
+      <t>
+	abstract
+      </t>
     </abstract>
   </front>
   <middle>
     <section>
       <name>Introduction</name>
-      <t>Put in some text followed by a picture.  </t>
+      <t>
+	Put in some text followed by a picture.
+      </t>
       <artwork type="svg">
-        <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" datatype="foobar">
-          <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="black"/>
-        </svg>
+	<svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" datatype="foobar">
+	  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="black"/>
+	</svg>
       </artwork>
-      <t>And pull in the same picture in a different way.  </t>
+      <t>
+	And pull in the same picture in a different way.
+      </t>
       <artwork type="svg">
-        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="circle.svg"/>
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="circle.svg"/>
       </artwork>
     </section>
   </middle>

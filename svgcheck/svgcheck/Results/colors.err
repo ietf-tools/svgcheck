@@ -10,3 +10,4 @@ Tests/colors.svg:11: The attribute 'fill' does not allow the value '#0a0a0a', re
 Tests/colors.svg:12: The attribute 'fill' does not allow the value 'grey', replaced with 'black'
 Tests/colors.svg:13: The attribute 'fill' does not allow the value 'gray', replaced with 'black'
 Tests/colors.svg:16: The attribute 'fill' does not allow the value 'unknown', replaced with 'black'
+ERROR: File does not conform to SVG requirements

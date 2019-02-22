@@ -5833,3 +5833,4 @@ Tests/full-tiny.xml:15712: The element 'animateMotion' is not allowed as a child
 Tests/full-tiny.xml:15725: The element 'discard' is not allowed as a child of 'use'
 Tests/full-tiny.xml:15732: The element 'handler' is not allowed as a child of 'use'
 Tests/full-tiny.xml:15734: The element 'switch' is not allowed as a child of 'a'
+ERROR: File does not conform to SVG requirements

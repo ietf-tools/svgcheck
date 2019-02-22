@@ -99,10 +99,11 @@ def main():
 
     # Parse the document into an xmlrfc tree instance
     parser = XmlRfcParser(source, verbose=options.verbose,
-                          no_xinclude=options.no_xinclude,
+                          preserve_all_white=True,
                           quiet=options.quiet,
                           cache_path=options.cache,
-                          no_network=options.no_network)
+                          no_network=options.no_network,
+                          no_xinclude=options.no_xinclude)
     try:
         xmlrfc = parser.parse(remove_pis=True, remove_comments=False, strip_cdata=False)
     except XmlRfcError as e:
@@ -127,9 +128,10 @@ def main():
                                            encoding='utf-8',
                                            doctype=xmlrfc.tree.docinfo.doctype,
                                            pretty_print=True).decode('utf-8'))
-        else:
-            sys.exit(1)
+        log.error("File does not conform to SVG requirements")
+        sys.exit(1)
 
+    log.info("File conforms to SVG requirements.")
     sys.exit(0)
 
 

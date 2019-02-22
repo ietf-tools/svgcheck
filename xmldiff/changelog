@@ -1,8 +1,10 @@
 xmldiff (0.5.12) distribution(s); urgency=low
 
 	* Add a class to deal with entities when they are not expanded.
+	* Remove --template-url option as the templates are now self-contained
+	* Load files from the cache if possible
 
--- Jim Schaad <ietf@augustcellars.com>  Fri 25 Jan 2019 12:00:00 -0800
+-- Jim Schaad <ietf@augustcellars.com>  Fri 22 Feb 2019 12:00:00 -0800
 
 xmldiff (0.5.11) distribution(s); urgency=low
 

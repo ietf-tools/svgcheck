@@ -3,5 +3,7 @@
   <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="black"/>
   <desc>This tries to cover all of the edge cases</desc>
   <desc>This tries to cover all of the edge cases</desc>
-  <desc>This tries to cover all of the edge cases </desc>
-</svg>
+  <desc>
+    This tries to cover all of the edge cases
+    </desc>
+  </svg>

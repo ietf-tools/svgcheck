@@ -1,3 +1,12 @@
+svgcheck (0.5.12) distribution(s); urgency=low
+
+	* Copy the preserve whitespace parameter from rfclint.  This preserves formatting.
+	* Preserve comments when doing a repair
+	* Change the test scripts to use the same parsing options
+	* Add exit comment on success/Failure
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 22 Feb 2019 12:00:00 -0800
+
 svgcheck (0.5.4) distribution(s); urgency=low
 
 	* Allow for #fff to be tagged as white.  Original discussions thought this was not going to be used.

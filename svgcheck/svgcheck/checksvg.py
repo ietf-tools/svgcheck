@@ -148,6 +148,7 @@ def check(el, depth=0):
 
     # Check that the namespace is one of the pre-approved ones
     # ElementTree prefixes elements with default namespace in braces
+
     element, ns = strip_prefix(el.tag, el)  # name of element
 
     # namespace for elements must be either empty or svg
@@ -226,6 +227,8 @@ def check(el, depth=0):
 
     for child in el:
         log.note("%schild, tag = %s" % (' ' * (depth*indent), child.tag))
+        if not isinstance(child.tag, str):
+            continue
         ch_tag, ns = strip_prefix(child.tag, el)
         if ns not in wp.svg_urls:
             log.warn("The namespace {0} is not permitted for svg elements.".format(ns),

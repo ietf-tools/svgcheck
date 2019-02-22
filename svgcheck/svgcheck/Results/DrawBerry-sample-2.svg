@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
+<!-- Created with DrawBerry (http://raphaelbost.free.fr/) -->
 <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="595.000000" height="841.000000">
-  <g id="Background">
-    <path d="M 74.000000,73.000000 L 215.000000,72.000000 " fill="none" stroke="#000000" stroke-width="1.000000px" stroke-opacity="1.000000" stroke-linecap="butt" stroke-linejoin="miter"/>
-    <path d="M 267.493164,156.498215 C 302.835632,175.829163 302.835632,207.170837 267.493164,226.501785 C 232.150711,245.832733 174.849289,245.832733 139.506836,226.501785 C 104.164383,207.170837 104.164383,175.829163 139.506836,156.498215 C 174.849289,137.167267 232.150711,137.167267 267.493164,156.498215  z" fill="none" stroke="#000000" stroke-width="1.000000px" stroke-opacity="1.000000" stroke-linecap="butt" stroke-linejoin="miter"/>
-    <path d="M 238.000000,100.000000 L 238.000000,100.000000 L 238.000000,100.000000 L 238.000000,100.000000 L 238.000000,100.000000  z" fill="none" stroke="none"/>
-    <path d="M nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan  zM nan,nan " fill="none" stroke="none"/>
-    <path d="M 96.000000,298.000000 L 96.000000,298.000000 L 96.000000,298.000000 L 96.000000,298.000000 L 96.000000,298.000000  z" fill="none" stroke="none"/>
-    <path d="M 65.000000,295.000000 L 211.000000,295.000000 L 211.000000,368.000000 L 65.000000,368.000000 L 65.000000,295.000000  z" fill="none" stroke="none"/>
-  </g>
+<g id="Background">
+<path d="M 74.000000,73.000000 L 215.000000,72.000000 " fill="none" stroke="#000000" stroke-width="1.000000px" stroke-opacity="1.000000" stroke-linecap="butt" stroke-linejoin="miter"/>
+<path d="M 267.493164,156.498215 C 302.835632,175.829163 302.835632,207.170837 267.493164,226.501785 C 232.150711,245.832733 174.849289,245.832733 139.506836,226.501785 C 104.164383,207.170837 104.164383,175.829163 139.506836,156.498215 C 174.849289,137.167267 232.150711,137.167267 267.493164,156.498215  z" fill="none" stroke="#000000" stroke-width="1.000000px" stroke-opacity="1.000000" stroke-linecap="butt" stroke-linejoin="miter"/>
+<path d="M 238.000000,100.000000 L 238.000000,100.000000 L 238.000000,100.000000 L 238.000000,100.000000 L 238.000000,100.000000  z" fill="none" stroke="none"/>
+<path d="M nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan C nan,nan nan,nan nan,nan  zM nan,nan " fill="none" stroke="none"/>
+<path d="M 96.000000,298.000000 L 96.000000,298.000000 L 96.000000,298.000000 L 96.000000,298.000000 L 96.000000,298.000000  z" fill="none" stroke="none"/>
+<path d="M 65.000000,295.000000 L 211.000000,295.000000 L 211.000000,368.000000 L 65.000000,368.000000 L 65.000000,295.000000  z" fill="none" stroke="none"/>
+</g>
 </svg>
