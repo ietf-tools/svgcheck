@@ -15,11 +15,14 @@ import requests
 import lxml.etree
 from rfctools_common import log
 from rfctools_common import utils
+from optparse import Values
+
 
 try:
     from urllib.parse import urlparse, urljoin
 except ImportError:
     from urlparse import urlparse, urljoin
+
 try:
     import debug
     assert debug
@@ -31,6 +34,15 @@ __all__ = ['XmlRfcParser', 'XmlRfc', 'XmlRfcError']
 CACHES       = ['/var/cache/xml2rfc', '~/.cache/xml2rfc']  # Ordered by priority
 CACHE_PREFIX = ''
 NET_SUBDIRS  = ['bibxml', 'bibxml2', 'bibxml3', 'bibxml4', 'bibxml5']
+
+Default_options = Values(defaults={
+    'verbose':False,
+    'no_network':False,
+    'vocabulary':'v3',
+    'cache':None,
+    'quiet':False
+})
+
 
 class XmlRfcError(Exception):
     """ Application XML errors with positional information
@@ -46,26 +58,30 @@ class XmlRfcError(Exception):
         self.filename = filename
         self.line = line_no
 
+    def __str__(self):
+        return self.msg
 
 class CachingResolver(lxml.etree.Resolver):
     """ Custom ENTITY request handler that uses a local cache """
     def __init__(self, cache_path=None, library_dirs=None, source=None,
-                 templates_path='templates', verbose=False, quiet=False,
-                 no_network=False, network_locs=[
+                 templates_path='templates', verbose=None, quiet=None,
+                 no_network=None, network_locs=[
                      'https://xml2rfc.tools.ietf.org/public/rfc/',
                      'http://xml2rfc.tools.ietf.org/public/rfc/',
                  ],
-                 rfc_number=None):
-        self.verbose = verbose
-        self.quiet = quiet
+                 rfc_number=None, options=Default_options):
+        self.quiet = quiet if quiet != None else options.quiet
+        self.verbose = verbose if verbose != None else options.verbose
+        self.no_network = no_network if no_network != None else options.no_network
+        self.cache_path = cache_path if cache_path != None else options.cache
         self.source = source
         self.library_dirs = library_dirs
         self.templates_path = templates_path
-        self.no_network = no_network
         self.network_locs = network_locs
         self.include = False
         self.rfc_number = rfc_number
         self.cache_refresh_secs = (60*60*24*14) # 14 days
+        self.options = options
 
         self.file_handles = []
 
@@ -81,9 +97,9 @@ class CachingResolver(lxml.etree.Resolver):
         # Determine cache directories to read/write to
         self.read_caches = [os.path.expanduser(path) for path in CACHES]
         self.write_cache = None
-        if cache_path:
+        if self.cache_path:
             # Explicit directory given, set as first directory in read_caches
-            self.read_caches.insert(0, cache_path)
+            self.read_caches.insert(0, self.cache_path)
         # Try to find a valid directory to write to by stepping through
         # Read caches one by one
         for dir in self.read_caches:
@@ -137,10 +153,12 @@ class CachingResolver(lxml.etree.Resolver):
         if not urlparse(request).netloc:
             # Format the request from the relative path of the source so that
             # We get the exact same path as in the XML document
-            if request.startswith("file:///"):
-                request = request[8:]
-            if request.startswith("file:/"):
-                request = request[6:]
+            if request.startswith("file:"):
+                request = urlparse(request)
+                request = request[2]
+                if request[2] == ':':
+                    request = request[1:]
+
             try:
                 # The following code plays with files which are in the Template
                 # directory.  a plain file name (dtd) will be returned with
@@ -261,10 +279,12 @@ class CachingResolver(lxml.etree.Resolver):
                     result = os.path.join(self.source_dir, basename)
                     attempts.append(result)
         else:
-            if request.endswith('.xml'):
+            if self.options and self.options.vocabulary == 'v3':
                 paths = [request]
-            else:
+            elif not request.endswith('.xml'):
                 paths = [request, request + '.xml']
+            else:
+                paths = [request]
             if os.path.isabs(paths[0]):
                 # Absolute path, return as-is
                 for path in paths:
@@ -292,8 +312,14 @@ class CachingResolver(lxml.etree.Resolver):
                         result = self.cache(path)
                         if result:
                             break
-                if not result and self.no_network:
-                    log.warn("Document not found in cache, and --no-network specified -- couldn't resolve %s" % request)
+                if not result:
+                    if self.options and self.options.vocabulary == 'v3' \
+                       and not request.endswith('.xml'):
+                        log.warn("The v3 formatters require full explicit URLs of external "
+                                 "resources.  Did you forget to add '.xml' (or some other extension)?")
+                        result = attempt
+                    elif self.no_network:
+                        log.warn("Document not found in cache, and --no-network specified -- couldn't resolve %s" % request)
                 tried_cache = True
             else:
                 if os.path.dirname(paths[0]):
@@ -305,7 +331,8 @@ class CachingResolver(lxml.etree.Resolver):
                             attempts.append(attempt)
                             if os.path.exists(attempt):
                                 result = attempt
-                                break
+                                break                    
+
                     if not result:
                         # Try network location
                         for loc in self.network_locs:
@@ -411,12 +438,22 @@ class CachingResolver(lxml.etree.Resolver):
             self.sessions[netloc] = requests.Session()
         session = self.sessions[netloc]
         r = session.get(url)
+        for rr in r.history + [r, ]:
+            log.note(' ... %s %s' % (rr.status_code, rr.url))
         if r.status_code == 200:
             if self.write_cache:
+                text = r.text.encode('utf8')
+                try:
+                    xml = lxml.etree.fromstring(text)
+                    if self.validate_ref(xml):
+                        xml.set('{%s}base'%xml2rfc.utils.namespaces['xml'], r.url)
+                        text = lxml.etree.tostring(xml, encoding='utf8')
+                except Exception as e:
+                    pass
                 write_path = os.path.normpath(os.path.join(self.write_cache,
                                                            CACHE_PREFIX, basename))
                 with codecs.open(write_path, 'w', encoding='utf-8') as cache_file:
-                    cache_file.write(r.text)
+                    cache_file.write(text.decode('utf8'))
                 log.note('Added file to cache: ', write_path)
                 r.close()
                 return write_path
@@ -439,6 +476,13 @@ class CachingResolver(lxml.etree.Resolver):
 class AnnotatedElement(lxml.etree.ElementBase):
     pis = None
 
+    def get(self, key, default=None):
+        value = super(AnnotatedElement, self).get(key, default)
+        if value == default:
+            return value
+        else:
+            return six.text_type(value)
+
 
 class XmlRfcParser:
 
@@ -447,10 +491,10 @@ class XmlRfcParser:
     }
 
     """ XML parser container with callbacks to construct an RFC tree """
-    def __init__(self, source, verbose=False, quiet=False,
+    def __init__(self, source, verbose=None, quiet=None, options=Default_options,
                  cache_path=None, templates_path=None, library_dirs=None,
                  no_xinclude=False,
-                 no_network=False, network_locs=[
+                 no_network=None, network_locs=[
                      'https://xml2rfc.tools.ietf.org/public/rfc/',
                      'http://xml2rfc.tools.ietf.org/public/rfc/',
                  ],
@@ -458,11 +502,12 @@ class XmlRfcParser:
                  preserve_all_white=False,
                  attribute_defaults = True
                  ):
-        self.verbose = verbose
-        self.quiet = quiet
+        self.options = options
+        self.quiet = quiet if quiet != None else options.quiet
+        self.verbose = verbose if verbose != None else options.verbose
+        self.no_network = no_network if no_network != None else options.no_network
+        self.cache_path = cache_path or options.cache
         self.source = source
-        self.cache_path = cache_path
-        self.no_network = no_network
         self.network_locs = network_locs
         self.no_xinclude = no_xinclude
         self.resolve_entities = resolve_entities
@@ -473,8 +518,12 @@ class XmlRfcParser:
         self.templates_path = templates_path or \
                               os.path.join(os.path.dirname(__file__),
                                            'templates')
-        self.default_dtd_path = os.path.join(self.templates_path, 'rfc2629.dtd')
-        self.default_rng_path = os.path.join(self.templates_path, 'rfc7991.rng')
+        if options and options.vocabulary == 'v2':
+            self.default_dtd_path = os.path.join(self.templates_path, 'rfc2629.dtd')
+            self.default_rng_path = None
+        else:
+            self.default_dtd_path = None
+            self.default_rng_path = os.path.join(self.templates_path, 'rfc7991.rng')
 
         for prefix, value in self.nsmap.items():
             lxml.etree.register_namespace(prefix, value)
@@ -504,6 +553,7 @@ class XmlRfcParser:
                                         network_locs=self.network_locs,
                                         verbose=self.verbose,
                                         quiet=self.quiet,
+                                        options=options,
                                     )
 
     def delete_cache(self, path=None):
@@ -546,16 +596,19 @@ class XmlRfcParser:
                                         network_locs=self.network_locs,
                                         verbose=self.verbose,
                                         quiet=self.quiet,
+                                        options=self.options,
                                      )
         context.resolvers.add(caching_resolver)
 
         # Get hold of the rfc number (if any) in the rfc element, so we can
         # later resolve the "&rfc.number;" entity.
         self.rfc_number = None
+        self.format_version = None
         try:
             for action, element in context:
                 if element.tag == "rfc":
                     self.rfc_number = element.attrib.get("number", None)
+                    self.format_version = element.attrib.get("version", None)
                     break
         except lxml.etree.XMLSyntaxError as e:
             pass
@@ -563,6 +616,10 @@ class XmlRfcParser:
         except ValueError as e:
             if e.message == "I/O operation on closed file":
                 pass
+
+        if self.format_version == "3":
+            self.default_dtd_path = None
+            self.default_rng_path = os.path.join(self.templates_path, 'rfc7991.rng')
 
         # now get a regular parser, and parse again, this time resolving entities
         parser = lxml.etree.XMLParser(dtd_validation=False,
@@ -585,7 +642,8 @@ class XmlRfcParser:
                                         network_locs=self.network_locs,
                                         verbose=self.verbose,
                                         quiet=self.quiet,
-                                        rfc_number=self.rfc_number
+                                        rfc_number=self.rfc_number,
+                                        options=self.options
         )
 
         # Add our custom resolver
