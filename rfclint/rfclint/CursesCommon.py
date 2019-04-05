@@ -53,7 +53,7 @@ class CursesCommon(object):
                     if self.curses:
                         self.endwin()
                     self.curses = None
-                    log.error("Problem loading curses - " + tostr(e))
+                    log.error("Problem loading curses - " + e)
             else:
                 log.warn("Unable to load CURSES for python")
 
@@ -64,7 +64,7 @@ class CursesCommon(object):
                 curses.echo()
                 curses.endwin()
                 self.curses = None
-            except curses.error as e:
+            except curses.error:
                 pass
 
     def writeStringInit(self):

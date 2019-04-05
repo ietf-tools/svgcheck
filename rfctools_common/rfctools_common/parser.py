@@ -4,7 +4,6 @@
 
 """ Public XML parser module """
 
-import io
 import re
 import os
 import codecs
@@ -43,6 +42,12 @@ Default_options = Values(defaults={
     'quiet':False
 })
 
+def SetCache(newCache):
+    global CACHES
+    CACHES = newCache
+
+def GetCache():
+    return CACHES
 
 class XmlRfcError(Exception):
     """ Application XML errors with positional information
@@ -446,9 +451,9 @@ class CachingResolver(lxml.etree.Resolver):
                 try:
                     xml = lxml.etree.fromstring(text)
                     if self.validate_ref(xml):
-                        xml.set('{%s}base'%xml2rfc.utils.namespaces['xml'], r.url)
+                        xml.set('{%s}base'%utils.namespaces['xml'], r.url)
                         text = lxml.etree.tostring(xml, encoding='utf8')
-                except Exception as e:
+                except Exception:
                     pass
                 write_path = os.path.normpath(os.path.join(self.write_cache,
                                                            CACHE_PREFIX, basename))
@@ -610,7 +615,7 @@ class XmlRfcParser:
                     self.rfc_number = element.attrib.get("number", None)
                     self.format_version = element.attrib.get("version", None)
                     break
-        except lxml.etree.XMLSyntaxError as e:
+        except lxml.etree.XMLSyntaxError:
             pass
             # log.warn("Parsing Error: %s" % e)
         except ValueError as e:

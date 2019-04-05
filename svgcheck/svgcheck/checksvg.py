@@ -6,10 +6,7 @@
 # From a simple original version by Joe Hildebrand
 
 from rfctools_common import log
-import lxml.etree
 
-import getopt
-import sys
 import re
 
 import svgcheck.word_properties as wp
@@ -29,7 +26,6 @@ def modify_style(node):
     log.note("modify_style check '{0}' in '{1}'".format(node.attrib['style'], node.tag))
 
     style_props = node.attrib['style'].rstrip(';').split(';')
-    new_attributes = []
     props_to_check = wp.style_properties
 
     for prop in style_props:
@@ -129,7 +125,6 @@ def strip_prefix(element, el):
             ns = element[1:rbp]
             element = element[rbp+1:]
         else:
-            errorCount += 1
             log.warn("Malformed namespace.  Should have errored during parsing")
     return element, ns  # return tag, namespace
 
@@ -199,10 +194,10 @@ def check(el, depth=0):
 
             #  Do method #1 of checking if the value is legal - not currently used.
             if vals and vals[0] == '[' and False:
-                ok, new_val = check_some_props(attr, val, depth)
-                if not ok:
-                    el.attrib[attr] = new_val[1:]
-
+                # ok, new_val = check_some_props(attr, val, depth)
+                # if not ok:
+                #    el.attrib[attr] = new_val[1:]
+                pass
             else:
                 ok, new_val = value_ok(attr, val)
                 if vals and not ok:

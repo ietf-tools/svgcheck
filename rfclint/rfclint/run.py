@@ -8,22 +8,14 @@ import re
 import optparse
 import os
 import lxml.etree
-import datetime
-import appdirs
 import six
-from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES, CachingResolver
+from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES, CachingResolver
 from rfctools_common import log
 from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker, RfcLintError
 from rfclint.spell import Speller, SpellerColors
 from rfclint.dups import Dups
 import rfclint
-
-try:
-    from configparser import SafeConfigParser
-except ImportError:
-    import ConfigParser
-
 
 try:
     import debug
@@ -44,8 +36,8 @@ def clear_cache(cache_path):
 
 def check_color(option, opt, value, parser):
     if value not in SpellerColors:
-        raise OptionValueError("color value not supported. Use one of '{0}'".
-                               format(" ".join(SpellerColors.keys())))
+        raise optparse.OptionValueError("color value not supported. Use one of '{0}'".
+                                        format(" ".join(SpellerColors.keys())))
     setattr(parser.values, option.dest, value)
 
 
@@ -273,8 +265,7 @@ def main():
                     text = re.sub(u'^\s+<\?xml ', '<?xml ', item.text)
                     file = six.BytesIO(text.encode('utf-8'))
 
-                    bbb = lxml.etree.parse(file, parser)
-                    aaa = bbb
+                    lxml.etree.parse(file, parser)
                     log.info("XML fragment in source code found and is well defined.", where=item)
                 except (lxml.etree.XMLSyntaxError) as e:
                     log.warn(u'XML in sourcecode not well formed: ', e.msg, where=item)
@@ -309,7 +300,7 @@ def main():
             log.error(e.message, additional=2)
             if speller:
                 speller.endwin()
-        except Exception as e:
+        except Exception:
             if speller:
                 speller.endwin()
             raise
@@ -327,7 +318,7 @@ def main():
             dups.endwin()
             log.error("Skipping duplicate checking because")
             log.error(e.message, additional=2)
-        except Exception as e:
+        except Exception:
             dups.endwin()
             raise
 

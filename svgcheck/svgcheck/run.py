@@ -2,10 +2,10 @@ import sys
 import optparse
 import os
 import lxml.etree
-from svgcheck.checksvg import checkTree, errorCount
+from svgcheck.checksvg import checkTree
 from svgcheck.__init__ import __version__
 from rfctools_common import log
-from rfctools_common.parser import XmlRfc, XmlRfcParser, XmlRfcError, CACHES
+from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES
 
 
 def display_version(self, opt, value, parser):

@@ -16,6 +16,12 @@ except ImportError:
 
 from rfctools_common import log
 
+namespaces={
+    'x':    'http://relaxng.org/ns/structure/1.0',
+    'a':    'http://relaxng.org/ns/compatibility/annotations/1.0',
+    'xml':  'http://www.w3.org/XML/1998/namespace',
+    's':    'http://www.w3.org/2000/svg',
+}
 
 class MyTextWrapper(textwrap.TextWrapper):
     """ Subclass that overrides a few things in the standard implementation """

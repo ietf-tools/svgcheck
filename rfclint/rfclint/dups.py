@@ -1,12 +1,7 @@
-import io
 import re
 import os
-import errno
 import sys
-import colorama
 import six
-import platform
-import codecs
 try:
     import curses
     haveCurses = True
@@ -18,7 +13,7 @@ from rfctools_common import log
 from rfclint.spell import RfcLintError, CheckAttributes, CutNodes
 
 if six.PY2:
-    input = raw_input
+    from six.moves import input
 
 
 class Dups(CursesCommon):

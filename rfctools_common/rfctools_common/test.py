@@ -2,12 +2,12 @@ import pycodestyle
 import unittest
 import os
 import shutil
-from rfctools_common.parser import XmlRfcParser
-from rfctools_common.parser import XmlRfcError, CACHES
+import subprocess
+import six
+from rfctools_common.parser import XmlRfcParser, SetCache, GetCache
+from rfctools_common.parser import XmlRfcError
 
-
-class TestParserMethods(unittest.TestCase):
-
+class Test_Coding(unittest.TestCase):
     @unittest.skipIf(True, "it has gone bad - the number of errors is different on different platforms")
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
@@ -17,6 +17,23 @@ class TestParserMethods(unittest.TestCase):
         print ("Error count is {0}".format(result.total_errors))
         self.assertEqual(result.total_errors, 114,
                          "Found code style errors (and warnings).")
+
+    def test_pyflakes_confrmance(self):
+        p = subprocess.Popen(['pyflakes', 'parser.py', 'log.py', 'utils.py',
+                                        'test.py'],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (stdoutX, stderrX) = p.communicate()
+        ret = p.wait()
+        if ret > 0:
+            if six.PY3:
+                stdoutX = stdoutX.decode('utf-8')
+                stderrX = stderrX.decode('utf-8')
+            print(stdoutX)
+            print(stderrX)
+            self.assertEqual(ret, 0)
+
+
+class TestParserMethods(unittest.TestCase):
 
     def test_simple(self):
         """ Test a simple xml file will load."""
@@ -57,7 +74,7 @@ class TestParserMethods(unittest.TestCase):
             self.assertEqual(len(tree.tree.xpath('reference')), 1,
                              "Must be exactly one reference node")
         except XmlRfcError as e:
-            print('Unable to parse the XML Document: ' + source)
+            # print('Unable to parse the XML Document: ' + source)
             print(e)
             self.assertFalse()
         parser.cachingResolver.close_all()
@@ -73,12 +90,14 @@ class TestParserMethods(unittest.TestCase):
 
     def test_remote_cache_entity(self):
         """ Test that a remote https entity can be cached """
-        CACHE = []
+        old = GetCache()
+        SetCache([])
         parser = XmlRfcParser("Tests/entity-http.xml", quiet=False,
                               cache_path='Tests/cache', no_network=False)
         clear_cache(parser)
         tree = parser.parse()
         parser.cachingResolver.close_all()
+        SetCache(old)
         self.assertEqual(len(tree.tree.xpath('reference')), 1,
                          "Must be exactly one reference node")
         self.assertTrue(os.path.exists('Tests/cache/reference.RFC.1847.xml'))
@@ -96,7 +115,8 @@ class TestParserMethods(unittest.TestCase):
 
     def test_local_cache_entity(self):
         """ Test that an entity in the cache can be used w/o a network """
-        CACHES = []
+        old = GetCache()
+        SetCache([])
         parser = XmlRfcParser("Tests/entity-http.xml", quiet=False,
                               cache_path='Tests/cache', no_network=True)
         clear_cache(parser)
@@ -108,46 +128,52 @@ class TestParserMethods(unittest.TestCase):
         self.assertEqual(len(tree.tree.xpath('reference')), 1,
                          "Must be exactly one reference node")
         parser.cachingResolver.close_all()
+        SetCache(old)
 
     def test_local_nocache_entity(self):
         """ See that we have a failure if we try to get an uncached item """
-        CACHES = []
+        restore = GetCache()
+        SetCache([])
         parser = XmlRfcParser("Tests/entity-http.xml", quiet=False,
                               cache_path='Tests/cache', no_network=True)
         clear_cache(parser)
         with self.assertRaises(XmlRfcError):
-            tree = parser.parse()
+            parser.parse()
+        SetCache(restore)
 
     def test_french_xml(self):
         """ Parse file w/ encoding ISO-8859-1 """
         parser = XmlRfcParser("Tests/doc_fr_latin1.xml", quiet=False)
-        tree = parser.parse()
+        parser.parse()
         """ self.assertEqual(len(tree.tree.xpath('doc')), 1,
                          "Look for that french tag - not found") """
 
     def test_utf8_xml(self):
         """ Parse file w/ encoding UTF-8 """
         parser = XmlRfcParser("Tests/doc_utf8.xml", quiet=False)
-        tree = parser.parse()
+        parser.parse()
 
     def test_pi_include(self):
         parser = XmlRfcParser("Tests/pi_include.xml", quiet=False)
-        tree = parser.parse()
+        parser.parse()
 
 
 class TestRegressions(unittest.TestCase):
     def test_local_dtd(self):
         """ Find a dtd in the templates directory """
         parser = XmlRfcParser("Tests/dtd.xml", quiet=False)
-        tree = parser.parse()
+        parser.parse()
 
     def test_network_dtd(self):
         """ Find a dtd using the network """
-        CACHES = []
+        old = GetCache()
+        # CACHES = []
+        SetCache([])
         parser = XmlRfcParser("Tests/network-dtd.xml", quiet=False,
                               cache_path='Tests/cache')
         clear_cache(parser)
-        tree = parser.parse()
+        parser.parse()
+        SetCache(old)
         parser.cachingResolver.close_all()
 
 

@@ -9,11 +9,10 @@ import six
 import inspect
 import struct
 from rfctools_common.parser import XmlRfcParser
-from rfctools_common.parser import XmlRfcError
 from xmldiff.EditItem import EditItem
 from xmldiff.zzs2 import distance
-from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount
-from xmldiff.DiffNode import ChangeTagMatching, tagMatching, AddParagraphs, SourceFiles
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree
+from xmldiff.DiffNode import ChangeTagMatching, AddParagraphs, SourceFiles
 
 xmldiff_program = "rfc-xmldiff"
 
@@ -94,9 +93,25 @@ class TestParserMethods(unittest.TestCase):
         """Test that we conform to PEP8."""
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
         result = pep8style.check_files(['../xmldiff/run.py', '../xmldiff/zzs2.py',
+                                        '../xmldiff/EditDistance.py', '../xmldiff/EditItem.py',
                                         '../xmldiff/DiffNode.py', 'test.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
+
+    def test_pyflakes_confrmance(self):
+        p = subprocess.Popen(['pyflakes', '../xmldiff/run.py', '../xmldiff/zzs2.py',
+                              '../xmldiff/EditDistance.py', '../xmldiff/EditItem.py',
+                              '../xmldiff/DiffNode.py', 'test.py'],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (stdoutX, stderrX) = p.communicate()
+        ret = p.wait()
+        if ret > 0:
+            if six.PY3:
+                stdoutX = stdoutX.decode('utf-8')
+                stderrX = stderrX.decode('utf-8')
+            print(stdoutX)
+            print(stderrX)
+            self.assertEqual(ret, 0)
 
 
 class TestDistanceMethods(unittest.TestCase):
@@ -213,7 +228,7 @@ class TestDistanceMethods(unittest.TestCase):
 
     def test_Table1(self):
         """ Add a layer to a tree """
-        global tagMatching
+        from xmldiff.DiffNode import tagMatching
 
         hold = tagMatching
         ChangeTagMatching(None)
@@ -271,7 +286,6 @@ class TestOverlappedTrees(unittest.TestCase):
 def DistanceTest(tester, leftFile, rightFile, diffFile, htmlFile, markParagraphs):
     """ General distance test function """
     options = OOO()
-    diffCount = 0
     SourceFiles.Clear()
     left = XmlRfcParser(leftFile, quiet=True, cache_path=None, no_network=True). \
         parse(strip_cdata=False, remove_comments=False)

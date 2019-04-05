@@ -1,5 +1,6 @@
 from xmldiff._zzs import ffi
 
+
 class EditItem(object):
     __slots__ = ['operation', 'left', 'right', 'cost']
     OP_INSERT = 1
@@ -28,5 +29,3 @@ class EditItem(object):
             right = " right= {:>3}".format(self.right.index)
         txt = "OP={0} {1:>9}{2}".format(str(self.operation), left, right)
         return txt
-
-

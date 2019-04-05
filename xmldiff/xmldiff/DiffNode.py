@@ -1,11 +1,9 @@
 import lxml.etree
-from rfctools_common.parser import XmlRfc
 from rfctools_common import log
 import math
 import sys
 import difflib
 import six
-import re
 from lxml.html import builder as E
 from xmldiff.EditItem import EditItem
 from xmldiff.EditDistance import ComputeEdits, DoWhiteArray
@@ -53,10 +51,7 @@ nsKeys = {
 nsKeysIndex = 0
 
 diffCount = 0
-if six.PY2:
-    nbsp = unichr(0xa0)
-else:
-    nbsp = chr(0xa0)
+nbsp = six.unichr(0xa0)
 
 
 def ChangeTagMatching(newMatching):
@@ -393,7 +388,7 @@ class DiffRoot(object):
                 right = otherParents[count-1]
                 parent = myParents[-1]
                 # should this return True?
-            return false
+            return False
         else:
             iLeft = -1
             iRight = -1
@@ -676,9 +671,9 @@ class DiffDocument(DiffRoot):
                 if edit.right.matchNode is not None:
                     continue
 
-                if isinstance(edit.right, DiffElement) and \
-                   (edit.right.xml.tag == 'back' or edit.right.xml.tag == 'middle'):
-                    thisIsABreak = 9
+                # if isinstance(edit.right, DiffElement) and \
+                #    (edit.right.xml.tag == 'back' or edit.right.xml.tag == 'middle'):
+                #     thisIsABreak = 9
 
                 if edit.right.insertTree:
                     matchingParent = edit.right.parent.matchNode
@@ -801,7 +796,6 @@ class DiffDocument(DiffRoot):
                         for child in edit.right.children:
                             if child.matchNode:
                                 child.matchNode.untangle()
-                        parentChildren = edit.right.parent.matchNode.children
                         edit.right.insertTree = True
                         newEdits.append(edit)
                         continue
@@ -958,7 +952,7 @@ class DiffComment(DiffRoot):
             node.append(n)
         elif self.matchNode is None:
             n = E.SPAN()
-            root.attrib['class'] = 'artwork error'
+            n.attrib['class'] = 'artwork error'
             self.fixPreserveSpace(n, myLine)
             node.append(n)
         else:
@@ -1315,7 +1309,7 @@ class DiffParagraph(DiffRoot):
             clone.children.append(child.cloneTree(clone))
         return clone
 
-    def decorateSource(self):
+    def decorateSource(self, sourceLines):
         for child in self.children:
             child.decorateSource(sourceLines)
 

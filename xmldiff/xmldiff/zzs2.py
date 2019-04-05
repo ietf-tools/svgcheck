@@ -1,5 +1,5 @@
 from xmldiff._zzs import ffi, lib
-from xmldiff.DiffNode import DiffElement, DiffParagraph, DiffComment
+from xmldiff.DiffNode import DiffParagraph
 from xmldiff.EditItem import EditItem
 
 all_handles = []
@@ -24,7 +24,7 @@ def zzs_get_children(node):
 
 @ffi.def_extern()
 def zzs_insert_cost(node):
-    treeNode = ffi.from_handle(node)
+    # treeNode = ffi.from_handle(node)
     return 1
 
 
