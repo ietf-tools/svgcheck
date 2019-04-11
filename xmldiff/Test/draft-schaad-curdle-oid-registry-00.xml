@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='US-ASCII'?>
+<!DOCTYPE rfc SYSTEM "../xml2rc-1.36/rfc2629.dtd" [
+<!ENTITY RFC5226 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5226.xml">
+<!ENTITY CURDLE SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-curdle-pkix.xml">
+]>
+
+<?rfc symrefs="yes"?>
+<?rfc sortrefs='yes'?>
+
+<rfc docName="draft-schaad-curdle-oid-registry-00" category="info">
+<front>
+<title abbrev="OID Registry">Object Identifier Registry for the Curdle Working Group</title>
+    <author fullname="Jim Schaad" initials="J." surname="Schaad">
+      <organization>August Cellars</organization>
+      <address>
+        <email>ietf@augustcellars.com</email>
+      </address>
+    </author>
+    <author fullname="Rick Andrews" initials="R." surname="Andrews">
+      <organization>Symantec Website Security</organization>
+      <address>
+        <email>Rick_Andrews@symantec.com</email>
+      </address>
+    </author>
+    <date/>
+    <area>Security Area</area>
+    <workgroup>Curdle</workgroup>
+    <abstract>
+      <t>
+        When the Curdle Security Working Group was chartered, a range of object identifiers was donated by Symantec Website Security for use by that working group.
+        This document describes the range of identifiers that were assigned in that donated range, transfers control of that range to IANA, and establishes IANA allocation policies for any future assignments within that range.
+      </t>
+    </abstract>
+    <note title="Contributing to this document">
+      <!-- RFC EDITOR - Please remove this note before publishing -->
+      <t>
+        The source for this draft is being maintained in GitHub.
+        Suggested changes should be submitted as pull requests  at <eref target="https://github.com/lamps-wg/smime"/>.
+        Instructions are on that page as well.
+        Editorial changes can be managed in GitHub, but any substantial issues need to be discussed on the LAMPS mailing list.
+      </t>
+    </note>
+  </front>
+  <middle>
+    <section title="Introduction">
+      <t>
+        When the Curdle Security Working Group was chartered, a range of object identifiers was donated by Symantec Website Security for use by that working group.
+        These object identifiers are primarily used with Abstract Syntax Notation (ASN.1) <xref target="ASN.1"/>.
+        The ASN.1 specifications continue to evolve, but object identifiers can be used with any and all versions of ASN.1.
+      </t>
+
+      
+      <t>
+        The Curdle object identifier range is:
+      </t>
+      
+        <figure>
+<artwork>        
+  { iso (1) identified-organization (3) thawte (101) 100 }
+  to
+  { iso (1) identified-organization (3) thawte (101) 127 }
+</artwork>
+        </figure>
+
+      <t>
+        This document describes the object identifiers that were assigned in that donated range, transfers control of the range to IANA, and establishes IANA allocation policies for any future assignments within that range.
+      </t>
+    </section>
+
+    <section title="IANA Considerations">
+      <t>
+        IANA is asked to create one new registry table.
+      </t>
+
+      <section title='"SMI Security for Curdle" Registry'>
+        <t>
+          Within the SMI-numbers registry, add an "SMI Security for Curdle" table with the three columns:
+        </t>
+        <texttable>
+          <ttcol>Decimal</ttcol><ttcol>Description</ttcol><ttcol>References</ttcol>
+          <c>100</c><c>Reserved for future sub-registry</c><c/>
+          <c>110</c><c>id-X25519</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
+          <c>111</c><c>id-X448</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
+          <c>112</c><c>id-EdDSA25519</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
+          <c>113</c><c>id-EdDS448</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
+          <!-- The next two items are in -03 of the draft and not in the final version -->
+          <c>114</c><c>id-EdDSA25519-ph</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
+          <c>115</c><c>id-EdDS448=ph</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
+          <c>120</c><c>Safecurves-pkix-0</c><c><xref target="I-D.ietf-curdle-pkix"/></c>
+
+        </texttable>
+
+        <t>
+          The column 'Decimal' is required to be a number between 100 and 127 inclusive.
+        </t>
+
+        <t>
+          Future updates to this table require both 'Specification Required' and 'Expert Review' as defiened in <xref target="RFC5226"/>.
+        </t>
+      </section>
+    </section>
+    <section title="Security Considerations">
+      <t>
+        This document populates an IANA registry, and it raises no new security considerations.
+        The protocols that specify these values include the security considerations associated with their usage.
+      </t>
+    </section>
+
+    
+  </middle>
+  <back>
+    <references title="Normative References">
+      &RFC5226;
+        <reference anchor="ASN.1">
+          <front>
+            <title>Information Technology - Abstract Syntax
+            Notation One (ASN.1):  Specification of basic notation.
+            ITU-T Recommendation X.680 (2008)
+            </title>
+            <author/>
+            <date month="November" year="2008"/>
+          </front>
+          <seriesInfo name="ITU-T" value="X.680"/>
+          <seriesInfo name="ISO/IEC"  value="8824-1:2008"/>
+        </reference>
+    </references>
+
+    <references title="Informational References">
+      &CURDLE;
+<!--      &CURDLE-V3; -->
+    </references>
+
+    <section title="Acknowledgments" numbered="no">
+      <t>
+        Our thanks go out to Symantec for donating the range of OIDs covered in this document.
+      </t>
+      <t>
+        This document stole text heavily from a previous document doing similar thing by Russ Housely.
+        Copying always makes things easier and less error prone.
+      </t>
+    </section>
+  </back>
+</rfc>

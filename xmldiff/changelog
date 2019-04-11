@@ -1,3 +1,10 @@
+xmldiff (0.5.14) distribution(s); urgency=low
+
+	* Change the text matching code to use longer sequences when possible
+	* Add 2.7 dependency for enumerations
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 12 Apr 2019 12:00:00 -0800
+
 xmldiff (0.5.12) distribution(s); urgency=low
 
 	* Add a class to deal with entities when they are not expanded.

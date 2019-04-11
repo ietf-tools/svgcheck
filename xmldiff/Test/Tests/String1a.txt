@@ -1,0 +1,6 @@
+In <xref target="RFC8032"/> the elliptic curve signature system Edwards-curve Digital Signature Algorithm (EdDSA) is described along with a recommendation for the use of the curve25519 and curve448. EdDSA has defined two modes, the PureEdDSA mode without pre-hashing, and the HashEdDSA mode with pre-hashing.
+<!-- Remove pre-hash
+The Ed25519ph and Ed448ph algorithm definitions specify the one-way hash function that is used for pre-hashing.
+The convention used for identifying the algorithm/curve combinations are to use the Ed25519 and Ed448 for the PureEdDSA mode, with Ed25519ph and Ed448ph for the HashEdDSA mode.
+-->
+The convention used for identifying the algorithm/curve combinations is to use "Ed25519" and "Ed448" for the PureEdDSA mode. The document does not provide the conventions needed for the pre-hash versions of the signature algorithm. The use of the OIDs is described for public keys, private keys and signatures.

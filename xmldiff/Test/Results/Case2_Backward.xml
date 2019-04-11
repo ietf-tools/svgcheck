@@ -15,7 +15,7 @@
 <li whereLeft="L18_0" whereRight="R17_0">&lt;front<span>&gt;</span><ul>
 <li whereLeft="L19_0" whereRight="R18_0">&lt;title<span> abbrev=</span><span class="left">"draft-iab-iotsi-workshop" </span><span class="right">"IOTSI Workshop 2016" </span><span>&gt;</span><ul>
 <li whereLeft="L19_0" whereRight="R18_0">
-<span>Report from the Internet of Things (IoT) Semantic</span><span class="left">  </span><span class="right">&#160; </span><span>Interoperability</span><span class="left">  </span><span class="right">&#160; </span><span>(IOTSI)</span><span class="left">  </span><span class="right">&#160; </span><span>Workshop</span><span class="left">  </span><span class="right">&#160; </span><span>2016</span>
+<span>Report from the Internet of Things (IoT) Semantic</span><span class="left"> Interoperability (IOTSI) Workshop  </span><span class="right">&#160;Interoperability&#160;(IOTSI)&#160;Workshop&#160; </span><span>2016</span>
 </li>
 <li whereLeft="L19_0" whereRight="R18_0"><span>&lt;/title&gt;</span></li>
 </ul>
@@ -113,7 +113,7 @@
 <li whereLeft="L61_0" whereRight="R56_0">&lt;front<span>&gt;</span><ul>
 <li whereLeft="L62_0" whereRight="R57_0">&lt;title<span>&gt;</span><ul>
 <li whereLeft="L62_0" whereRight="R57_0">
-<span>Semantic Interoperability Requires Self-describing Interaction </span><span class="left">Models -  </span><span class="right">Models:  </span><span>HATEOAS for the Internet of Things</span>
+<span>Semantic Interoperability Requires Self-describing Interaction </span><span class="left">Models - </span><span class="right">Models: </span><span> HATEOAS for the Internet of Things</span>
 </li>
 <li whereLeft="L62_0" whereRight="R57_0"><span>&lt;/title&gt;</span></li>
 </ul>
@@ -568,7 +568,7 @@
 <li whereLeft="L166_0"><span class="left">&lt;/section&gt;</span></li>
 </ul>
 </li>
-<li whereLeft="L172_0" whereRight="R94_0">&lt;section<span class="left"> anchor="section-10"</span><span> title=</span><span class="left">"Appendix A: Program  </span><span class="right">"Program  </span><span>Committee"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span><ul>
+<li whereLeft="L172_0" whereRight="R94_0">&lt;section<span class="left"> anchor="section-10"</span><span> title=</span><span class="left">"Appendix A: Program </span><span class="right">"Program </span><span> Committee"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span><ul>
 <li whereLeft="L174_0" whereRight="R96_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L174_0" whereRight="R96_0">
 <span>This workshop was organized by the following individuals: Jari Arkko, Ralph Droms, Jaime </span><span class="left">Jim&#233;nez, </span><span class="right">Jimenez, </span><span> Michael Koster, Dave Thaler, and Hannes Tschofenig.</span>
@@ -579,7 +579,7 @@
 <li whereLeft="L172_0" whereRight="R94_0"><span>&lt;/section&gt;</span></li>
 </ul>
 </li>
-<li whereLeft="L179_0" whereRight="R101_0">&lt;section<span class="left"> anchor="section-11"</span><span> title=</span><span class="left">"Appendix B: Accepted  </span><span class="right">"Accepted  </span><span>Position Papers"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span><ul>
+<li whereLeft="L179_0" whereRight="R101_0">&lt;section<span class="left"> anchor="section-11"</span><span> title=</span><span class="left">"Appendix B: Accepted </span><span class="right">"Accepted </span><span> Position Papers"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span><ul>
 <li whereRight="R105_0"><span class="artwork right">&lt;--[rfced]&#160;FYI,&#160;we&#160;standardized&#160;the&#160;capitalization&#160;of&#160;the&#160;paper
 <br>titles&#160;from&#160;the&#160;workshop.&#160;Please&#160;let&#160;us&#160;know&#160;if&#160;that&#160;creates&#160;any
 <br>problems.&#160;&#160;--&gt;</span></li>
@@ -594,7 +594,7 @@
 </li>
 <li whereLeft="L183_0" whereRight="R109_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L183_0" whereRight="R109_0">
-<span>Carsten Bormann, </span><span class="left">&#8220;Noise </span><span class="right">"Noise </span><span> in </span><span class="left">specifications hurts&#8221; </span><span class="right">Specifications hurts" </span>
+<span>Carsten Bormann, </span><span class="left">&#8220;Noise </span><span class="right">"Noise </span><span> in</span><span class="left"> specifications hurts&#8221; </span><span class="right"> Specifications hurts" </span>
 </li>
 <li whereLeft="L183_0" whereRight="R109_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -636,14 +636,14 @@
 </li>
 <li whereLeft="L189_0" whereRight="R115_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L189_0" whereRight="R115_0">
-<span>Stephen </span><span class="left">Farrell,  </span><span class="right">Farrell and  </span><span>Alissa Cooper, </span><span class="left">&#8220;It&#8217;s </span><span class="right">"It's </span><span> Often True: </span><span class="left">Security&#8217;s </span><span class="right">Security's </span><span> Ignored (IOTSI) - and Privacy </span><span class="left">too&#8221; </span><span class="right">too" </span>
+<span>Stephen </span><span class="left">Farrell, </span><span class="right">Farrell and </span><span> Alissa Cooper, </span><span class="left">&#8220;It&#8217;s </span><span class="right">"It's </span><span> Often True: </span><span class="left">Security&#8217;s </span><span class="right">Security's </span><span> Ignored (IOTSI) - and Privacy </span><span class="left">too&#8221; </span><span class="right">too" </span>
 </li>
 <li whereLeft="L189_0" whereRight="R115_0"><span>&lt;/t&gt;</span></li>
 </ul>
 </li>
 <li whereLeft="L190_0" whereRight="R116_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L190_0" whereRight="R116_0">
-<span>Christian Groves, Lui Yan, </span><span class="left">ang  </span><span class="right">and Yang  </span><span>Weiwei, </span><span class="left">&#8220;Overview </span><span class="right">"Overview </span><span> of IoT semantics </span><span class="left">landscape&#8221; </span><span class="right">landscape" </span>
+<span>Christian Groves, Lui Yan, </span><span class="left">ang </span><span class="right">and Yang </span><span> Weiwei, </span><span class="left">&#8220;Overview </span><span class="right">"Overview </span><span> of IoT semantics </span><span class="left">landscape&#8221; </span><span class="right">landscape" </span>
 </li>
 <li whereLeft="L190_0" whereRight="R116_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -678,7 +678,7 @@
 </li>
 <li whereLeft="L195_0" whereRight="R121_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L195_0" whereRight="R121_0">
-<span>Sebastian </span><span class="left">Kaebisch,  </span><span class="right">Kaebisch and  </span><span>Darko Anicic, </span><span class="left">&#8220;Thing </span><span class="right">"Thing </span><span> Description as Enabler of Semantic Interoperability on the Web of </span><span class="left">Things&#8221; </span><span class="right">Things" </span>
+<span>Sebastian </span><span class="left">Kaebisch, </span><span class="right">Kaebisch and </span><span> Darko Anicic, </span><span class="left">&#8220;Thing </span><span class="right">"Thing </span><span> Description as Enabler of Semantic Interoperability on the Web of </span><span class="left">Things&#8221; </span><span class="right">Things" </span>
 </li>
 <li whereLeft="L195_0" whereRight="R121_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -692,7 +692,7 @@
 </li>
 <li whereLeft="L197_0" whereRight="R123_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L197_0" whereRight="R123_0">
-<span>Ari </span><span class="left">Keraenen,  </span><span class="right">Keraenen and  </span><span>Cullen Jennings, </span><span class="left">&#8220;SenML: </span><span class="right">"SenML: </span><span> simple building block for IoT semantic </span><span class="left">interoperability&#8221; </span><span class="right">interoperability" </span>
+<span>Ari </span><span class="left">Keraenen, </span><span class="right">Keraenen and </span><span> Cullen Jennings, </span><span class="left">&#8220;SenML: </span><span class="right">"SenML: </span><span> simple building block for IoT semantic </span><span class="left">interoperability&#8221; </span><span class="right">interoperability" </span>
 </li>
 <li whereLeft="L197_0" whereRight="R123_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -713,7 +713,7 @@
 </li>
 <li whereLeft="L200_0" whereRight="R126_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L200_0" whereRight="R126_0">
-<span>Matthias Kovatsch, Yassin N. Hassan, </span><span class="right">and  </span><span>Klaus Hartke, </span><span class="left">&#8220;Semantic </span><span class="right">"Semantic </span><span> Interoperability Requires </span><span class="left">self describing  </span><span class="right">Self-describing  </span><span>Interaction </span><span class="left">Models&#8221; </span><span class="right">Models" </span>
+<span>Matthias Kovatsch, Yassin N. Hassan, </span><span class="right">and  </span><span>Klaus Hartke, </span><span class="left">&#8220;Semantic </span><span class="right">"Semantic </span><span> Interoperability Requires </span><span class="left">self describing </span><span class="right">Self-describing </span><span> Interaction </span><span class="left">Models&#8221; </span><span class="right">Models" </span>
 </li>
 <li whereLeft="L200_0" whereRight="R126_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -741,7 +741,7 @@
 </li>
 <li whereLeft="L204_0" whereRight="R130_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L204_0" whereRight="R130_0">
-<span>Kerry </span><span class="left">Lynn,  </span><span class="right">Lynn and  </span><span>Laird Dornin, </span><span class="left">&#8220;Modeling </span><span class="right">"Modeling </span><span> RESTful APIs with JSON </span><span class="left">Hyper-Schema&#8221; </span><span class="right">Hyper-Schema" </span>
+<span>Kerry </span><span class="left">Lynn, </span><span class="right">Lynn and </span><span> Laird Dornin, </span><span class="left">&#8220;Modeling </span><span class="right">"Modeling </span><span> RESTful APIs with JSON </span><span class="left">Hyper-Schema&#8221; </span><span class="right">Hyper-Schema" </span>
 </li>
 <li whereLeft="L204_0" whereRight="R130_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -762,7 +762,7 @@
 </li>
 <li whereLeft="L207_0" whereRight="R133_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L207_0" whereRight="R133_0">
-<span>Jean </span><span class="left">Paoli,  </span><span class="right">Paoli and  </span><span>Taqi Jaffri, </span><span class="left">&#8220;IoT </span><span class="right">"IoT </span><span> Information Model Interoperability: An Open, Crowd-Sourced Approach in Three Parallel </span><span class="left">Parti&#8221; </span><span class="right">Parti" </span>
+<span>Jean </span><span class="left">Paoli, </span><span class="right">Paoli and </span><span> Taqi Jaffri, </span><span class="left">&#8220;IoT </span><span class="right">"IoT </span><span> Information Model Interoperability: An Open, Crowd-Sourced Approach in Three Parallel </span><span class="left">Parti&#8221; </span><span class="right">Parti" </span>
 </li>
 <li whereLeft="L207_0" whereRight="R133_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -776,21 +776,21 @@
 </li>
 <li whereLeft="L209_0" whereRight="R135_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L209_0" whereRight="R135_0">
-<span>Dave </span><span class="left">Raggett,  </span><span class="right">Raggett and  </span><span>Soumya Kanti Datta, </span><span class="left">&#8220;Input </span><span class="right">"Input </span><span> paper for IAB Semantic Interoperability </span><span class="left">Workshop&#8221; </span><span class="right">Workshop" </span>
+<span>Dave </span><span class="left">Raggett, </span><span class="right">Raggett and </span><span> Soumya Kanti Datta, </span><span class="left">&#8220;Input </span><span class="right">"Input </span><span> paper for IAB Semantic Interoperability </span><span class="left">Workshop&#8221; </span><span class="right">Workshop" </span>
 </li>
 <li whereLeft="L209_0" whereRight="R135_0"><span>&lt;/t&gt;</span></li>
 </ul>
 </li>
 <li whereLeft="L210_0" whereRight="R136_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L210_0" whereRight="R136_0">
-<span>Pete </span><span class="left">Rai,  </span><span class="right">Rai and  </span><span>Stephen Tallamy, </span><span class="left">&#8220;Semantic </span><span class="right">"Semantic </span><span> Overlays Over Immutable Data to Facilitate Time and Context Specific </span><span class="left">Interoperability&#8221; </span><span class="right">Interoperability" </span>
+<span>Pete </span><span class="left">Rai, </span><span class="right">Rai and </span><span> Stephen Tallamy, </span><span class="left">&#8220;Semantic </span><span class="right">"Semantic </span><span> Overlays Over Immutable Data to Facilitate Time and Context Specific </span><span class="left">Interoperability&#8221; </span><span class="right">Interoperability" </span>
 </li>
 <li whereLeft="L210_0" whereRight="R136_0"><span>&lt;/t&gt;</span></li>
 </ul>
 </li>
 <li whereLeft="L211_0" whereRight="R137_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L211_0" whereRight="R137_0">
-<span>Jasper </span><span class="left">Roes,  </span><span class="right">Roes and  </span><span>Laura Daniele, </span><span class="left">&#8220;Towards </span><span class="right">"Towards </span><span> semantic interoperability in the IoT using the Smart Appliances REFerence ontology (SAREF) and its </span><span class="left">extensions&#8221; </span><span class="right">extensions" </span>
+<span>Jasper </span><span class="left">Roes, </span><span class="right">Roes and </span><span> Laura Daniele, </span><span class="left">&#8220;Towards </span><span class="right">"Towards </span><span> semantic interoperability in the IoT using the Smart Appliances REFerence ontology (SAREF) and its </span><span class="left">extensions&#8221; </span><span class="right">extensions" </span>
 </li>
 <li whereLeft="L211_0" whereRight="R137_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -804,7 +804,7 @@
 </li>
 <li whereLeft="L213_0" whereRight="R139_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L213_0" whereRight="R139_0">
-<span>Bill Silverajan, Mert </span><span class="left">Ocak,  </span><span class="right">Ocak and  </span><span>Jaime Jimenez, </span><span class="left">&#8220;Implementation </span><span class="right">"Implementation </span><span> Experiences of Semantic Interoperability for RESTful Gateway </span><span class="left">Management&#8221; </span><span class="right">Management" </span>
+<span>Bill Silverajan, Mert </span><span class="left">Ocak, </span><span class="right">Ocak and </span><span> Jaime Jimenez, </span><span class="left">&#8220;Implementation </span><span class="right">"Implementation </span><span> Experiences of Semantic Interoperability for RESTful Gateway </span><span class="left">Management&#8221; </span><span class="right">Management" </span>
 </li>
 <li whereLeft="L213_0" whereRight="R139_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -818,7 +818,7 @@
 </li>
 <li whereLeft="L215_0" whereRight="R141_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L215_0" whereRight="R141_0">
-<span>Robert Sparks and Ben Campbell, </span><span class="left">&#8220;Considerations </span><span class="right">"Considerations </span><span> for certain </span><span class="left">IoT based services&#8221; </span><span class="right">IoT-based services" </span>
+<span>Robert Sparks and Ben Campbell, </span><span class="left">&#8220;Considerations </span><span class="right">"Considerations </span><span> for certain</span><span class="left"> IoT based services&#8221; </span><span class="right"> IoT-based services" </span>
 </li>
 <li whereLeft="L215_0" whereRight="R141_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -832,7 +832,7 @@
 </li>
 <li whereLeft="L217_0" whereRight="R143_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L217_0" whereRight="R143_0">
-<span>J. Clarke </span><span class="left">Stevens,  </span><span class="right">Stevens and  </span><span>Piper Merriam, </span><span class="left">&#8220;Derived </span><span class="right">"Derived </span><span> Models for Interoperability Between IoT </span><span class="left">Ecosystems&#8221; </span><span class="right">Ecosystems" </span>
+<span>J. Clarke </span><span class="left">Stevens, </span><span class="right">Stevens and </span><span> Piper Merriam, </span><span class="left">&#8220;Derived </span><span class="right">"Derived </span><span> Models for Interoperability Between IoT </span><span class="left">Ecosystems&#8221; </span><span class="right">Ecosystems" </span>
 </li>
 <li whereLeft="L217_0" whereRight="R143_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -881,7 +881,7 @@
 </li>
 <li whereLeft="L224_0" whereRight="R151_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L224_0" whereRight="R151_0">
-<span>Peter van der </span><span class="left">Stok,  </span><span class="right">Stok and  </span><span>Andy Bierman, </span><span class="left">&#8220;YANG-Based </span><span class="right">"YANG-Based </span><span> Constrained Management Interface </span><span class="left">(CoMI)&#8221; </span><span class="right">(CoMI)" </span>
+<span>Peter van der </span><span class="left">Stok, </span><span class="right">Stok and </span><span> Andy Bierman, </span><span class="left">&#8220;YANG-Based </span><span class="right">"YANG-Based </span><span> Constrained Management Interface </span><span class="left">(CoMI)&#8221; </span><span class="right">(CoMI)" </span>
 </li>
 <li whereLeft="L224_0" whereRight="R151_0"><span>&lt;/t&gt;</span></li>
 </ul>
@@ -895,7 +895,7 @@
 <li whereLeft="L179_0" whereRight="R101_0"><span>&lt;/section&gt;</span></li>
 </ul>
 </li>
-<li whereLeft="L228_0" whereRight="R156_0">&lt;section<span class="left"> anchor="section-12"</span><span> title=</span><span class="left">"Appendix C: List  </span><span class="right">"List  </span><span>of Participants"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span><ul>
+<li whereLeft="L228_0" whereRight="R156_0">&lt;section<span class="left"> anchor="section-12"</span><span> title=</span><span class="left">"Appendix C: List </span><span class="right">"List </span><span> of Participants"</span><span> numbered="true"</span><span> toc="default"</span><span>&gt;</span><ul>
 <li><span class="right" whereRight="R157_0">&lt;?rfc subcompact="yes"?&gt;</span></li>
 <li whereLeft="L230_0" whereRight="R158_0">&lt;t<span>&gt;</span><ul>
 <li whereLeft="L230_0" whereRight="R158_0">&lt;list<span class="left"> style="symbols"</span><span>&gt;</span><ul>

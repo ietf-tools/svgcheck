@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!-- This template is for creating an Internet Draft using xml2rfc,
+    which is available here: http://xml.resource.org. -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!-- used by XSLT processors -->
+<!-- For a complete list and description of processing instructions (PIs),
+    please see http://xml.resource.org/authoring/README.html. -->
+<!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
+    (Here they are set differently than their defaults in xml2rfc v1.32) -->
+<?rfc strict="yes" ?>
+<!-- give errors regarding ID-nits and DTD validation -->
+<!-- control the table of contents (ToC) -->
+<?rfc toc="yes"?>
+<!-- generate a ToC -->
+<?rfc tocdepth="4"?>
+<!-- the number of levels of subsections in ToC. default: 3 -->
+<!-- control references -->
+<?rfc symrefs="yes"?>
+<!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
+<?rfc sortrefs="yes" ?>
+<!-- sort the reference entries alphabetically -->
+<!-- control vertical white space
+    (using these PIs as follows is recommended by the RFC Editor) -->
+<?rfc compact="yes" ?>
+<!-- do not start each main section on a new page -->
+<?rfc subcompact="no" ?>
+<!-- keep one blank line between list items -->
+<!-- end of list of popular I-D processing instructions -->
+<rfc category="std" docName="draft-ietf-ospf-segment-routing-msd-25"
+     ipr="trust200902">
+  <front>
+    <title abbrev="">Signaling MSD (Maximum SID Depth) using OSPF</title>
+
+
+      <author fullname="Jeff Tantsura" initials="J.T." surname="Tantsura">
+      <organization>Apstra, Inc.</organization>
+      <address>
+	<email>jefftant.ietf@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Uma Chunduri" initials="U.C." surname="Chunduri">
+      <organization>Huawei Technologies</organization>
+      <address>
+      <email>uma.chunduri@huawei.com</email>
+      </address>
+    </author>
+
+   <author fullname="Sam Aldrin" initials="S.A." surname="Aldrin">
+      <organization>Google, Inc</organization>
+      <address>
+	<email>aldrin.ietf@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Peter Psenak" initials="P.P." surname="Psenak">
+      <organization>Cisco Systems</organization>
+      <address>
+	<email>ppsenak@cisco.com</email>
+      </address>
+    </author>
+
+    <date day="17" month="October" year="2018" />
+
+    <area>Routing</area>
+
+    <workgroup>OSPF Working Group</workgroup>
+
+    <keyword>Internet-Draft</keyword>
+
+    <keyword>BGP-LS</keyword>
+
+    <keyword>SID</keyword>
+
+    <keyword>MSD </keyword>
+
+    <keyword>OSPF</keyword>
+
+   <abstract>
+	<t>This document defines a way for an Open Shortest Path First (OSPF) Router to advertise multiple
+	types of supported Maximum SID(Segment Identifier) Depths (MSDs) at node and/or link
+	granularity. Such advertisements allow entities (e.g., centralized
+	controllers) to determine whether a particular SID stack can be supported
+	in a given network. This document defines only one type of MSD,  
+    but defines an encoding that can support other MSD types.
+    Here the term OSPF means both OSPFv2 and  OSPFv3.</t>
+
+    </abstract>
+  </front>
+
+  <middle>
+	  <section title="Introduction">
+      <t>When Segment Routing (SR) paths are computed by a centralized
+      controller, it is critical that the controller learns the Maximum SID (Segment Identifier)
+      Depth (MSD) that can be imposed at each node/link on a given SR path 
+      to ensure that the Segment Identifier (SID) stack depth of a computed path
+      doesn't exceed the number of SIDs the node is capable of imposing.</t>
+
+      <t><xref target="I-D.ietf-pce-segment-routing"/> defines how to signal
+      MSD in the Path Computation Element communication Protocol (PCEP).
+       However, if PCEP is not supported/configured on
+      the head-end of an SR tunnel or a Binding-SID anchor node and controller
+      does not participate in IGP routing, it has no way to learn the MSD of
+      nodes and links. BGP-LS (Distribution of Link-State and TE Information using
+	    Border Gateway Protocol) <xref target="RFC7752"/> defines a way to expose topology and associated
+      attributes and capabilities of the nodes in that topology to a
+      centralized controller. MSD signaling by BGP-LS has been defined in
+      <xref target="I-D.ietf-idr-bgp-ls-segment-routing-msd"/>. Typically,
+      BGP-LS is configured on a small number of nodes that do not necessarily
+      act as head-ends. In order for BGP-LS to signal MSD for all the nodes
+      and links in the network MSD is relevant, MSD capabilities SHOULD be
+      advertised by every OSPF router in the network.</t>
+
+      <t>Other types of MSD are known to be useful. For example,
+	  <xref target="I-D.ietf-ospf-mpls-elc"/> defines Readable Label Depth
+      Capability (RLDC) that is used by a head-end to insert an Entropy Label
+      (EL) at a depth that could be read by transit nodes.</t>
+
+      <t>This document defines an extension to OSPF used to advertise one or
+      more types of MSD at node and/or link granularity.
+      In the future it is expected, that new MSD-types will be defined to signal additional capabilities
+      e.g., entropy labels, SIDs that can be imposed through recirculation, or
+      SIDs associated with another dataplane e.g., IPv6. </t>
+
+      <t>MSD advertisements MAY be useful even if Segment Routing itself is
+      not enabled. For example, in a non-SR MPLS network, MSD defines the
+      maximum label depth.</t>
+
+	<section title="Terminology">
+
+  <t>This memo makes use of the terms defined in <xref target="RFC7770"/></t>
+
+		<t>BGP-LS: Distribution of Link-State and TE Information using
+		Border Gateway Protocol</t>
+
+		<t>OSPF: Open Shortest Path First</t>
+
+		<t>MSD: Maximum SID Depth - the number of SIDs supported by a node or
+        a link on a node</t>
+
+        <t>SID: Segment Identifier as defined in <xref target="RFC8402"/></t>
+
+        <t>Label Imposition: Imposition is the act of modifying and/or adding
+        labels to the outgoing label stack associated with a packet. This
+        includes:</t>
+
+        <t><list style="symbols">
+            <t>replacing the label at the top of the label stack with a new
+            label</t>
+
+            <t>pushing one or more new labels onto the label stack</t>
+          </list></t>
+
+        <t>The number of labels imposed is then the sum of the number of
+        labels which are replaced and the number of labels which are pushed.
+        See <xref target="RFC3031"/> for further details.</t>
+
+		<t>PCC: Path Computation Client</t>
+
+		<t>PCE: Path Computation Element</t>
+
+		<t>PCEP: Path Computation Element Protocol</t>
+
+		<t>SR: Segment Routing</t>
+
+        <t>SID: Segment Identifier</t>
+
+        <t>LSA: Link state advertisement</t>
+
+        <t>RI: OSPF Router Information LSA</t>
+
+	</section>
+
+	<section title="Requirements Language">
+     <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL                                                                                                
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+      "MAY", and "OPTIONAL" in this document are to be interpreted as
+      described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/>
+      when, and only when, they appear in all capitals, as shown here.</t>
+    </section>
+    </section>
+    <section anchor="NODE_LEVEL" title="Node MSD Advertisement">
+      <t>The node MSD TLV within the body of the OSPF RI Opaque LSA <xref target="RFC7770"/> is defined to carry the provisioned SID depth
+      of the router originating the RI LSA. Node MSD is the smallest MSD supported by the node on the set of interfaces configured 
+      for use by the advertising IGP instance.
+      MSD values may be learned via a hardware API or may be provisioned.
+      </t>
+      <figure align="center" anchor="Node_MSD_TLV"
+	      title="Node MSD TLV">
+          <preamble></preamble>
+
+	  <artwork align="left">
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |    Type                       |  Length                       |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |    MSD-Type   |  MSD-Value    |  MSD-Type...  |  MSD-Value... | 
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+          </artwork>
+
+          <postamble></postamble>
+  </figure>
+      <t>Type: 12</t>
+      <t>Length: variable (multiple of 2 octets) and represents the total length of value field in octets. </t>
+      <t>Value: consists of one or more pairs of a 1 octet MSD-type and 1 octet MSD-Value. </t>
+      <t>MSD-Type: one of the values defined in the IGP MSD-Types registry
+         defined in <xref target="I-D.ietf-isis-segment-routing-msd"/>.</t>
+   
+     
+	  <t>MSD-Value: a number in the range of 0-255. For all MSD-Types, 0 represents lack of the ability to 
+         impose MSD stack of any depth; any other value represents that of the node. This value MUST 
+         represent the lowest value supported by any link configured for use by the
+         advertising OSPF instance.</t>
+      <t>This TLV is applicable to OSPFv2 and to OSPFv3 and is optional. 
+         The scope of the advertisement is specific to the deployment.</t>
+         
+      <t> When multiple Node MSD TLVs are received from a given router, the
+        receiver MUST use the first occurrence of the TLV in the Router
+        Information LSA.  If the Node MSD TLV appears in multiple Router
+        Information LSAs that have different flooding scopes, the Node
+        MSD TLV in the Router Information LSA with the area-scoped
+        flooding scope MUST be used.  If the Node MSD TLV appears in
+        multiple Router Information LSAs that have the same flooding scope,
+        the Node MSD TLV in the Router Information (RI) LSA with the
+        numerically smallest Instance ID MUST be used and other
+        instances of the Node MSD TLV MUST be ignored.
+ 
+        The RI LSA can be advertised at any of the defined opaque flooding
+        scopes (link, area, or Autonomous System (AS)).  For the purpose of
+        Node MSD TLV advertisement, area-scoped flooding is RECOMMENDED. </t>
+
+    </section>
+
+    <section anchor="LINK_LEVEL" title="Link MSD sub-TLV">
+      <t>The link sub-TLV is defined to carry the MSD of the interface associated with the link. 
+        MSD values may be learned via a hardware API or may be provisioned.</t>
+    <figure align="center" anchor="Link_MSD_sub_TLV"
+	      title="Link MSD Sub-TLV">
+          <preamble></preamble>
+
+	  <artwork align="left">
+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |    Type                       |  Length                       |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |    MSD-Type   |  MSD-Value    |  MSD-Type...  |  MSD-Value... | 
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+
+          </artwork>
+
+          <postamble></postamble>
+  </figure>
+
+  <t>Type:</t>
+	    <t>For OSPFv2, the Link level MSD-Value is advertised as an optional Sub-TLV
+		    of the OSPFv2 Extended Link TLV as defined in <xref target="RFC7684"/>, and has a type of 6.</t>
+	    <t>For OSPFv3, the Link level MSD-Value is advertised as an optional Sub-TLV of the E-Router-LSA TLV as
+		    defined in <xref target="RFC8362"/>, and has a type of 9.
+	    </t>
+      <t>Length: variable and same as defined in <xref target="NODE_LEVEL"> </xref>.</t>
+      <t>Value: consists of one or more pairs of a 1 octet MSD-type and 1 octet MSD-Value. </t>
+      <t>MSD-Type: one of the values defined in the MSD-Types registry
+         defined in <xref target="I-D.ietf-isis-segment-routing-msd"/>.</t> 
+         <t>MSD-Value field contains Link MSD of the router originating the corresponding LSA as specified 
+         for OSPFv2 and OSPFv3.  Link MSD is a number in the range of 0-255. 
+         For all MSD-Types, 0 represents lack of the ability to impose MSD stack of any depth; 
+        any other value represents that of the particular link when used as an outgoing interface.</t>
+
+
+      <t>If this sub-TLV is advertised multiple times in the same OSPFv2 Extended
+        Link Opaque LSA/E-Router-LSA, only the first instance of the TLV MUST be used by
+        receiving OSPF routers. This situation SHOULD be logged as an error.</t>
+ 
+  <t> If this sub-TLV is advertised multiple times for the same link in
+   different OSPF Extended Link Opaque LSAs/E-Router-LSAs originated by the same
+  OSPF router, the OSPFv2 Extended Link TLV in the OSPFv2 Extended
+   Link Opaque LSA with the smallest Opaque ID or in the OSPFv3 E-Router-LSA with the smallest Link State ID MUST be used by receiving
+   OSPF routers. This situation MAY be logged as a warning.
+</t>
+
+
+	     </section>
+
+			 <section anchor="Confict_resolution"
+             title="Procedures for Defining and Using Node and Link MSD Advertisements">
+      <t>When Link MSD is present for a given MSD-type, the value of the Link
+      MSD MUST take precedence over the Node MSD. When a Link MSD-type is not
+      signaled but the Node MSD-type is, then the Node MSD-type value MUST be
+      considered as the MSD value for that link.</t>
+
+      <t>In order to increase flooding efficiency, it is RECOMMENDED that
+      routers with homogenous link MSD values advertise just the Node MSD
+      value.</t>
+
+      <t>The meaning of the absence of both Node and Link MSD advertisements
+      for a given MSD-type is specific to the MSD-type. Generally it can only
+      be inferred that the advertising node does not support advertisement of
+      that MSD-type. However, in some cases the lack of advertisement might
+      imply that the functionality associated with the MSD-type is not
+      supported. The correct interpretation MUST be specified when an MSD-type is
+      defined in <xref target="I-D.ietf-isis-segment-routing-msd"/>.</t>
+
+      <!---->
+    </section>
+
+      <!---->
+    <section anchor="IANA" title="IANA Considerations">
+    <t>This specification updates several existing OSPF registries.</t>
+      <t>IANA has allocated TLV type 12 from the OSPF Router
+	      Information (RI) TLVs Registry as defined by <xref target="RFC7770"/>.
+
+<figure align="center" anchor="Node_MSD"
+	      title="RI Node MSD">
+          <preamble/>
+
+	  <artwork align="left">
+
+   Value     Description                      Reference
+   -----     ---------------                  -------------
+   12        Node MSD                         This document
+
+          </artwork>
+          <postamble/>
+  </figure>
+
+	      IANA has allocated sub-TLV type 6 from
+	      the OSPFv2 Extended Link TLV Sub-TLVs registry. 
+<figure align="center" anchor="OSPFv2_Link_MSD"
+	      title="OSPFv2 Link MSD">
+          <preamble/>
+
+
+	  <artwork align="left">
+
+   Value     Description                      Reference
+   -----     ---------------                  -------------
+   6         OSPFv2 Link MSD                   This document
+
+          </artwork>
+          <postamble/>
+  </figure>
+
+	      IANA has allocated sub-TLV type 9 from the OSPFv3 Extended-LSA Sub-TLV registry.
+
+          <figure align="center" anchor="OSPFv3_Link_MSD"
+	      title="OSPFv3 Link MSD">
+          <preamble/>
+
+
+	  <artwork align="left">
+
+   Value     Description                      Reference
+   -----     ---------------                  -------------
+   9         OSPFv3 Link MSD                  This document
+
+          </artwork>
+          <postamble/>
+  </figure>
+     </t>
+</section>
+
+		<section anchor="Security" title="Security Considerations">
+    <t>Security concerns for OSPF are addressed in <xref target="RFC7474"/>,  <xref target="RFC4552"/> and <xref target="RFC7166"/>.
+   Further security analysis for OSPF protocol is done in <xref target="RFC6863"/>. 
+   Security considerations, as specified by <xref target="RFC7770"/>, <xref target="RFC7684"/> and  <xref target="RFC8362"/> are applicable to this document.</t>
+   <t>Implementations MUST assure that malformed TLV and Sub-TLV defined in
+   this document are detected and do not provide a vulnerability for
+   attackers to crash the OSPF router or routing process.  Reception
+   of malformed TLV or Sub-TLV SHOULD be counted and/or logged for
+   further analysis.  Logging of malformed TLVs and Sub-TLVs SHOULD be
+   rate-limited to prevent a Denial of Service (DoS) attack (distributed
+   or otherwise) from overloading the OSPF control plane.</t>
+
+   <t>Advertisement of an incorrect MSD value may have negative
+      consequences. If the value is smaller than supported, path computation
+      may fail to compute a viable path. If the value is larger than
+      supported, an attempt to instantiate a path that can't be supported by
+      the head-end (the node performing the SID imposition) may occur.</t>
+
+      <t>The presence of this information also may inform an attacker of how
+      to induce any of the aforementioned conditions.</t>
+
+    <t>There's no  Denial of Service risk specific to this extension, and it is not vulnerable to replay attacks.</t>
+
+			<!---->
+		</section>
+
+
+        <section anchor="Contributors" title="Contributors">
+
+	     <t>The following people contributed to this document:</t>
+	     <t>Les Ginsberg</t>
+	     <t>Email: ginsberg@cisco.com</t>
+    </section>
+
+
+     <section anchor="Acknowledgments" title="Acknowledgments">
+	    <t>The authors would like to thank Acee Lindem, Ketan Talaulikar, Tal Mizrahi, Stephane Litkowski and Bruno Decraene
+				for their reviews and valuable comments.  </t>
+    <!---->
+    </section>
+
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include="reference.I-D.ietf-isis-segment-routing-msd"?>
+      <?rfc include="reference.RFC.2119"?>
+      <?rfc include="reference.RFC.8174"?>
+      <?rfc include="reference.RFC.7770"?>
+      <?rfc include="reference.RFC.8362"?>
+      <?rfc include="reference.RFC.7684"?>
+      <?rfc include="reference.RFC.3031"?>
+      <?rfc include="reference.RFC.8402"?>
+      <!---->
+    </references>
+
+    <references title="Informative References">
+      <?rfc include="reference.I-D.ietf-pce-segment-routing"?>
+      <?rfc include="reference.I-D.ietf-idr-bgp-ls-segment-routing-msd"?>
+      <?rfc include="reference.I-D.ietf-ospf-mpls-elc"?>
+      <?rfc include="reference.RFC.7752"?>
+      <?rfc include="reference.RFC.6863"?>
+      <?rfc include="reference.RFC.7474"?>
+      <?rfc include="reference.RFC.4552"?>
+      <?rfc include="reference.RFC.7166"?>
+      <!---->
+    </references>
+  </back>
+</rfc>

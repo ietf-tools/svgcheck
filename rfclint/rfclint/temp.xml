@@ -1,0 +1,679 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<rfc number="8187" category="std" submissionType="IETF" consensus="yes" ipr="trust200902" obsoletes="5987" updates="" xml:lang="en">
+  <front>
+    <title abbrev="Charset/Language Encoding in HTTP">Indicating Character Encoding and Language for HTTP Header Field Parameters</title>
+    <author initials="J. F." surname="Reschke" fullname="Julian F. Reschke">
+      <organization abbrev="greenbytes">greenbytes GmbH</organization>
+      <address>
+        <postal>
+          <street>Hafenweg 16</street>
+          <city>Münster</city>
+          <region>NW</region>
+          <code>48155</code>
+          <country>Germany</country>
+        </postal>
+        <email>julian.reschke@greenbytes.de</email>
+        <uri>http://greenbytes.de/tech/webdav/</uri>
+      </address>
+    </author>
+    <date year="2017" month="June"/>
+    <area>Applications and Real-Time</area>
+    <workgroup>HTTP Working Group</workgroup>
+    <keyword>HTTP</keyword>
+    <keyword>header field parameter</keyword>
+    <keyword>internationalization</keyword>
+    <abstract>
+      <t>By default, header field values in Hypertext Transfer Protocol (HTTP) messages cannot easily carry characters outside the US-ASCII-coded character set. RFC 2231 defines defines an encoding mechanism for use in parameters inside Multipurpose Internet Mail Extensions (MIME) header field values. This document specifies an encoding suitable for use in HTTP header fields that is compatible with a simplified profile of the encoding defined in RFC 2231.  </t>
+      <t>This document obsoletes RFC 5987.  </t>
+    </abstract>
+  </front>
+  <middle>
+    <section anchor="introduction" title="Introduction" numbered="true" toc="default">
+      <t>Use of characters outside the US-ASCII-coded character set (<xref target="RFC0020" format="default" pageno="false"/>) in HTTP header fields (<xref target="RFC7230" format="default" pageno="false"/>) is non-trivial: </t>
+      <t>
+        <list style="symbols">
+          <t>The HTTP specification discourages use of non-US-ASCII characters in field values, placing them into the "obs-text" Augmented Backus-Naur Form (ABNF) production (<xref target="RFC7230" format="default" pageno="false"/>, Section 3.2).</t>
+          <t>Furthermore, the specification is silent about default character encoding schemes for field values, so any use of non-US-ASCII characters would need to be specific to the field definition or would require some other kind of out-of-band information.</t>
+          <t>Finally, some APIs assume a default character encoding scheme in order to map from the octet sequences (obtained from the HTTP message) to character sequences: for instance, the XMLHttpRequest API (<xref target="XMLHttpRequest" format="default" pageno="false"/>) uses the Interface Definition Language type "ByteString", effectively resulting in the ISO-8859-1 character encoding scheme <xref target="ISO-8859-1" format="default" pageno="false"/> being used.  </t>
+        </list>
+      </t>
+      <t>On the other hand, RFC 2231 defines an encoding mechanism for parameters inside MIME header fields (<xref target="RFC2231" format="default" pageno="false"/>), which, as opposed to HTTP messages, do need to be sent over non-binary transports.  This document specifies an encoding suitable for use in HTTP header fields that is compatible with a simplified profile of the encoding defined in RFC 2231.  It can be applied to any HTTP header field that uses the common "parameter" ("name=value") syntax.  </t>
+      <t>This document obsoletes <xref target="RFC5987" format="default" pageno="false"/> and moves it to "Historic" status; the changes are summarized in <xref target="changes.from.rfc5987" format="default" pageno="false"/>.  </t>
+      <t>
+        <list>
+          <t>Note: In the remainder of this document, RFC 2231 is only referenced for the purpose of explaining the choice of features that were adopted; therefore, they are purely informative.  </t>
+        </list>
+      </t>
+      <t>
+        <list>
+          <t>Note: This encoding does not apply to message payloads transmitted over HTTP, such as when using the media type "multipart/form-data" (<xref target="RFC7578" format="default" pageno="false"/>).  </t>
+        </list>
+      </t>
+    </section>
+    <section title="Notational Conventions" numbered="true" toc="default">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119" format="default" pageno="false"/> <xref target="RFC8174" format="default" pageno="false"/> when, and only when, they appear in all capitals, as shown here.  </t>
+      <t>This specification uses uses the ABNF notation defined in <xref target="RFC5234" format="default" pageno="false"/>. The following core rules are included by reference, as defined in <xref target="RFC5234" format="default" pageno="false"/>, Appendix B.1: ALPHA (letters), DIGIT (decimal 0-9), HEXDIG (hexadecimal 0-9/A-F/a-f), and LWSP (linear whitespace).  </t>
+      <t>This specification uses terminology defined in <xref target="RFC6365" format="default" pageno="false"/>, namely: "character encoding scheme" (abbreviated to "character encoding" below), "charset", and "coded character set".  </t>
+      <t>Note that this differs from RFC 2231, which uses the term "character set" for "character encoding scheme".  </t>
+    </section>
+    <section title="Comparison to RFC 2231 and Definition of the Encoding" numbered="true" toc="default">
+      <t>RFC 2231 defines several extensions to MIME. The sections below discuss if and how they apply to HTTP header fields.  </t>
+      <t>In short: <list style="symbols"><t>Parameter continuations aren't needed (<xref target="parameter.continuations" format="default" pageno="false"/>),</t><t>Character encoding and language information are useful, therefore a simple subset is specified (<xref target="character.set.and.language.information" format="default" pageno="false"/>), and</t><t>Language specifications in encoded words aren't needed (<xref target="language.specification.in.encoded.words" format="default" pageno="false"/>).</t></list> </t>
+      <section anchor="parameter.continuations" title="Parameter Continuations" numbered="true" toc="default">
+        <t>Section 3 of <xref target="RFC2231" format="default" pageno="false"/> defines a mechanism that deals with the length limitations that apply to MIME headers. These limitations do not apply to HTTP (<xref target="RFC7231" format="default" pageno="false"/>, Appendix A.6).  </t>
+        <t>Thus, parameter continuations are not part of the encoding defined by this specification.  </t>
+      </section>
+      <section anchor="character.set.and.language.information" title="Parameter Value Character Encoding and Language Information" numbered="true" toc="default">
+        <t>Section 4 of <xref target="RFC2231" format="default" pageno="false"/> specifies how to embed language information into parameter values, and also how to encode non-ASCII characters, dealing with restrictions both in MIME and HTTP header field parameters.  </t>
+        <t>However, RFC 2231 does not specify a mandatory-to-implement character encoding, making it hard for senders to decide which encoding to use.  Thus, recipients implementing this specification MUST support the "UTF-8" character encoding <xref target="RFC3629" format="default" pageno="false"/>.  </t>
+        <t>Furthermore, RFC 2231 allows the character encoding information to be left out.  The encoding defined by this specification does not allow that.  </t>
+        <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+          <artwork type="xml" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+  entityID="https://service.example.com/entity">
+  <md:Extensions>
+    <mdattr:EntityAttributes
+      xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute">
+      <Attribute xmlns="urn:oasis:names:tc:SAML:2.0:assertion"
+        NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+        Name="http://macedir.org/entity-category">
+        <AttributeValue
+          >http://example.org/category/dog</AttributeValue>
+        <AttributeValue>urn:oid:1.3.6.1.4.1.21829</AttributeValue>
+      </Attribute>
+    </mdattr:EntityAttributes>
+  </md:Extensions>
+  ...
+</md:EntityDescriptor>]]></artwork>
+        </figure>
+        <section anchor="definition" title="Definition" numbered="true" toc="default">
+          <t>The presence of extended parameter values is usually indicated by a parameter name ending in an asterisk character. Note, however, that this is just a convention, and that it needs to be explicitly specified in the definition of the header field using this extension (see <xref target="usage.guidelines" format="default" pageno="false"/>).  </t>
+          <t>The ABNF for extended parameter values is specified below: <!-- [rfced] Is there any IANA action required regarding the following:
+
+Original:
+                   ; as <mime-charset> in Section 2.3 of [RFC2978]
+                   ; except that the single quote is not included
+                   ; SHOULD be registered in the IANA charset registry
+-->
+</t>
+          <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+            <artwork type="abnf" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[
+  ext-value     = charset  "'" [ language ] "'" value-chars
+                ; like RFC 2231's <extended-initial-value>
+                ; (see [RFC2231], Section 7)
+
+  charset       = "UTF-8" / mime-charset
+
+  mime-charset  = 1*mime-charsetc
+  mime-charsetc = ALPHA / DIGIT
+                / "!" / "#" / "$" / "%" / "&"
+                / "+" / "-" / "^" / "_" / "`"
+                / "{" / "}" / "~"
+                ; as <mime-charset> in Section 2.3 of [RFC2978]
+                ; except that the single quote is not included
+                ; SHOULD be registered in the IANA charset registry
+
+  language      = <Language-Tag, see [RFC5646], Section 2.1>
+
+  value-chars   = *( pct-encoded / attr-char )
+
+  pct-encoded   = "%" HEXDIG HEXDIG
+                ; see [RFC3986], Section 2.1
+
+  attr-char     = ALPHA / DIGIT
+                / "!" / "#" / "$" / "&" / "+" / "-" / "."
+		 / "^" / "_" / "`" / "|" / "~"
+		 ; token except ( "*" / "'" / "%" )
+ ]]></artwork>
+          </figure>
+          <t>The value part of an extended parameter (ext-value) is a token that consists of three parts: </t>
+          <t>
+            <list style="numbers">
+              <t>the REQUIRED character encoding name (charset),</t>
+              <t>the OPTIONAL language information (language), and</t>
+              <t>a character sequence representing the actual value (value-chars), separated by single quote characters.</t>
+            </list>
+          </t>
+          <t>Note that both character encoding names and language tags are restricted to the US-ASCII coded character set and are matched case-insensitively (see Section 2.3 of <xref target="RFC2978" format="default" pageno="false"/> and Section 2.1.1 of <xref target="RFC5646" format="default" pageno="false"/>).  </t>
+          <t>Inside the value part, characters not contained in attr-char are encoded into an octet sequence using the specified character encoding. That octet sequence is then percent-encoded as specified in Section 2.1 of <xref target="RFC3986" format="default" pageno="false"/>.  </t>
+          <t>Producers MUST use the "UTF-8" (<xref target="RFC3629" format="default" pageno="false"/>) character encoding.  Extension character encodings (mime-charset) are reserved for future use.  </t>
+          <t>
+            <list>
+              <t>Note: recipients should be prepared to handle encoding errors, such as malformed or incomplete percent escape sequences, or non-decodable octet sequences, in a robust manner. This specification does not mandate any specific behavior, for instance, the following strategies are all acceptable: <list style="symbols"><t>ignoring the parameter,</t><t>stripping a non-decodable octet sequence, and </t><t>substituting a non-decodable octet sequence by a replacement character, such as the Unicode character U+FFFD (Replacement Character).</t></list> </t>
+            </list>
+          </t>
+        </section>
+        <section title="Historical Notes" numbered="true" toc="default">
+          <t>The RFC 7230 token production (<xref target="RFC7230" format="default" pageno="false"/>, Section 3.2.6) differs from the production used in RFC 2231 (imported from Section 5.1 of <xref target="RFC2045" format="default" pageno="false"/>) in that curly braces (i.e., "{" and "}") are excluded. Thus, these two characters are excluded from the attr-char production as well.  </t>
+          <t>The &lt;mime-charset&gt; ABNF defined here differs from the one in Section 2.3 of <xref target="RFC2978" format="default" pageno="false"/> in that it does not allow the single quote character (see also RFC Errata ID 1912 <xref target="Err1912" format="default" pageno="false"/>). In practice, no character encoding names using that character have been registered at the time of this writing.  </t>
+          <t>For backwards compatibility with RFC 2231, the encoding defined by this specification deviates from common parameter syntax in that the quoted-string notation is not allowed. Implementations using generic parser components might not be able to detect the use of quoted-string notation and thus might accept that format, although invalid, as well.  </t>
+          <t><xref target="RFC5987" format="default" pageno="false"/> did require support for ISO-8859-1 (<xref target="ISO-8859-1" format="default" pageno="false"/>), too; for compatibility with legacy code, recipients are encouraged to support this encoding as well.  </t>
+        </section>
+        <section anchor="examples" title="Examples" numbered="true" toc="default">
+          <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+            <preamble>Non-extended notation, using "token": </preamble>
+            <artwork type="example" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[
+   foo: bar; title=Economy
+ ]]></artwork>
+          </figure>
+          <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+            <preamble>Non-extended notation, using "quoted-string": </preamble>
+            <artwork type="example" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[
+   foo: bar; title="US-$ rates"
+ ]]></artwork>
+          </figure>
+          <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+            <preamble>Extended notation, using the Unicode character U+00A3 ("£", POUND SIGN): </preamble>
+            <artwork type="example" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[
+   foo: bar; title*=utf-8'en'%C2%A3%20rates
+ ]]></artwork>
+            <postamble>Note: The Unicode pound sign character U+00A3 was encoded into the octet sequence C2 A3 using the UTF-8 character encoding, and then percent-encoded. Also, note that the space character was encoded as %20, as it is not contained in attr-char.  </postamble>
+          </figure>
+          <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+            <preamble>Extended notation, using the Unicode characters U+00A3 ("£", POUND SIGN) and U+20AC ("€", EURO SIGN): </preamble>
+            <artwork type="example" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[
+   foo: bar; title*=UTF-8''%c2%a3%20and%20%e2%82%ac%20rates
+ ]]></artwork>
+            <postamble>Note: The Unicode pound sign character U+00A3 was encoded into the octet sequence C2 A3 using the UTF-8 character encoding, and then percent-encoded. Likewise, the Unicode euro sign character U+20AC was encoded into the octet sequence E2 82 AC, and then percent-encoded. Also note that HEXDIG allows both lowercase and uppercase characters, so recipients must understand both, and that the language information is optional, while the character encoding is not.  </postamble>
+          </figure>
+          <t>test section: <list><t>Czech: Č, č, Ď, ď, Ě, ě, Ň, ň, Ř, ř, Š, š, Ť, ť, Ů, ů, Ž, ž</t><t>French: Œ, œ, and the very rare Ÿ the very rare Ÿ</t><t>Guarani: Ẽ, ẽ, Ĩ, ĩ, Ũ, ũ, Ỹ, ỹ, G̃, g̃ g̃ </t><t>Hungarian: Ő, ő, Ű, ű</t><t>Māori: Ā, ā, Ē, ē, Ī, ī, Ō, ō, Ū, ū</t><t>Romanian: Ă, ă, Ș, ș, Ț, ț and older Ţ, ţ with cedilla</t><t>Japanese example:<list><t>UNIX での日本語文字コードを扱うために使用されている従来の EUC は次のような ものでした。 This means "The conventional EUC encoding used to handle Japanese character codes on Unix was as follows." </t></list></t><t>Chinese:<list><t>simplified Chinese: 汉语;</t><t>traditional Chinese: 漢語;</t><t>Pinyin: Hànyǔ;</t><t>simplified Chinese: 华语;</t><t>traditional Chinese: 華語;</t><t>Chinese: 中文;</t></list></t><t>Greek: Ή Έ Ό Ώ ξ ώ ϴ</t><t>Arabic: ص ط ٸ ڛ ݵ</t><t>Thai: ๓ แ ใ ๗ (๎ THAI CHARACTER YAMAKKAN (U+0E4E)??) (็ THAI CHARACTER MAITAIKHU (U+0E47)</t><t>Tibetan: couldn't copy and paste these characters.  Examples of tested characters (perhaps had trouble with just subjoined letters??): <list><t>ྱྱྱTIBETAN SUBJOINED LETTER YA (U+0FB1)</t><t>ླTIBETAN SUBJOINED LETTER LA (U+0FB3)</t><t>ྞTIBETAN SUBJOINED LETTER NNA (U+0F9E)</t><t>࿇ TIBETAN SYMBOL RDO RJE RGYA GRAM (U+0FC7) -- ok</t><t>࿐    TIBETAN MARK BSKA- SHOG GI MGO RGYAN (U+0FD0) -- ok</t></list></t><t>Hangul: ᄵ ᅒ ᆂᆂᇀ (couldn't get all chars: HANGUL JUNGSEONG O-O (U+1182), ᆃ HANGUL JUNGSEONG O-U (U+1183), ᆜHANGUL JUNGSEONG I-EU (U+119C)), HANGUL JONGSEONG THIEUTH (U+11C0)</t><t>Symbols: œ ™ ¡</t></list></t>
+        </section>
+      </section>
+      <section anchor="language.specification.in.encoded.words" title="Language Specification in Encoded Words" numbered="true" toc="default">
+        <t>Section 5 of <xref target="RFC2231" format="default" pageno="false"/> extends the encoding defined in <xref target="RFC2047" format="default" pageno="false"/> to also support language specification in encoded words.  RFC 2616, the now-obsolete HTTP/1.1 specification, did refer to RFC 2047 (<xref target="RFC2616" format="default" pageno="false"/>, Section 2.2). However, it wasn't clear to which header field it applied. Consequently, the current revision of the HTTP/1.1 specification has deprecated use of the encoding forms defined in RFC 2047 (see Section 3.2.4 of <xref target="RFC7230" format="default" pageno="false"/>).  </t>
+        <t>Thus, this specification does not include this feature.  </t>
+      </section>
+    </section>
+    <section anchor="usage.guidelines" title="Guidelines for Usage in HTTP Header Field Definitions" numbered="true" toc="default">
+      <t>Specifications of HTTP header fields that use the extensions defined in <xref target="character.set.and.language.information" format="default" pageno="false"/> ought to clearly state that. A simple way to achieve this is to normatively reference this specification and to include the <xref target="definition" format="none" pageno="false">ext-value</xref> production into the ABNF for specific header field parameters.  </t>
+      <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+        <preamble>For instance:</preamble>
+        <artwork type="example" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[
+   foo         = token ";" LWSP title-param
+   title-param = "title" LWSP "=" LWSP value
+	       / "title*" LWSP "=" LWSP ext-value
+   ext-value   = <see RFC 8187, Section 3.2>
+ ]]></artwork>
+      </figure>
+      <t>
+        <list>
+          <t>Note: The parameter value continuation feature defined in Section 3 of <xref target="RFC2231" format="default" pageno="false"/> makes it impossible to have multiple instances of extended parameters with identical names, as the processing of continuations would become ambiguous. Thus, specifications using this extension are advised to disallow this case for compatibility with RFC 2231.  </t>
+        </list>
+      </t>
+      <t>
+        <list>
+          <t>Note: This specification does not automatically assign a new interpretation to parameter names ending in an asterisk. As pointed out above, it's up to the specification for the non-extended parameter to "opt in" to the syntax defined here. That being said, some existing implementations are known to automatically switch to using this notation when a parameter name ends with an asterisk; thus, using parameter names ending in an asterisk for something else is likely to cause interoperability problems.  </t>
+        </list>
+      </t>
+      <section anchor="when.to.use.the.extension" title="When to Use the Extension" numbered="true" toc="default">
+        <t>Section 4.2 of <xref target="RFC2277" format="default" pageno="false"/> requires that protocol elements containing human-readable text be able to carry language information. Thus, the <xref target="definition" format="none" pageno="false">ext-value</xref> production ought to always be used when the parameter value is of a textual nature and its language is known.  </t>
+        <t>Furthermore, the extension ought to also be used whenever the parameter value needs to carry characters not present in the US-ASCII-coded character set (<xref target="RFC0020" format="default" pageno="false"/>); note that it would be unacceptable to define a new parameter that would be restricted to a subset of the Unicode character set.  </t>
+      </section>
+      <section title="Error Handling" numbered="true" toc="default">
+        <t>Header field specifications need to define whether multiple instances of parameters with identical names are allowed, and how they should be processed. This specification suggests that a parameter using the extended syntax takes precedence. This would allow producers to use both formats without breaking recipients that do not understand the extended syntax yet.  </t>
+        <figure title="" suppress-title="false" align="left" alt="" width="" height="">
+          <preamble>Example:</preamble>
+          <artwork type="example" xml:space="preserve" name="" align="left" alt="" width="" height=""><![CDATA[
+   foo: bar; title="EURO exchange rates";
+	     title*=utf-8''%e2%82%ac%20exchange%20rates
+ ]]></artwork>
+          <postamble>In this case, the sender provides an ASCII version of the title for legacy recipients, but also includes an internationalized version for recipients understanding this specification -- the latter obviously ought to prefer the new syntax over the old one.</postamble>
+        </figure>
+      </section>
+    </section>
+    <section anchor="security.considerations" title="Security Considerations" numbered="true" toc="default">
+      <t>The format described in this document makes it possible to transport non-ASCII characters, and thus enables character "spoofing" scenarios in which a displayed value appears to be something other than it is.  </t>
+      <t>Furthermore, there are known attack scenarios related to decoding UTF-8.  </t>
+      <t>See Section 10 of <xref target="RFC3629" format="default" pageno="false"/> for more information on both topics.  </t>
+      <t>In addition, the extension specified in this document makes it possible to transport multiple language variants for a single parameter, and such use might allow spoofing attacks where different language versions of the same parameter are not equivalent.  <!-- [rfced] Is "useful" the correct word here?  Does "successful" or
+"effective" work better here? 
+
+Original:
+   Whether
+   this attack is useful as an attack depends on the parameter
+   specified.
+
+-->
+   Whether this attack is useful as an attack depends on the parameter
+   specified.
+ </t>
+    </section>
+    <section anchor="iana.considerations" title="IANA Considerations" numbered="true" toc="default">
+      <t>This document does not require any IANA actions.  </t>
+    </section>
+  </middle>
+  <back>
+    <!-- RFC references updated with entries from citation library -->
+    <references title="Normative References">
+      <reference anchor="RFC0020" target="http://www.rfc-editor.org/info/rfc20" quote-title="true">
+        <front>
+          <title>ASCII format for network interchange</title>
+          <author initials="V.G." surname="Cerf" fullname="V.G. Cerf">
+            <organization/>
+          </author>
+          <date year="1969" month="October"/>
+        </front>
+        <seriesInfo name="STD" value="80"/>
+        <seriesInfo name="RFC" value="20"/>
+        <seriesInfo name="DOI" value="10.17487/RFC0020"/>
+      </reference>
+      <reference anchor="RFC2119" target="http://www.rfc-editor.org/info/rfc2119" quote-title="true">
+        <front>
+          <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+          <author initials="S." surname="Bradner" fullname="S. Bradner">
+            <organization/>
+          </author>
+          <date year="1997" month="March"/>
+        </front>
+        <seriesInfo name="BCP" value="14"/>
+        <seriesInfo name="RFC" value="2119"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2119"/>
+      </reference>
+      <reference anchor="RFC2978" target="http://www.rfc-editor.org/info/rfc2978" quote-title="true">
+        <front>
+          <title>IANA Charset Registration Procedures</title>
+          <author initials="N." surname="Freed" fullname="N. Freed">
+            <organization/>
+          </author>
+          <author initials="J." surname="Postel" fullname="J. Postel">
+            <organization/>
+          </author>
+          <date year="2000" month="October"/>
+        </front>
+        <seriesInfo name="BCP" value="19"/>
+        <seriesInfo name="RFC" value="2978"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2978"/>
+      </reference>
+      <reference anchor="RFC3629" target="http://www.rfc-editor.org/info/rfc3629" quote-title="true">
+        <front>
+          <title>UTF-8, a transformation format of ISO 10646</title>
+          <author initials="F." surname="Yergeau" fullname="F. Yergeau">
+            <organization/>
+          </author>
+          <date year="2003" month="November"/>
+        </front>
+        <seriesInfo name="STD" value="63"/>
+        <seriesInfo name="RFC" value="3629"/>
+        <seriesInfo name="DOI" value="10.17487/RFC3629"/>
+      </reference>
+      <reference anchor="RFC3986" target="http://www.rfc-editor.org/info/rfc3986" quote-title="true">
+        <front>
+          <title>Uniform Resource Identifier (URI): Generic Syntax</title>
+          <author initials="T." surname="Berners-Lee" fullname="T. Berners-Lee">
+            <organization/>
+          </author>
+          <author initials="R." surname="Fielding" fullname="R. Fielding">
+            <organization/>
+          </author>
+          <author initials="L." surname="Masinter" fullname="L. Masinter">
+            <organization/>
+          </author>
+          <date year="2005" month="January"/>
+        </front>
+        <seriesInfo name="STD" value="66"/>
+        <seriesInfo name="RFC" value="3986"/>
+        <seriesInfo name="DOI" value="10.17487/RFC3986"/>
+      </reference>
+      <reference anchor="RFC5646" target="http://www.rfc-editor.org/info/rfc5646" quote-title="true">
+        <front>
+          <title>Tags for Identifying Languages</title>
+          <author initials="A." surname="Phillips" fullname="A. Phillips" role="editor">
+            <organization/>
+          </author>
+          <author initials="M." surname="Davis" fullname="M. Davis" role="editor">
+            <organization/>
+          </author>
+          <date year="2009" month="September"/>
+        </front>
+        <seriesInfo name="BCP" value="47"/>
+        <seriesInfo name="RFC" value="5646"/>
+        <seriesInfo name="DOI" value="10.17487/RFC5646"/>
+      </reference>
+      <reference anchor="RFC5234" target="http://www.rfc-editor.org/info/rfc5234" quote-title="true">
+        <front>
+          <title>Augmented BNF for Syntax Specifications: ABNF</title>
+          <author initials="D." surname="Crocker" fullname="D. Crocker" role="editor">
+            <organization/>
+          </author>
+          <author initials="P." surname="Overell" fullname="P. Overell">
+            <organization/>
+          </author>
+          <date year="2008" month="January"/>
+        </front>
+        <seriesInfo name="STD" value="68"/>
+        <seriesInfo name="RFC" value="5234"/>
+        <seriesInfo name="DOI" value="10.17487/RFC5234"/>
+      </reference>
+      <reference anchor="RFC7230" target="http://www.rfc-editor.org/info/rfc7230" quote-title="true">
+        <front>
+          <title>Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
+          <author initials="R." surname="Fielding" fullname="R. Fielding" role="editor">
+            <organization/>
+          </author>
+          <author initials="J." surname="Reschke" fullname="J. Reschke" role="editor">
+            <organization/>
+          </author>
+          <date year="2014" month="June"/>
+          <abstract>
+            <t>The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems.  This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="7230"/>
+        <seriesInfo name="DOI" value="10.17487/RFC7230"/>
+      </reference>
+      <reference anchor="RFC7231" target="http://www.rfc-editor.org/info/rfc7231" quote-title="true">
+        <front>
+          <title>Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
+          <author initials="R." surname="Fielding" fullname="R. Fielding" role="editor">
+            <organization/>
+          </author>
+          <author initials="J." surname="Reschke" fullname="J. Reschke" role="editor">
+            <organization/>
+          </author>
+          <date year="2014" month="June"/>
+          <abstract>
+            <t>The Hypertext Transfer Protocol (HTTP) is a stateless \%application- level protocol for distributed, collaborative, hypertext information systems.  This document defines the semantics of HTTP/1.1 messages, as expressed by request methods, request header fields, response status codes, and response header fields, along with the payload of messages (metadata and body content) and mechanisms for content negotiation.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="7231"/>
+        <seriesInfo name="DOI" value="10.17487/RFC7231"/>
+      </reference>
+      <reference anchor="RFC8174" target="http://www.rfc-editor.org/info/rfc8174" quote-title="true">
+        <front>
+          <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
+          <author initials="B." surname="Leiba" fullname="B. Leiba">
+            <organization/>
+          </author>
+          <date year="2017" month="May"/>
+          <abstract>
+            <t>RFC 2119 specifies common key words that may be used in protocol  specifications.  This document aims to reduce the ambiguity by clarifying that only UPPERCASE usage of the key words have the  defined special meanings.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="BCP" value="14"/>
+        <seriesInfo name="RFC" value="8174"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8174"/>
+      </reference>
+    </references>
+    <references title="Informative References">
+      <reference anchor="Err1912" target="http://www.rfc-editor.org" quote-title="true">
+        <front>
+          <title>Erratum ID 1912</title>
+          <author>
+            <organization>RFC Errata</organization>
+          </author>
+          <date/>
+        </front>
+        <seriesInfo name="RFC" value="2978"/>
+      </reference>
+      <reference anchor="ISO-8859-1" quote-title="true">
+        <front>
+          <title>Information technology -- 8-bit single-byte coded graphic character sets -- Part 1: Latin alphabet No. 1</title>
+          <author>
+            <organization>International Organization for Standardization</organization>
+          </author>
+          <date year="1998"/>
+        </front>
+        <seriesInfo name="ISO/IEC" value="8859-1:1998"/>
+      </reference>
+      <reference anchor="RFC2045" target="http://www.rfc-editor.org/info/rfc2045" quote-title="true">
+        <front>
+          <title>Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</title>
+          <author initials="N." surname="Freed" fullname="N. Freed">
+            <organization/>
+          </author>
+          <author initials="N." surname="Borenstein" fullname="N. Borenstein">
+            <organization/>
+          </author>
+          <date year="1996" month="November"/>
+          <abstract>
+            <t>This initial document specifies the various headers used to describe the structure of MIME messages.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="2045"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2045"/>
+      </reference>
+      <reference anchor="RFC2047" target="http://www.rfc-editor.org/info/rfc2047" quote-title="true">
+        <front>
+          <title>MIME (Multipurpose Internet Mail Extensions) Part Three: Message Header Extensions for Non-ASCII Text</title>
+          <author initials="K." surname="Moore" fullname="K. Moore">
+            <organization/>
+          </author>
+          <date year="1996" month="November"/>
+          <abstract>
+            <t>This particular document is the third document in the series.  It describes extensions to RFC 822 to allow non-US-ASCII text data in Internet mail header fields.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="2047"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2047"/>
+      </reference>
+      <reference anchor="RFC2231" target="http://www.rfc-editor.org/info/rfc2231" quote-title="true">
+        <front>
+          <title>MIME Parameter Value and Encoded Word Extensions: Character Sets, Languages, and Continuations</title>
+          <author initials="N." surname="Freed" fullname="N. Freed">
+            <organization/>
+          </author>
+          <author initials="K." surname="Moore" fullname="K. Moore">
+            <organization/>
+          </author>
+          <date year="1997" month="November"/>
+          <abstract>
+            <t>This memo defines extensions to the RFC 2045 media type and RFC 2183 disposition parameter value mechanisms.  This memo also defines an extension to the encoded words defined in RFC 2047 to allow the specification of the language to be used for display as well as the character set.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="2231"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2231"/>
+      </reference>
+      <reference anchor="RFC2277" target="http://www.rfc-editor.org/info/rfc2277" quote-title="true">
+        <front>
+          <title>IETF Policy on Character Sets and Languages</title>
+          <author initials="H." surname="Alvestrand" fullname="H. Alvestrand">
+            <organization/>
+          </author>
+          <date year="1998" month="January"/>
+          <abstract>
+            <t>This document is the current policies being applied by the Internet Engineering Steering Group (IESG) towards the standardization efforts in the Internet Engineering Task Force (IETF) in order to help Internet protocols fulfill these requirements.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="BCP" value="18"/>
+        <seriesInfo name="RFC" value="2277"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2277"/>
+      </reference>
+      <reference anchor="RFC2616" target="http://www.rfc-editor.org/info/rfc2616" quote-title="true">
+        <front>
+          <title>Hypertext Transfer Protocol -- HTTP/1.1</title>
+          <author initials="R." surname="Fielding" fullname="R. Fielding">
+            <organization/>
+          </author>
+          <author initials="J." surname="Gettys" fullname="J. Gettys">
+            <organization/>
+          </author>
+          <author initials="J." surname="Mogul" fullname="J. Mogul">
+            <organization/>
+          </author>
+          <author initials="H." surname="Frystyk" fullname="H. Frystyk">
+            <organization/>
+          </author>
+          <author initials="L." surname="Masinter" fullname="L. Masinter">
+            <organization/>
+          </author>
+          <author initials="P." surname="Leach" fullname="P. Leach">
+            <organization/>
+          </author>
+          <author initials="T." surname="Berners-Lee" fullname="T. Berners-Lee">
+            <organization/>
+          </author>
+          <date year="1999" month="June"/>
+          <abstract>
+            <t>HTTP has been in use by the World-Wide Web global information initiative since 1990. This specification defines the protocol referred to as "HTTP/1.1", and is an update to RFC 2068.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="2616"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2616"/>
+      </reference>
+      <reference anchor="RFC5987" target="http://www.rfc-editor.org/info/rfc5987" quote-title="true">
+        <front>
+          <title>Character Set and Language Encoding for Hypertext Transfer Protocol (HTTP) Header Field Parameters</title>
+          <author initials="J." surname="Reschke" fullname="J. Reschke">
+            <organization/>
+          </author>
+          <date year="2010" month="August"/>
+          <abstract>
+            <t>By default, message header field parameters in Hypertext Transfer Protocol (HTTP) messages cannot carry characters outside the ISO- 8859-1 character set.  RFC 2231 defines an encoding mechanism for use in Multipurpose Internet Mail Extensions (MIME) headers.  This document specifies an encoding suitable for use in HTTP header fields that is compatible with a profile of the encoding defined in RFC 2231.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="5987"/>
+        <seriesInfo name="DOI" value="10.17487/RFC5987"/>
+      </reference>
+      <reference anchor="RFC5988" target="http://www.rfc-editor.org/info/rfc5988" quote-title="true">
+        <front>
+          <title>Web Linking</title>
+          <author initials="M." surname="Nottingham" fullname="M. Nottingham">
+            <organization/>
+          </author>
+          <date year="2010" month="October"/>
+          <abstract>
+            <t>This document specifies relation types for Web links, and defines a registry for them.  It also defines the use of such links in HTTP headers with the Link header field.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="5988"/>
+        <seriesInfo name="DOI" value="10.17487/RFC5988"/>
+      </reference>
+      <reference anchor="RFC6266" target="http://www.rfc-editor.org/info/rfc6266" quote-title="true">
+        <front>
+          <title>Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)</title>
+          <author initials="J." surname="Reschke" fullname="J. Reschke">
+            <organization/>
+          </author>
+          <date year="2011" month="June"/>
+          <abstract>
+            <t>RFC 2616 defines the Content-Disposition response header field, but points out that it is not part of the HTTP/1.1 Standard.  This specification takes over the definition and registration of Content-Disposition, as used in HTTP, and clarifies internationalization aspects.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="6266"/>
+        <seriesInfo name="DOI" value="10.17487/RFC6266"/>
+      </reference>
+      <reference anchor="RFC6365" target="http://www.rfc-editor.org/info/rfc6365" quote-title="true">
+        <front>
+          <title>Terminology Used in Internationalization in the IETF</title>
+          <author initials="P." surname="Hoffman" fullname="P. Hoffman">
+            <organization/>
+          </author>
+          <author initials="J." surname="Klensin" fullname="J. Klensin">
+            <organization/>
+          </author>
+          <date year="2011" month="September"/>
+          <abstract>
+            <t>This document provides a list of terms used in the IETF when discussing internationalization.  The purpose is to help frame discussions of internationalization in the various areas of the IETF and to help introduce the main concepts to IETF participants.   This memo documents an Internet Best Current Practice.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="BCP" value="166"/>
+        <seriesInfo name="RFC" value="6365"/>
+        <seriesInfo name="DOI" value="10.17487/RFC6365"/>
+      </reference>
+      <reference anchor="RFC7578" target="http://www.rfc-editor.org/info/rfc7578" quote-title="true">
+        <front>
+          <title>Returning Values from Forms: multipart/form-data</title>
+          <author initials="L." surname="Masinter" fullname="L. Masinter">
+            <organization/>
+          </author>
+          <date year="2015" month="July"/>
+          <abstract>
+            <t>This specification defines the multipart/form-data media type, which can be used by a wide variety of applications and transported by a wide variety of protocols as a way of returning a set of values as the result of a user filling out a form.  This document obsoletes RFC 2388.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="7578"/>
+        <seriesInfo name="DOI" value="10.17487/RFC7578"/>
+      </reference>
+      <reference anchor="RFC7616" target="http://www.rfc-editor.org/info/rfc7616" quote-title="true">
+        <front>
+          <title>HTTP Digest Access Authentication</title>
+          <author initials="R." surname="Shekh-Yusef" fullname="R. Shekh-Yusef" role="editor">
+            <organization/>
+          </author>
+          <author initials="D." surname="Ahrens" fullname="D. Ahrens">
+            <organization/>
+          </author>
+          <author initials="S." surname="Bremer" fullname="S. Bremer">
+            <organization/>
+          </author>
+          <date year="2015" month="September"/>
+          <abstract>
+            <t>The Hypertext Transfer Protocol (HTTP) provides a simple challenge- response authentication mechanism that may be used by a server to challenge a client request and by a client to provide authentication information.  This document defines the HTTP Digest Authentication scheme that can be used with the HTTP authentication mechanism.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="7616"/>
+        <seriesInfo name="DOI" value="10.17487/RFC7616"/>
+      </reference>
+      <reference anchor="RFC8053" target="http://www.rfc-editor.org/info/rfc8053" quote-title="true">
+        <front>
+          <title>HTTP Authentication Extensions for Interactive Clients</title>
+          <author initials="Y." surname="Oiwa" fullname="Y. Oiwa">
+            <organization/>
+          </author>
+          <author initials="H." surname="Watanabe" fullname="H. Watanabe">
+            <organization/>
+          </author>
+          <author initials="H." surname="Takagi" fullname="H. Takagi">
+            <organization/>
+          </author>
+          <author initials="K." surname="Maeda" fullname="K. Maeda">
+            <organization/>
+          </author>
+          <author initials="T." surname="Hayashi" fullname="T. Hayashi">
+            <organization/>
+          </author>
+          <author initials="Y." surname="Ioku" fullname="Y. Ioku">
+            <organization/>
+          </author>
+          <date year="2017" month="January"/>
+          <abstract>
+            <t>This document specifies extensions for the HTTP authentication framework for interactive clients.  Currently, fundamental features of HTTP-level authentication are insufficient for complex requirements of various Web-based applications.  This forces these applications to implement their own authentication frameworks by means such as HTML forms, which becomes one of the hurdles against introducing secure authentication mechanisms handled jointly by servers and user agents.  The extended framework fills gaps between Web application requirements and HTTP authentication provisions to solve the above problems, while maintaining compatibility with existing Web and non-Web uses of HTTP authentication.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="8053"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8053"/>
+      </reference>
+      <reference anchor="XMLHttpRequest" target="https://xhr.spec.whatwg.org/" quote-title="true">
+        <front>
+          <title>XMLHttpRequest</title>
+          <author>
+            <organization>WhatWG</organization>
+          </author>
+          <date/>
+        </front>
+      </reference>
+    </references>
+    <section anchor="changes.from.rfc5987" title="Changes from RFC 5987" numbered="true" toc="default">
+      <t>This section summarizes the changes compared to <xref target="RFC5987" format="default" pageno="false"/>: </t>
+      <t>
+        <list style="symbols">
+          <t>The document title was changed to "Indicating Character Encoding and Language for HTTP Header Field Parameters".  </t>
+          <t>The introduction was rewritten to better explain the issues around non-ASCII characters in field values.  </t>
+          <t>The requirement to support the "ISO-8859-1" encoding was removed.  </t>
+          <t>This document does not attempt to re-define a generic "parameter" ABNF (it turned out that there really isn't a generic definition of parameters in HTTP; for instance, there are subtle differences with respect to whitespace handling).  </t>
+          <t>A note about defects in error handling in current implementations was removed, as it was no longer accurate.  </t>
+        </list>
+      </t>
+    </section>
+    <section anchor="implementation.report" title="Implementation Report" numbered="true" toc="default">
+      <t>The encoding defined in this document is currently used in four different HTTP header fields: </t>
+      <t>
+        <list style="symbols">
+          <t>"Authentication-Control", defined in <xref target="RFC8053" format="default" pageno="false"/>, </t>
+          <t>"Authorization" (as used in HTTP Digest Authentication, defined in <xref target="RFC7616" format="default" pageno="false"/>), </t>
+          <t>"Content-Disposition", defined in <xref target="RFC6266" format="default" pageno="false"/>, and </t>
+          <t>"Link", defined in <xref target="RFC5988" format="default" pageno="false"/>.  </t>
+        </list>
+      </t>
+      <t>As the encoding is a profile/clarification of the one defined in <xref target="RFC2231" format="default" pageno="false"/> in 1997, many user agents already supported it for use in "Content-Disposition" when <xref target="RFC5987" format="default" pageno="false"/> got published.  </t>
+      <t>Since the publication of <xref target="RFC5987" format="default" pageno="false"/>, three more popular desktop user agents have added support for this encoding; see <eref target="http://purl.org/NET/http/content-disposition-tests#encoding-2231-char"/> for details. At this time, the current versions of all major desktop user agents support it.  </t>
+      <t>Note that the implementation in Internet Explorer 9 does not support the ISO-8859-1 character encoding; this document revision acknowledges that UTF-8 is sufficient for expressing all code points and removes the requirement to support ISO-8859-1.  </t>
+      <t>The "Link" header field, on the other hand, was more recently specified in <xref target="RFC5988" format="default" pageno="false"/>. At the time of this writing, no User Agent except Firefox supported the "title*" parameter (starting with release 15).  </t>
+      <t>Section 3.4 of <xref target="RFC7616" format="default" pageno="false"/> defines the "username*" parameter for use in HTTP Digest Authentication. At the time of writing, no User Agent implemented this extension.  </t>
+    </section>
+    <section title="Acknowledgements" numbered="no" toc="default">
+      <t>Thanks to Martin Dürst and Frank Ellermann for help figuring out ABNF details, to Graham Klyne and Alexey Melnikov for general review, to Chris Newman for pointing out an RFC 2231 incompatibility, and to Benjamin Carlyle, Roar Lauritzsen, Eric Lawrence, and James Manger for implementers feedback.  </t>
+      <t>Furthermore, thanks to the members of the IETF HTTP Working Group for the feedback specific to this update of RFC 5987.  </t>
+    </section>
+  </back>
+</rfc>

@@ -1,12 +1,39 @@
 import re
 import sys
+import six
+
+if six.PY2:
+    from aenum import Enum
+else:
+    from enum import Enum
 
 Console = sys.stdout
 
 
+class Trace(Enum):
+    STOP = 1
+    DIAG = 2
+    UP = 3
+    LEFT = 4
+
+
+def matrix(left, right):
+    if left == right:
+        if left[0] == ' ':
+            return (0, 1)
+        return (0, 1)
+    if '\n' in left:
+        if '\n' in right:
+            return (1, 4)
+        return (1, -200)
+    elif '\n' in right:
+        return (1, -200)
+    return (1, -100)
+
+
 def ComputeEdits(leftArray, rightArray):
 
-    d = {}
+    trace = {}
     S = len(leftArray)
     T = len(rightArray)
 
@@ -33,74 +60,146 @@ def ComputeEdits(leftArray, rightArray):
             opEnd[3] = T-i + 1
             break
 
-    leftIndex = [i for i in range(rangeStart-1, len(leftArray)-rangeEnd)]
-    rightIndex = [i for i in range(rangeStart-1, len(rightArray)-rangeEnd)]
+    leftIndex = [i for i in range(rangeStart, len(leftArray)-rangeEnd)]
+    rightIndex = [i for i in range(rangeStart, len(rightArray)-rangeEnd)]
+    # leftIndex = [ i for i in range(rangeStart, len(leftArray)-rangeEnd)
+    #               if leftArray[i] != ' ' ]
+    # rightIndex = [ i for i in range(rangeStart, len(rightArray)-rangeEnd)
+    #                if rightArray[i] != ' ' ]
+    leftIndex.insert(0, 0)
+    rightIndex.insert(0, 0)
 
     S = len(leftIndex)
     T = len(rightIndex)
 
-    d[0, 0] = 0
+    gap = 10
+    o = gap   # gap
+    e = 3     # extend
+    maxNegValue = - 655465
+
+    v = {}
+    vDiagonal = 0    # best score in cell
+    f = maxNegValue  # score from diagonal
+    h = maxNegValue  # best score ending with gap from left
+    g = {}           # best score ending with gap from above
+    g[0] = f
+    for i in range(1, T):
+        v[i] = -o - (i-1)*e
+        g[i] = maxNegValue
+
+    lengthOfHorizontalGap = 0
+    lengthOfVerticalGap = {}
+
+    maximumScore = maxNegValue
+
+    trace[0, 0] = Trace.STOP
     for i in range(1, S):
-        d[i, 0] = d[i-1, 0] + (4 if '\n' in leftArray[leftIndex[i]] else 1)
+        trace[i, 0] = Trace.UP
 
-    for j in range(1, T):
-        d[0, j] = d[0, j-1] + (4 if '\n' in rightArray[rightIndex[j]] else 1)
+    for i in range(1, T):
+        trace[0, i] = Trace.LEFT
 
-    for j in range(1, T):
-        for i in range(1, S):
-            left = leftArray[leftIndex[i]]
+    #  Fill in the matrices
+    for i in range(1, S):   # for all rows
+        v[0] = -o - (i - 1) * e
+
+        # Console.write(str(i))
+        # Console.write(": \n")
+        left = leftArray[leftIndex[i]]
+
+        for j in range(1, T):  # for all columns
             right = rightArray[rightIndex[j]]
-            if left == right:
-                d[i, j] = d[i-1, j-1]
-            elif '\n' in left and '\n' in right:
-                d[i, j] = d[i-1, j-1]
-            else:
-                d[i, j] = min(d[i-1, j] + (d[i, 0] - d[i-1, 0]),   # Insert
-                              d[i, j-1] + (d[0, j] - d[0, j-1]),   # Delete
-                              d[i-1, j-1] + d[i, 0] - d[i-1, 0] + \
-                              d[0, j] - d[0, j-1])  # Change = max(Insert + Delete)
 
+            simularityScore = matrix(left, right)
+
+            f = vDiagonal + simularityScore[1]
+
+            # which cell from the left?
+            if h - e >= v[j-1] - o:
+                h -= e
+                lengthOfHorizontalGap += simularityScore[0]
+            else:
+                h = v[j-1] - o
+                lengthOfHorizontalGap = 1
+
+            # which cell from above?
+            if g[j] - e >= v[j] - o:
+                g[j] = g[j] - e
+                lengthOfVerticalGap[j] = lengthOfVerticalGap[j] + simularityScore[0]
+            else:
+                g[j] = v[j] - o
+                lengthOfVerticalGap[j] = 1
+
+            vDiagonal = v[j]
+            v[j] = max(f, g[j], h)  # get best score
+            if v[j] > maximumScore:
+                maximumScore = v[j]
+
+            if v[j] == f:
+                trace[i, j] = Trace.DIAG
+            elif v[j] == g[j]:
+                trace[i, j] = Trace.UP
+                # lengths[l] = lengthOfVerticalGap[j]
+            else:
+                trace[i, j] = Trace.LEFT
+                # lengths[l] = lengthOfHorizontalGap
+
+        # PrintLine(i, T, v, g, lengthOfVerticalGap, trace)
+
+        # Reset
+        h = maxNegValue
+        vDiagonal = 0
+        lengthOfHorizontalGap = 0
+        # Console.write("\n")
+
+    # Console.write("\n")
     # for i in range(S):
     #    Console.write(str(i))
     #    Console.write(": ")
     #    for j in range(T):
-    #        Console.write(str(d[i, j]))
+    #        if trace[i,j] == Trace.LEFT:
+    #            Console.write('L')
+    #        elif trace[i,j] == Trace.UP:
+    #            Console.write('U')
+    #        elif trace[i,j] == Trace.DIAG:
+    #            Console.write('D')
+    #        elif trace[i,j] == Trace.STOP:
+    #            Console.write('S')
+    #        else:
+    #            Console.write('X')
     #        Console.write(" ")
     #    Console.write("\n")
 
     i = S - 1
     j = T - 1
+
     # val = d[i, j]
     ops = []
     leftIndex.append(leftIndex[-1]+1)
     rightIndex.append(rightIndex[-1]+1)
+    ops = []
 
     op = opEnd
 
-    while (i >= 0 and j >= 0):
-        if i == 0:
-            if j == 0:
-                op1 = ['equal', leftIndex[i], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
-                j -= 1
-                i -= 1
-                op1 = ['nop', 0, 0, 0, 0]
-            else:
-                op1 = ['insert', leftIndex[i+1], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
-                j -= 1
-        elif j == 0:
+    stillGoing = True
+    while stillGoing:
+        if trace[i, j] == Trace.UP:
             op1 = ['remove', leftIndex[i], leftIndex[i+1], rightIndex[j+1], rightIndex[j+1]]
             i -= 1
-        else:
-            if d[i, j] == d[i-1, j-1] and d[i-1, j-1] < d[i-1, j] and d[i-1, j-1] < d[i, j-1]:
+        elif trace[i, j] == Trace.LEFT:
+            op1 = ['insert', leftIndex[i+1], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
+            j -= 1
+        elif trace[i, j] == Trace.DIAG:
+            if leftArray[leftIndex[i]] == rightArray[rightIndex[j]]:
                 op1 = ['equal', leftIndex[i], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
-                i -= 1
-                j -= 1
-            elif d[i-1, j] <= d[i, j-1]:
-                op1 = ['remove', leftIndex[i], leftIndex[i+1], rightIndex[j+1], rightIndex[j+1]]
-                i -= 1
             else:
-                op1 = ['insert', leftIndex[i+1], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
-                j -= 1
+                op1 = ['swap', leftIndex[i],  leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
+            i -= 1
+            j -= 1
+        else:
+            stillGoing = False
+            ops.append(op)
+            break
 
         if op1[0] == op[0]:
             op[1] = op1[1]
@@ -123,11 +222,42 @@ def ComputeEdits(leftArray, rightArray):
     return ops
 
 
+def PrintLine(i, T, v, g, lengthOfVerticalGap, trace):
+    Console.write("i={0:3d}".format(i))
+    for j in range(1, T):
+        Console.write("{0:3d} ".format(v[j]))
+    Console.write("\n")
+
+    for j in range(1, T):
+        Console.write("{0:3d} ".format(g[j]))
+    Console.write("\n")
+
+    for j in range(1, T):
+        Console.write("{0:3d} ".format(lengthOfVerticalGap[j]))
+    Console.write("\n")
+
+    for j in range(1, T):
+        if trace[i, j] == Trace.LEFT:
+            ch = 'L'
+        elif trace[i, j] == Trace.UP:
+            ch = 'U'
+        elif trace[i, j] == Trace.DIAG:
+            ch = 'D'
+        elif trace[i, j] == Trace.STOP:
+            ch = 'S'
+        else:
+            ch = ' '
+        Console.write("  {0} ".format(ch))
+    Console.write("\n")
+
+    Console.write("\n")
+
+
 def DoWhiteArray(text):
     result = []
     #  At some point I want to split whitespace with
     #  CR in them to multiple lines
-    for right in re.split(r'([\s\xa0=]+)', text):
+    for right in re.split(r'([\s\xa0=]+)', text, flags=re.UNICODE):
         if len(right) == 0:
             continue
         if right.isspace():
@@ -225,18 +355,34 @@ if __name__ == '__main__':
 
     Console.write("**********************************************\n")
 
+    old = "This document specifies Elliptic Curve constructs using the curve25519"
+    new = "This document specifies elliptic curve constructs using the curve25519"
+    leftArray = DoWhiteArray(old)
+    rightArray = DoWhiteArray(new)
+
+    ops = ComputeEdits(leftArray, rightArray)
+
+    for op in ops:
+        Console.write("%s %2d %2d %2d %2d '%s' '%s'\n" %
+                      (op[0], op[1], op[2], op[3], op[4], ''.join(leftArray[op[1]:op[2]]),
+                       ''.join(rightArray[op[3]:op[4]])))
+
+    Console.write("**********************************************\n")
+
     old = "This document specifies algorithm identifiers and ASN.1 encoding formats for " + \
           "Elliptic Curve constructs using the curve25519 and curve448 curves. <!--\xa0" + \
-          "Remove\xa0ph\n\xa0The\xa0signature\xa0algorithms\xa0covered\xa0are\xa0Ed25519,\xa0" + \
-          "Ed25519ph,\xa0Ed448\xa0and\xa0Ed448ph.\n-->\nThe signature algorithms covered are " + \
-          "Ed25519 and Ed448. The key agreement algorithm covered are X25519 and X448. The " + \
-          "encoding for Public Key, Private Key and EdDSA digital signature structures is provided."
+          "Remove\xa0ph\n\xa0The\xa0signature\xa0algorithms\xa0covered\xa0are\xa0Ed25519," + \
+          "\xa0Ed25519ph,\xa0Ed448\xa0and\xa0Ed448ph.\n-->\nThe signature algorithms covered" + \
+          " are Ed25519 and Ed448. The key agreement algorithm covered are X25519 and X448." + \
+          " The encoding for Public Key, Private Key and EdDSA digital signature structures " + \
+          "is provided."
 
     new = "This document specifies algorithm identifiers and ASN.1 encoding formats for " + \
-          "elliptic curve constructs using the curve25519 and curve448 curves.  The " + \
-          "signature algorithms covered are Ed25519 and Ed448.  The key agreement algorithms " + \
-          "covered are X25519 and X448.  The encoding for public key, private key, and Edwards-" + \
-          "curve Digital Signature Algorithm (EdDSA) structures is provided."
+          "elliptic curve constructs using the curve25519 and curve448 curves.  The signature " + \
+          "algorithms covered are Ed25519 and Ed448.  The key agreement algorithms covered are " + \
+          "X25519 and X448.  The encoding for public key, private key, and Edwards-curve" + \
+          " Digital Signature Algorithm (EdDSA) structures is provided."
+
     leftArray = DoWhiteArray(old)
     rightArray = DoWhiteArray(new)
 

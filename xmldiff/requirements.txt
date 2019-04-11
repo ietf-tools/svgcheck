@@ -3,3 +3,4 @@ requests>=2.5.0
 six
 rfctools_common>=0.5.12
 cffi>=1.0.0
+aenum
