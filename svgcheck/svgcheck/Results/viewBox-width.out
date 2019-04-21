@@ -1,0 +1,2 @@
+Tests/viewBox-width.svg:1: The attribute viewBox is required on the root svg element
+Tests/viewBox-width.svg:2: The attribute 'fill' does not allow the value 'red', replaced with 'black'

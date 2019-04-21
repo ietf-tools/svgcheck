@@ -1,0 +1,3 @@
+Tests/viewBox-both.svg:1: The attribute viewBox is required on the root svg element
+Tests/viewBox-both.svg:1: Trying to put in the attribute with value '0 0 100.0 100.0'
+Tests/viewBox-both.svg:2: The attribute 'fill' does not allow the value 'red', replaced with 'black'

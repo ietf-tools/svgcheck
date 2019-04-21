@@ -19,6 +19,13 @@ trace = True
 bad_namespaces = []
 
 
+def maybefloat(f):
+    try:
+        return float(f)
+    except (ValueError, TypeError):
+        return None
+
+
 def modify_style(node):
     """
     For style properties, we want to pull it apart and then make individual attributes
@@ -213,6 +220,23 @@ def check(el, depth=0):
 
     for attrib in attribs_to_remove:
         del el.attrib[attrib]
+
+    # Need to have a viewBox on the root
+    if (depth == 0):
+        if el.get("viewBox"):
+            pass
+        else:
+            log.warn("The attribute viewBox is required on the root svg element", where=el)
+            svgw = maybefloat(el.get('width'))
+            svgh = maybefloat(el.get('height'))
+            try:
+                if svgw and svgh:
+                    newValue = '0 0 %s %s' % (svgw, svgh)
+                    log.warn("Trying to put in the attribute with value '{0}'".
+                             format(newValue), where=el)
+                    el.set('viewBox', newValue)
+            except ValueError as e:
+                log.error("Error when calculating SVG size: %s" % e, where=el)
 
     els_to_rm = []  # Can't remove them inside the iteration!
     if element in wp.element_children:

@@ -158,6 +158,24 @@ class TestParserMethods(unittest.TestCase):
                       None, None)
 
 
+class TestViewBox(unittest.TestCase):
+    def test_svg_noViewbox(self):
+        """ Tests/viewBox-none.svg """
+        test_svg_file(self, "viewBox-none.svg")
+
+    def test_svg_ViewboxHeight(self):
+        """ Tests/viewBox-height.svg """
+        test_svg_file(self, "viewBox-height.svg")
+
+    def test_svg_ViewboxWidth(self):
+        """ Tests/viewBox-width.svg """
+        test_svg_file(self, "viewBox-width.svg")
+
+    def test_svg_ViewboxBoth(self):
+        """ Tests/viewBox-both.svg """
+        test_svg_file(self, "viewBox-both.svg")
+
+
 def test_rfc_file(tester, fileName):
     """ Run the basic tests for a single input file """
 

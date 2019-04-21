@@ -20,7 +20,7 @@
 	Put in some text followed by a picture.
       </t>
       <artwork type="svg">
-	<svg height="100" width="100" datatype="foobar" xmlns="http://www.w3.org/2000/svg">
+	<svg height="100" width="100" datatype="foobar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100.0 100.0">
 	  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
 	</svg>
       </artwork>
