@@ -1,3 +1,9 @@
+rfclint (0.5.13) distribution(s); urgency=low
+
+	* Clean up so that pyflakes is happy
+
+-- Jim Schaad <ietf@augustcellars.com>  Sat 06 Apr 2019 12:00:00 -0700
+
 rfclint (0.5.11) distribution(s); urgency=low
 
 	* Aspell does not permit numbers to be part of words while Python does.  Change the matching patterns so that numbers are not part of words.

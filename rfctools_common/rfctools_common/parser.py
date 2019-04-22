@@ -564,21 +564,29 @@ class XmlRfcParser:
     def delete_cache(self, path=None):
         self.cachingResolver.delete_cache(path=path)
 
-    def parse(self, remove_comments=True, remove_pis=False, quiet=False, strip_cdata=True):
+    def parse(self, remove_comments=True, remove_pis=False, quiet=False, strip_cdata=True, textIn=None):
         """ Parses the source XML file and returns an XmlRfc instance """
-        if not (self.quiet or quiet):
-            log.write('Parsing file', os.path.normpath(self.source))
+        if textIn is None:
+            if not (self.quiet or quiet):
+                log.write('Parsing file', os.path.normpath(self.source))
 
-        if six.PY2:
-            with open(self.source, "rU") as f:
-                self.text = f.read()
+            if six.PY2:
+                with open(self.source, "rU") as f:
+                    self.text = f.read()
+            else:
+                with open(self.source, "rb", newline=None) as f:
+                    self.text = f.read()
         else:
-            with open(self.source, "rb", newline=None) as f:
-                self.text = f.read()
+            self.text = textIn.encode('utf-8')
+                
 
         # Get an iterating parser object
         file = six.BytesIO(self.text)
-        file.name = os.path.join(os.path.abspath(  os.path.dirname(self.source)), os.path.basename(self.source))
+        if textIn is None:
+            file.name = os.path.join(os.path.abspath(  os.path.dirname(self.source)), os.path.basename(self.source))
+        else:
+            file.name = "stdin"
+
         context = lxml.etree.iterparse(file,
                                       dtd_validation=False,
                                       load_dtd=True,

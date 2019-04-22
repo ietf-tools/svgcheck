@@ -84,13 +84,14 @@ def main():
     if options.clear_cache:
         clear_cache(options.cache)
 
+    sourceText = None
     if len(args) < 1:
-        optionparser.print_help()
-        sys.exit(2)
-
-    source = args[0]
-    if not os.path.exists(source):
-        sys.exit('No such file: ' + source)
+        sourceText = sys.stdin.read()
+        source = os.getcwd() + "/stdin"
+    else:
+        source = args[0]
+        if not os.path.exists(source):
+            sys.exit('No such file: ' + source)
 
     # Setup warnings module
     # rfclint.log.warn_error = options.warn_error and True or False
@@ -105,7 +106,8 @@ def main():
                           no_network=options.no_network,
                           no_xinclude=options.no_xinclude)
     try:
-        xmlrfc = parser.parse(remove_pis=True, remove_comments=False, strip_cdata=False)
+        xmlrfc = parser.parse(remove_pis=True, remove_comments=False,
+                              strip_cdata=False, textIn=sourceText)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + source, e)
         sys.exit(1)
