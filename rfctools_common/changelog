@@ -1,10 +1,10 @@
-rfctools-common (0.5.13) distribution(s); urgency=low
+rfctools-common (0.5.14) distribution(s); urgency=low
 
 	* Merge in some of the XML2RFC changes to these files
 	* Setup to allow for the input coming from stdin
 	* Clean things up so that pyflakes will pass, still has problems with PEP8
 
--- Jim Schaad <ietf@augustcellars.com>  Sat 5 Apr 2019 12:00:00 -0700
+-- Jim Schaad <ietf@augustcellars.com>  Sun 21 Apr 2019 12:00:00 -0700
 
 rfctools-common (0.5.12) distribution(s); urgency=low
 

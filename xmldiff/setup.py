@@ -114,6 +114,12 @@ setup(
     #  'dev':['twine',],
     # ]
 
+    extras_require= {
+        ':python_version == "2.7"': [
+            'aenum',
+        ],
+    },
+
     package_data={
        'xmldiff': ['Templates/*']
        },

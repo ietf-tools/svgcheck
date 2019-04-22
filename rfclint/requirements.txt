@@ -1,6 +1,6 @@
 lxml>=4.1.1
 requests>=2.5.0
 six
-rfctools_common>=0.5.11
+rfctools_common>=0.5.14
 colorama
 appdirs
