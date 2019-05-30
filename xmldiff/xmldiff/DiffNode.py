@@ -46,6 +46,8 @@ PreserveSpace = ['artwork', 'sourcecode']
 nsKeys = {
     "http://www.w3.org/XML/1998/namespace": "xml",
     "http://www.w3.org/2001/XInclude": "xi",
+    "http://www.w3.org/2003/XInclude": "xi",
+    "http://www.w3.org/2003/Xinclude": "xi",
     "http://www.w3.org/2000/svg": "svg"
 }
 nsKeysIndex = 0
@@ -122,6 +124,7 @@ def BuildDiffTree(xmlNode, options):
 
     # Now process the root element itself
     root.children.append(root.createNode(xmlNode.getroot(), root))
+    root.children[-1].root = True
 
     # Now process any elements after to root element
 
@@ -253,6 +256,7 @@ class DiffRoot(object):
         self.index = diffCount
         self.deleteTree = False
         self.preserve = False
+        self.root = False
 
         if hasattr(xmlNode, "base"):
             baseFile = xmlNode.base
@@ -1036,6 +1040,18 @@ class DiffElement(DiffRoot):
             # return '<div class="tooltip"/>' + nsKeys[ns] + '<div class="tooltiptext">' + \
             #     ns + '</div></div>' + ':' + element
 
+    def toText(self):
+        text = lxml.etree.tostring(self.xml)
+        if type(text).__name__ == 'bytes':
+            text = text.decode('utf-8')
+        elements = text.split(' ')
+        newText = []
+        for attr in elements:
+            if attr.startswith("xmlns:"):
+                continue
+            newText.append(attr)
+        return ' '.join(newText)
+
     def ToHtml(self, parent):
         # If we have the right doc info - then emit the <?xml?> line
 
@@ -1121,6 +1137,28 @@ class DiffElement(DiffRoot):
                     node.attrib['class'] = 'right'
                     node.text = " " + self.FixNamespace(key) + '="' + \
                                 self.matchNode.xml.attrib[key] + '"'
+                    anchor.append(node)
+
+        if self.root:
+            nsLeft = []
+            nsRight = []
+            if self.xml.nsmap is not None:
+                nsLeft = [self.xml.nsmap[key] for key in self.xml.nsmap]
+            if self.matchNode and self.matchNode.xml.nsmap is not None:
+                nsRight = [self.matchNode.xml.nsmap[key] for key in self.matchNode.xml.nsmap]
+
+            for ns in nsLeft:
+                node = E.SPAN()
+                node.text = " xmlns:" + nsKeys[ns] + '="' + ns + '"'
+                if ns not in nsRight:
+                    node.attrib['class'] = 'left'
+                anchor.append(node)
+
+            for ns in nsRight:
+                if ns not in nsLeft:
+                    node = E.SPAN()
+                    node.text = " xmlns:" + nsKeys[ns] + '="' + ns + '"'
+                    node.attrib['class'] = 'right'
                     anchor.append(node)
 
         if len(self.children):

@@ -20,11 +20,11 @@ class Trace(Enum):
 def matrix(left, right):
     if left == right:
         if left[0] == ' ':
-            return (0, 1)
+            return (0, 2)
         return (0, 1)
     if '\n' in left:
         if '\n' in right:
-            return (1, 4)
+            return (1, 8)
         return (1, -200)
     elif '\n' in right:
         return (1, -200)
@@ -180,6 +180,7 @@ def ComputeEdits(leftArray, rightArray):
     ops = []
 
     op = opEnd
+    op2 = None
 
     stillGoing = True
     while stillGoing:
@@ -193,13 +194,27 @@ def ComputeEdits(leftArray, rightArray):
             if leftArray[leftIndex[i]] == rightArray[rightIndex[j]]:
                 op1 = ['equal', leftIndex[i], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
             else:
-                op1 = ['swap', leftIndex[i],  leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
+                op1 = ['remove', leftIndex[i], leftIndex[i+1], rightIndex[j+1], rightIndex[j+1]]
+                op2 = ['insert', leftIndex[i+1],  leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
             i -= 1
             j -= 1
         else:
             stillGoing = False
             ops.append(op)
             break
+
+        if op2:
+            if op2[0] == op[0]:
+                op[1] = op2[1]
+                op[3] = op2[3]
+            elif op1[0] == op[0]:
+                op[1] = op1[1]
+                op[3] = op1[3]
+                op1 = op2
+            else:
+                ops.append(op2)
+                op = op2
+            op2 = None
 
         if op1[0] == op[0]:
             op[1] = op1[1]
