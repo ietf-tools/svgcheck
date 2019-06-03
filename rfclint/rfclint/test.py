@@ -561,6 +561,26 @@ class Test_DupChecks(unittest.TestCase):
                       "Results/Dups2.xml", "Temp/dups.xml", input="Tests/Dups2.in")
 
 
+class Test_SvgCheck(unittest.TestCase):
+    def test_check1(self):
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml", "--no-dup-detection",
+                             "--out=Temp/svg.xml", "Tests/svg.xml"],
+                      "Results/empty", "Results/svg.err", "Results/empty", "Results/empty")
+
+    def test_no_check(self):
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml", "--no-dup-detection", "--no-svgcheck",
+                             "--out=Temp/svg.xml", "Tests/svg.xml"],
+                      "Results/empty", "Results/empty", "Results/empty", "Results/empty")
+
+    def test_color(self):
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml", "--no-dup-detection",
+                             "--out=Temp/color.xml", "Tests/color.svg"],
+                      "Results/empty", "Results/color.err", "Results/empty", "Results/empty")
+
+
 def compare_file2(errFile, stderr, displayError):
     with open(stderr, 'rb') as f:
         stderr = f.read()

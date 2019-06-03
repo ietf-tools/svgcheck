@@ -15,6 +15,7 @@ from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker, RfcLintError
 from rfclint.spell import Speller, SpellerColors
 from rfclint.dups import Dups
+from svgcheck.checksvg import checkTree
 import rfclint
 
 try:
@@ -85,6 +86,8 @@ def main():
                              help='Show debugging output')
     plain_options.add_option('--extract', dest='extract',
                              help='Extract all items of the given type')
+    plain_options.add_option('--no-svgcheck', action='store_true', dest='no_svgcheck',
+                             help='Don\'t run svgcheck')
     optionparser.add_option_group(plain_options)
 
     spell_options = optparse.OptionGroup(optionparser, 'Spell Options')
@@ -283,6 +286,10 @@ def main():
         except RfcLintError as e:
             log.error("Skipping ABNF checking because")
             log.error(e.message, additional=2)
+
+    # Validate any SVG items
+    if not options.no_svgcheck:
+        checkTree(xmlrfc.tree)
 
     # do the Spelling checking
     if not options.no_spell:

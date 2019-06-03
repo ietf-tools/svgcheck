@@ -1,0 +1,17 @@
+<svg height="100" width="100" datatype="foobar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100.0 100.0">
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(0,0,0)"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(255,255,255)"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(128,128,182)"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="#fff"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="#aaa"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="#000"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="#ffffff"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="#000000"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="#0a0a0a"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="grey"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="gray"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="black"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="white"/>
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="unknown"/>
+</svg>

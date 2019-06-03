@@ -4,3 +4,4 @@ six
 rfctools_common>=0.5.14
 colorama
 appdirs
+svgcheck>=0.5.14

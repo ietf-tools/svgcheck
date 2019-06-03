@@ -9,12 +9,12 @@ Tests/spell.xml:5: Misspelled word 'THis' in attribute 'name'
   THis is the series Info TItle
 Tests/spell.xml:5: Misspelled word 'TItle' in attribute 'name'
   THis is the series Info TItle
-Tests/spell.xml:6: Misspelled word 'Schaad' in attribute 'asciiFullname'
-  Jim Schaad
+Tests/spell.xml:6: Misspelled word 'Schaadx' in attribute 'asciiFullname'
+  Jim Schaadx
 Tests/spell.xml:6: Misspelled word 'YYY' in attribute 'asciiSurname'
   YYY
-Tests/spell.xml:6: Misspelled word 'Schaad' in attribute 'surname'
-  Schaad
+Tests/spell.xml:6: Misspelled word 'Schaadx' in attribute 'surname'
+  Schaadx
 Tests/spell.xml:7: Misspelled word was found 'Orgg'
   Orgg is an affilliation of text
 Tests/spell.xml:7: Misspelled word was found 'affilliation'
