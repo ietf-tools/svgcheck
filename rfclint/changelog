@@ -1,6 +1,7 @@
 rfclint (0.5.15) distribution(s); urgency=low
 
 	* Add svgcheck to rfclint
+	* Use file names to extract data if they exist
 
 -- Jim Schaad <ietf@augustcellars.com>  Sat 1 Jun 2019 12:00:00 -0700
 

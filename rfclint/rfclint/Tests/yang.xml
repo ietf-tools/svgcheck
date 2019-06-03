@@ -1,0 +1,15 @@
+<rfc>
+  <sourcecode type="yang" name="yang-a.yang">
+    <![CDATA[
+Pretend to be some yang data here
+]]>
+  </sourcecode>
+
+  <sourcecode type="yang" name="yang-b.yang">
+This is more yang data to extract as well
+  </sourcecode>
+
+  <sourcecode type="yang">
+  THis yang data does not have a file name associated with it.
+  </sourcecode>
+</rfc>

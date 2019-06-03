@@ -195,7 +195,7 @@ def ComputeEdits(leftArray, rightArray):
                 op1 = ['equal', leftIndex[i], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
             else:
                 op1 = ['remove', leftIndex[i], leftIndex[i+1], rightIndex[j+1], rightIndex[j+1]]
-                op2 = ['insert', leftIndex[i+1],  leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
+                op2 = ['insert', leftIndex[i+1], leftIndex[i+1], rightIndex[j], rightIndex[j+1]]
             i -= 1
             j -= 1
         else:
@@ -213,7 +213,6 @@ def ComputeEdits(leftArray, rightArray):
                 op1 = op2
             else:
                 ops.append(op2)
-                op = op2
             op2 = None
 
         if op1[0] == op[0]:

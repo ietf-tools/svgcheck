@@ -238,9 +238,15 @@ def main():
 
         needEOL = True
         for item in codeItems:
-            file.write(item.text)
-            if len(item.text) > 0:
-                needEOL = item.text[-1] != '\n'
+            if "name" in item.attrib:
+                with open(item.attrib["name"], 'w') as f:
+                    f.write(item.text)
+                    if len(item.text) > 0 and item.text[-1] != '\n':
+                        f.write('\n')
+            else:
+                file.write(item.text)
+                if len(item.text) > 0:
+                    needEOL = item.text[-1] != '\n'
 
         if needEOL:
             file.write('\n')

@@ -206,6 +206,24 @@ class Test_Extract(unittest.TestCase):
                       "Results/empty", "Results/empty",
                       "Results/extract.txt", "Temp/extract.txt")
 
+    def test_extract_to_name(self):
+        """ extract multiple named items """
+        if os.path.exists("./yang-a.yang"):
+            os.remove("./yang-a.yang")
+        if os.path.exists("./yang-b.yang"):
+            os.remove("./yang-b.yang")
+        check_process(self, [sys.executable, test_program, "--extract=yang",
+                             "--out=Temp/yang.yang", "--no-spell", "--no-dup-detection",
+                             "--no-rng", "Tests/yang.xml"],
+                      "Results/empty", "Results/empty",
+                      "Results/yang1.yang", "Temp/yang.yang")
+        self.assertTrue(compare_file2("./yang-a.yang", "Results/yang-a.yang", True))
+        if os.path.exists("./yang-a.yang"):
+            os.remove("./yang-a.yang")
+        self.assertTrue(compare_file2("./yang-b.yang", "Results/yang-b.yang", True))
+        if os.path.exists("./yang-b.yang"):
+            os.remove("./yang-b.yang")
+
 
 class Test_Xml(unittest.TestCase):
     """ Set of tests dealing with extracting code from the source """
