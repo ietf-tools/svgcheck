@@ -1,4 +1,10 @@
-rfctools-common (0.5.14) distribution(s); urgency=low
+rfctools-common (0.5.15) distribhution(s); urgency=low
+
+	* Use the correct function anywhere that we could write out UTF-8
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 27 May 2019 12:00:00 -0700
+
+rfctools-common (0.5.14) distribhution(s); urgency=low
 
 	* Merge in some of the XML2RFC changes to these files
 	* Setup to allow for the input coming from stdin

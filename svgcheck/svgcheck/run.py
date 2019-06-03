@@ -121,15 +121,15 @@ def main():
 
     if not checkTree(xmlrfc.tree):
         if options.repair:
+            encodedBytes = lxml.etree.tostring(xmlrfc.tree.getroot(),
+                                               xml_declaration=True,
+                                               encoding='utf-8',
+                                               pretty_print=True).decode('utf-8')
             if options.output_filename is None:
                 file = sys.stdout
             else:
                 file = open(options.output_filename, 'w')
-            file.write(lxml.etree.tostring(xmlrfc.tree.getroot(),
-                                           xml_declaration=True,
-                                           encoding='utf-8',
-                                           doctype=xmlrfc.tree.docinfo.doctype,
-                                           pretty_print=True).decode('utf-8'))
+            log.write_to(file, encodedBytes)
         log.error("File does not conform to SVG requirements")
         sys.exit(1)
 

@@ -157,6 +157,21 @@ class TestParserMethods(unittest.TestCase):
                       "Results/full-tiny-02.out", "Results/full-tiny-02.err",
                       None, None)
 
+    def test_utf8(self):
+        check_process(self, [sys.executable, test_program, "-r", "Tests/utf8.svg"],
+                      "Results/utf8.out", "Results/utf8.err", None, None)
+
+    def test_twice(self):
+        if not os.path.exists('Temp'):
+            os.mkdir('Temp')
+        check_process(self, [sys.executable, test_program, "-r", "--out=Temp/utf8-1.svg",
+                             "Tests/utf8.svg"],
+                      "Results/empty", "Results/utf8.err", None, None)
+        check_process(self, [sys.executable, test_program, "-r", "--out=Temp/utf8-2.svg",
+                             "Temp/utf8-1.svg"],
+                      "Results/empty", "Results/utf8-2.err",
+                      None, "Temp/utf8-2.svg")
+
 
 class TestViewBox(unittest.TestCase):
     def test_svg_noViewbox(self):
@@ -230,7 +245,7 @@ def check_results(file1, file2Name):
          any differences
     """
 
-    with open(file2Name, 'r') as f:
+    with io.open(file2Name, 'r', encoding='utf-8') as f:
         lines2 = f.readlines()
 
     if os.name == 'nt' and (file2Name.endswith(".out") or file2Name.endswith(".err")):
@@ -275,11 +290,11 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
 
     returnValue = True
     if stdoutFile is not None:
-        with open(stdoutFile, 'r') as f:
+        with io.open(stdoutFile, 'r', encoding='utf-8') as f:
             lines2 = f.readlines()
 
         if six.PY2:
-            lines1 = stdoutX.splitlines(True)
+            lines1 = stdoutX.decode('utf-8').splitlines(True)
         else:
             lines1 = stdoutX.decode('utf-8').splitlines(True)
 
@@ -298,15 +313,15 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
                 break
         if hasError:
             print("stdout:")
-            print("".join(result))
+            print(u"".join(result))
             returnValue = False
 
     if errFile is not None:
-        with open(errFile, 'r') as f:
+        with io.open(errFile, 'r', encoding='utf-8') as f:
             lines2 = f.readlines()
 
         if six.PY2:
-            lines1 = stderr.splitlines(True)
+            lines1 = stderr.decode('utf-8').splitlines(True)
         else:
             lines1 = stderr.decode('utf-8').splitlines(True)
 
@@ -329,10 +344,10 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             returnValue = False
 
     if generatedFile is not None:
-        with open(generatedFile, 'r') as f:
+        with io.open(generatedFile, 'r', encoding='utf-8') as f:
             lines2 = f.readlines()
 
-        with open(compareFile, 'r') as f:
+        with io.open(compareFile, 'r', encoding='utf-8') as f:
             lines1 = f.readlines()
 
         d = difflib.Differ()
@@ -346,7 +361,7 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
 
         if hasError:
             print(generatedFile)
-            print("".join(result))
+            print(u"".join(result))
             returnValue = False
 
     tester.assertTrue(returnValue, "Comparisons failed")

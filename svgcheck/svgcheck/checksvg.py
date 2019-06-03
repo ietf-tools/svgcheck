@@ -211,12 +211,12 @@ def check(el, depth=0):
                     errorCount += 1
                     if new_val is not None:
                         el.attrib[attr] = new_val
-                        log.warn("The attribute '{1}' does not allow the value '{0}',"
-                                 " replaced with '{2}'".format(val, attr, new_val), where=el)
+                        log.warn(u"The attribute '{1}' does not allow the value '{0}',"
+                                 u" replaced with '{2}'".format(val, attr, new_val), where=el)
                     else:
                         attribs_to_remove.append(nsAttrib)
-                        log.warn("The attribute '{1}' does not allow the value '{0}',"
-                                 " attribute to be removed".format(val, attr), where=el)
+                        log.warn(u"The attribute '{1}' does not allow the value '{0}',"
+                                 u" attribute to be removed".format(val, attr), where=el)
 
     for attrib in attribs_to_remove:
         del el.attrib[attrib]

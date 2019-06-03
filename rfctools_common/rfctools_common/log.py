@@ -51,7 +51,7 @@ def write_to(file, unicodeString):
 
 def write_on_line(*args):
     """ Writes a message without ending the line, i.e. in a loading bar """
-    write_err.write(u' '.join(args))
+    write_to(write_err, u' '.join(args))
     write_err.flush()
 
 
@@ -77,7 +77,7 @@ def info(*args, **kwargs):
         else:
             fileName = os.path.relpath(fileName)
         prefix = "{0}:{1}: ".format(fileName, where.sourceline)
-    write_err.write(prefix + u' '.join(args))
+    write_to(write_err, prefix + u' '.join(args))
     write_err.write(u'\n')
     write_err.flush()
 
@@ -85,7 +85,7 @@ def info(*args, **kwargs):
 def note(*args):
     """ Call for being verbose only """
     if verbose and not quiet:
-        write_err.write(u' '.join(args))
+        write_to(write_err, u' '.join(args))
         write_err.write('\n')
 
 
@@ -105,7 +105,7 @@ def warn(*args, **kwargs):
             else:
                 fileName = os.path.relpath(fileName)
             prefix = "{0}:{1}: ".format(fileName, where.sourceline)
-        write_err.write(prefix + u' '.join(args))
+        write_to(write_err, prefix + u' '.join(args))
         write_err.write(u'\n')
         write_err.flush()
 
@@ -146,7 +146,7 @@ def exception(message, list):
             attr['filename'] = 'unknown'
         if 'line' not in attr:
             attr['line'] = -1
-        write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
+        write_to(write_err, " %(filename)s: Line %(line)s: %(message)s\n" % attr)
 
 
 def exception_lines(message, list):
@@ -158,7 +158,7 @@ def exception_lines(message, list):
         if attr["message"].endswith(", got "):
             attr["message"] += "nothing."
         attr["filename"] = make_relative(attr["filename"])
-        write_err.write(" %(filename)s: Line %(line)s: %(message)s\n" % attr)
+        write_to(write_err, " %(filename)s: Line %(line)s: %(message)s\n" % attr)
 
 
 def make_relative(fileName):

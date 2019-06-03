@@ -1,3 +1,12 @@
+svgcheck (0.5.15) distribution(s); urgency=low
+
+	* Fix errors where we need to emit UTF-8 characters in either text or attributes
+	* Add test case for UTF-8
+	* Force DOCTYPE not to be emitted when we have fixed a file so that we don't pick up default attributes
+	* Add test case for two pass
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 27 May 2019 12:00:00 -0800
+
 svgcheck (0.5.14) distribution(s); urgency=low
 
 	* Force a viewBox to be part of the output
