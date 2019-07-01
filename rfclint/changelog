@@ -1,3 +1,9 @@
+rfclint (0.5.16) distribution(s); urgency=low
+
+	* Update version dependency on rfctools_common
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 1 July 2019 12:00:00 -0700
+
 rfclint (0.5.15) distribution(s); urgency=low
 
 	* Add svgcheck to rfclint

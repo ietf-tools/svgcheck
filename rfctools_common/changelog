@@ -1,3 +1,9 @@
+rfctools-common (0.5.16) distribhution(s); urgency=low
+
+	* Update the RNG schema file from XML2RFC drop v2.23.0
+
+-- Jim Schaad <ietf@augustcellars.com>  Mon 1 July 2019 12:00:00 -0700
+
 rfctools-common (0.5.15) distribhution(s); urgency=low
 
 	* Use the correct function anywhere that we could write out UTF-8
