@@ -1,5 +1,5 @@
 # --------------------------------------------------
-# Copyright The IETF Trust 2011, All Rights Reserved
+# Copyright The IETF Trust 2011-2019, All Rights Reserved
 # --------------------------------------------------
 
 """ Module Singleton which handles output of warnings and errors to

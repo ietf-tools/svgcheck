@@ -1,3 +1,7 @@
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 import lxml.etree
 from rfctools_common import log
 import math

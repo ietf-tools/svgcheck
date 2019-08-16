@@ -1,0 +1,4 @@
+Tests/bcp14.xml:3: bcp14 text 'SHOULD NOT' found with out bcp14 tag around it
+Tests/bcp14.xml:3: bcp14 text 'SHOULD' found with out bcp14 tag around it
+Tests/bcp14.xml:5: text 'IS NOT' in bcp14 tag is not bcp14 language
+Tests/bcp14.xml:6: text '<bcp14><i>MUST NOT</i></bcp14>' in bcp14 tag is not bcp14 language

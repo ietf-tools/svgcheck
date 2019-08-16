@@ -1,3 +1,9 @@
+svgcheck (0.5.17) distribhution(s); urgency=low
+
+	* Remove Python 3.4 from the supported liste
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 16 Aug 2019 12:00:00 -0700
+
 svgcheck (0.5.16) distribution(s); urgency=low
 
 	* Require new version of rfctools for new RNG file

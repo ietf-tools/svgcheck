@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
 
 from __future__ import print_function
 
@@ -15,6 +18,7 @@ from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker, RfcLintError
 from rfclint.spell import Speller, SpellerColors
 from rfclint.dups import Dups
+from rfclint.must import Lang2119
 from svgcheck.checksvg import checkTree
 import rfclint
 
@@ -64,14 +68,16 @@ def main():
                               help='Specify an alternate RNG file')
     parser_options.add_option('-X', '--no-xinclude', action='store_true', dest='no_xinclude',
                               help='don\'t resolve any xi:include elements')
-    parser_options.add_option('--no-xml', dest='no_xml', action='store_true',
-                              help='Don\'t perform XML well-formness checking')
 
     optionparser.add_option_group(parser_options)
 
     general_options = optparse.OptionGroup(optionparser, "General Options")
     general_options.add_option('-o', '--out', dest='output_filename', metavar='FILE',
                                help='specify an explicit output filename')
+    parser_options.add_option('--no-xml', dest='no_xml', action='store_true',
+                              help='Don\'t perform XML well-formness checking')
+    parser_options.add_option('--bcp14', dest='bcp14', action='store_true',
+                              help='Done\'t perform bcp14 checking')
     optionparser.add_option_group(general_options)
 
     plain_options = optparse.OptionGroup(optionparser, 'Plain Options')
@@ -333,6 +339,22 @@ def main():
             log.error(e.message, additional=2)
         except Exception:
             dups.endwin()
+            raise
+
+    # do the 2119 Language tag checking
+    if options.bcp14:
+        try:
+            lang2119 = Lang2119(config)
+            if options.no_curses:
+                lang2119.no_curses = True
+            lang2119.initscr()
+            lang2119.processTree(xmlrfc.tree.getroot())
+            lang2119.endwin()
+        except RfcLintError as e:
+            log.error("Skipping RFC 2119 language tag checking because")
+            log.error(e.message, additoin=2)
+        except Exception:
+            lang2119.endwin()
             raise
 
     if options.output_filename is not None:

@@ -1,3 +1,7 @@
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 import pycodestyle
 import unittest
 import os
@@ -8,6 +12,7 @@ import subprocess
 import six
 import inspect
 import struct
+import re
 from rfctools_common.parser import XmlRfcParser
 from xmldiff.EditItem import EditItem
 from xmldiff.zzs2 import distance
@@ -88,22 +93,51 @@ class TestCommandLineOptions(unittest.TestCase):
                       "Temp/Base.html", "Results/Base.html")
 
 
-class TestParserMethods(unittest.TestCase):
+class Test_Coding(unittest.TestCase):
 
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
+        dirParent = os.path.dirname(os.getcwd())
+
+        files = [f for f in os.listdir(os.getcwd()) if f[-3:] == '.py' and f[:8] != 'torture.']
+
+        errors = 0
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
-        result = pep8style.check_files(['../xmldiff/run.py', '../xmldiff/zzs2.py',
-                                        '../xmldiff/EditDistance.py', '../xmldiff/EditItem.py',
-                                        '../xmldiff/DiffNode.py', 'test.py'])
-        self.assertEqual(result.total_errors, 0,
+        result = pep8style.check_files(files)
+
+        errors += result.total_errors
+
+        files = [os.path.join(dirParent, f) for f in os.listdir(dirParent) if f[-3:] == '.py']
+        pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
+        result = pep8style.check_files(files)
+        errors += result.total_errors
+
+        dirParent = os.path.join(dirParent, "xmldiff")
+        files = [os.path.join(dirParent, f) for f in os.listdir(dirParent)
+                 if f[-3:] == '.py']
+        pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
+        result = pep8style.check_files(files)
+        errors += result.total_errors
+
+        self.assertEqual(errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pyflakes_confrmance(self):
-        p = subprocess.Popen(['pyflakes', '../xmldiff/run.py', '../xmldiff/zzs2.py',
-                              '../xmldiff/EditDistance.py', '../xmldiff/EditItem.py',
-                              '../xmldiff/DiffNode.py', 'test.py'],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        files = [f for f in os.listdir(os.getcwd()) if f[-3:] == '.py' and f[:8] != 'torture.']
+        dir = os.path.basename(os.getcwd())
+        dirParent = os.path.dirname(os.getcwd())
+
+        files2 = [os.path.join(dirParent, f) for f in os.listdir(dirParent) if f[-3:] == '.py']
+        files.extend(files2)
+
+        dir = os.path.join(dirParent, 'xmldiff')
+        files2 = [os.path.join(dir, f) for f in os.listdir(dir)
+                  if f[-3:] == '.py']
+        files.extend(files2)
+
+        files.insert(0, 'pyflakes')
+
+        p = subprocess.Popen(files, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdoutX, stderrX) = p.communicate()
         ret = p.wait()
         if ret > 0:
@@ -113,6 +147,63 @@ class TestParserMethods(unittest.TestCase):
             print(stdoutX)
             print(stderrX)
             self.assertEqual(ret, 0)
+
+    def test_copyright(self):
+        dir = os.path.basename(os.getcwd())
+        dirParent = os.path.dirname(os.getcwd())
+        if dir != 'Test':
+            return
+        files = [f for f in os.listdir(os.getcwd()) if f[-3:] == '.py']
+
+        copyright_year_re = r"(?i)Copyright The IETF Trust 201\d-%s, All Rights Reserved" % (9)
+
+        passed = True
+
+        for name in files:
+            with open(name) as file:
+                try:
+                    chunk = file.read(4000)
+                except UnicodeDecodeError:
+                    print("Error reading file %s" % (name))
+                    passed = False
+                    continue
+                if not re.search(copyright_year_re, chunk):
+                    print("No copyright in file %s" % (name))
+                    passed = False
+                    continue
+
+        files = [f for f in os.listdir(dirParent) if f[-3:] == '.py']
+
+        for name in files:
+            with open(os.path.join("..", name)) as file:
+                try:
+                    chunk = file.read(4000)
+                except UnicodeDecodeError:
+                    print("Error reading file %s" % (name))
+                    passed = False
+                    continue
+                if not re.search(copyright_year_re, chunk):
+                    print("No copyright in file %s" % (name))
+                    passed = False
+                    continue
+
+        path2 = os.path.join(dirParent, "xmldiff")
+        files = [f for f in os.listdir(path2) if f[-3:] == '.py']
+
+        for name in files:
+            with open(os.path.join(path2, name)) as file:
+                try:
+                    chunk = file.read(4000)
+                except UnicodeDecodeError:
+                    print("Error reading file %s" % (name))
+                    passed = False
+                    continue
+                if not re.search(copyright_year_re, chunk):
+                    print("No copyright in file %s" % (name))
+                    passed = False
+                    continue
+
+        self.assertTrue(passed)
 
 
 class TestDistanceMethods(unittest.TestCase):

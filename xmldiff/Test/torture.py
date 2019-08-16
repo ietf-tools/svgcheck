@@ -1,18 +1,21 @@
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 #
 #  Before running this program execute the command
 #
 #  $ rsync rsync.ietf.org::id-archive/*.xml Torture
 #
-#  
+#
+
 
 import os
-import subprocess
 import optparse
 from rfctools_common.parser import XmlRfcParser
-from rfctools_common.parser import XmlRfcError, CACHES
-from xmldiff.EditItem import EditItem
+from rfctools_common.parser import CACHES
 from xmldiff.zzs2 import distance
-from xmldiff.DiffNode import DiffRoot, BuildDiffTree, DecorateSourceFile, diffCount, AddParagraphs
+from xmldiff.DiffNode import DiffRoot, BuildDiffTree, AddParagraphs
 from rfctools_common import log
 
 
@@ -94,12 +97,11 @@ def main():
 
     (options, args) = optionparser.parse_args()
 
-    files = [os.path.join('Torture', f) for f in os.listdir('Torture') if os.path.isfile(os.path.join('Torture', f))
-             and f[-4:] == '.xml']
+    files = [os.path.join('Torture', f) for f in os.listdir('Torture')
+             if os.path.isfile(os.path.join('Torture', f)) and f[-4:] == '.xml']
 
     for i in range(len(files)-1):
         DistanceTest(files[i], files[i+1], options)
-
 
 
 def DistanceTest(leftFile, rightFile, options):
@@ -121,8 +123,8 @@ def DistanceTest(leftFile, rightFile, options):
                       format(leftFile, rightFile, c))
     except Exception as e:
         log.exception("Fail applying edits for '{0}' and '{1}'".
-                  format(leftFile, rightFile), e)
-                                                     
+                      format(leftFile, rightFile), e)
+
 
 if __name__ == '__main__':
     main()

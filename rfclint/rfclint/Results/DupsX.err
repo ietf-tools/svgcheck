@@ -1,0 +1,3 @@
+Tests/dups2.xml:3: Duplicate word found 'test'
+Tests/dups2.xml:5: Duplicate word found 'word'
+Tests/dups2.xml:7: Duplicate word found 'word'

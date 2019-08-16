@@ -1,3 +1,7 @@
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 import pycodestyle
 import platform
 import unittest
@@ -7,6 +11,7 @@ import sys
 import subprocess
 import difflib
 import six
+import re
 
 test_program = "rfclint"
 
@@ -30,16 +35,37 @@ def which(program):
 class Test_Coding(unittest.TestCase):
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
+        dir = os.path.basename(os.getcwd())
+        dirParent = os.path.dirname(os.getcwd())
+
+        files = [f for f in os.listdir(os.getcwd()) if f[-3:] == '.py']
+
         pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
-        result = pep8style.check_files(['run.py', 'abnf.py', 'config.py', 'spell.py',
-                                        'test.py', 'dups.py', 'CursesCommon.py'])
+        result = pep8style.check_files(files)
+
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+        if dir != os.path.basename(dirParent):
+            return
+
+        files = [os.path.join("..", f) for f in os.listdir(dirParent) if f[-3:] == '.py']
+        pep8style = pycodestyle.StyleGuide(quiet=False, config_file="pycode.cfg")
+        result = pep8style.check_files(files)
+        print("Error count is {0}".format(result.total_errors))
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pyflakes_confrmance(self):
-        p = subprocess.Popen(['pyflakes', 'run.py', 'abnf.py', 'config.py', 'spell.py',
-                              'test.py', 'dups.py', 'CursesCommon.py'],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        files = [f for f in os.listdir(os.getcwd()) if f[-3:] == '.py']
+        dir = os.path.basename(os.getcwd())
+        dirParent = os.path.dirname(os.getcwd())
+        if dir == os.path.basename(dirParent):
+            files2 = [os.path.join("..", f) for f in os.listdir(dirParent) if f[-3:] == '.py']
+            files.extend(files2)
+        files.insert(0, 'pyflakes')
+
+        p = subprocess.Popen(files, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdoutX, stderrX) = p.communicate()
         ret = p.wait()
         if ret > 0:
@@ -49,6 +75,47 @@ class Test_Coding(unittest.TestCase):
             print(stdoutX)
             print(stderrX)
             self.assertEqual(ret, 0)
+
+    def test_copyright(self):
+        dir = os.path.basename(os.getcwd())
+        dirParent = os.path.dirname(os.getcwd())
+        if dir != os.path.basename(dirParent):
+            return
+        files = [f for f in os.listdir(os.getcwd()) if f[-3:] == '.py']
+
+        copyright_year_re = r"(?i)Copyright The IETF Trust 201\d-%s, All Rights Reserved" % (9)
+
+        passed = True
+
+        for name in files:
+            with open(name) as file:
+                try:
+                    chunk = file.read(4000)
+                except UnicodeDecodeError:
+                    print("Error reading file %s" % (name))
+                    passed = False
+                    continue
+                if not re.search(copyright_year_re, chunk):
+                    print("No copyright in file %s" % (name))
+                    passed = False
+                    continue
+
+        files = [f for f in os.listdir(dirParent) if f[-3:] == '.py']
+
+        for name in files:
+            with open(os.path.join("..", name)) as file:
+                try:
+                    chunk = file.read(4000)
+                except UnicodeDecodeError:
+                    print("Error reading file %s" % (name))
+                    passed = False
+                    continue
+                if not re.search(copyright_year_re, chunk):
+                    print("No copyright in file %s" % (name))
+                    passed = False
+                    continue
+
+        self.assertTrue(passed)
 
 
 class TestCommandLineOptions(unittest.TestCase):
@@ -578,6 +645,13 @@ class Test_DupChecks(unittest.TestCase):
                       "Results/Dups2.out", "Results/Dups2.err",
                       "Results/Dups2.xml", "Temp/dups.xml", input="Tests/Dups2.in")
 
+    def test_xref(self):
+        """ Check xref mode duplicate detection """
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml",
+                             "Tests/dups2.xml"],
+                      "Results/empty", "Results/DupsX.err", None, None)
+
 
 class Test_SvgCheck(unittest.TestCase):
     def test_check1(self):
@@ -597,6 +671,14 @@ class Test_SvgCheck(unittest.TestCase):
                              "--no-abnf", "--no-xml", "--no-dup-detection",
                              "--out=Temp/color.xml", "Tests/color.svg"],
                       "Results/empty", "Results/color.err", "Results/empty", "Results/empty")
+
+
+class Test_BCP14(unittest.TestCase):
+    def test_check1(self):
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml", "--no-dup-detection", "--bcp14",
+                             "Tests/bcp14.xml"],
+                      "Results/empty", "Results/bcp14.err", None, None)
 
 
 def compare_file2(errFile, stderr, displayError):

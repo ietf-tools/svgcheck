@@ -1,5 +1,8 @@
 #!/Usr/bin/env python
 # -*- coding: utf-8 -*-
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
 #  Adapted from code by
 # Authors: Tim Henderson and Steve Johnson
 # Email: tim.tadh@gmail.com, steve@steveasleep.com

@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 # --------------------------------------------------
-# Copyright The IETF Trust 2018, All Rights Reserved
+# Copyright The IETF Trust 2018-2019, All Rights Reserved
 # --------------------------------------------------
 
 import re
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+import rfctools_common
+import six
+
+if six.PY3:
+    unicode = str
 
 here = path.abspath(path.dirname(__file__))
 
@@ -21,14 +26,15 @@ with open(path.join(here, 'requirements.txt'), encoding='utf-8') as file:
 
 # Get additional items from the local MANIFEST.in file
 with open(path.join(here, 'MANIFEST.in'), encoding='utf-8') as file:
-    extra_files = [ l.split()[1] for l in file.read().splitlines() if l ]
+    extra_files = [l.split()[1] for l in file.read().splitlines() if l]
+
 
 def parse(changelog):
     ver_line = "^([a-z0-9+-]+) \(([^)]+)\)(.*?) *$"
     sig_line = "^ ?-- ([^<]+) <([^>]+)>  (.*?) *$"
 
     entries = []
-    if type(changelog) == type(''):
+    if isinstance(changelog, str) or isinstance(changelog, unicode):
         changelog = open(changelog, mode='rU', encoding='utf-8')
     for line in changelog:
         if re.match(ver_line, line):
@@ -44,11 +50,12 @@ def parse(changelog):
             entry["datetime"] = date
             entry["date"] = " ".join(date.split()[:3])
 
-            entries += [ entry ]
+            entries += [entry]
         else:
             entry["logentry"] += line.rstrip() + '\n'
     changelog.close()
     return entries
+
 
 changelog_entry_template = """
 Version %(version)s (%(date)s)
@@ -62,11 +69,9 @@ long_description += """
 Changelog
 =========
 
-""" + "\n".join([ changelog_entry_template % entry for entry in parse("changelog")[:3] ])
+""" + "\n".join([changelog_entry_template % entry for entry in parse("changelog")[:3]])
 
 long_description = long_description.replace('\r', '')
-
-import rfctools_common
 
 setup(
     name='rfctools_common',
@@ -76,7 +81,7 @@ setup(
 
     description="Verify that an svg file is compliant with the RFC standards.",
     long_description=long_description,
-    
+
     # The projects main homepage.
     url='https://tools.ietf.org/tools/ietfdb/browser/brance/elft/svgcheck/',
 
@@ -88,15 +93,15 @@ setup(
     license='Simplified BSD',
 
     # Classifiers
-    classifiers = [
+    classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Other Audience',
         'Topic :: Text Processing',
         'Topic :: Text Processing :: Markup :: XML',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.6',
-        ],
+        'Programming Language :: Python :: 3.7',
+    ],
 
     # What does your project relate to?
     keywords='RFC common',
@@ -106,7 +111,7 @@ setup(
 
     # List run-time dependencies here.
     install_requires=requirements,
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, <4',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
 
     # List additional gorups of dependencies here.
     # extras_require=(
@@ -115,8 +120,8 @@ setup(
 
     package_data={
         'rfctools-common': ['templates/*']
-        },
-    include_package_data = True,
+    },
+    include_package_data=True,
 
     zip_safe=False
 )

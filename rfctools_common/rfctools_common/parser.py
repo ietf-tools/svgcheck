@@ -1,5 +1,5 @@
 # --------------------------------------------------
-# Copyright The IETF Trust 2011, All Rights Reserved
+# Copyright The IETF Trust 2011-2019, All Rights Reserved
 # --------------------------------------------------
 
 """ Public XML parser module """
@@ -35,19 +35,22 @@ CACHE_PREFIX = ''
 NET_SUBDIRS  = ['bibxml', 'bibxml2', 'bibxml3', 'bibxml4', 'bibxml5']
 
 Default_options = Values(defaults={
-    'verbose':False,
-    'no_network':False,
-    'vocabulary':'v3',
-    'cache':None,
-    'quiet':False
+    'verbose': False,
+    'no_network': False,
+    'vocabulary': 'v3',
+    'cache': None,
+    'quiet': False
 })
+
 
 def SetCache(newCache):
     global CACHES
     CACHES = newCache
 
+
 def GetCache():
     return CACHES
+
 
 class XmlRfcError(Exception):
     """ Application XML errors with positional information
@@ -65,6 +68,7 @@ class XmlRfcError(Exception):
 
     def __str__(self):
         return self.msg
+
 
 class CachingResolver(lxml.etree.Resolver):
     """ Custom ENTITY request handler that uses a local cache """
@@ -336,7 +340,7 @@ class CachingResolver(lxml.etree.Resolver):
                             attempts.append(attempt)
                             if os.path.exists(attempt):
                                 result = attempt
-                                break                    
+                                break
 
                     if not result:
                         # Try network location
@@ -492,7 +496,7 @@ class AnnotatedElement(lxml.etree.ElementBase):
 class XmlRfcParser:
 
     nsmap = {
-        'xi':   'http://www.w3.org/2001/XInclude',
+        'xi': 'http://www.w3.org/2001/XInclude',
     }
 
     """ XML parser container with callbacks to construct an RFC tree """
@@ -505,7 +509,7 @@ class XmlRfcParser:
                  ],
                  resolve_entities=True,
                  preserve_all_white=False,
-                 attribute_defaults = True
+                 attribute_defaults=True
                  ):
         self.options = options
         self.quiet = quiet if quiet != None else options.quiet
@@ -578,7 +582,6 @@ class XmlRfcParser:
                     self.text = f.read()
         else:
             self.text = textIn.encode('utf-8')
-                
 
         # Get an iterating parser object
         file = six.BytesIO(self.text)
@@ -588,29 +591,29 @@ class XmlRfcParser:
             file.name = "stdin"
 
         context = lxml.etree.iterparse(file,
-                                      dtd_validation=False,
-                                      load_dtd=True,
-                                      attribute_defaults=self.attribute_defaults,
-                                      no_network=self.no_network,
-                                      remove_comments=remove_comments,
-                                      remove_pis=remove_pis,
-                                      remove_blank_text=True,
-                                      resolve_entities=False,
-                                      strip_cdata=strip_cdata,
-                                      events=("start",),
-                                      tag="rfc",
-                                  )
+                                       dtd_validation=False,
+                                       load_dtd=True,
+                                       attribute_defaults=self.attribute_defaults,
+                                       no_network=self.no_network,
+                                       remove_comments=remove_comments,
+                                       remove_pis=remove_pis,
+                                       remove_blank_text=True,
+                                       resolve_entities=False,
+                                       strip_cdata=strip_cdata,
+                                       events=("start",),
+                                       tag="rfc",
+        )
         # resolver without knowledge of rfc_number:
         caching_resolver = CachingResolver(cache_path=self.cache_path,
-                                        library_dirs=self.library_dirs,
-                                        templates_path=self.templates_path,
-                                        source=self.source,
-                                        no_network=self.no_network,
-                                        network_locs=self.network_locs,
-                                        verbose=self.verbose,
-                                        quiet=self.quiet,
-                                        options=self.options,
-                                     )
+                                           library_dirs=self.library_dirs,
+                                           templates_path=self.templates_path,
+                                           source=self.source,
+                                           no_network=self.no_network,
+                                           network_locs=self.network_locs,
+                                           verbose=self.verbose,
+                                           quiet=self.quiet,
+                                           options=self.options,
+        )
         context.resolvers.add(caching_resolver)
 
         # Get hold of the rfc number (if any) in the rfc element, so we can
@@ -648,15 +651,15 @@ class XmlRfcParser:
 
         # Initialize the caching system
         self.cachingResolver = CachingResolver(cache_path=self.cache_path,
-                                        library_dirs=self.library_dirs,
-                                        templates_path=self.templates_path,
-                                        source=self.source,
-                                        no_network=self.no_network,
-                                        network_locs=self.network_locs,
-                                        verbose=self.verbose,
-                                        quiet=self.quiet,
-                                        rfc_number=self.rfc_number,
-                                        options=self.options
+                                               library_dirs=self.library_dirs,
+                                               templates_path=self.templates_path,
+                                               source=self.source,
+                                               no_network=self.no_network,
+                                               network_locs=self.network_locs,
+                                               verbose=self.verbose,
+                                               quiet=self.quiet,
+                                               rfc_number=self.rfc_number,
+                                               options=self.options
         )
 
         # Add our custom resolver

@@ -7,18 +7,18 @@ bar bar
 
 ERROR: Tests/dups.xml:3 Duplicate word found ' it'
 Make this a very long sentence that is going to be longer than what the scrien\
- is so it it will either wrap or go to the far end of the scrren.  This MUST be\
- a problem for somebody.  Look S/MIME spec  spec is a problem problem.  
+ is so it it will either wrap or go to the far end of the scrren.  This MUSTbe\
+ a problem for somebody.  Look S/MIME spec spec is a problem problem.  
 
 ERROR: Tests/dups.xml:6 Duplicate word found ' spec'
 Make this a very long sentence that is going to be longer than what the scrien\
- is so it will either wrap or go to the far end of the scrren.  This MUST be a \
-problem for somebody.  Look S/MIME spec  spec is a problem problem.  
+ is so it will either wrap or go to the far end of the scrren.  This MUSTbe a \
+problem for somebody.  Look S/MIME spec spec is a problem problem.  
 
 ERROR: Tests/dups.xml:6 Duplicate word found ' problem'
 Make this a very long sentence that is going to be longer than what the scrien\
- is so it will either wrap or go to the far end of the scrren.  This MUST be a \
-problem for somebody.  Look S/MIME spec  NewWord is a problem problem.  
+ is so it will either wrap or go to the far end of the scrren.  This MUSTbe a \
+problem for somebody.  Look S/MIME spec NewWord is a problem problem.  
 
 ERROR: Tests/dups.xml:8 Duplicate word found ' test'
 Test test

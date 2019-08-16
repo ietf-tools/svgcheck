@@ -1,3 +1,7 @@
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 try:
     import curses
     haveCurses = True
@@ -114,8 +118,8 @@ class CursesCommon(object):
                     self.x = 0
                 self.y += 1
                 newLine = False
-            if self.x != 0 and line[-1] != ' ' and not partialString:
-                self.lines[-1] += " "
+            # if self.x != 0 and line[-1] != ' ' and not partialString:
+            #     self.lines[-1] += " "
         if color == self.A_REVERSE:
             self.reverse = [saveX, saveY, self.x, self.y, color]
 

@@ -1,0 +1,10 @@
+<section>
+  <title ascii="foo" abbrev="bar"/>
+  <t>
+    This is a test test for the xref <xref/> xref double checks.
+    It may also be a word <xref>word</xref> that can be placed in side
+    of things.
+    One needs also to Look at Other things <em> word <xref> word</xref> </em> and play aournd.
+    Also need to make sure that <eref/> and <relref/> show up as well.
+  </t>
+</section>

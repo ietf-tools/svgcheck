@@ -42,7 +42,10 @@ of the document.
   .                  ``--save-config``           save configuration back to config file             
   ``-v``             ``--verbose``               print extra information                            
   ``-V``             ``--version``               display the version number and exit                
-  ``-X``             ``--no-xinclude``           don't resolve xi:include elements                  
+  ``-X``             ``--no-xinclude``           don't resolve xi:include elements
+  .                  ``--no-xml``                don't check xml examples for well-formness
+  .                  ``--bcp14``                 do checking for bcp14 keywords
+  .                  ``--no-svgcheck``           skip check svg for limited vocabulary
  
   ``-c DIRECTORY``   ``--cache=DIRECTORY``       specify the primary cache directory to write to    
   .                  ``--configfile=FILENAME``   specify the configuration file to use              
@@ -61,15 +64,16 @@ of the document.
     ================= ============================== =================================================== 
     .                  ``--no-dup-detection``         don't perform duplicate detection                  
     .                  ``--no-spell``                 don't perform spell checking on the source         
-    .                  ``--no-suggest``               don't provide suggestions for misspelled words     
+    .                  ``--no-suggest``               don't provide suggestions for misspelled words
+    .                  ``--skip-code``                skip code elements when checking
+    .                  ``--skip-artwork``             skip artwork elements check checking
+    .                  ``--no-curses``                don't do window based 
     		     
     .                  ``--color=TEXT``               specify the color to use for word highlighting     
     .                  ``--dictionary=FILENAME``      specify an additional dictionary to use            
     .                  ``--personal=FILENAME``        specify the personal dictionary to use             
     .                  ``--spell-program=FILENAME``   program to use for spell checking                  
     .                  ``--spell-window=NUM``         how many words to display as part of the context
-    .                  ``--skip-code``                skip code elements when checking
-    .                  ``--skip-artwork``             skip artwork elements check checking
     ================= ============================== =================================================== 
 
     It is assumed that the spell checking program is aspell and that aspell is on the path.
@@ -134,8 +138,13 @@ rfclint depends on the following packages:
 
 * lxml_ *(>= 4.1.1)*
 * requests_ *(>= 2.5.0)*
-* `rfctools_common`_ *(>= 0.5.3)*
+* `rfctools_common`_ *(>= 0.5.16)*
+* six
+* colorama
+* appdirs
+* svgcheck_ '(>=0.5.14)
 
 .. _lxml: http://lxml.de
 .. _requests: http://docs.python-requests.org
 .. _rfctools_common: https://pypi.python.org/pypi/pip
+.. _svgcheck: https://pypi.python.org/pypi/svgcheck

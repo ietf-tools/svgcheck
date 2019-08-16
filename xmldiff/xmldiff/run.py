@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 
 import optparse
 import os
@@ -7,6 +11,7 @@ import sys
 from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES
 from rfctools_common.parser import CachingResolver
 from rfctools_common import log
+from rfctools_common.log import write_to
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, AddParagraphs
 from xmldiff.DiffNode import SourceFiles
 import string
@@ -274,7 +279,7 @@ def main():
     output = html_template.substitute(subs)
 
     if options.output_filename is None:
-        sys.stdout.write(output)
+        write_to(sys.stdout, output)
     else:
         log.note('Write out html file: ' + options.output_filename)
         file = open(options.output_filename, "wb")

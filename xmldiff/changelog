@@ -1,3 +1,10 @@
+svgcheck (0.5.17) distribhution(s); urgency=low
+
+	* Remove Python 3.4 from the supported list
+	* Correct problem with writing unicode on Python 2.7
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 16 Aug 2019 12:00:00 -0700
+
 xmldiff (0.5.15) distribution(s); urgency=low
 
 	* Change the parameterization on the text difference code to use shorter unmatched strings.

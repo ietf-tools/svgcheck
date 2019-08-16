@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-# --------------------------------------------------
-# Copyright The IETF Trust 2018, All Rights Reserved
-# --------------------------------------------------
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
 
 import re
 import sys
@@ -10,6 +10,7 @@ from codecs import open
 from os import path
 from setuptools.command.install import install
 import os
+import rfclint
 
 here = path.abspath(path.dirname(__file__))
 
@@ -27,10 +28,7 @@ if major == 2:
 
 # Get additional items from the local MANIFEST.in file
 with open(path.join(here, 'MANIFEST.in'), encoding='utf-8') as file:
-    extra_files = [ l.split()[1] for l in file.read().splitlines() if l ]
-
-import rfclint
-
+    extra_files = [l.split()[1] for l in file.read().splitlines() if l]
 
 
 class PostInstallCommand(install):
@@ -46,7 +44,7 @@ class PostInstallCommand(install):
 
     def is_exists(self, fpath):
         return os.path.isfile(fpath)
-    
+
     def which(self, program):
 
         fpath, fname = os.path.split(program)
@@ -54,18 +52,19 @@ class PostInstallCommand(install):
             if self.is_exists(program):
                 return program
         else:
-            for path in os.environ["PATH"].split(os.pathsep):
-                exe_file = os.path.join(path, program)
+            for pathX in os.environ["PATH"].split(os.pathsep):
+                exe_file = os.path.join(pathX, program)
                 if self.is_exists(exe_file):
                     return exe_file
         return None
+
 
 def parse(changelog):
     ver_line = "^([a-z0-9+-]+) \(([^)]+)\)(.*?) *$"
     sig_line = "^ ?-- ([^<]+) <([^>]+)>  (.*?) *$"
 
     entries = []
-    if type(changelog) == type(''):
+    if isinstance(changelog, type('')):
         changelog = open(changelog, mode='rU', encoding='utf-8')
     for line in changelog:
         if re.match(ver_line, line):
@@ -81,11 +80,12 @@ def parse(changelog):
             entry["datetime"] = date
             entry["date"] = " ".join(date.split()[:3])
 
-            entries += [ entry ]
+            entries += [entry]
         else:
             entry["logentry"] += line.rstrip() + '\n'
     changelog.close()
     return entries
+
 
 changelog_entry_template = """
 Version %(version)s (%(date)s)
@@ -99,7 +99,7 @@ long_description += """
 Changelog
 =========
 
-""" + "\n".join([ changelog_entry_template % entry for entry in parse("changelog")[:3] ])
+""" + "\n".join([changelog_entry_template % entry for entry in parse("changelog")[:3]])
 
 long_description = long_description.replace('\r', '')
 
@@ -111,7 +111,7 @@ setup(
 
     description="Perform a set of checks on an RFC input file to check for errors.",
     long_description=long_description,
-    
+
     # The projects main homepage.
     url='https://tools.ietf.org/tools/ietfdb/browser/brance/elft/rfclint/',
 
@@ -123,7 +123,7 @@ setup(
     license='Simplified BSD',
 
     # Classifiers
-    classifiers = [
+    classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Console',
         'Intended Audience :: Other Audience',
@@ -135,6 +135,7 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         ],
 
     # What does your project relate to?
@@ -145,7 +146,7 @@ setup(
 
     # List run-time dependencies here.
     install_requires=requirements,
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, <4',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
 
     # List additional groups of dependencies here.
     # extras_require=(
@@ -160,24 +161,21 @@ setup(
     # 'rfclint': [ "../win32/bap.exe", "../win32/cygwin1.dll" ],
     # },
     # Match with what is in abnf.py
-    #data_files=[('bin',
+    # data_files=[('bin',
     #             ["win32/bap.exe", "win32/cygwin1.dll"] if os.name == "nt" else
     #             ["linux/bap"] if sys.platform.startswith("linux") else
     #             ["macos/bap"] if sys.platform == "darwin" else []
     #             )
     #            ],
-    #cmdclass= {
+    # cmdclass= {
     #    'install': PostInstallCommand
-    #},
+    # },
 
     entry_points={
         'console_scripts': [
             'rfclint=rfclint.run:main'
             ]
         },
-    include_package_data = True,
+    include_package_data=True,
     zip_safe=False
 )
-
-
-        

@@ -1,3 +1,7 @@
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 import re
 import os
 import sys
@@ -74,6 +78,8 @@ class Dups(CursesCommon):
         words = []
         if tree.text:
             words += [(tree.text, tree, True, -1)]
+        elif tree.tag == 'eref' or tree.tag == 'relref' or tree.tag == 'xref':
+            words += [('<' + tree.tag + '>', None, False, -1)]
 
         for node in tree.iterchildren():
             if node.tag in CutNodes:
@@ -97,8 +103,12 @@ class Dups(CursesCommon):
 
         # check for dups
         last = None
+        lastX = None
         for words in wordSet:
             xx = self.dup_re.finditer(words[0])
+            if words[1] is None:
+                last = None
+                continue
             for w in xx:
                 g = w.group(0).strip().lower()
                 if last:
@@ -109,12 +119,13 @@ class Dups(CursesCommon):
                         else:
                             if attributeName:
                                 log.error("Duplicate word found '{0}' in attribute '{1}'".
-                                          format(last, attributeName), where=words[1])
+                                          format(lastX, attributeName), where=words[1])
                             else:
-                                log.error("Duplicate word found '{0}'".format(last),
+                                log.error("Duplicate word found '{0}'".format(lastX),
                                           where=words[1])
 
                 last = g
+                lastX = w.group(0).strip()
 
     def Interact(self, element, match, srcLine, wordSet, words):
         if self.curses:
@@ -153,6 +164,8 @@ class Dups(CursesCommon):
         for line in wordSet:
             if isinstance(line[2], str):
                 text = line[1].attrib[line[2]]
+            elif line[1] is None:
+                text = line[0]
             elif line[2]:
                 text = line[1].text
             else:

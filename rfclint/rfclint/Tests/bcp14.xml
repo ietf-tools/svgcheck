@@ -1,0 +1,9 @@
+<section>
+  <title>This MUST be done</title>
+  <t>
+    This contains a SHOULD NOT and a SHOULD not.
+    Also it <bcp14>IS NOT</bcp14> something reasonable.
+    <bcp14><i>MUST NOT</i></bcp14> be reasonable.
+    <em><bcp14>MAY</bcp14></em> be done as well.
+  </t>
+</section>

@@ -1,3 +1,7 @@
+# ----------------------------------------------------
+# Copyright The IETF Trust 2018-9, All Rights Reserved
+# ----------------------------------------------------
+
 from xmldiff._zzs import ffi, lib
 from xmldiff.DiffNode import DiffParagraph
 from xmldiff.EditItem import EditItem
