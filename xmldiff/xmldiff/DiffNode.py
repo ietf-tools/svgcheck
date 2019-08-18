@@ -164,7 +164,7 @@ ParagraphMarkers = {
     'c': 3,
     'dd': 2,
     'dt': 1,
-    'li': 1,
+    'li': 2,
     'refcontent': 1,
     'sourcecode': 1,  # need to deal with perserveSpace
     't': 4,

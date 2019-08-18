@@ -279,8 +279,8 @@ function XXX()
 
 function isElementVisible(el) {
     var rect     = el.getBoundingClientRect(),
-        vWidth   = window.innerWidth || doc.documentElement.clientWidth,
-        vHeight  = window.innerHeight || doc.documentElement.clientHeight,
+        vWidth   = window.innerWidth || document.documentElement.clientWidth,
+        vHeight  = window.innerHeight || document.documentElement.clientHeight,
         efp      = function (x, y) { return document.elementFromPoint(x, y) };     
 
     // Return false if it's not in the viewport
