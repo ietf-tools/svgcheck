@@ -680,6 +680,13 @@ class Test_BCP14(unittest.TestCase):
                              "Tests/bcp14.xml"],
                       "Results/empty", "Results/bcp14.err", None, None)
 
+    def test_check2(self):
+        check_process(self, [sys.executable, test_program, "--no-rng", "--no-spell",
+                             "--no-abnf", "--no-xml", "--no-dup-detection", "--bcp14",
+                             "--out=Temp/bcp14.xml", "Tests/bcp14.xml"],
+                      "Results/empty", "Results/bcp14-2.err",
+                      "Temp/bcp14.xml", "Results/bcp14-2.xml")
+
 
 def compare_file2(errFile, stderr, displayError):
     with open(stderr, 'rb') as f:
@@ -693,9 +700,11 @@ def compare_file2(errFile, stderr, displayError):
 
 def compare_file(errFile, stderr, displayError):
     if six.PY2:
-        with open(errFile, 'r') as f:
-            lines2 = f.readlines()
+        with open(errFile, 'rb') as f:
+            lines2 = f.read().decode('utf-8').splitlines(True)
+        lines2 = [line.replace('\r', '') for line in lines2]
         lines1 = stderr.splitlines(True)
+        lines1 = [line.decode('utf-8') for line in lines1]
     else:
         with open(errFile, 'r', encoding='utf8') as f:
             lines2 = f.readlines()
@@ -723,6 +732,8 @@ def compare_file(errFile, stderr, displayError):
             break
     if hasError and displayError:
         print("stderr")
+        if six.PY2:
+            result = [line.encode('utf-8') for line in result]
         print("".join(result))
         return False
     return True

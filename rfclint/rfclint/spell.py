@@ -476,6 +476,8 @@ class Speller(CursesCommon):
         words = []
         if tree.text:
             words += [(tree.text, tree, True, -1)]
+        elif tree.tag == 'eref' or tree.tag == 'relref' or tree.tag == 'xref':
+            words += [('<' + tree.tag + '>', None, False, -1)]
 
         for node in tree.iterchildren():
             if node.tag not in CutNodes:
@@ -493,6 +495,8 @@ class Speller(CursesCommon):
         allWords = []
         if not self.interactive:
             for words in wordSet:
+                if words[1] is None:
+                    continue
                 newline = re.sub(r'\s*\n\s*', ' ',
                                  re.sub(r'\.\s*\n\s*', '.  ', words[0]))
                 xx = self.word_re.finditer(newline)
@@ -509,6 +513,8 @@ class Speller(CursesCommon):
         # do the spelling checking
         wordNo = -1
         for words in wordSet:
+            if words[1] is None:
+                continue
             xx = self.spell_re.finditer(words[0])
             for w in xx:
                 wordNo += 1
@@ -593,6 +599,8 @@ class Speller(CursesCommon):
         for line in wordSet:
             if isinstance(line[2], str):
                 text = line[1].attrib[line[2]]
+            elif line[1] is None:
+                text = line[0]
             elif line[2]:
                 text = line[1].text
             else:

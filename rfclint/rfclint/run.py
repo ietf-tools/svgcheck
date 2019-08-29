@@ -77,7 +77,7 @@ def main():
     parser_options.add_option('--no-xml', dest='no_xml', action='store_true',
                               help='Don\'t perform XML well-formness checking')
     parser_options.add_option('--bcp14', dest='bcp14', action='store_true',
-                              help='Done\'t perform bcp14 checking')
+                              help='Perform bcp14 checking')
     optionparser.add_option_group(general_options)
 
     plain_options = optparse.OptionGroup(optionparser, 'Plain Options')

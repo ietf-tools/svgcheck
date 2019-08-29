@@ -79,11 +79,11 @@ setup(
     # Versions should comply with PEP440.
     version=rfctools_common.__version__,
 
-    description="Verify that an svg file is compliant with the RFC standards.",
+    description="Common routines for a set of RFC Production center tools",
     long_description=long_description,
 
     # The projects main homepage.
-    url='https://tools.ietf.org/tools/ietfdb/browser/brance/elft/svgcheck/',
+    url='https://github.com/ietf-tools/RfcEditor/tree/master/rfctools_common',
 
     # Author details
     author='Jim Schaad',
@@ -94,7 +94,7 @@ setup(
 
     # Classifiers
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Other Audience',
         'Topic :: Text Processing',
         'Topic :: Text Processing :: Markup :: XML',

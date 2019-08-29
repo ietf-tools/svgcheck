@@ -131,6 +131,16 @@ class TestParserMethods(unittest.TestCase):
                              "Tests/rfc.xml"], "Results/rfc-02.out", "Results/rfc-02.err",
                       None, None)
 
+    def test_always_to_stdout(self):
+        check_process(self, [sys.executable, test_program, "--always-emit", "--no-xinclude",
+                             "Tests/good.svg"], "Results/colors.out", "Results/good.err",
+                      None, None)
+
+    def test_always2_to_stdout(self):
+        check_process(self, [sys.executable, test_program, "--always-emit", "--no-xinclude",
+                             "Tests/colors.svg"], "Results/colors.out", "Results/colors.err",
+                      None, None)
+
     def test_to_quiet(self):
         check_process(self, [sys.executable, test_program, "--no-xinclude", "--quiet",
                              "Tests/rfc.xml"], "Results/rfc-03.out",

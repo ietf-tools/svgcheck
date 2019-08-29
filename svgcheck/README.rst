@@ -39,13 +39,16 @@ the document.
     ``-h``           ``--help``              show the help message and exit
     ``-N``           ``--no-network``        don't use the network to resolve references
     ``-q``           ``--quiet``             dont print anything
-    ``-r``           ``--repair``            repair the SVG so it meets RFC 7966
+    ``-r``           ``--repair``            repair the SVG so it meets RFC 7966, only emit the new file if repairs are needed
+    ``-a``           ``--always-emit``       repair the SVG file if needed, emit the file even if no repairs are needed
     ``-v``           ``--verbose``           print extra information
     ``-V``           ``--version``           display the version number and exit
     ``-X``           ``--no-xinclude``       don't resolve xi:include elements
 
     ``-d RNG``       ``--rng=RNG``           specify an alternate RNG file
-    ``-o FILENAME``  ``--out=FILENAME``      specify an output filename
+    ``-o FILENAME``  ``--out=FILENAME``      specify an output filename, default to stdout
+    ``-g``           ``--grey-scale``        use a grey scale hieristic to determine what is white
+    .                ``--grey-level``        cut off level between black and white
     ===============  ======================= ==================================================
 
 Dependencies

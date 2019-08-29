@@ -241,6 +241,8 @@ xmlns_urls = (  # Whitelist of allowed URLs
 
 color_map = {
     'rgb(0,0,0)': 'black',
-    'rgb(255,255,255)': 'white',
-    '#fff': 'white'
+    #    'rgb(255,255,255)': 'white',
+    #    '#fff': 'white'
 }
+
+color_threshold = 764  # 764 = 255 + 255 + 254 - BC original value is 381

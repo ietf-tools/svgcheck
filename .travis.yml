@@ -38,7 +38,7 @@ install:
 
 script:
   - $PIP install -r requirements.txt
-  - export PATH=$PATH:${HOME}/build/Com-AugustCellars/RfcEditor/$BAP
+  - export PATH=$PATH:${HOME}/build/ietf-tools/RfcEditor/$BAP
   - pwd
   - mkdir dist
   - python --version

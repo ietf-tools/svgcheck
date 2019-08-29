@@ -105,10 +105,10 @@ class Dups(CursesCommon):
         last = None
         lastX = None
         for words in wordSet:
-            xx = self.dup_re.finditer(words[0])
             if words[1] is None:
                 last = None
                 continue
+            xx = self.dup_re.finditer(words[0])
             for w in xx:
                 g = w.group(0).strip().lower()
                 if last:

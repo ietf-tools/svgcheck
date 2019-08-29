@@ -52,23 +52,13 @@ class Lang2119(CursesCommon):
     def __init__(self, config):
         CursesCommon.__init__(self, config)
 
-        # [^\W\d_]
-        self.word_re = re.compile(r'(\W*\w+\W*)', re.UNICODE | re.MULTILINE)
-        self.word_re = re.compile(r'([\W\d_]*[^\W\d_]+[\W\d_]*)', re.UNICODE | re.MULTILINE)
-        # self.word_re = re.compile(r'\w+', re.UNICODE | re.MULTILINE)
+        self.bcp14_re = re.compile(u"MUST[ |\u00A0]NOT|MUST|REQUIRED|SHALL[ |\u00A0]NOT|SHALL|"
+                                   u"SHOULD[ |\u00A0]NOT|SHOULD|"
+                                   u"NOT[ |\u00A0]RECOMMENDED|RECOMMENDED|MAY|OPTIONAL", re.UNICODE)
 
-        # pattern to match output of aspell
-        self.aspell_re = re.compile(r".\s(\S+)\s(\d+)\s*((\d+): (.+))?", re.UNICODE)
-
-        self.spell_re = re.compile(r'\w[\w\'\u00B4\u2019]*\w', re.UNICODE)
-        self.spell_re = re.compile(r'[^\W\d_]([^\W\d_]|[\'\u00B4\u2019])*[^\W\d_]', re.UNICODE)
-
-        self.bcp14_re = re.compile(r"MUST NOT|MUST|REQUIRED|SHALL NOT|SHALL|SHOULD NOT|SHOULD|"
-                                   r"RECOMMENDED NOT|RECOMMENDED|MAY|OPTIONAL")
-
+        self.rewrite = False
         if config.options.output_filename is not None:
-            self.lastElement = None
-            self.textLocation = True
+            self.rewrite = True
 
     def processTree(self, tree):
         # log.warn("processTree - look at node {0}".format(tree.tag))
@@ -86,21 +76,42 @@ class Lang2119(CursesCommon):
                 inner = lxml.etree.tostring(tree, with_tail=False)
                 if not isinstance(inner, type('')):
                     inner = inner.decode('utf8')
-                log.error("text '{0}' in bcp14 tag is not bcp14 language".format(inner),
+                log.error(u"text '{0}' in bcp14 tag is not bcp14 language".format(inner),
                           where=tree)
             elif not self.bcp14_re.match(tree.text):
-                log.error("text '{0}' in bcp14 tag is not bcp14 language".
+                log.error(u"text '{0}' in bcp14 tag is not bcp14 language".
                           format(tree.text), where=tree)
-            return
-        if tree.text:
-            xx = self.bcp14_re.finditer(tree.text)
-            for x in xx:
-                log.error("bcp14 text '{0}' found with out bcp14 tag around it".
-                          format(x.group(0)), where=tree)
+        elif tree.text:
+            xx = self.bcp14_re.search(tree.text)
+            if xx:
+                if self.rewrite:
+                    xx = self.bcp14_re.search(tree.text)
+                    bcpNode = lxml.etree.SubElement(tree, "bcp14")
+                    bcpNode.text = xx.group(0)
+                    bcpNode.tail = tree.text[xx.end(0):]
+                    tree.text = tree.text[:xx.start(0)]
+                    tree.insert(0, bcpNode)
+                else:
+                    xx = self.bcp14_re.finditer(tree.text)
+                    for x in xx:
+                        log.error(u"bcp14 text '{0}' found without bcp14 tag around it".
+                                  format(x.group(0)), where=tree)
         if tree.tail:
-            xx = self.bcp14_re.finditer(tree.tail)
-            for x in xx:
-                log.error("bcp14 text '{0}' found with out bcp14 tag around it".
-                          format(x.group(0)), where=tree)
+            xx = self.bcp14_re.search(tree.tail)
+            if xx:
+                if self.rewrite:
+                    parent = tree.getparent()
+                    bcpNode = lxml.etree.SubElement(parent, "bcp14")
+                    bcpNode.text = xx.group(0)
+                    bcpNode.tail = tree.tail[xx.end(0):]
+                    tree.tail = tree.tail[:xx.start(0)]
+                    parent.insert(parent.index(tree)+1, bcpNode)
+                    self.checkTree(bcpNode)
+                else:
+                    xx = self.bcp14_re.finditer(tree.text)
+                    for x in xx:
+                        log.error(u"bcp14 text '{0}' found without bcp14 tag around it".
+                                  format(x.group(0)), where=tree)
+
         for node in tree.iterchildren():
             self.checkTree(node)

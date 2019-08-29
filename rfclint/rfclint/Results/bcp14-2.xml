@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<section>
+  <title>This MUST be done</title>
+  <t>
+    This contains a <bcp14>SHOULD NOT</bcp14> and a <bcp14>SHOULD</bcp14> not.
+    Also it <bcp14>IS NOT</bcp14> something reasonable.
+    <bcp14><i><bcp14>MUST NOT</bcp14></i></bcp14> be reasonable.
+    <em><bcp14>MAY</bcp14></em> be done as well.
+  </t>
+  <t>
+    This contains a <bcp14>SHOULD NOT</bcp14> be an error.
+  </t>
+</section>

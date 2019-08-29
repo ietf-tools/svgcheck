@@ -6,6 +6,7 @@ from svgcheck.checksvg import checkTree
 from svgcheck.__init__ import __version__
 from rfctools_common import log
 from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES
+import svgcheck.word_properties as wp
 
 
 def display_version(self, opt, value, parser):
@@ -54,6 +55,12 @@ def main():
     svg_options = optparse.OptionGroup(optionparser, 'SVG options')
     svg_options.add_option('-r', '--repair', action='store_true', default=False,
                            help='Repair the SVG so it meets RFC 7966')
+    svg_options.add_option('-a', '--always-emit', action='store_true', default=False,
+                           help='Emit the SVG file even if does not need repairing.  Implies -r')
+    svg_options.add_option('-g', '--grey-scale', action='store_true',
+                           help='Use grey scaling hieristic to determine what is white')
+    svg_options.add_option('--grey-level', default=381,
+                           help='Level to use for grey scaling, defaults to 381')
     optionparser.add_option_group(svg_options)
 
     # --- Parse and validate arguments --------------
@@ -83,6 +90,9 @@ def main():
 
     if options.clear_cache:
         clear_cache(options.cache)
+
+    if options.grey_scale:
+        wp.color_threshold = options.grey_level
 
     sourceText = None
     if len(args) < 1:
@@ -119,22 +129,24 @@ def main():
 
     # Check that
 
-    if not checkTree(xmlrfc.tree):
-        if options.repair:
-            encodedBytes = lxml.etree.tostring(xmlrfc.tree.getroot(),
-                                               xml_declaration=True,
-                                               encoding='utf-8',
-                                               pretty_print=True).decode('utf-8')
-            if options.output_filename is None:
-                file = sys.stdout
-            else:
-                file = open(options.output_filename, 'w')
-            log.write_to(file, encodedBytes)
-        log.error("File does not conform to SVG requirements")
-        sys.exit(1)
+    ok = checkTree(xmlrfc.tree)
+    if (not ok and options.repair) or options.always_emit:
+        encodedBytes = lxml.etree.tostring(xmlrfc.tree.getroot(),
+                                           xml_declaration=True,
+                                           encoding='utf-8',
+                                           pretty_print=True).decode('utf-8')
+        if options.output_filename is None:
+            file = sys.stdout
+        else:
+            file = open(options.output_filename, 'w')
+        log.write_to(file, encodedBytes)
 
-    log.info("File conforms to SVG requirements.")
-    sys.exit(0)
+    if ok:
+        log.info("File conforms to SVG requirements.")
+        sys.exit(0)
+
+    log.error("File does not conform to SVG requirements")
+    sys.exit(1)
 
 
 if __name__ == '__main__':

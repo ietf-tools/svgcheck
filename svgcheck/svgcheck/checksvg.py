@@ -114,7 +114,32 @@ def value_ok(obj, v):
     if obj == '<color>':
         if v in wp.color_map:
             return (False, wp.color_map[v])
+
+        # Heuristic conversion of color or grayscale
+        # when we get here, v is a non-conforming color element
+        if ('rgb(' not in v) and v[0] != '#':
+            return (False, wp.color_default)
+        if v[0] == '#' and len(v) == 7:
+            # hexadecimal color code
+            shade = int(v[1:3], 16) + int(v[3:5], 16) + int(v[5:7], 16)
+        elif v[0] == '#' and len(v) == 4:
+            shade = int(v[1], 16)*16 + int(v[1], 16) + int(v[2], 16)*16 + int(v[2], 16) + \
+                    int(v[3], 16)*16 + int(v[3], 16)
+        elif 'rgb(' in v:
+            triple = v.split('(')[1].split(')')[0].split(',')
+            if '%' in triple[0]:
+                shade = sum([int(t.replace('%', ''))*255/100 for t in triple])
+            else:
+                shade = sum([int(t) for t in triple])
+        else:
+            shade = 0
+
+        log.note(u"Color or grayscale heuristic applied to: '{0}' yields shade: '{1}'".
+                 format(v, shade))
+        if shade > wp.color_threshold:
+            return (False, 'white')
         return (False, wp.color_default)
+
     return (False, replaceWith)
 
 

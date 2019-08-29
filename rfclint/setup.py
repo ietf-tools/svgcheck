@@ -113,7 +113,7 @@ setup(
     long_description=long_description,
 
     # The projects main homepage.
-    url='https://tools.ietf.org/tools/ietfdb/browser/brance/elft/rfclint/',
+    url='https://github.com/ietf-tools/RfcEditor/tree/master/rfclint',
 
     # Author details
     author='Jim Schaad',
@@ -124,7 +124,7 @@ setup(
 
     # Classifiers
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: Other Audience',
         'Topic :: Text Processing',

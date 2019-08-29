@@ -1,11 +1,15 @@
-svgcheck (0.5.18) distribhution(s); urgency=low
+xmldiff (0.5.19) distribution(s); urgency=low
+
+	* Change source repository
+
+-- Jim Schaad <ietf@augustcellars.com>  Sun 24 Aug 2019 12:00:00 -0700
+
+xmldiff (0.5.18) distribution(s); urgency=low
 
 	* Fix error building paragraphs with 'li'
 	* Fix error in JavaScript
 
 -- Jim Schaad <ietf@augustcellars.com>  Sat 17 Aug 2019 12:00:00 -0700
-
-svgcheck (0.5.17) distribhution(s); urgency=low
 
 	* Remove Python 3.4 from the supported list
 	* Correct problem with writing unicode on Python 2.7
@@ -26,7 +30,7 @@ xmldiff (0.5.14) distribution(s); urgency=low
 
 -- Jim Schaad <ietf@augustcellars.com>  Sun 21 Apr 2019 12:00:00 -0800
 
-rfclint (0.5.13) distribution(s); urgency=low
+xmldiff (0.5.13) distribution(s); urgency=low
 
 	* Clean up so that pyflakes is happy
 

@@ -6,4 +6,7 @@
     <bcp14><i>MUST NOT</i></bcp14> be reasonable.
     <em><bcp14>MAY</bcp14></em> be done as well.
   </t>
+  <t>
+    This contains a SHOULD&#x00a0;NOT be an error.
+  </t>
 </section>

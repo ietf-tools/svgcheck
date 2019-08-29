@@ -1,0 +1,21 @@
+<section>
+  <title>
+    Test of re-write for BCP14
+  </title>
+  <t>
+    I need to have a MUST element that is only text.
+  </t>
+  <t>
+    I need a MUST element <em>that</em> has a following child.
+  </t>
+  <t>
+    I <em>need a</em> MUST element that <em>comes between</em> two elements.
+  </t>
+  <t>I <em> need</em> to have the word at the end MUST</t>
+  <t>I might was well make it at the end of a text too MUST</t>
+  <t>I MUST<em> need</em> an element directly after the key word.</t>
+  <t> MUST<em>keep MUST <tt> or MUST NOT</tt> </em>
+  <sub> SHOULD <tt>or MAY</tt> or MUST or must or "SHOULD NOT" <tt>RECOMMENDED
+  </tt></sub></t>
+</section>
+
