@@ -1,10 +1,10 @@
-rfclint (0.5.18) distribution(s); urgency=low
+rfclint (0.5.19) distribution(s); urgency=low
 
 	* Modify BCP14 if needed
 	* Add <xref> marker when spell checking
 	* Change the source tree pointer
 
--- Jim Schaad <ietf@augustcellars.com>  Sun 25 Aug 2019 12:00:00 -0700
+-- Jim Schaad <ietf@augustcellars.com>  Thur 29 Aug 2019 12:00:00 -0700
 
 rfclint (0.5.17) distribution(s); urgency=low
 

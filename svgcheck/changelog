@@ -1,9 +1,9 @@
-svgcheck (0.5.18) distribhution(s); urgency=low
+svgcheck (0.5.19) distribhution(s); urgency=low
 
 	* Move sources to an appropirate github location
 	* Always emit a file when repair is chosen
 
--- Jim Schaad <ietf@augustcellars.com>  Sun 25 Aug 2019 12:00:00 -070
+-- Jim Schaad <ietf@augustcellars.com>  Thur 29 Aug 2019 12:00:00 -070
 
 svgcheck (0.5.17) distribhution(s); urgency=low
 
