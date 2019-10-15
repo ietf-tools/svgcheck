@@ -3,7 +3,7 @@
 # ----------------------------------------------------
 
 # Static values
-__version__ = '0.5.18'
+__version__ = '0.6.0'
 NAME = 'xmldiff'
 VERSION = [int(i) if i.isdigit() else i for i in __version__.split('.')]
 

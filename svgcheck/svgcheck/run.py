@@ -6,11 +6,13 @@ from svgcheck.checksvg import checkTree
 from svgcheck.__init__ import __version__
 from rfctools_common import log
 from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES
+from rfctools_common.__init__ import __version__ as toolsVersion
 import svgcheck.word_properties as wp
 
 
 def display_version(self, opt, value, parser):
-    print(__version__)
+    print("svgcheck = " + __version__)
+    print("rfctools_common = " + toolsVersion)
     sys.exit()
 
 

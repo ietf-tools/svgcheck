@@ -14,6 +14,7 @@ from rfctools_common import log
 from rfctools_common.log import write_to
 from xmldiff.DiffNode import DiffRoot, BuildDiffTree, AddParagraphs
 from xmldiff.DiffNode import SourceFiles
+from rfctools_common.__init__ import __version__ as toolsVersion
 import string
 from xmldiff.zzs2 import distance
 # from xmldiff.zzs import distance, EditItem
@@ -37,7 +38,8 @@ except ImportError:
 
 
 def display_version(self, opt, value, parser):
-    print(__version__)
+    print("xmldiff = " + __version__)
+    print("rfctools_common = " + toolsVersion)
     sys.exit()
 
 

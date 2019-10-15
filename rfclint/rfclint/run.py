@@ -14,12 +14,14 @@ import lxml.etree
 import six
 from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES, CachingResolver
 from rfctools_common import log
+from rfctools_common.__init__ import __version__ as toolsVersion
 from rfclint.config import ConfigFile
 from rfclint.abnf import AbnfChecker, RfcLintError
 from rfclint.spell import Speller, SpellerColors
 from rfclint.dups import Dups
 from rfclint.must import Lang2119
 from svgcheck.checksvg import checkTree
+from svgcheck.__init__ import __version__ as svgcheckVersion
 import rfclint
 
 try:
@@ -30,7 +32,9 @@ except ImportError:
 
 
 def display_version(self, opt, value, parser):
-    print(rfclint.__version__)
+    print("rfclint = " + rfclint.__version__)
+    print("rfctools_common = " + toolsVersion)
+    print("svgcheck = " + svgcheckVersion)
     sys.exit()
 
 

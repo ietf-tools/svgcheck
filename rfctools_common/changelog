@@ -1,3 +1,10 @@
+rfctools-common (0.6.0) distribhution(s); urgency=low
+
+	* Update to the latest set of schema files
+	* Update the entity definition file with more values
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 10 Oct 2019 12:00:00 -0700
+
 rfctools-common (0.5.17) distribhution(s); urgency=low
 
 	* Remove Python 3.4 from the supported liste

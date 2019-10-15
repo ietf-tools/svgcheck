@@ -532,7 +532,7 @@ class XmlRfcParser:
             self.default_rng_path = None
         else:
             self.default_dtd_path = None
-            self.default_rng_path = os.path.join(self.templates_path, 'rfc7991.rng')
+            self.default_rng_path = os.path.join(self.templates_path, 'v3.rng')
 
         for prefix, value in self.nsmap.items():
             lxml.etree.register_namespace(prefix, value)
@@ -635,7 +635,7 @@ class XmlRfcParser:
 
         if self.format_version == "3":
             self.default_dtd_path = None
-            self.default_rng_path = os.path.join(self.templates_path, 'rfc7991.rng')
+            self.default_rng_path = os.path.join(self.templates_path, 'v3.rng')
 
         # now get a regular parser, and parse again, this time resolving entities
         parser = lxml.etree.XMLParser(dtd_validation=False,
