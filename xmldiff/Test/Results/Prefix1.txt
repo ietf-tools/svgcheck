@@ -1,0 +1,6 @@
+OP=3 left=   7 right=   9
+OP=4 left=   3 right=   3
+OP=3 left=   8 right=  10
+OP=4 left=   5 right=   6
+OP=4 left=   2 right=   2
+OP=4 left=   1 right=   1

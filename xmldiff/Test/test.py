@@ -351,6 +351,21 @@ class TestDistanceMethods(unittest.TestCase):
                       "Results/Empty.txt", "Results/Entity.err",
                       "Temp/Entity.html", "Results/Entity.html")
 
+    def test_Prefix1(self):
+        """ Deal with space presevation """
+        DistanceTest(self, "Tests/Prefix1.xml", "Tests/Prefix2.xml",
+                     "Results/Prefix1.txt", "Results/Prefix1.html", True)
+
+    def test_Regress1(self):
+        """ Deal with space presevation """
+        DistanceTest(self, "Tests/Regress1.xml", "Tests/Regress2.xml",
+                     "Results/Regress1.txt", "Results/Regress1.html", True)
+
+    def test_Regress2(self):
+        """ Deal with space presevation """
+        DistanceTest(self, "Tests/Regress2.xml", "Tests/Regress1.xml",
+                     "Results/Regress2.txt", "Results/Regress2.html", True)
+
 
 class TestOverlappedTrees(unittest.TestCase):
     """ Deal with tests for cases where sub-trees will overlap while merging """

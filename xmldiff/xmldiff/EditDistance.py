@@ -46,10 +46,10 @@ def ComputeEdits(leftArray, rightArray):
     opStart = ['equal', 0, minLength, 0, minLength]
     rangeStart = 0
     for i in range(minLength):
+        rangeStart = i
         if leftArray[i] != rightArray[i]:
             opStart[2] = i
             opStart[4] = i
-            rangeStart = i
             break
 
     if opStart[2] == minLength and minLength == S and minLength == T:
@@ -216,7 +216,8 @@ def ComputeEdits(leftArray, rightArray):
                 op[3] = op1[3]
                 op1 = op2
             else:
-                ops.append(op2)
+                ops.append(op)
+                op = op2
             op2 = None
 
         if op1[0] == op[0]:

@@ -1,0 +1,18 @@
+<section>
+  <t>
+    As this header element does not provide any trust, the header attribute can be in either a protected or unprotected header attribute.
+    <!--
+     [Is the point being made here that the header is incidental to any trust processing that is done on the basis of the certificates in the bag?
+     If so, I suggest the following text:
+     "As the trust mechanisms in operation here do not depend on the header element itself, the header attribute MAY be either protected or unprotected. "]
+    -->
+  </t>
+  <t>
+    <!--
+     [Is the point being made here that the header is incidental to any trust processing that is done on the basis of the certificates in the bag?
+     If so, I suggest the following text:
+     "As the trust mechanisms in operation here do not depend on the header element itself, the header attribute MAY be either protected or unprotected. "]
+    -->
+    As this header element does not provide any trust, the header attribute can be in either a protected or unprotected header attribute.
+  </t>
+</section>

@@ -1,0 +1,13 @@
+<section>
+      <t>
+	In some of these cases, a constrained device is being deployed in the context of an existing X.509 PKI: for example, in the 6TiSCH environment,
+  <!-- <xref target="draft-richardson-enrollment-roadmap-00"/>
+-->
+  describes a device enrollment solution that relies on the presence in the device of a factory-installed certificate.
+  The <xref target="I-D.selander-ace-cose-ecdhe"/> draft was also written with the idea that long term certificates could be used to provide for
+  authentication of devices, and uses them to establish session keys.
+	A third scenario is the use of COSE as the basis for a secure messaging application.
+  This scenario assumes the presence of long term keys and a central authentication authority.
+  Basing such an application on public key certificates allows it to make use of well established key management disciplines.
+      </t>
+</section>

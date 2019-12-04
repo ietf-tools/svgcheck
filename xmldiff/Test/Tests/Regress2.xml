@@ -1,0 +1,9 @@
+<section>
+      <t>
+	Some of the constrained device situations are being used where an X.509 PKI is already installed.
+	One of these situations is the 6TiSCH environment for enrollment of devices where the certificates are installed at the factory.
+	The <xref target="I-D.selander-ace-cose-ecdhe"/> draft was also written with the idea that long term certificates could be used to provide for authentication of devices and uses them to establish session keys.
+	A final scenario is the use of COSE as a messaging application where long term existence of keys can be used along with a central authentication authority.
+	The use of certificates in this scenario allows for key management to be used which is well understood.
+      </t>
+</section>
