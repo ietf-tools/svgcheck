@@ -629,7 +629,7 @@ class Speller(CursesCommon):
         #     list += "{0}) {1} ".format(chr(i + 0x31), suggest[i])
 
         for i in range(min(10, len(suggest))):
-            str1 = "{0}) {1}".format((i+1) % 10, suggest[i].strip())
+            str1 = u"{0}) {1}".format((i+1) % 10, suggest[i].strip())
             if self.curses:
                 self.curses.addstr(int(i/2) + curses.LINES-12, int(i % 2)*40, str1)
 

@@ -1,3 +1,9 @@
+rfclint (0.5.20) distribution(s); urgency=low
+
+	* If suggestion if UTF8, then force format template to be UTF8 for Python 2.0
+
+-- Jim Schaad <ietf@augustcellars.com>  Thur 9 Jan 2020 12:00:00 -0700
+
 rfclint (0.5.19) distribution(s); urgency=low
 
 	* Modify BCP14 if needed
