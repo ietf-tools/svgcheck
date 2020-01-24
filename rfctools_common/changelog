@@ -1,3 +1,9 @@
+rfctools-common (0.6.1) distribhution(s); urgency=low
+
+	* Remove module six from the setup
+
+-- Jim Schaad <ietf@augustcellars.com>  Fri 24 Jan 2020 12:00:00 -0700
+
 rfctools-common (0.6.0) distribhution(s); urgency=low
 
 	* Update to the latest set of schema files

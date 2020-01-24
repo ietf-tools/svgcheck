@@ -8,10 +8,6 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 import rfctools_common
-import six
-
-if six.PY3:
-    unicode = str
 
 here = path.abspath(path.dirname(__file__))
 
@@ -34,7 +30,7 @@ def parse(changelog):
     sig_line = "^ ?-- ([^<]+) <([^>]+)>  (.*?) *$"
 
     entries = []
-    if isinstance(changelog, str) or isinstance(changelog, unicode):
+    if isinstance(changelog, type('')):
         changelog = open(changelog, mode='rU', encoding='utf-8')
     for line in changelog:
         if re.match(ver_line, line):
