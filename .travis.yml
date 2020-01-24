@@ -37,40 +37,26 @@ install:
     - ./install.sh
 
 script:
-  - $PIP install -r requirements.txt
   - export PATH=$PATH:${HOME}/build/ietf-tools/RfcEditor/$BAP
   - pwd
   - mkdir dist
   - python --version
   - cd rfctools_common && $PYTHON setup.py --quiet install
   - pwd
-  - cd rfctools_common && $PYTHON test.py
-  - cd ../../svgcheck
-  - $PYTHON setup.py --quiet install
-  - cd svgcheck
-  - $PYTHON test.py
-  - cd ../../rfclint
-  - $PYTHON setup.py --quiet install
-  - cd rfclint
-  - $PYTHON test.py
-  - cd ../../xmldiff
-  - $PYTHON setup.py --quiet install
+  - cd ../rfclint && $PYTHON setup.py --quiet install
+  - cd ../svgcheck && $PYTHON setup.py --quiet install
+  - cd ../xmldiff && $PYTHON setup.py --quiet install
   - $PYTHON setup.py --quiet bdist_wheel
-  - cp dist/* ../dist
-  - cd Test
-  - $PYTHON test.py
+
+  - cd ..
+  - $PIP install -r requirements.txt
+  - cd rfctools_common/rfctools_common && $PYTHON test.py
+  - cd ../..
+  - cd svgcheck/svgcheck && $PYTHON test.py
+  - cd ../..
+  - cd rfclint/rfclint && $PYTHON test.py
+  - cd ../..
+  - cd xmldiff/test && $PYTHON test.py
   - cd ../..
   - ls dist
-
-before_deploy:
-  openssl aes-256-cbc -K $encrypted_b97c0a903367_key -iv $encrypted_b97c0a903367_iv -in deploy_key2.enc -out deploy_key -d
- 
-deploy:
-  provider: releases
-  api_key: "GITHUB AUTH TOKEN"
-  file_glob: true
-  file: dist/*
-  skip_cleanup: true
-  on:
-    tags: true
     
