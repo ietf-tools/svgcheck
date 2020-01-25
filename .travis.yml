@@ -56,7 +56,7 @@ script:
   - cd ../..
   - cd rfclint/rfclint && $PYTHON test.py
   - cd ../..
-  - cd xmldiff/test && $PYTHON test.py
+  - cd xmldiff/Test && $PYTHON test.py
   - cd ../..
+  - pwd
   - ls dist
-    
