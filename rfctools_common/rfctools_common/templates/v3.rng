@@ -173,6 +173,9 @@
       <optional>
         <ref name="boilerplate"/>
       </optional>
+      <optional>
+        <ref name="toc"/>
+      </optional>
     </element>
   </define>
   <define name="title">
@@ -189,7 +192,12 @@
       <optional>
         <attribute name="ascii"/>
       </optional>
-      <text/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="br"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="author">
@@ -222,10 +230,47 @@
       </optional>
       <optional>
         <attribute name="role">
-          <choice>
-            <value>editor</value>
-          </choice>
+          <value>editor</value>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="asciiFullname"/>
+      </optional>
+      <optional>
+        <ref name="organization"/>
+      </optional>
+      <optional>
+        <ref name="address"/>
+      </optional>
+    </element>
+  </define>
+  <define name="contact">
+    <element name="contact">
+      <optional>
+        <attribute name="xml:base"/>
+      </optional>
+      <optional>
+        <attribute name="xml:lang"/>
+      </optional>
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="initials"/>
+      </optional>
+      <optional>
+        <attribute name="asciiInitials"/>
+      </optional>
+      <optional>
+        <attribute name="surname"/>
+      </optional>
+      <optional>
+        <attribute name="asciiSurname"/>
+      </optional>
+      <optional>
+        <attribute name="fullname"/>
       </optional>
       <optional>
         <attribute name="asciiFullname"/>
@@ -303,42 +348,19 @@
         <zeroOrMore>
           <choice>
             <ref name="city"/>
+            <ref name="cityarea"/>
             <ref name="code"/>
             <ref name="country"/>
+            <ref name="extaddr"/>
+            <ref name="pobox"/>
             <ref name="region"/>
+            <ref name="sortingcode"/>
             <ref name="street"/>
           </choice>
         </zeroOrMore>
         <oneOrMore>
           <ref name="postalLine"/>
         </oneOrMore>
-        <interleave>
-          <optional>
-            <ref name="city"/>
-          </optional>
-          <optional>
-            <ref name="cityarea"/>
-          </optional>
-          <optional>
-            <ref name="code"/>
-          </optional>
-          <ref name="country"/>
-          <zeroOrMore>
-            <ref name="extaddr"/>
-          </zeroOrMore>
-          <optional>
-            <ref name="pobox"/>
-          </optional>
-          <optional>
-            <ref name="region"/>
-          </optional>
-          <optional>
-            <ref name="sortingcode"/>
-          </optional>
-          <zeroOrMore>
-            <ref name="street"/>
-          </zeroOrMore>
-        </interleave>
       </choice>
     </element>
   </define>
@@ -660,6 +682,19 @@
       </oneOrMore>
     </element>
   </define>
+  <define name="toc">
+    <element name="toc">
+      <optional>
+        <attribute name="xml:base"/>
+      </optional>
+      <optional>
+        <attribute name="xml:lang"/>
+      </optional>
+      <oneOrMore>
+        <ref name="section"/>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="middle">
     <element name="middle">
       <optional>
@@ -729,6 +764,7 @@
           <ref name="aside"/>
           <ref name="author"/>
           <ref name="blockquote"/>
+          <ref name="contact"/>
           <ref name="dl"/>
           <ref name="figure"/>
           <ref name="iref"/>
@@ -762,6 +798,7 @@
         <choice>
           <text/>
           <ref name="bcp14"/>
+          <ref name="br"/>
           <ref name="cref"/>
           <ref name="em"/>
           <ref name="eref"/>
@@ -774,6 +811,17 @@
           <ref name="xref"/>
         </choice>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <optional>
+        <attribute name="xml:base"/>
+      </optional>
+      <optional>
+        <attribute name="xml:lang"/>
+      </optional>
+      <empty/>
     </element>
   </define>
   <define name="t">
@@ -817,6 +865,8 @@
         <choice>
           <text/>
           <ref name="bcp14"/>
+          <ref name="br"/>
+          <ref name="contact"/>
           <ref name="cref"/>
           <ref name="em"/>
           <ref name="eref"/>
@@ -909,6 +959,7 @@
           <choice>
             <text/>
             <ref name="bcp14"/>
+            <ref name="br"/>
             <ref name="cref"/>
             <ref name="em"/>
             <ref name="eref"/>
@@ -1031,14 +1082,14 @@
             </choice>
           </attribute>
         </optional>
-        <optional>
-           <attribute name="indent"/>
-        </optional>
-        <optional>
-          <attribute name="pn">
-            <data type="ID"/>
-          </attribute>
-        </optional>
+      </optional>
+      <optional>
+        <attribute name="indent"/>
+      </optional>
+      <optional>
+        <attribute name="pn">
+          <data type="ID"/>
+        </attribute>
       </optional>
       <oneOrMore>
         <ref name="li"/>
@@ -1077,6 +1128,7 @@
             <ref name="ol"/>
             <ref name="sourcecode"/>
             <ref name="t"/>
+            <ref name="table"/>
             <ref name="ul"/>
           </choice>
         </oneOrMore>
@@ -1084,6 +1136,7 @@
           <choice>
             <text/>
             <ref name="bcp14"/>
+            <ref name="br"/>
             <ref name="cref"/>
             <ref name="em"/>
             <ref name="eref"/>
@@ -1165,6 +1218,7 @@
         <choice>
           <text/>
           <ref name="bcp14"/>
+          <ref name="br"/>
           <ref name="cref"/>
           <ref name="em"/>
           <ref name="eref"/>
@@ -1207,6 +1261,7 @@
             <ref name="ol"/>
             <ref name="sourcecode"/>
             <ref name="t"/>
+            <ref name="table"/>
             <ref name="ul"/>
           </choice>
         </oneOrMore>
@@ -1214,6 +1269,7 @@
           <choice>
             <text/>
             <ref name="bcp14"/>
+            <ref name="br"/>
             <ref name="cref"/>
             <ref name="em"/>
             <ref name="eref"/>
@@ -1281,7 +1337,16 @@
       <optional>
         <attribute name="derivedLink"/>
       </optional>
-      <text/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="em"/>
+          <ref name="strong"/>
+          <ref name="sub"/>
+          <ref name="sup"/>
+          <ref name="tt"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="relref">
@@ -1325,6 +1390,14 @@
       </optional>
       <optional>
         <attribute name="xml:lang"/>
+      </optional>
+      <optional>
+        <attribute name="brackets" a:defaultValue="none">
+          <choice>
+            <value>none</value>
+            <value>angle</value>
+          </choice>
+        </attribute>
       </optional>
       <attribute name="target"/>
       <text/>
@@ -1385,6 +1458,7 @@
       <zeroOrMore>
         <choice>
           <text/>
+          <ref name="br"/>
           <ref name="em"/>
           <ref name="eref"/>
           <ref name="relref"/>
@@ -1409,6 +1483,7 @@
         <choice>
           <text/>
           <ref name="bcp14"/>
+          <ref name="br"/>
           <ref name="cref"/>
           <ref name="em"/>
           <ref name="eref"/>
@@ -1434,6 +1509,7 @@
         <choice>
           <text/>
           <ref name="bcp14"/>
+          <ref name="br"/>
           <ref name="cref"/>
           <ref name="em"/>
           <ref name="eref"/>
@@ -1459,6 +1535,7 @@
         <choice>
           <text/>
           <ref name="bcp14"/>
+          <ref name="br"/>
           <ref name="cref"/>
           <ref name="eref"/>
           <ref name="iref"/>
@@ -1946,6 +2023,7 @@
           <choice>
             <text/>
             <ref name="bcp14"/>
+            <ref name="br"/>
             <ref name="cref"/>
             <ref name="em"/>
             <ref name="eref"/>
@@ -2007,6 +2085,7 @@
           <choice>
             <text/>
             <ref name="bcp14"/>
+            <ref name="br"/>
             <ref name="cref"/>
             <ref name="em"/>
             <ref name="eref"/>
