@@ -1,4 +1,21 @@
-# Check SVG against RFC schema
+<div align="center">
+    
+<img src="https://raw.githubusercontent.com/ietf-tools/common/main/assets/logos/ietf-svgcheck-logo.svg" alt="IETF SVGCHECK" width="600" />
+    
+[![Release](https://img.shields.io/github/release/ietf-tools/svgcheck.svg?style=flat&maxAge=600)](https://github.com/ietf-tools/svgcheck/releases)
+[![License](https://img.shields.io/github/license/ietf-tools/svgcheck)](https://github.com/ietf-tools/svgcheck/blob/main/LICENSE)
+[![PyPI - Version](https://img.shields.io/pypi/v/svgcheck)](https://pypi.org/project/svgcheck/)
+[![PyPI - Status](https://img.shields.io/pypi/status/svgcheck)](https://pypi.org/project/svgcheck/)
+[![PyPI - Format](https://img.shields.io/pypi/format/svgcheck)](https://pypi.org/project/svgcheck/)
+    
+##### Check SVG against RFC schema
+    
+</div>
+
+- [Changelog](https://github.com/ietf-tools/svgcheck/blob/main/CHANGELOG.md)
+- [Contributing](https://github.com/ietf-tools/svgcheck/blob/main/CONTRIBUTING.md)
+
+---
 
 This program takes an XML file containing an SVG or an RFC document.  It then compares all of the SVG elements with the schema defined in the document with [RFC 7996 bis](https://datatracker.ietf.org/doc/draft-7996-bis).
 The program has the option of modifying and writing out a version of the input that passes the defined schema.
