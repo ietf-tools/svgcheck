@@ -1,4 +1,0 @@
-ERROR: Unable to validate the XML document: Tests/bad_rfc_svg.xml
- Tests/bad_rfc_svg.xml: Line 13: Invalid attribute fill for element circle
- Tests/bad_rfc_svg.xml: Line 14: Did not expect element rectangle there
- Tests/bad_rfc_svg.xml: Line 14: Element svg has extra content: rectangle
