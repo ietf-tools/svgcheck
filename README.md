@@ -13,7 +13,7 @@
 </div>
 
 - [Changelog](https://github.com/ietf-tools/svgcheck/blob/main/CHANGELOG.md)
-- [Contributing](https://github.com/ietf-tools/svgcheck/blob/main/CONTRIBUTING.md)
+- [Contributing](https://github.com/ietf-tools/.github/blob/main/CONTRIBUTING.md)
 
 ---
 
