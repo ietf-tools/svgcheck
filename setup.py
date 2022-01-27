@@ -1,12 +1,15 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # --------------------------------------------------
 # Copyright The IETF Trust 2018, All Rights Reserved
 # --------------------------------------------------
 
-import re
-from setuptools import setup, find_packages
+from __future__ import unicode_literals, print_function, division
+
+import os
+
 from codecs import open
-from os
+from setuptools import setup
 
 here = os.path.abspath(os.path.dirname(__file__))
 
