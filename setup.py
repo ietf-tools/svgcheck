@@ -13,6 +13,10 @@ from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 
+# Get the requirements from the local requirements.txt file
+with open(os.path.join(here, 'requirements.txt'), encoding='utf-8') as file:
+    requirements = file.read().splitlines()
+
 # Get the long description from the README file
 with open(os.path.join(here, 'README.md'), encoding='utf-8') as file:
     long_description = file.read()
