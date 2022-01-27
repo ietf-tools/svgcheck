@@ -6,9 +6,9 @@
 import re
 from setuptools import setup, find_packages
 from codecs import open
-from os import path
+from os
 
-here = path.abspath(path.dirname(__file__))
+here = os.path.abspath(os.path.dirname(__file__))
 
 # Get the long description from the README file
 with open(os.path.join(here, 'README.md'), encoding='utf-8') as file:
