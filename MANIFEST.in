@@ -1,6 +1,6 @@
-include changelog
+include CHANGELOG.md
 include LICENSE
-include README.rst
+include README.md
 include requirements.txt
 include svgcheck/run.py
 include svgcheck/checksvg.py
