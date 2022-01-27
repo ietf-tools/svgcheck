@@ -3,3 +3,4 @@ requests>=2.5.0
 six
 rfctools_common>=0.6.0
 pycodestyle
+pyflakes>=0.8.1
