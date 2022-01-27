@@ -9,7 +9,7 @@ from __future__ import unicode_literals, print_function, division
 import os
 
 from codecs import open
-from setuptools import setup
+from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 
