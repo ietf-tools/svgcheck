@@ -1,6 +1,6 @@
 <div align="center">
     
-<img src="https://raw.githubusercontent.com/ietf-tools/common/main/assets/logos/ietf-svgcheck-logo.svg" alt="IETF SVGCHECK" width="600" />
+<img src="https://raw.githubusercontent.com/ietf-tools/common/main/assets/logos/svgcheck.svg" alt="SVGCHECK" height="125" />
     
 [![Release](https://img.shields.io/github/release/ietf-tools/svgcheck.svg?style=flat&maxAge=360)](https://github.com/ietf-tools/svgcheck/releases)
 [![License](https://img.shields.io/github/license/ietf-tools/svgcheck)](https://github.com/ietf-tools/svgcheck/blob/main/LICENSE)
