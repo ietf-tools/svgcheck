@@ -101,7 +101,7 @@ jobs:
       run: |
         echo "Using repository $TWINE_REPOSITORY_URL"
         twine check dist/*
-        twine upload --verbose dist/*
+        # twine upload --verbose dist/*
         
     - name: Update CHANGELOG
       id: changelog
