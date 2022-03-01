@@ -91,6 +91,7 @@ jobs:
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" svgcheck/__init__.py
         python ./setup.py setopt --command=metadata --option=version --set-value=$PKG_VERSION_STRICT
         python ./setup.py sdist --dist-dir dist
+        ls dist
         
     - name: Publish to Test PyPI
       if: env.SHOULD_DEPLOY != 'true'
@@ -139,3 +140,4 @@ jobs:
           CHANGELOG.md
           setup.cfg
           svgcheck/__init__.py
+          dist/*.tar.gz
