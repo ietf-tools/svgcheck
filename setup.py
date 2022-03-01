@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # --------------------------------------------------
-# Copyright The IETF Trust 2018, All Rights Reserved
+# Copyright The IETF Trust 2018-2022, All Rights Reserved
 # --------------------------------------------------
 
 from __future__ import unicode_literals, print_function, division
@@ -36,7 +36,7 @@ setup(
     author_email='ietf@augustcellars.com',
 
     # Choose your license
-    license='Simplified BSD',
+    license='BSD-3-Clause',
 
     # Classifiers
     classifiers = [

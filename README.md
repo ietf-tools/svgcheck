@@ -47,7 +47,7 @@ svgcheck [options] SOURCE
 | `-d RNG`      | `--rng=RNG`      | specify an alternate RNG file                                                     |
 | `-o FILENAME` | `--out=FILENAME` | specify an output filename, default to stdout                                     |
 | `-g`          | `--grey-scale`   | use a grey scale hieristic to determine what is white                             |
-| `.`           | `--grey-level`   | cut off level between black and white                                             |
+|               | `--grey-level`   | cut off level between black and white                                             |
 
 ## Dependencies
 
