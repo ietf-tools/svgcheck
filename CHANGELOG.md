@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.6.1] - 2022-04-05
+### :white_check_mark: Tests
+- [`265b214`](https://github.com/ietf-tools/svgcheck/commit/265b2147961b1adafaded13be8f154bd2354357a) - add tox.ini *(commit by [@NGPixel](https://github.com/NGPixel))*
+- [`5e75de3`](https://github.com/ietf-tools/svgcheck/commit/5e75de35d4122a450884dd1f97212bd22f56febb) - fix test entry path *(commit by [@NGPixel](https://github.com/NGPixel))*
+- [`689ebe0`](https://github.com/ietf-tools/svgcheck/commit/689ebe07be31edfa5dd4cb164e86cf0526713f81) - add missing pycodestyle *(commit by [@NGPixel](https://github.com/NGPixel))*
+- [`91febab`](https://github.com/ietf-tools/svgcheck/commit/91febab5098d70da944233f62590338131ed75f7) - missing pyflakes *(commit by [@NGPixel](https://github.com/NGPixel))*
+- [`217f4a7`](https://github.com/ietf-tools/svgcheck/commit/217f4a7e29a8d1df6c735ba78a2d87be3b8c2874) - update Results. address pep8 complaint. *(PR [#3](https://github.com/ietf-tools/svgcheck/pull/3) by [@rjsparks](https://github.com/rjsparks))*
+
+### :wrench: Chores
+- [`5da8749`](https://github.com/ietf-tools/svgcheck/commit/5da8749f0505065634d1d1ada9921e86bda6464f) - exclude non-svgcheck files *(commit by [@NGPixel](https://github.com/NGPixel))*
+
+
 ## [0.5.19] - 2019-08-29
 
 ### Changed
@@ -115,3 +127,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.0.3]: https://github.com/ietf-tools/rfc2html/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/ietf-tools/rfc2html/compare/0.0.1...0.0.2
 [0.0.1]: https://github.com/ietf-tools/rfc2html/releases/tag/0.0.1
+
+[v0.6.1]: https://github.com/ietf-tools/svgcheck/compare/0.6.0...v0.6.1
