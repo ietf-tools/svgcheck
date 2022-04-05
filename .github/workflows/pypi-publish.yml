@@ -129,7 +129,7 @@ jobs:
         tag: ${{ env.PKG_VERSION }}
         name: ${{ env.PKG_VERSION }}
         body: ${{ steps.changelog.outputs.changes }}
-        artifacts: "dist/**"
+        artifacts: "dist/*.tar.gz"
         token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Upload Build Artifacts
