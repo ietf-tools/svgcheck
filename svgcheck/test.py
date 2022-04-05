@@ -274,8 +274,8 @@ def check_results(file1, file2Name):
     result = list(d.compare(lines1, lines2))
 
     hasError = False
-    for l in result:
-        if l[0:2] == '+ ' or l[0:2] == '- ':
+    for line in result:
+        if line[0:2] == '+ ' or line[0:2] == '- ':
             hasError = True
             break
 
@@ -317,8 +317,8 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
         result = list(d.compare(lines1, lines2))
 
         hasError = False
-        for l in result:
-            if l[0:2] == '+ ' or l[0:2] == '- ':
+        for line in result:
+            if line[0:2] == '+ ' or line[0:2] == '- ':
                 hasError = True
                 break
         if hasError:
@@ -344,8 +344,8 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
         result = list(d.compare(lines1, lines2))
 
         hasError = False
-        for l in result:
-            if l[0:2] == '+ ' or l[0:2] == '- ':
+        for line in result:
+            if line[0:2] == '+ ' or line[0:2] == '- ':
                 hasError = True
                 break
         if hasError:
@@ -364,8 +364,8 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
         result = list(d.compare(lines1, lines2))
 
         hasError = False
-        for l in result:
-            if l[0:2] == '+ ' or l[0:2] == '- ':
+        for line in result:
+            if line[0:2] == '+ ' or line[0:2] == '- ':
                 hasError = True
                 break
 
