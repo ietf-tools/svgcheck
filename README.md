@@ -19,7 +19,6 @@
 
 This program takes an XML file containing an SVG or an RFC document.  It then compares all of the SVG elements with the schema defined in the document with [RFC 7996 bis](https://datatracker.ietf.org/doc/draft-7996-bis). The program has the option of modifying and writing out a version of the input that passes the defined schema.
 
-The [RFC Editor](https://www.rfc-editor.org) is in the process of changing the canonical input format of [Internet-Draft](https://en.wikipedia.org/wiki/Internet_Draft) and [RFC](https://en.wikipedia.org/wiki/Request_for_Comments) docuemnts.  As part of this process, the ability to create artwork which is not ASCII text is being introduced.  This is being done with SVG. However, the full set of SVG does not match with the archival nature of RFCs so a subset of the SVG specification is being defined by the RFC Editor that eliminates many capabilities such as animation.  Additionally, there is a requirement that the images have the widest possible usage both by printers, monochrome displays and individuals with visual disabilities.  Further information on the process can be found on the RFC Editor at the [RFC Editor](https://www.rfc-editor.org) site.
 
 ## Usage
 
