@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.6.2] - 2023-01-19
+### :bug: Bug Fixes
+- [`f07f3ac`](https://github.com/ietf-tools/svgcheck/commit/f07f3aca8f051641f5e50c79a2f9c21a84f4b35b) - remove obsolete text. Fixes [#19](https://github.com/ietf-tools/svgcheck/pull/19). *(commit by [@rjsparks](https://github.com/rjsparks))*
+
+
 ## [v0.6.1] - 2022-04-05
 ### :white_check_mark: Tests
 - [`265b214`](https://github.com/ietf-tools/svgcheck/commit/265b2147961b1adafaded13be8f154bd2354357a) - add tox.ini *(commit by [@NGPixel](https://github.com/NGPixel))*
@@ -129,3 +134,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.0.1]: https://github.com/ietf-tools/rfc2html/releases/tag/0.0.1
 
 [v0.6.1]: https://github.com/ietf-tools/svgcheck/compare/0.6.0...v0.6.1
+[v0.6.2]: https://github.com/ietf-tools/svgcheck/compare/v0.6.1...v0.6.2
