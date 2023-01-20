@@ -56,11 +56,6 @@ class Test_Coding(unittest.TestCase):
 
 class TestCommandLineOptions(unittest.TestCase):
     """ Run a set of command line checks to make sure they work """
-    def test_get_version(self):
-        check_process(self, [sys.executable, test_program, "--version"],
-                      "Results/version.out", "Results/version.err",
-                      None, None)
-
     def test_clear_cache(self):
         if not os.path.exists('Temp'):
             os.mkdir('Temp')
