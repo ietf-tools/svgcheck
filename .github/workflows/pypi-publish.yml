@@ -89,8 +89,7 @@ jobs:
       run: |
         echo "Using version $PKG_VERSION_STRICT"
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" svgcheck/__init__.py
-        python ./setup.py setopt --command=metadata --option=version --set-value=$PKG_VERSION_STRICT
-        python ./setup.py sdist --dist-dir dist
+        python -m build
         ls dist
         
     - name: Publish to Test PyPI
