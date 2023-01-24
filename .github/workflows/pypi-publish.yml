@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
         
@@ -70,9 +70,9 @@ jobs:
         fi
     
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.10'
         
     - name: Install Python dependencies
       env:
@@ -80,7 +80,7 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
-        python -m pip install --upgrade pip setuptools wheel twine
+        python -m pip install --upgrade pip build twine
         pip install build
         sudo apt update
         sudo apt install -y twine
@@ -89,8 +89,12 @@ jobs:
       run: |
         echo "Using version $PKG_VERSION_STRICT"
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" svgcheck/__init__.py
-        python ./setup.py setopt --command=metadata --option=version --set-value=$PKG_VERSION_STRICT
-        python ./setup.py sdist --dist-dir dist
+        source venv/bin/activate
+        if [[ $SHOULD_DEPLOY == false ]]; then
+          python -m build --config-setting=--build-option="setopt --command=metadata --option=version --set-value=$PKG_VERSION_STRICT"
+          rm -rf dist
+        fi
+        python -m build --sdist
         ls dist
         
     - name: Publish to Test PyPI
