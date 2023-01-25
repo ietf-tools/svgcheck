@@ -5,7 +5,7 @@
 
 # From a simple original version by Joe Hildebrand
 
-from rfctools_common import log
+from svgcheck import log
 
 import re
 

@@ -1,4 +1,3 @@
-Parsing file Tests/full-tiny.xml
 http://example.org/label:2: The element 'svg' does not allow the attribute 'pointer-events', attribute to be removed.
 http://example.org/label:2: The element 'svg' does not allow the attribute 'audio-level', attribute to be removed.
 http://example.org/label:2: The element 'svg' does not allow the attribute 'focusHighlight', attribute to be removed.

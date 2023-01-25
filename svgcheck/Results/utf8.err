@@ -1,7 +1,3 @@
-Parsing file Tests/utf8.svg
-Tests/utf8.svg:3: The element 'svg' does not allow the attribute 'zoomAndPan', attribute to be removed.
-Tests/utf8.svg:3: The element 'svg' does not allow the attribute 'contentScriptType', attribute to be removed.
-Tests/utf8.svg:3: The element 'svg' does not allow the attribute 'contentStyleType', attribute to be removed.
 Tests/utf8.svg:5: The element 'clipPath' is not allowed as a child of 'defs'
 Tests/utf8.svg:8: The element 'clipPath' is not allowed as a child of 'defs'
 Tests/utf8.svg:13: Element 'g' does not allow attributes with namespace 'http://xml.openoffice.org/svg/export'

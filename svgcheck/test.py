@@ -6,10 +6,10 @@ import lxml.etree
 import subprocess
 import six
 import sys
-from rfctools_common.parser import XmlRfcParser
-from rfctools_common import log
+from xml2rfc.parser import XmlRfcParser
 import difflib
 from svgcheck.checksvg import checkTree
+from svgcheck import log
 import io
 
 test_program = "svgcheck"
@@ -108,16 +108,11 @@ class TestParserMethods(unittest.TestCase):
         """ Tests/malformed.svg """
         test_svg_file(self, "malformed.svg")
 
-    @unittest.skipIf(os.name != 'nt', "xi:include does not work correctly on Linux")
-    def test_rfc(self):
-        """ Tests/rfc.xml: Test an XML file w/ two pictures """
-        test_rfc_file(self, "rfc.xml")
-
     def test_simple_sub(self):
         if not os.path.exists('Temp'):
             os.mkdir('Temp')
         check_process(self, [sys.executable, test_program, "--out=Temp/rfc.xml",
-                             "--repair", "--no-xinclude", "Tests/rfc.xml"],
+                             "--repair", "Tests/rfc.xml"],
                       "Results/rfc-01.out", "Results/rfc-01.err",
                       "Results/rfc-01.xml", "Temp/rfc.xml")
 
@@ -196,42 +191,18 @@ class TestViewBox(unittest.TestCase):
         test_svg_file(self, "viewBox-both.svg")
 
 
-def test_rfc_file(tester, fileName):
-    """ Run the basic tests for a single input file """
-
-    basename = os.path.basename(fileName)
-    parse = XmlRfcParser("Tests/" + fileName, quiet=True, cache_path=None, no_network=True,
-                         preserve_all_white=True)
-    tree = parse.parse(remove_comments=False, remove_pis=True, strip_cdata=False)
-
-    log.write_out = io.StringIO()
-    log.write_err = log.write_out
-    checkTree(tree.tree)
-
-    returnValue = check_results(log.write_out, "Results/" + basename.replace(".xml", ".out"))
-    tester.assertFalse(returnValue, "Output to console is different")
-
-    result = io.StringIO(lxml.etree.tostring(tree.tree,
-                                             xml_declaration=True,
-                                             encoding='utf-8',
-                                             pretty_print=True).decode('utf-8'))
-    returnValue = check_results(result, "Results/" + basename)
-    tester.assertFalse(returnValue, "Result from editing the tree is different")
-
-
 def test_svg_file(tester, fileName):
     """ Run the basic tests for a single input file """
 
     basename = os.path.basename(fileName)
-    parse = XmlRfcParser("Tests/" + fileName, quiet=True, cache_path=None, no_network=True,
-                         preserve_all_white=True)
+    parse = XmlRfcParser("Tests/" + fileName, quiet=True, cache_path=None, no_network=True)
     tree = parse.parse(remove_comments=False, remove_pis=True, strip_cdata=False)
 
     log.write_out = io.StringIO()
     log.write_err = log.write_out
     checkTree(tree.tree)
 
-    (result, errors) = tree.validate(rng_path=parse.default_rng_path.replace("rfc7991", "svg"))
+    (result, errors) = tree.validate()
 
     returnValue = check_results(log.write_out, "Results/" + basename.replace(".svg", ".out"))
     tester.assertFalse(returnValue, "Output to console is different")
