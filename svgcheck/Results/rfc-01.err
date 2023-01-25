@@ -1,3 +1,2 @@
-Parsing file Tests/rfc.xml
 Tests/rfc.xml:24: The attribute 'fill' does not allow the value 'red', replaced with 'black'
 ERROR: File does not conform to SVG requirements

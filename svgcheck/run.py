@@ -1,23 +1,30 @@
 import sys
 import optparse
 import os
+import shutil
 import lxml.etree
 from svgcheck.checksvg import checkTree
 from svgcheck.__init__ import __version__
-from rfctools_common import log
-from rfctools_common.parser import XmlRfcParser, XmlRfcError, CACHES
-from rfctools_common.__init__ import __version__ as toolsVersion
+from svgcheck import log
+from xml2rfc.parser import XmlRfcParser, XmlRfcError
+from xml2rfc import CACHES, CACHE_PREFIX
 import svgcheck.word_properties as wp
 
 
 def display_version(self, opt, value, parser):
     print("svgcheck = " + __version__)
-    print("rfctools_common = " + toolsVersion)
     sys.exit()
 
 
 def clear_cache(cache_path):
-    XmlRfcParser('', cache_path=cache_path).delete_cache()
+    # Explicit path given?
+    paths = [os.path.expanduser(cache_path) for cache_path in CACHES]
+    caches = cache_path and [cache_path] or paths
+    for dir in caches:
+        path = os.path.join(dir, CACHE_PREFIX)
+        if os.access(path, os.W_OK):
+            shutil.rmtree(path)
+            log.write('Deleted cache directory at', path)
     sys.exit()
 
 
@@ -96,9 +103,7 @@ def main():
     if options.grey_scale:
         wp.color_threshold = options.grey_level
 
-    sourceText = None
     if len(args) < 1:
-        sourceText = sys.stdin.read()
         source = os.getcwd() + "/stdin"
     else:
         source = args[0]
@@ -112,14 +117,12 @@ def main():
 
     # Parse the document into an xmlrfc tree instance
     parser = XmlRfcParser(source, verbose=options.verbose,
-                          preserve_all_white=True,
                           quiet=options.quiet,
                           cache_path=options.cache,
-                          no_network=options.no_network,
-                          no_xinclude=options.no_xinclude)
+                          no_network=options.no_network)
     try:
         xmlrfc = parser.parse(remove_pis=True, remove_comments=False,
-                              strip_cdata=False, textIn=sourceText)
+                              strip_cdata=False)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + source, e)
         sys.exit(1)
