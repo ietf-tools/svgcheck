@@ -143,8 +143,8 @@ def main():
         if options.output_filename is None:
             file = sys.stdout
         else:
-            file = open(options.output_filename, 'w')
-        log.write_to(file, encodedBytes)
+            file = open(options.output_filename, 'w', encoding='utf-8')
+        file.write(encodedBytes)
 
     if ok:
         log.info("File conforms to SVG requirements.")
