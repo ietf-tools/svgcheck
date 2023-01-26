@@ -3,3 +3,6 @@ branch=True
 omit =
      */rfctools_common/*
 parallel=True
+
+[report]
+show_missing = true
