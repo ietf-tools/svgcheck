@@ -42,7 +42,6 @@ svgcheck [options] SOURCE
 | `-a`          | `--always-emit`  | repair the SVG file if needed, emit the file even if no repairs are needed        |
 | `-v`          | `--verbose`      | print extra information                                                           |
 | `-V`          | `--version`      | display the version number and exit                                               |
-| `-X`          | `--no-xinclude`  | don't resolve xi:include elements                                                 |
 | `-d RNG`      | `--rng=RNG`      | specify an alternate RNG file                                                     |
 | `-o FILENAME` | `--out=FILENAME` | specify an output filename, default to stdout                                     |
 | `-g`          | `--grey-scale`   | use a grey scale hieristic to determine what is white                             |
@@ -53,5 +52,4 @@ svgcheck [options] SOURCE
 `svgcheck` depends on the following packages:
 
 - [lxml](http://lxml.de) *(>= 4.1.1)*
-- [requests](http://docs.python-requests.org) *(>= 2.5.0)*
-- [rfctools_common](https://pypi.python.org/pypi/pip) *(>= 0.5.5)*
+- [xml2rfc](https://github.com/ietf-tools/xml2rfc/) *(>= 3.16.0)*
