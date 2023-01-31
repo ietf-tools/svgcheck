@@ -90,10 +90,8 @@ jobs:
         echo "Using version $PKG_VERSION_STRICT"
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" svgcheck/__init__.py
         source venv/bin/activate
-        if [[ $SHOULD_DEPLOY == false ]]; then
-          python -m build --config-setting=--build-option="setopt --command=metadata --option=version --set-value=$PKG_VERSION_STRICT"
-          rm -rf dist
-        fi
+        python -m build --config-setting=--build-option="setopt --command=metadata --option=version --set-value=$PKG_VERSION_STRICT"
+        rm -rf dist
         python -m build --sdist
         ls dist
         
