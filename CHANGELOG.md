@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.7.0] - 2023-01-31
+### :sparkles: New Features
+- [`ac1cc51`](https://github.com/ietf-tools/svgcheck/commit/ac1cc516f29da1495dfa10e4cfed0b7f720363be) - Use xml2rfc *(PR [#28](https://github.com/ietf-tools/svgcheck/pull/28) by [@kesara](https://github.com/kesara))*
+- [`8935e20`](https://github.com/ietf-tools/svgcheck/commit/8935e206769cfe158247c935120271190c27d17a) - Add support for Python 3.11 *(PR [#30](https://github.com/ietf-tools/svgcheck/pull/30) by [@kesara](https://github.com/kesara))*
+- [`d1076d2`](https://github.com/ietf-tools/svgcheck/commit/d1076d2ec1a4f73e9992f23d942b38730c7f56a2) - Remove command line option --no-xinclude *(PR [#32](https://github.com/ietf-tools/svgcheck/pull/32) by [@kesara](https://github.com/kesara))*
+
+### :recycle: Refactors
+- [`57299b5`](https://github.com/ietf-tools/svgcheck/commit/57299b5873f1a61b3288987ab673611d6f7e562c) - Drop dependency on six in log module *(PR [#29](https://github.com/ietf-tools/svgcheck/pull/29) by [@kesara](https://github.com/kesara))*
+
+### :wrench: Chores
+- [`5cafacd`](https://github.com/ietf-tools/svgcheck/commit/5cafacdc47df0128199938aee848c941162b9b13) - Move to setup.cfg *(PR [#24](https://github.com/ietf-tools/svgcheck/pull/24) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1](undefined) opened by [@dkg](https://github.com/dkg)*
+  - :arrow_lower_right: *addresses issue [#6](undefined) opened by [@rjsparks](https://github.com/rjsparks)*
+
+
 ## [v0.6.2] - 2023-01-19
 ### :bug: Bug Fixes
 - [`f07f3ac`](https://github.com/ietf-tools/svgcheck/commit/f07f3aca8f051641f5e50c79a2f9c21a84f4b35b) - remove obsolete text. Fixes [#19](https://github.com/ietf-tools/svgcheck/pull/19). *(commit by [@rjsparks](https://github.com/rjsparks))*
@@ -135,3 +150,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [v0.6.1]: https://github.com/ietf-tools/svgcheck/compare/0.6.0...v0.6.1
 [v0.6.2]: https://github.com/ietf-tools/svgcheck/compare/v0.6.1...v0.6.2
+[v0.7.0]: https://github.com/ietf-tools/svgcheck/compare/v0.6.2...v0.7.0
