@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.7.1] - 2023-02-01
+### :bug: Bug Fixes
+- [`182b486`](https://github.com/ietf-tools/svgcheck/commit/182b486d86cb98561d34bda2050e53a5dba34400) - No op --no-xinclude option *(PR [#35](https://github.com/ietf-tools/svgcheck/pull/35) by [@kesara](https://github.com/kesara))*
+
+
 ## [v0.7.0] - 2023-01-31
 ### :sparkles: New Features
 - [`ac1cc51`](https://github.com/ietf-tools/svgcheck/commit/ac1cc516f29da1495dfa10e4cfed0b7f720363be) - Use xml2rfc *(PR [#28](https://github.com/ietf-tools/svgcheck/pull/28) by [@kesara](https://github.com/kesara))*
@@ -151,3 +156,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.6.1]: https://github.com/ietf-tools/svgcheck/compare/0.6.0...v0.6.1
 [v0.6.2]: https://github.com/ietf-tools/svgcheck/compare/v0.6.1...v0.6.2
 [v0.7.0]: https://github.com/ietf-tools/svgcheck/compare/v0.6.2...v0.7.0
+[v0.7.1]: https://github.com/ietf-tools/svgcheck/compare/v0.7.0...v0.7.1
