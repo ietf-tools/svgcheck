@@ -38,6 +38,8 @@ def main():
     parser_options = optparse.OptionGroup(optionparser, 'Parser Options')
     parser_options.add_option('-N', '--no-network', action='store_true', default=False,
                               help='don\'t use the network to resolve references')
+    parser_options.add_option('-X', "--no-xinclude", action='store_true', default=False,
+                              help='This option is deprecated and has no effect.')
 
     parser_options.add_option('-C', '--clear-cache', action='store_true', dest='clear_cache',
                               default=False, help='purge the cache and exit')
@@ -78,6 +80,9 @@ def main():
     # rfclint.log.warn_error = options.warn_error and True or False
     log.quiet = options.quiet and True or False
     log.verbose = options.verbose
+
+    if options.no_xinclude:
+        log.warn('--no-xinclude option is deprecated and has no effect.')
 
     if options.cache:
         if not os.path.exists(options.cache):
