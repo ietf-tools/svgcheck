@@ -4,7 +4,6 @@ import os
 import shutil
 import lxml.etree
 import subprocess
-import six
 import sys
 from xml2rfc.parser import XmlRfcParser
 import difflib
@@ -46,9 +45,8 @@ class Test_Coding(unittest.TestCase):
         (stdoutX, stderrX) = p.communicate()
         ret = p.wait()
         if ret > 0:
-            if six.PY3:
-                stdoutX = stdoutX.decode('utf-8')
-                stderrX = stderrX.decode('utf-8')
+            stdoutX = stdoutX.decode('utf-8')
+            stderrX = stderrX.decode('utf-8')
             print(stdoutX)
             print(stderrX)
             self.assertEqual(ret, 0)
@@ -269,10 +267,7 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
         with io.open(stdoutFile, 'r', encoding='utf-8') as f:
             lines2 = f.readlines()
 
-        if six.PY2:
-            lines1 = stdoutX.decode('utf-8').splitlines(True)
-        else:
-            lines1 = stdoutX.decode('utf-8').splitlines(True)
+        lines1 = stdoutX.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
             lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\')
@@ -296,10 +291,7 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
         with io.open(errFile, 'r', encoding='utf-8') as f:
             lines2 = f.readlines()
 
-        if six.PY2:
-            lines1 = stderr.decode('utf-8').splitlines(True)
-        else:
-            lines1 = stderr.decode('utf-8').splitlines(True)
+        lines1 = stderr.decode('utf-8').splitlines(True)
 
         if os.name == 'nt':
             lines2 = [line.replace('Tests/', 'Tests\\').replace('Temp/', 'Temp\\')
