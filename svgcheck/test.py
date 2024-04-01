@@ -219,7 +219,7 @@ def check_results(file1, file2Name):
          any differences
     """
 
-    with io.open(file2Name, 'r', encoding='utf-8') as f:
+    with open(file2Name, encoding='utf-8') as f:
         lines2 = f.readlines()
 
     if os.name == 'nt' and (file2Name.endswith(".out") or file2Name.endswith(".err")):
@@ -264,7 +264,7 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
 
     returnValue = True
     if stdoutFile is not None:
-        with io.open(stdoutFile, 'r', encoding='utf-8') as f:
+        with open(stdoutFile, encoding='utf-8') as f:
             lines2 = f.readlines()
 
         lines1 = stdoutX.decode('utf-8').splitlines(True)
@@ -288,7 +288,7 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             returnValue = False
 
     if errFile is not None:
-        with io.open(errFile, 'r', encoding='utf-8') as f:
+        with open(errFile, encoding='utf-8') as f:
             lines2 = f.readlines()
 
         lines1 = stderr.decode('utf-8').splitlines(True)
@@ -312,10 +312,10 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
             returnValue = False
 
     if generatedFile is not None:
-        with io.open(generatedFile, 'r', encoding='utf-8') as f:
+        with open(generatedFile, encoding='utf-8') as f:
             lines2 = f.readlines()
 
-        with io.open(compareFile, 'r', encoding='utf-8') as f:
+        with open(compareFile, encoding='utf-8') as f:
             lines1 = f.readlines()
 
         d = difflib.Differ()
