@@ -176,8 +176,6 @@ properties = {
     'fill-rule':           ('nonzero', 'evenodd', 'inherit'),
     'fill-opacity':        (),  # 'inherit'
 
-    'height':              ('<number>',),
-
     'requiredFeatures': (),
     'requiredFormats': (),
     'requiredExtensions': (),
