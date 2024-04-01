@@ -81,7 +81,7 @@ def error(*args, **kwargs):
     if 'additional' in kwargs:
         prefix = ' ' * kwargs['additional']
 
-    write_err.write(prefix + u' '.join(args))
+    write_err.write(prefix + ' '.join(args))
     write_err.write('\n')
     write_err.flush()
 

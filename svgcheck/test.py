@@ -284,7 +284,7 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
                 break
         if hasError:
             print("stdout:")
-            print(u"".join(result))
+            print("".join(result))
             returnValue = False
 
     if errFile is not None:
@@ -329,7 +329,7 @@ def check_process(tester, args, stdoutFile, errFile, generatedFile, compareFile)
 
         if hasError:
             print(generatedFile)
-            print(u"".join(result))
+            print("".join(result))
             returnValue = False
 
     tester.assertTrue(returnValue, "Comparisons failed")

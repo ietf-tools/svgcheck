@@ -134,7 +134,7 @@ def value_ok(obj, v):
         else:
             shade = 0
 
-        log.note(u"Color or grayscale heuristic applied to: '{0}' yields shade: '{1}'".
+        log.note("Color or grayscale heuristic applied to: '{0}' yields shade: '{1}'".
                  format(v, shade))
         if shade > wp.color_threshold:
             return (False, 'white')
@@ -236,12 +236,12 @@ def check(el, depth=0):
                     errorCount += 1
                     if new_val is not None:
                         el.attrib[attr] = new_val
-                        log.warn(u"The attribute '{1}' does not allow the value '{0}',"
-                                 u" replaced with '{2}'".format(val, attr, new_val), where=el)
+                        log.warn("The attribute '{1}' does not allow the value '{0}',"
+                                 " replaced with '{2}'".format(val, attr, new_val), where=el)
                     else:
                         attribs_to_remove.append(nsAttrib)
-                        log.warn(u"The attribute '{1}' does not allow the value '{0}',"
-                                 u" attribute to be removed".format(val, attr), where=el)
+                        log.warn("The attribute '{1}' does not allow the value '{0}',"
+                                 " attribute to be removed".format(val, attr), where=el)
 
     for attrib in attribs_to_remove:
         del el.attrib[attrib]
