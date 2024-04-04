@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.8.0] - 2024-04-04
+### :sparkles: New Features
+- [`6a6de81`](https://github.com/ietf-tools/svgcheck/commit/6a6de81112b2a2cf2056046d0283b9ee5ba4ed75) - Add support for Python 3.12 *(PR [#43](https://github.com/ietf-tools/svgcheck/pull/43) by [@Rotzbua](https://github.com/Rotzbua))*
+- [`e5d1820`](https://github.com/ietf-tools/svgcheck/commit/e5d1820cf7428d0744b201cda8a2a1ef52a03676) - Remove support for Python 3.7 *(PR [#49](https://github.com/ietf-tools/svgcheck/pull/49) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#44](https://github.com/ietf-tools/svgcheck/issues/44) opened by [@kesara](https://github.com/kesara)*
+  - :arrow_lower_right: *addresses issue [#47](https://github.com/ietf-tools/svgcheck/issues/47) opened by [@dwaite](https://github.com/dwaite)*
+
+### :bug: Bug Fixes
+- [`db9471f`](https://github.com/ietf-tools/svgcheck/commit/db9471feedbe4484a900bba1a5d160c8346b5be5) - Remove duplicate key *(PR [#45](https://github.com/ietf-tools/svgcheck/pull/45) by [@Rotzbua](https://github.com/Rotzbua))*
+
+### :recycle: Refactors
+- [`28240de`](https://github.com/ietf-tools/svgcheck/commit/28240deb91fec21739392e892dde240eabda59f5) - Remove Python 2 specific code *(PR [#46](https://github.com/ietf-tools/svgcheck/pull/46) by [@Rotzbua](https://github.com/Rotzbua))*
+
+
 ## [v0.7.1] - 2023-02-01
 ### :bug: Bug Fixes
 - [`182b486`](https://github.com/ietf-tools/svgcheck/commit/182b486d86cb98561d34bda2050e53a5dba34400) - No op --no-xinclude option *(PR [#35](https://github.com/ietf-tools/svgcheck/pull/35) by [@kesara](https://github.com/kesara))*
@@ -157,3 +171,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.6.2]: https://github.com/ietf-tools/svgcheck/compare/v0.6.1...v0.6.2
 [v0.7.0]: https://github.com/ietf-tools/svgcheck/compare/v0.6.2...v0.7.0
 [v0.7.1]: https://github.com/ietf-tools/svgcheck/compare/v0.7.0...v0.7.1
+[v0.8.0]: https://github.com/ietf-tools/svgcheck/compare/v0.7.1...v0.8.0
