@@ -1,12 +1,6 @@
 name: Publish Python Package
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*'
-
   workflow_dispatch:
     inputs:
       publish:
@@ -16,10 +10,15 @@ on:
 
 jobs:
   publish:
+    environment: release
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         
@@ -28,6 +27,7 @@ jobs:
       id: semver
       uses: ietf-tools/semver-action@v1
       with:
+        patchList: fix, bugfix, perf, refactor, test, tests, chore, revert
         token: ${{ github.token }}
         branch: main
         
@@ -70,7 +70,7 @@ jobs:
         fi
     
     - name: Setup Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
         
@@ -143,3 +143,12 @@ jobs:
           setup.cfg
           svgcheck/__init__.py
           dist/*.tar.gz
+
+    - name: Publish to Test PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
+
+    - name: Publish to PyPI
+      if: env.SHOULD_DEPLOY == 'true'
+      uses: pypa/gh-action-pypi-publish@release/v1
