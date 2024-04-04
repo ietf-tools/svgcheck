@@ -89,11 +89,9 @@ jobs:
       run: |
         echo "Using version $PKG_VERSION_STRICT"
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" svgcheck/__init__.py
+        sed -i -r -e "s/^version += .*$/version = $PKG_VERSION_STRICT/" setup.cfg
         source venv/bin/activate
-        python -m build --config-setting=--build-option="setopt --command=metadata --option=version --set-value=$PKG_VERSION_STRICT"
-        rm -rf dist
         python -m build --sdist
-        ls dist
         
     - name: Update CHANGELOG
       id: changelog
