@@ -95,17 +95,6 @@ jobs:
         python -m build --sdist
         ls dist
         
-    - name: Publish to Test PyPI
-      if: env.SHOULD_DEPLOY != 'true'
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
-        TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
-      run: |
-        echo "Using repository $TWINE_REPOSITORY_URL"
-        twine check dist/*
-        twine upload --verbose dist/*
-        
     - name: Update CHANGELOG
       id: changelog
       uses: Requarks/changelog-action@v1
