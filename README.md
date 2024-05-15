@@ -44,7 +44,7 @@ svgcheck [options] SOURCE
 | `-V`          | `--version`      | display the version number and exit                                               |
 | `-d RNG`      | `--rng=RNG`      | specify an alternate RNG file                                                     |
 | `-o FILENAME` | `--out=FILENAME` | specify an output filename, default to stdout                                     |
-| `-g`          | `--grey-scale`   | use a grey scale hieristic to determine what is white                             |
+| `-g`          | `--grey-scale`   | use a grey scale heuristic to determine what is white                             |
 |               | `--grey-level`   | cut off level between black and white                                             |
 
 ## Dependencies
