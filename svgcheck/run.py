@@ -29,6 +29,11 @@ def clear_cache(cache_path):
     sys.exit()
 
 
+def delete_tempfile(tempfile_in_use, source):
+    if tempfile_in_use and os.path.exists(source):
+        os.remove(source)
+
+
 def main():
     # Populate the options
     formatter = optparse.IndentedHelpFormatter(max_help_position=40)
@@ -107,11 +112,13 @@ def main():
     if options.grey_scale:
         wp.color_threshold = options.grey_level
 
+    tempfile_in_use = False
     if len(args) < 1:
         with tempfile.NamedTemporaryFile(delete=False, mode="w+t") as tmp_file:
             data = sys.stdin.read()
             tmp_file.write(data)
             source = tmp_file.name
+            tempfile_in_use = True
     else:
         source = args[0]
         if not os.path.exists(source):
@@ -132,11 +139,13 @@ def main():
                               strip_cdata=False)
     except XmlRfcError as e:
         log.exception('Unable to parse the XML document: ' + source, e)
+        delete_tempfile(tempfile_in_use, source)
         sys.exit(1)
     except lxml.etree.XMLSyntaxError as e:
         # Give the lxml.etree.XmlSyntaxError exception a line attribute which
         # matches lxml.etree._LogEntry, so we can use the same logging function
         log.exception('Unable to parse the XML document: ' + source, e.error_log)
+        delete_tempfile(tempfile_in_use, source)
         sys.exit(1)
 
     # Check that
@@ -152,6 +161,8 @@ def main():
         else:
             file = open(options.output_filename, 'w', encoding='utf-8')
         file.write(encodedBytes)
+
+    delete_tempfile(tempfile_in_use, source)
 
     if ok:
         log.info("File conforms to SVG requirements.")
