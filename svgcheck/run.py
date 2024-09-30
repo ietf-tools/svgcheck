@@ -107,7 +107,7 @@ def main():
         wp.color_threshold = options.grey_level
 
     if len(args) < 1:
-        source = "/dev/stdin"
+        source = "CON" if sys.platform.startswith("win") else "/dev/stdin"
     else:
         source = args[0]
         if not os.path.exists(source):
