@@ -24,7 +24,7 @@ def clear_cache(cache_path):
         path = os.path.join(dir, CACHE_PREFIX)
         if os.access(path, os.W_OK):
             shutil.rmtree(path)
-            log.write('Deleted cache directory at', path)
+            log.info('Deleted cache directory at', path)
     sys.exit()
 
 
@@ -89,8 +89,8 @@ def main():
             try:
                 os.makedirs(options.cache)
                 if options.verbose:
-                    log.write('Created cache directory at',
-                              options.cache)
+                    log.info('Created cache directory at',
+                             options.cache)
             except OSError as e:
                 print('Unable to make cache directory: %s ' % options.cache)
                 print(e)
