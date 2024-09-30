@@ -108,7 +108,7 @@ def main():
         wp.color_threshold = options.grey_level
 
     if len(args) < 1:
-        with tempfile.NamedTemporaryFile(dir=options.cache, delete=False, mode="w+t") as tmp_file:
+        with tempfile.NamedTemporaryFile(delete=False, mode="w+t") as tmp_file:
             data = sys.stdin.read()
             tmp_file.write(data)
             source = tmp_file.name
