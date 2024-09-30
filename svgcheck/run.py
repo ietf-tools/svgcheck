@@ -2,6 +2,7 @@ import sys
 import optparse
 import os
 import shutil
+import tempfile
 import lxml.etree
 from svgcheck.checksvg import checkTree
 from svgcheck.__init__ import __version__
@@ -107,7 +108,10 @@ def main():
         wp.color_threshold = options.grey_level
 
     if len(args) < 1:
-        source = "CON" if sys.platform.startswith("win") else "/dev/stdin"
+        with tempfile.NamedTemporaryFile(dir=options.cache, delete=False, mode="w+t") as tmp_file:
+            data = sys.stdin.read()
+            tmp_file.write(data)
+            source = tmp_file.name
     else:
         source = args[0]
         if not os.path.exists(source):
