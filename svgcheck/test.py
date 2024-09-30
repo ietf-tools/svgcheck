@@ -67,6 +67,14 @@ class TestCommandLineOptions(unittest.TestCase):
                       None, None)
         self.assertFalse(os.path.exists('Temp/cache/reference.RFC.1847.xml'))
 
+    def test_stdin(self):
+        process = subprocess.Popen([sys.executable, test_program],
+                                   stdin=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
+        _, stderr_data = process.communicate(input=b"<svvvvvg/>")
+        self.assertEqual(stderr_data.decode("utf-8").strip(),
+                         'INFO: File conforms to SVG requirements.')
+
 
 class TestParserMethods(unittest.TestCase):
 
