@@ -114,8 +114,8 @@ def main():
 
     tempfile_in_use = False
     if len(args) < 1:
-        with tempfile.NamedTemporaryFile(delete=False, mode="w+t") as tmp_file:
-            data = sys.stdin.read()
+        with tempfile.NamedTemporaryFile(delete=False, mode="w+b") as tmp_file:
+            data = sys.stdin.buffer.read()
             tmp_file.write(data)
             source = tmp_file.name
             tempfile_in_use = True
