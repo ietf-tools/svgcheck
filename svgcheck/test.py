@@ -71,7 +71,7 @@ class TestCommandLineOptions(unittest.TestCase):
         process = subprocess.Popen([sys.executable, test_program],
                                    stdin=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
-        _, stderr_data = process.communicate(input=b"<svvvvvg/>")
+        _, stderr_data = process.communicate(input=b'<svg viewBox="0 0 1 1"/>')
         self.assertEqual(stderr_data.decode("utf-8").strip(),
                          'INFO: File conforms to SVG requirements.')
 
