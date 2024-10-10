@@ -77,7 +77,15 @@ class TestCommandLineOptions(unittest.TestCase):
                                    stderr=subprocess.PIPE)
         _, stderr_data = process.communicate(input=b'<svg viewBox="0 0 1 1"/>')
         self.assertEqual(stderr_data.decode("utf-8").strip(),
-                         'INFO: File conforms to SVG requirements.')
+                         "INFO: File conforms to SVG requirements.")
+
+    def test_no_such_file(self):
+        file = "this_file_does_not_exist.svg"
+        process = subprocess.Popen([sys.executable, test_program, file],
+                                   stderr=subprocess.PIPE)
+        _, stderr_data = process.communicate()
+        self.assertEqual(stderr_data.decode("utf-8").strip(),
+                         f"No such file: {file}")
 
 
 class TestParserMethods(unittest.TestCase):

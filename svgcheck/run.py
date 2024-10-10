@@ -127,9 +127,9 @@ def main():
             process_svg(options, source)
     else:
         source = args[0]
-        process_svg(options, source)
         if not os.path.exists(source):
             sys.exit('No such file: ' + source)
+        process_svg(options, source)
 
 
 def process_svg(options, source):
