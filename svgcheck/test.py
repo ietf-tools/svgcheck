@@ -67,6 +67,10 @@ class TestCommandLineOptions(unittest.TestCase):
                       None, None)
         self.assertFalse(os.path.exists('Temp/cache/reference.RFC.1847.xml'))
 
+    @unittest.skipIf(
+        sys.platform.lower().startswith("win") and sys.version_info < (3, 12),
+        "Skip on Windows with Python version less than 3.12."
+    )
     def test_stdin(self):
         process = subprocess.Popen([sys.executable, test_program],
                                    stdin=subprocess.PIPE,
