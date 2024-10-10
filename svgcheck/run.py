@@ -108,17 +108,19 @@ def main():
         wp.color_threshold = options.grey_level
 
     if len(args) < 1:
-        if sys.platform.lower().startswith("win") and sys.version_info < (3, 12):
+        # delete_on_close was introduced in Python 3.12
+        have_delete_on_close = sys.version_info >= (3, 12)
+
+        if sys.platform.lower().startswith("win") and not have_delete_on_close:
             # On Windows with Python < 3.12, can not reopen closed temp files.
             sys.exit("Stdin is only supported on Windows with Python 3.12 and above.")
 
-        # delete_on_close was introduced in Python 3.12
-        delete_on_close = {"delete_on_close": False} if sys.version_info >= (3, 12) else {}
+        delete_on_close = {"delete_on_close": False} if have_delete_on_close else {}
 
         with tempfile.NamedTemporaryFile(mode="w+b", **delete_on_close) as tmp_file:
             data = sys.stdin.buffer.read()
             tmp_file.write(data)
-            if sys.version_info >= (3, 12):
+            if have_delete_on_close:
                 tmp_file.close()
             else:
                 # Prior to Python 3.12 file is deleted as soon as it's closed
