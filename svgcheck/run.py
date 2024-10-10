@@ -2,6 +2,7 @@ import sys
 import optparse
 import os
 import shutil
+import tempfile
 import lxml.etree
 from svgcheck.checksvg import checkTree
 from svgcheck.__init__ import __version__
@@ -107,12 +108,33 @@ def main():
         wp.color_threshold = options.grey_level
 
     if len(args) < 1:
-        source = os.getcwd() + "/stdin"
+        # delete_on_close was introduced in Python 3.12
+        have_delete_on_close = sys.version_info >= (3, 12)
+
+        if sys.platform.lower().startswith("win") and not have_delete_on_close:
+            # On Windows with Python < 3.12, can not reopen closed temp files.
+            sys.exit("Stdin is only supported on Windows with Python 3.12 and above.")
+
+        delete_on_close = {"delete_on_close": False} if have_delete_on_close else {}
+
+        with tempfile.NamedTemporaryFile(mode="w+b", **delete_on_close) as tmp_file:
+            data = sys.stdin.buffer.read()
+            tmp_file.write(data)
+            if have_delete_on_close:
+                tmp_file.close()
+            else:
+                # Prior to Python 3.12 file is deleted as soon as it's closed
+                tmp_file.seek(0)
+            source = tmp_file.name
+            process_svg(options, source)
     else:
         source = args[0]
         if not os.path.exists(source):
             sys.exit('No such file: ' + source)
+        process_svg(options, source)
 
+
+def process_svg(options, source):
     # Setup warnings module
     # rfclint.log.warn_error = options.warn_error and True or False
     log.quiet = options.quiet and True or False
