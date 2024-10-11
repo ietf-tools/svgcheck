@@ -158,11 +158,4 @@ def main():
 
 
 if __name__ == '__main__':
-    major, minor = sys.version_info[:2]
-    if major == 2 and minor < 7:
-        print("")
-        print("The svgcheck script requires python of 2.7 or higher.")
-        print("Can't proceed, quitting.")
-        exit()
-
     main()
