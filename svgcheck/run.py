@@ -117,7 +117,7 @@ def main():
                 source = tmp_file.name
                 process_svg(options, source)
         finally:
-            if os.path.exists(source):
+            if source and os.path.exists(source):
                 os.remove(source)
     else:
         source = args[0]
