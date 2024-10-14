@@ -102,7 +102,7 @@ jobs:
         tag: ${{ env.PKG_VERSION }}
 
     - name: Commit CHANGELOG.md
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v5
       if: env.SHOULD_DEPLOY == 'true'
       with:
         branch: main
@@ -122,7 +122,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@4
       with:
         name: artifacts
         path: |
