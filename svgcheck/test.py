@@ -67,6 +67,22 @@ class TestCommandLineOptions(unittest.TestCase):
                       None, None)
         self.assertFalse(os.path.exists('Temp/cache/reference.RFC.1847.xml'))
 
+    def test_stdin(self):
+        process = subprocess.Popen([sys.executable, test_program],
+                                   stdin=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
+        _, stderr_data = process.communicate(input=b'<svg viewBox="0 0 1 1"/>')
+        self.assertEqual(stderr_data.decode("utf-8").strip(),
+                         "INFO: File conforms to SVG requirements.")
+
+    def test_no_such_file(self):
+        file = "this_file_does_not_exist.svg"
+        process = subprocess.Popen([sys.executable, test_program, file],
+                                   stderr=subprocess.PIPE)
+        _, stderr_data = process.communicate()
+        self.assertEqual(stderr_data.decode("utf-8").strip(),
+                         f"No such file: {file}")
+
 
 class TestParserMethods(unittest.TestCase):
 

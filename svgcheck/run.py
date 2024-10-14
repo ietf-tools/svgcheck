@@ -2,6 +2,7 @@ import sys
 import optparse
 import os
 import shutil
+import tempfile
 import lxml.etree
 from svgcheck.checksvg import checkTree
 from svgcheck.__init__ import __version__
@@ -107,12 +108,25 @@ def main():
         wp.color_threshold = options.grey_level
 
     if len(args) < 1:
-        source = os.getcwd() + "/stdin"
+        source = None
+        try:
+            with tempfile.NamedTemporaryFile(mode="w+b", delete=False) as tmp_file:
+                data = sys.stdin.buffer.read()
+                tmp_file.write(data)
+                tmp_file.close()
+                source = tmp_file.name
+                process_svg(options, source)
+        finally:
+            if source and os.path.exists(source):
+                os.remove(source)
     else:
         source = args[0]
         if not os.path.exists(source):
             sys.exit('No such file: ' + source)
+        process_svg(options, source)
 
+
+def process_svg(options, source):
     # Setup warnings module
     # rfclint.log.warn_error = options.warn_error and True or False
     log.quiet = options.quiet and True or False
