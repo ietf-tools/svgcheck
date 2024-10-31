@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.9.0] - 2024-10-31
+### :sparkles: New Features
+- [`1af4336`](https://github.com/ietf-tools/svgcheck/commit/1af43361b5cb26e2047cb3c7c575ee619f0fb12b) - Add support for Python 3.13 *(PR [#62](https://github.com/ietf-tools/svgcheck/pull/62) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#58](https://github.com/ietf-tools/svgcheck/issues/58) opened by [@kesara](https://github.com/kesara)*
+
+
 ## [v0.8.1] - 2024-10-14
 ### :bug: Bug Fixes
 - [`40c2914`](https://github.com/ietf-tools/svgcheck/commit/40c2914c688de757b9e72560920dfd890ff0f8f9) - typo heuristic *(PR [#53](https://github.com/ietf-tools/svgcheck/pull/53) by [@Rotzbua](https://github.com/Rotzbua))*
@@ -185,3 +191,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.7.1]: https://github.com/ietf-tools/svgcheck/compare/v0.7.0...v0.7.1
 [v0.8.0]: https://github.com/ietf-tools/svgcheck/compare/v0.7.1...v0.8.0
 [v0.8.1]: https://github.com/ietf-tools/svgcheck/compare/v0.8.0...v0.8.1
+[v0.9.0]: https://github.com/ietf-tools/svgcheck/compare/v0.8.1...v0.9.0
