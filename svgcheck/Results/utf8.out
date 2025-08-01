@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:ooo="http://xml.openoffice.org/svg/export" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:presentation="http://sun.com/xmlns/staroffice/presentation" xmlns:smil="http://www.w3.org/2001/SMIL20/" xmlns:anim="urn:oasis:names:tc:opendocument:xmlns:animation:1.0" version="1.2" viewBox="0 0 28000 21000" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xml:space="preserve">
- <defs class="ClipPathGroup">
-  </defs>
  <defs>
   <g id="ooo:meta_slides">
    <g id="ooo:meta_dummy_slide"/>
@@ -9,12 +7,6 @@
   </g>
  </defs>
  <defs id="presentation-animations"/>
- <defs>
-  </defs>
- <defs>
-  </defs>
- <defs>
-  </defs>
  <defs class="TextShapeIndex">
   <g/>
  </defs>
