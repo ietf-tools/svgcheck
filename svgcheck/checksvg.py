@@ -330,6 +330,7 @@ def check(el, depth=0):
     if len(els_to_rm) != 0:
         for child in els_to_rm:
             el.remove(child)
+        return False
     return True  # OK
 
 
@@ -344,11 +345,12 @@ def checkTree(tree):
     global errorCount
 
     errorCount = 0
+    checkOK = True
     element = tree.getroot().tag
     if element[0] == "{":
         element = element[element.rfind("}") + 1:]
     if element == "svg":
-        check(tree.getroot(), 0)
+        checkOK = check(tree.getroot(), 0)
     else:
         # Locate all of the svg elements that we need to check
 
@@ -361,6 +363,6 @@ def checkTree(tree):
                 log.note(
                     "Checking svg element at line {0} in file {1}".format(1, "file")
                 )
-            check(path, 0)
+            checkOK = check(path, 0)
 
-    return errorCount == 0
+    return errorCount == 0 and checkOK
