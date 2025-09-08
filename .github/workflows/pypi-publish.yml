@@ -82,7 +82,6 @@ jobs:
       run: |
         echo "Using version $PKG_VERSION_STRICT"
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" svgcheck/__init__.py
-        sed -i -r -e "s/^version += .*$/version = $PKG_VERSION_STRICT/" setup.cfg
         python3 -m build
 
     - name: Store the distribution packages
@@ -96,12 +95,6 @@ jobs:
       with:
         name: svgcheck-init
         path: svgcheck/__init__.py
-
-    - name: Store updated setup.cfg
-      uses: actions/upload-artifact@v4
-      with:
-        name: svgcheck-setupcfg
-        path: setup.cfg
 
   publish-to-pypi:
     name: >-
@@ -157,13 +150,6 @@ jobs:
       with:
         name: svgcheck-init
         path: svgcheck/
-        merge-multiple: true
-
-    - name: Download updated setup.cfg
-      uses: actions/download-artifact@v4
-      with:
-        name: svgcheck-setupcfg
-        path: ./
         merge-multiple: true
 
     - name: Set Variables
