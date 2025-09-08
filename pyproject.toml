@@ -1,3 +1,56 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "svgcheck"
+dynamic = ["version"]
+authors = [
+  {name = "IETF Tools", email = "tools-help@ietf.org"},
+]
+description = "Verify that an svg file is compliant with the RFC standards."
+keywords = ["svg", "validation", "rfc", "internet-draft", "xml", "xml2rfc"]
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+	"lxml>=5.3.0",
+	"xml2rfc>=3.24.0",
+]
+
+[project.urls]
+homepage = "https://github.com/ietf-tools/svgcheck"
+source = "https://github.com/ietf-tools/svgcheck"
+issues = "https://github.com/ietf-tools/svgcheck/issues"
+changelog = "https://github.com/ietf-tools/svgcheck/blob/main/CHANGELOG.md"
+releasenotes = "https://github.com/ietf-tools/svgcheck/releases"
+
+[project.optional-dependencies]
+tests = [
+    "coverage",
+	"pycodestyle",
+	"pyflakes>=0.8.1",
+    "tox",
+]
+
+[project.scripts]
+svgcheck = "svgcheck.run:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "svgcheck.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["svgcheck"]
