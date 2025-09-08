@@ -91,13 +91,17 @@ jobs:
         name: python-package-distributions
         path: dist/
 
-    - name: Store updated version files
+    - name: Store updated __init__.py
       uses: actions/upload-artifact@v4
       with:
-        name: svgcheck-version
-        path:
-        - svgcheck/__init__.py
-        - setup.cfg
+        name: svgcheck-init
+        path: svgcheck/__init__.py
+
+    - name: Store updated setup.cfg
+      uses: actions/upload-artifact@v4
+      with:
+        name: svgcheck-setupcfg
+        path: setup.cfg
 
   publish-to-pypi:
     name: >-
@@ -150,12 +154,16 @@ jobs:
     - name: Download updated init file
       uses: actions/download-artifact@v4
       with:
-        name: svgcheck-version
+        name: svgcheck-init
         path: svgcheck/
         merge-multiple: true
 
-    - name: Move setup.cfg
-      run: mv svgcheck/setup.cfg ./
+    - name: Download updated setup.cfg
+      uses: actions/download-artifact@v4
+      with:
+        name: svgcheck-setupcfg
+        path: ./
+        merge-multiple: true
 
     - name: Set Variables
       run: echo "PKG_VERSION=${{needs.build.outputs.pkg_version}}" >> $GITHUB_ENV
