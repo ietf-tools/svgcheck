@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.11.0] - 2025-09-12
+### :sparkles: New Features
+- [`e8471cd`](https://github.com/ietf-tools/svgcheck/commit/e8471cda1bc80206b234993fcbec244badf8c812) - Migrate to pyproject.toml *(PR [#75](https://github.com/ietf-tools/svgcheck/pull/75) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#74](https://github.com/ietf-tools/svgcheck/issues/74) opened by [@kesara](https://github.com/kesara)*
+
+### :bug: Bug Fixes
+- [`668682b`](https://github.com/ietf-tools/svgcheck/commit/668682bfc1faf44a63d00246f041d80b7f1ce582) - Return false on svgcheck errors *(PR [#72](https://github.com/ietf-tools/svgcheck/pull/72) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#70](https://github.com/ietf-tools/svgcheck/issues/70) opened by [@szabgab](https://github.com/szabgab)*
+
+### :construction_worker: Build System
+- [`ab3747f`](https://github.com/ietf-tools/svgcheck/commit/ab3747fdda28901e505b114562682f6e882b8c39) - Improve PyPI publishing workflow *(PR [#71](https://github.com/ietf-tools/svgcheck/pull/71) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#69](https://github.com/ietf-tools/svgcheck/issues/69) opened by [@kesara](https://github.com/kesara)*
+- [`6131a2e`](https://github.com/ietf-tools/svgcheck/commit/6131a2e33c07d0b4d6c254e8b449a131e93ab8e7) - Fix pypi-publish GHA issues *(PR [#73](https://github.com/ietf-tools/svgcheck/pull/73) by [@kesara](https://github.com/kesara))*
+
+
 ## [v0.10.0] - 2024-12-03
 ### :sparkles: New Features
 - [`bb883fc`](https://github.com/ietf-tools/svgcheck/commit/bb883fc551c4070f13da4bffa973855a347964ae) - Drop support for Python 3.8 *(PR [#67](https://github.com/ietf-tools/svgcheck/pull/67) by [@kesara](https://github.com/kesara))*
@@ -199,3 +214,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.8.1]: https://github.com/ietf-tools/svgcheck/compare/v0.8.0...v0.8.1
 [v0.9.0]: https://github.com/ietf-tools/svgcheck/compare/v0.8.1...v0.9.0
 [v0.10.0]: https://github.com/ietf-tools/svgcheck/compare/v0.9.0...v0.10.0
+[v0.11.0]: https://github.com/ietf-tools/svgcheck/compare/v0.10.0...v0.11.0
