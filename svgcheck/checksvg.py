@@ -30,28 +30,34 @@ def modify_style(node):
     """
     For style properties, we want to pull it apart and then make individual attributes
     """
-    log.note("modify_style check '{0}' in '{1}'".format(node.attrib['style'], node.tag))
+    log.note("modify_style check '{0}' in '{1}'".format(node.attrib["style"], node.tag))
 
-    style_props = node.attrib['style'].rstrip(';').split(';')
+    style_props = node.attrib["style"].rstrip(";").split(";")
     props_to_check = wp.style_properties
 
     for prop in style_props:
         # print("prop = %s" %  prop)
-        v = prop.split(':')
+        v = prop.split(":")
         if len(v) != 2:
-            log.error("Malformed field '{0}' in style attribute found. Field removed.".format(v),
-                      where=node)
+            log.error(
+                "Malformed field '{0}' in style attribute found. Field removed.".format(
+                    v
+                ),
+                where=node,
+            )
             continue
         p = v[0].strip()
         v = v[1].strip()  # May have leading blank
         log.note("   modify_style - p={0}  v={1}".format(p, v))
         # we will deal with the change of values later when the attribute list is processed.
         if p in props_to_check:
-            log.error("Style property '{0}' promoted to attribute".format(p), where=node)
+            log.error(
+                "Style property '{0}' promoted to attribute".format(p), where=node
+            )
             node.attrib[p] = v
         else:
             log.error("Style property '{0}' removed".format(p), where=node)
-    del node.attrib['style']
+    del node.attrib["style"]
 
 
 def value_ok(obj, v):
@@ -73,8 +79,8 @@ def value_ok(obj, v):
         values = wp.basic_types[obj]
     elif isinstance(obj, str):
         # values to check is a string
-        if obj[0] == '+':
-            n = re.match(r'\d+\.\d+%?$', v)
+        if obj[0] == "+":
+            n = re.match(r"\d+\.\d+%?$", v)
             rv = None
             if n:
                 rv = n.group()
@@ -102,8 +108,8 @@ def value_ok(obj, v):
 
     log.note(" --- skip to end -- {0}".format(obj))
     v = v.lower()
-    if obj == 'font-family':
-        all = v.split(',')
+    if obj == "font-family":
+        all = v.split(",")
         newFonts = []
         for font in ["sans-serif", "serif", "monospace"]:
             if font in all:
@@ -111,33 +117,42 @@ def value_ok(obj, v):
         if len(newFonts) == 0:
             newFonts.append("sans-serif")
         return (False, ",".join(newFonts))
-    if obj == '<color>':
+    if obj == "<color>":
         if v in wp.color_map:
             return (False, wp.color_map[v])
 
         # Heuristic conversion of color or grayscale
         # when we get here, v is a non-conforming color element
-        if ('rgb(' not in v) and v[0] != '#':
+        if ("rgb(" not in v) and v[0] != "#":
             return (False, wp.color_default)
-        if v[0] == '#' and len(v) == 7:
+        if v[0] == "#" and len(v) == 7:
             # hexadecimal color code
             shade = int(v[1:3], 16) + int(v[3:5], 16) + int(v[5:7], 16)
-        elif v[0] == '#' and len(v) == 4:
-            shade = int(v[1], 16)*16 + int(v[1], 16) + int(v[2], 16)*16 + int(v[2], 16) + \
-                    int(v[3], 16)*16 + int(v[3], 16)
-        elif 'rgb(' in v:
-            triple = v.split('(')[1].split(')')[0].split(',')
-            if '%' in triple[0]:
-                shade = sum([int(t.replace('%', ''))*255/100 for t in triple])
+        elif v[0] == "#" and len(v) == 4:
+            shade = (
+                int(v[1], 16) * 16
+                + int(v[1], 16)
+                + int(v[2], 16) * 16
+                + int(v[2], 16)
+                + int(v[3], 16) * 16
+                + int(v[3], 16)
+            )
+        elif "rgb(" in v:
+            triple = v.split("(")[1].split(")")[0].split(",")
+            if "%" in triple[0]:
+                shade = sum([int(t.replace("%", "")) * 255 / 100 for t in triple])
             else:
                 shade = sum([int(t) for t in triple])
         else:
             shade = 0
 
-        log.note("Color or grayscale heuristic applied to: '{0}' yields shade: '{1}'".
-                 format(v, shade))
+        log.note(
+            "Color or grayscale heuristic applied to: '{0}' yields shade: '{1}'".format(
+                v, shade
+            )
+        )
         if shade > wp.color_threshold:
-            return (False, 'white')
+            return (False, "white")
         return (False, wp.color_default)
 
     return (False, replaceWith)
@@ -151,11 +166,11 @@ def strip_prefix(element, el):
     """
 
     ns = None
-    if element[0] == '{':
-        rbp = element.rfind('}')  # Index of rightmost }
+    if element[0] == "{":
+        rbp = element.rfind("}")  # Index of rightmost }
         if rbp >= 0:
             ns = element[1:rbp]
-            element = element[rbp+1:]
+            element = element[rbp + 1:]
         else:
             log.warn("Malformed namespace.  Should have errored during parsing")
     return element, ns  # return tag, namespace
@@ -171,7 +186,7 @@ def check(el, depth=0):
     """
     global errorCount
 
-    log.note("%s tag = %s" % (' ' * (depth*indent), el.tag))
+    log.note("%s tag = %s" % (" " * (depth * indent), el.tag))
 
     # Check that the namespace is one of the pre-approved ones
     # ElementTree prefixes elements with default namespace in braces
@@ -180,12 +195,14 @@ def check(el, depth=0):
 
     # namespace for elements must be either empty or svg
     if ns is not None and ns not in wp.svg_urls:
-        log.warn("Element '{0}' in namespace '{1}' is not allowed".format(element, ns),
-                 where=el)
+        log.warn(
+            "Element '{0}' in namespace '{1}' is not allowed".format(element, ns),
+            where=el,
+        )
         return False  # Remove this el
 
     # Is the element in the list of legal elements?
-    log.note("%s element % s: %s" % (' ' * (depth*indent), element, el.attrib))
+    log.note("%s element % s: %s" % (" " * (depth * indent), element, el.attrib))
     if element not in wp.elements:
         errorCount += 1
         log.warn("Element '{0}' not allowed".format(element), where=el)
@@ -194,19 +211,22 @@ def check(el, depth=0):
     elementAttributes = wp.elements[element]  # Allowed attributes for element
 
     # do a re-write of style into individual elements
-    if 'style' in el.attrib:
+    if "style" in el.attrib:
         modify_style(el)
 
     attribs_to_remove = []  # Can't remove them inside the iteration!
     for nsAttrib, val in el.attrib.items():
         # validate that the namespace of the element is known and ok
         attr, ns = strip_prefix(nsAttrib, el)
-        log.note("%s attr %s = %s (ns = %s)" % (
-                ' ' * (depth*indent), attr, val, ns))
+        log.note("%s attr %s = %s (ns = %s)" % (" " * (depth * indent), attr, val, ns))
         if ns is not None and ns not in wp.svg_urls:
             if ns not in wp.xmlns_urls:
-                log.warn("Element '{0}' does not allow attributes with namespace '{1}'".
-                         format(element, ns), where=el)
+                log.warn(
+                    "Element '{0}' does not allow attributes with namespace '{1}'".format(
+                        element, ns
+                    ),
+                    where=el,
+                )
                 attribs_to_remove.append(nsAttrib)
             continue
 
@@ -214,18 +234,20 @@ def check(el, depth=0):
         # element or is an attribute generically for all properties
         if (attr not in elementAttributes) and (attr not in wp.properties):
             errorCount += 1
-            log.warn("The element '{0}' does not allow the attribute '{1}',"
-                     " attribute to be removed.".format(element, attr),
-                     where=el)
+            log.warn(
+                "The element '{0}' does not allow the attribute '{1}',"
+                " attribute to be removed.".format(element, attr),
+                where=el,
+            )
             attribs_to_remove.append(nsAttrib)
 
         # Now check if the attribute is a generic property
-        elif (attr in wp.properties):
+        elif attr in wp.properties:
             vals = wp.properties[attr]
             # log.note("vals = " + vals +  "<<<<<")
 
             #  Do method #1 of checking if the value is legal - not currently used.
-            if vals and vals[0] == '[' and False:
+            if vals and vals[0] == "[" and False:
                 # ok, new_val = check_some_props(attr, val, depth)
                 # if not ok:
                 #    el.attrib[attr] = new_val[1:]
@@ -236,30 +258,42 @@ def check(el, depth=0):
                     errorCount += 1
                     if new_val is not None:
                         el.attrib[attr] = new_val
-                        log.warn("The attribute '{1}' does not allow the value '{0}',"
-                                 " replaced with '{2}'".format(val, attr, new_val), where=el)
+                        log.warn(
+                            "The attribute '{1}' does not allow the value '{0}',"
+                            " replaced with '{2}'".format(val, attr, new_val),
+                            where=el,
+                        )
                     else:
                         attribs_to_remove.append(nsAttrib)
-                        log.warn("The attribute '{1}' does not allow the value '{0}',"
-                                 " attribute to be removed".format(val, attr), where=el)
+                        log.warn(
+                            "The attribute '{1}' does not allow the value '{0}',"
+                            " attribute to be removed".format(val, attr),
+                            where=el,
+                        )
 
     for attrib in attribs_to_remove:
         del el.attrib[attrib]
 
     # Need to have a viewBox on the root
-    if (depth == 0):
+    if depth == 0:
         if el.get("viewBox"):
             pass
         else:
-            log.warn("The attribute viewBox is required on the root svg element", where=el)
-            svgw = maybefloat(el.get('width'))
-            svgh = maybefloat(el.get('height'))
+            log.warn(
+                "The attribute viewBox is required on the root svg element", where=el
+            )
+            svgw = maybefloat(el.get("width"))
+            svgh = maybefloat(el.get("height"))
             try:
                 if svgw and svgh:
-                    newValue = '0 0 %s %s' % (svgw, svgh)
-                    log.warn("Trying to put in the attribute with value '{0}'".
-                             format(newValue), where=el)
-                    el.set('viewBox', newValue)
+                    newValue = "0 0 %s %s" % (svgw, svgh)
+                    log.warn(
+                        "Trying to put in the attribute with value '{0}'".format(
+                            newValue
+                        ),
+                        where=el,
+                    )
+                    el.set("viewBox", newValue)
             except ValueError as e:
                 log.error("Error when calculating SVG size: %s" % e, where=el)
 
@@ -270,26 +304,33 @@ def check(el, depth=0):
         allowed_children = []
 
     for child in el:
-        log.note("%schild, tag = %s" % (' ' * (depth*indent), child.tag))
+        log.note("%schild, tag = %s" % (" " * (depth * indent), child.tag))
         if not isinstance(child.tag, str):
             continue
         ch_tag, ns = strip_prefix(child.tag, el)
         if ns not in wp.svg_urls:
-            log.warn("The namespace {0} is not permitted for svg elements.".format(ns),
-                     where=child)
+            log.warn(
+                "The namespace {0} is not permitted for svg elements.".format(ns),
+                where=child,
+            )
             els_to_rm.append(child)
             continue
 
         if ch_tag not in allowed_children:
-            log.warn("The element '{0}' is not allowed as a child of '{1}'".
-                     format(ch_tag, element), where=child)
+            log.warn(
+                "The element '{0}' is not allowed as a child of '{1}'".format(
+                    ch_tag, element
+                ),
+                where=child,
+            )
             els_to_rm.append(child)
-        elif not check(child, depth+1):
+        elif not check(child, depth + 1):
             els_to_rm.append(child)
 
     if len(els_to_rm) != 0:
         for child in els_to_rm:
             el.remove(child)
+        return False
     return True  # OK
 
 
@@ -304,19 +345,24 @@ def checkTree(tree):
     global errorCount
 
     errorCount = 0
+    checkOK = True
     element = tree.getroot().tag
-    if element[0] == '{':
-        element = element[element.rfind('}')+1:]
-    if element == 'svg':
-        check(tree.getroot(), 0)
+    if element[0] == "{":
+        element = element[element.rfind("}") + 1:]
+    if element == "svg":
+        checkOK = check(tree.getroot(), 0)
     else:
         # Locate all of the svg elements that we need to check
 
-        svgPaths = tree.getroot().xpath("//x:svg", namespaces={'x': 'http://www.w3.org/2000/svg'})
+        svgPaths = tree.getroot().xpath(
+            "//x:svg", namespaces={"x": "http://www.w3.org/2000/svg"}
+        )
 
         for path in svgPaths:
             if len(svgPaths) > 1:
-                log.note("Checking svg element at line {0} in file {1}".format(1, "file"))
-            check(path, 0)
+                log.note(
+                    "Checking svg element at line {0} in file {1}".format(1, "file")
+                )
+            checkOK = check(path, 0)
 
-    return errorCount == 0
+    return errorCount == 0 and checkOK
