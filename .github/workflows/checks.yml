@@ -31,6 +31,30 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
 
+  coverage:
+    name: Code coverage
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox
+
+    - name: Run tests and collect coverage
+      run: |
+        tox -- coverage run test.py && coverage xml
+
+    - name: Upload coverage to Codecov
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      uses: codecov/codecov-action@v4
+
   tests:
     name: Unit Tests
     runs-on: ${{ matrix.platform }}
