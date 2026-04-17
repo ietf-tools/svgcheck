@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.12.0] - 2026-04-17
+### :sparkles: New Features
+- [`4207ba1`](https://github.com/ietf-tools/svgcheck/commit/4207ba1a456b3299d49032d14a001b6de67ba893) - Add support for Python 3.14 *(PR [#81](https://github.com/ietf-tools/svgcheck/pull/81) by [@bkmgit](https://github.com/bkmgit))*
+  - :arrow_lower_right: *addresses issue [#79](https://github.com/ietf-tools/svgcheck/issues/79) opened by [@kesara](https://github.com/kesara)*
+- [`d97193a`](https://github.com/ietf-tools/svgcheck/commit/d97193ad3d701bc676ad71c3e86c65e1644f9a46) - Drop support for Python 3.9 *(PR [#82](https://github.com/ietf-tools/svgcheck/pull/82) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#80](https://github.com/ietf-tools/svgcheck/issues/80) opened by [@kesara](https://github.com/kesara)*
+
+### :construction_worker: Build System
+- [`fdf5180`](https://github.com/ietf-tools/svgcheck/commit/fdf5180ca897b042b188dcb14d6e7d0481536923) - Fix PR creation commit message syntax *(PR [#77](https://github.com/ietf-tools/svgcheck/pull/77) by [@kesara](https://github.com/kesara))*
+
+### :memo: Documentation Changes
+- [`d96180b`](https://github.com/ietf-tools/svgcheck/commit/d96180b95c9ef561899fbf96a8830572873e1594) - update CHANGELOG.md + py file version for v0.11.0 *(commit by [@github-actions[bot]](https://github.com/apps/github-actions))*
+
+
 ## [v0.11.0] - 2025-09-12
 ### :sparkles: New Features
 - [`e8471cd`](https://github.com/ietf-tools/svgcheck/commit/e8471cda1bc80206b234993fcbec244badf8c812) - Migrate to pyproject.toml *(PR [#75](https://github.com/ietf-tools/svgcheck/pull/75) by [@kesara](https://github.com/kesara))*
@@ -215,3 +229,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.9.0]: https://github.com/ietf-tools/svgcheck/compare/v0.8.1...v0.9.0
 [v0.10.0]: https://github.com/ietf-tools/svgcheck/compare/v0.9.0...v0.10.0
 [v0.11.0]: https://github.com/ietf-tools/svgcheck/compare/v0.10.0...v0.11.0
+[v0.12.0]: https://github.com/ietf-tools/svgcheck/compare/v0.11.0...v0.12.0
